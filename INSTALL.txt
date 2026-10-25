@@ -1,0 +1,260 @@
+ASHFORD UNIVERSITY PORTAL - STEP BY STEP LOCALHOST INSTALLATION INSTRUCTIONS
+
+These instructions guide you through setting up and running the Ashford University Fullstack Information System on your local computer. No Composer, no npm, and no build step are required.
+
+----------------------------------------
+STEP 1 - VERIFY THE FILES ARE IN PLACE
+----------------------------------------
+
+Confirm that the following files and folders exist in your project folder:
+
+- config/database.php
+- config/auth.php
+- includes/env.php
+- includes/session.php
+- includes/functions.php
+- includes/helpers.php
+- includes/mail.php
+- includes/password_reset.php
+- includes/layout.php
+- database/schema.sql
+- database/migrations/0002_registration_windows.sql
+- database/migrations/0003_semester_start.sql
+- database/migrations/0004_master_schedule.sql
+- database/migrations/0005_admin.sql
+- lib/PHPMailer/PHPMailer.php
+- lib/PHPMailer/SMTP.php
+- lib/PHPMailer/Exception.php
+- index.php
+- login.php
+- logout.php
+- register.php
+- register_actions.php
+- register_form.php
+- forgot_password.php
+- reset_password.php
+- install.php
+- install_actions.php
+- install_form.php
+- router.php
+- .env
+- .gitignore
+
+If any of these files are missing, the application will not function correctly.
+
+----------------------------------------
+STEP 2 - START MYSQL
+----------------------------------------
+
+Option A - using XAMPP Control Panel:
+1. Open the XAMPP Control Panel.
+2. Click Start next to MySQL.
+3. Leave the window open.
+
+Option B - command line:
+1. Open a terminal or PowerShell window.
+2. Run mysqld with your data directory.
+3. Leave this window open. Closing it stops the database.
+
+Make note of the port MySQL is using (default XAMPP port is often 3300 or 3306).
+
+----------------------------------------
+STEP 3 - CONFIGURE THE .ENV FILE
+----------------------------------------
+
+Open the .env file in your project root folder. Edit the values to match your local MySQL setup:
+
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=ashford_university
+DB_USER=root
+DB_PASS=
+APP_URL=http://localhost
+SESSION_NAME=ashford_university_session
+APP_BASE_PATH=
+
+Update DB_PORT to match your MySQL port from Step 2.
+If you are using a password for the MySQL root user, set DB_PASS to that password.
+Save the file.
+
+----------------------------------------
+STEP 4 - CREATE THE DATABASE
+----------------------------------------
+
+Open a terminal or PowerShell window.
+
+Run these commands against your MySQL server:
+
+mysql -u root -e "CREATE DATABASE ashford_university CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u root ashford_university < database/schema.sql
+
+If you get an access denied error, add -p after root and enter your MySQL password when prompted.
+
+----------------------------------------
+STEP 5 - RUN THE MIGRATIONS
+----------------------------------------
+
+Run these migration files in order against the ashford_university database:
+
+mysql -u root ashford_university < database/migrations/0002_registration_windows.sql
+mysql -u root ashford_university < database/migrations/0003_semester_start.sql
+mysql -u root ashford_university < database/migrations/0004_master_schedule.sql
+mysql -u root ashford_university < database/migrations/0005_admin.sql
+
+Each migration adds or modifies tables needed by the application. All four must run successfully.
+
+----------------------------------------
+STEP 6 - START THE WEB SERVER
+----------------------------------------
+
+You can use either Apache (XAMPP) or the built-in PHP server.
+
+Option A - Apache (XAMPP):
+1. Start Apache in the XAMPP Control Panel.
+2. Copy the project folder into your web root, for example C:\xampp\htdocs\AshfordUni1-main.
+3. Open your browser to http://localhost/AshfordUni1-main/
+
+Option B - built-in PHP server:
+1. Open a terminal or PowerShell window.
+2. Run this command from the project root folder:
+
+php -S localhost:8000 -t .
+
+3. Leave this window open.
+4. Open your browser to http://localhost:8000/
+
+The router.php file ensures that the root URL / opens the public landing page.
+
+----------------------------------------
+STEP 7 - RUN THE INSTALLER
+----------------------------------------
+
+Open your browser to:
+
+http://localhost:8000/install.php
+
+or if using Apache:
+
+http://localhost/AshfordUni1-main/install.php
+
+The installer will check that the database schema is present. If it is not, import schema.sql and the migrations first, then reload this page.
+
+Fill in the form to create the first administrator account:
+- First name
+- Last name
+- Email address
+- Password
+- Confirm password
+
+Click Submit. The installer creates one Full-Access administrator and then disables itself. It cannot be used again once a user exists in the database.
+
+----------------------------------------
+STEP 8 - SIGN IN TO THE PORTAL
+----------------------------------------
+
+Open the portal:
+
+http://localhost:8000/index.php
+
+or if using Apache:
+
+http://localhost/AshfordUni1-main/index.php
+
+Sign in with the administrator account you created in Step 7.
+
+After sign in, you are redirected to your role-based dashboard:
+- Admin -> /admin/dashboard.php
+- Student -> /student/dashboard.php
+- Faculty -> /faculty/dashboard.php
+- StatStaff -> /statstaff/dashboard.php
+
+----------------------------------------
+STEP 9 - BUILD THE UNIVERSITY DATA
+----------------------------------------
+
+As an administrator, use the admin portal to create the data the system needs:
+
+1. Admin -> Academic: Create departments, courses, prerequisites, majors, minors, and their requirements.
+2. Admin -> Users: Create student, faculty, and statistics-staff accounts.
+3. Admin -> Semesters: Create semester start dates and registration windows for Fall 2026 and Spring 2027.
+4. Admin -> Sections: Create course sections with rooms, meeting times, and faculty.
+5. Admin -> Master Schedule: Build and publish the master schedule.
+
+Students may also self-register from the login page using register.php.
+
+----------------------------------------
+STEP 10 - TEST KEY FUNCTIONS
+----------------------------------------
+
+Verify the following work correctly:
+
+Student:
+- Login and view home page
+- View personal information and advisor
+- View degree audit, holds, semester grades, unofficial transcript
+- View departments, courses, majors, minors, and course prerequisites
+- View master schedule for Fall 2026 and Spring 2027
+- Search course catalog by name, day, department, faculty, period, room/building
+- Add and drop course sections within the 4-week timeframe
+- Add majors and minors (subject to limits)
+- Update password and personal information
+
+Faculty:
+- Login and view home page
+- View personal information and advisees
+- View student information, schedules, grades, holds, transcripts, degree audits
+- View own course section roster and attendance
+- Record attendance and assign grades within allowed windows
+- Send email notifications to students
+- Update password and personal information
+
+Admin:
+- Login and view home page
+- View any student or faculty information, schedules, grades, holds, transcripts
+- Create users, course sections, departments, majors, minors, prerequisites
+- Create and update the master schedule
+- Add or drop students from course sections and advisor assignments
+- Change any account password
+- Cancel course sections within the time window
+- Assign rooms, time slots, and available seats
+
+StatStaff:
+- Login and view home page
+- View own personal information
+- View collective statistics and anonymous reports
+- Search master schedule and course catalog
+- Change own password and update own personal information
+
+----------------------------------------
+TROUBLESHOOTING
+----------------------------------------
+
+Database connection failed:
+- Confirm MySQL is running.
+- Confirm .env has the correct DB_HOST, DB_PORT, DB_USER, and DB_PASS.
+- Confirm the ashford_university database exists and schema.sql was imported.
+
+Raw PHP code displayed or blank page:
+- You are using the wrong PHP. Use XAMPP's PHP which has the MySQL driver, not the system PHP.
+
+Root URL shows sign-in page instead of landing page:
+- When using the built-in server, include router.php at the end of the php -S command.
+
+Port 8000 already in use:
+- Use a different port, for example php -S localhost:8080 -t . router.php
+
+Invalid login credentials:
+- Use the administrator account created during installation.
+- If using the full dataset, sample accounts include arianaaugustin@ashford.edu for Admin.
+
+Permission denied:
+- You are signed in as the wrong role. Admin pages require an Admin account.
+
+----------------------------------------
+STOPPING THE SITE
+----------------------------------------
+
+Press Ctrl+C in the terminal or PowerShell window running the web server.
+Press Ctrl+C in the terminal or PowerShell window running MySQL if you started it manually.
+
+Close both windows to fully stop the application.

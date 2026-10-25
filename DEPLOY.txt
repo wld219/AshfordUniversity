@@ -1,0 +1,280 @@
+DEPLOYING THE ASHFORD UNIVERSITY PORTAL TO AWS AND INFINITY FREE
+
+This document provides step-by-step instructions for hosting the Ashford University Fullstack Information System on Amazon Web Services (AWS) and Infinity Free.
+
+----------------------------------------
+PREREQUISITES FOR BOTH PLATFORMS
+----------------------------------------
+
+Before deploying to either platform, complete these steps on your local machine:
+
+1. Verify the project files are intact. Required files include config/database.php, config/auth.php, includes/env.php, includes/session.php, includes/functions.php, includes/helpers.php, includes/mail.php, includes/password_reset.php, includes/layout.php, database/schema.sql, database/migrations/0002_registration_windows.sql through 0005_admin.sql, lib/PHPMailer/, all portal directories (admin, student, faculty, statstaff, public), and root entry points (index.php, login.php, logout.php, register.php, forgot_password.php, reset_password.php, install.php, router.php).
+
+2. Create a .env file on your local machine with the database credentials you will use on the hosting platform. Do not commit real passwords to version control.
+
+3. Ensure you have the database schema file (database/schema.sql) and all four migration files ready to import on the remote database server.
+
+----------------------------------------
+OPTION A - DEPLOY TO AWS (LIGHTSAIL OR EC2 WITH LAMP)
+----------------------------------------
+
+AWS Lightsail is the simplest option for a PHP/MySQL application. You can also use EC2 with the same steps.
+
+Step 1 - Launch an AWS Instance
+1. Log in to the AWS Management Console.
+2. Navigate to Amazon Lightsail (recommended) or EC2.
+3. Create a new instance with the following blueprint:
+   - OS: Linux (Ubuntu 22.04 LTS or Amazon Linux 2023)
+   - Blueprint: LAMP (Linux, Apache, MySQL, PHP) or OS only with manual LAMP install
+4. Choose an instance plan with at least 1 GB RAM.
+5. Create or select an SSH key pair for access.
+6. Launch the instance and wait for it to be running.
+
+Step 2 - Configure the Firewall
+1. In the Lightsail or EC2 networking settings, add firewall rules to allow:
+   - HTTP on port 80
+   - HTTPS on port 443
+   - SSH on port 22 (restrict to your IP if possible)
+   - MySQL on port 3306 (only if you need remote database access; otherwise block it and use localhost only)
+
+Step 3 - Connect to the Instance
+1. Use SSH to connect to your instance:
+   ssh -i your-key.pem ubuntu@your-instance-public-ip
+2. Update the system:
+   sudo apt update && sudo apt upgrade -y   (Ubuntu)
+   or
+   sudo yum update -y   (Amazon Linux)
+
+Step 4 - Install or Verify LAMP Stack
+If you chose the OS-only blueprint, install Apache, PHP 8, and MySQL:
+
+Ubuntu:
+   sudo apt install apache2 mysql-server php8.1 libapache2-mod-php php8.1-pdo php8.1-mysql php8.1-mbstring php8.1-xml php8.1-curl php8.1-zip unzip -y
+
+Amazon Linux:
+   sudo yum install httpd mysql-server php php-pdo php-mysqlnd php-mbstring php-xml php-curl php-zip unzip -y
+
+Start and enable services:
+   sudo systemctl start apache2   (or httpd)
+   sudo systemctl enable apache2
+   sudo systemctl start mysql   (or mysqld)
+   sudo systemctl enable mysql
+
+Step 5 - Secure MySQL
+1. Run the secure installation script:
+   sudo mysql_secure_installation
+2. Set a root password, remove anonymous users, disable remote root login, and remove the test database.
+
+Step 6 - Create the Database
+1. Log in to MySQL:
+   sudo mysql -u root -p
+2. Create the database and user:
+   CREATE DATABASE ashford_university CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+   CREATE USER 'ashford_user'@'localhost' IDENTIFIED BY 'your_strong_password';
+   GRANT ALL PRIVILEGES ON ashford_university.* TO 'ashford_user'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
+
+Step 7 - Upload Project Files
+1. On your local machine, compress the project folder (excluding .git, .env, vendor, and any local-only files).
+2. Transfer the files to the server using SCP or SFTP:
+   scp -i your-key.pem -r /path/to/project/* ubuntu@your-instance-public-ip:/tmp/
+3. On the server, move files to the web root:
+   sudo mv /tmp/* /var/www/html/
+   sudo chown -R www-data:www-data /var/www/html/   (Ubuntu)
+   or
+   sudo chown -R apache:apache /var/www/html/   (Amazon Linux)
+   sudo chmod -R 755 /var/www/html/
+
+Step 8 - Configure the .env File on the Server
+1. Create the .env file in the project root (/var/www/html/.env):
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_NAME=ashford_university
+   DB_USER=ashford_user
+   DB_PASS=your_strong_password
+   APP_URL=http://your-instance-public-ip   (or your domain)
+   SESSION_NAME=ashford_university_session
+   APP_BASE_PATH=
+
+2. Set restrictive permissions:
+   sudo chmod 600 /var/www/html/.env
+   sudo chown www-data:www-data /var/www/html/.env   (Ubuntu)
+   or
+   sudo chown apache:apache /var/www/html/.env   (Amazon Linux)
+
+Step 9 - Import the Database Schema
+1. Upload database/schema.sql and the four migration files to the server.
+2. Import the schema:
+   mysql -u ashford_user -p ashford_university < /var/www/html/database/schema.sql
+3. Import migrations in order:
+   mysql -u ashford_user -p ashford_university < /var/www/html/database/migrations/0002_registration_windows.sql
+   mysql -u ashford_user -p ashford_university < /var/www/html/database/migrations/0003_semester_start.sql
+   mysql -u ashford_user -p ashford_university < /var/www/html/database/migrations/0004_master_schedule.sql
+   mysql -u ashford_user -p ashford_university < /var/www/html/database/migrations/0005_admin.sql
+
+Step 10 - Configure Apache
+1. Ensure Apache allows .htaccess overrides if needed:
+   sudo nano /etc/apache2/apache2.conf   (Ubuntu)
+   or
+   sudo nano /etc/httpd/conf/httpd.conf   (Amazon Linux)
+2. Change AllowOverride None to AllowOverride All for the /var/www/html directory.
+3. Enable the rewrite module if you plan to use clean URLs:
+   sudo a2enmod rewrite   (Ubuntu)
+4. Restart Apache:
+   sudo systemctl restart apache2   (Ubuntu)
+   or
+   sudo systemctl restart httpd   (Amazon Linux)
+
+Step 11 - Set PHP Timezone and Settings
+1. Edit php.ini to set the timezone to America/New_York:
+   sudo nano /etc/php/8.1/apache2/php.ini   (Ubuntu path may vary)
+   date.timezone = America/New_York
+2. Restart Apache after saving.
+
+Step 12 - Run the Installer
+1. Open your browser to:
+   http://your-instance-public-ip/install.php
+2. Fill in the administrator account form and submit.
+3. The installer creates the first Full-Access admin and disables itself.
+
+Step 13 - Access the Portal
+1. Open your browser to:
+   http://your-instance-public-ip/index.php
+2. Sign in with the administrator account you created.
+3. Build university data through the admin portal (departments, courses, users, semesters, sections, master schedule).
+
+Optional - Assign a Domain Name
+1. In AWS Lightsail or EC2, create a static IP and attach it to your instance.
+2. Create an A record in your DNS provider pointing your domain to the static IP.
+3. Update APP_URL in .env to your domain.
+4. Optionally set up HTTPS using AWS Certificate Manager or Let's Encrypt.
+
+----------------------------------------
+OPTION B - DEPLOY TO INFINITY FREE
+----------------------------------------
+
+Infinity Free is a free shared PHP/MySQL hosting service. It does not provide root access, so you work entirely through their control panel and FTP.
+
+Step 1 - Create an Infinity Free Account
+1. Go to https://infinityfree.com and sign up for a free account.
+2. Verify your email address.
+3. Log in to the Infinity Free client area.
+
+Step 2 - Create a Hosting Account
+1. In the client area, click "Add Hosting Account" or "Create New Account."
+2. Choose a subdomain (e.g., yoursite.rf.gd) or add your own custom domain if you have one.
+3. Select the free hosting plan.
+4. Wait for the account to be provisioned.
+
+Step 3 - Get Your Database Credentials
+1. In the Infinity Free control panel, open the MySQL Databases section.
+2. Create a new database (e.g., if0_ashford_university).
+3. Note the database name, database username, database password, and MySQL hostname (typically sql123.infinityfree.com or similar).
+4. Note your FTP hostname, username, and password from the FTP Accounts section.
+
+Step 4 - Prepare the .env File for Infinity Free
+Create a .env file with these values using the Infinity Free credentials you noted:
+
+DB_HOST=sql123.infinityfree.com   (use the hostname from your control panel)
+DB_PORT=3306
+DB_NAME=if0_xxxxxxxx_ashford_university   (your actual database name)
+DB_USER=if0_xxxxxxxx_username   (your actual database username)
+DB_PASS=your_database_password
+APP_URL=http://yoursite.rf.gd   (your Infinity Free subdomain or custom domain)
+SESSION_NAME=ashford_university_session
+APP_BASE_PATH=
+
+Important: Infinity Free shared hosting may restrict outbound email. PHPMailer may not work for password reset emails unless you configure SMTP with an external provider. Test email functionality before relying on it.
+
+Step 5 - Upload Files via FTP
+1. Download an FTP client such as FileZilla, WinSCP, or Cyberduck.
+2. Connect using your Infinity Free FTP credentials:
+   - Host: ftpupload.net (or the hostname in your control panel)
+   - Username: your FTP username
+   - Password: your FTP password
+   - Port: 21
+3. Navigate to the htdocs folder on the server. This is your web root.
+4. Upload all project files and folders EXCEPT:
+   - .git folder
+   - .env (create this separately on the server as described below)
+   - vendor folder (not used by this project)
+   - INSTALL.txt and HOW_TO_RUN.txt (optional, not needed on server)
+   - docs folder (optional documentation)
+   - skills folder (optional Kilo configuration)
+
+5. Upload the .env file you prepared in Step 4 to the htdocs folder.
+6. Set file permissions:
+   - Folders: 755
+   - Files: 644
+   - .env: 600 or 644 depending on server configuration
+
+Step 6 - Import the Database on Infinity Free
+1. In the Infinity Free control panel, open phpMyAdmin.
+2. Select your database from the left sidebar.
+3. Click the Import tab.
+4. Choose database/schema.sql and click Go to import the schema.
+5. Repeat for each migration file in order:
+   - 0002_registration_windows.sql
+   - 0003_semester_start.sql
+   - 0004_master_schedule.sql
+   - 0005_admin.sql
+
+Step 7 - Configure the Landing Page
+Infinity Free shared hosting does not use the built-in PHP server, so router.php is not used for routing. The server will serve index.php from the htdocs folder by default.
+
+The public/index.php is the landing page. If you want http://yoursite.rf.gd/ to show the public landing page instead of the sign-in page, create an .htaccess file in htdocs with:
+
+DirectoryIndex public/index.php
+
+Or move the contents of the public folder into htdocs and adjust paths accordingly. Test both approaches to see which works with your Infinity Free configuration.
+
+Step 8 - Run the Installer
+1. Open your browser to:
+   http://yoursite.rf.gd/install.php
+2. If the database connection fails, verify your .env DB_HOST, DB_NAME, DB_USER, and DB_PASS match the Infinity Free control panel values exactly.
+3. Fill in the administrator account form and submit.
+4. The installer creates the first Full-Access admin and disables itself.
+
+Step 9 - Access the Portal
+1. Open your browser to:
+   http://yoursite.rf.gd/index.php
+2. Sign in with the administrator account you created.
+3. Build university data through the admin portal.
+
+----------------------------------------
+INFINITY FREE LIMITATIONS TO KNOW
+----------------------------------------
+
+- No outbound email on free accounts by default. Password reset and faculty notification emails may not work unless you use an external SMTP service.
+- No cron jobs on free accounts. Scheduled tasks cannot run automatically.
+- File upload size limits may apply. Large SQL imports may need to be split or done via phpMyAdmin in chunks.
+- Databases may be suspended if inactive for long periods. Log in periodically to keep the account active.
+- Custom domains require upgrading or using their domain pointing feature.
+- SSL certificates may be available through their control panel for custom domains. Subdomains typically share the platform certificate.
+
+----------------------------------------
+POST-DEPLOYMENT CHECKLIST
+----------------------------------------
+
+1. Confirm the database connection works by loading install.php.
+2. Create the first administrator account.
+3. Sign in to /index.php and verify your role-based dashboard loads.
+4. Create semesters for Fall 2026 and Spring 2027 through Admin Semesters.
+5. Create departments, courses, majors, minors, and prerequisites through Admin Academic.
+6. Create user accounts for students, faculty, and statistics staff through Admin Users.
+7. Create course sections and build the master schedule through Admin Sections and Admin Master Schedule.
+8. Test student registration, course add/drop, grade viewing, transcript, and degree audit.
+9. Test faculty roster viewing, attendance recording, and grade assignment.
+10. Test statistics reports through the StatStaff portal.
+11. Remove or restrict access to install.php after initial setup for security.
+
+----------------------------------------
+SECURITY REMINDERS
+----------------------------------------
+
+- Never commit your .env file to Git. Add it to .gitignore.
+- Use strong, unique passwords for database users and administrator accounts.
+- Change the default database user and password on AWS before production use.
+- On Infinity Free, avoid storing sensitive data beyond what the application requires.
+- Keep PHP and MySQL updated on AWS instances with regular security patches.
