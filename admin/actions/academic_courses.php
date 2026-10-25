@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 // Academic actions: courses and prerequisites.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 // Save a course (create or update)
 if ($action === 'save_course') {

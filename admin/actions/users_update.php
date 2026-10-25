@@ -9,6 +9,9 @@ declare(strict_types=1);
 //     non-admin users only.
 //   - Lock manager may update any user, including admin security level
 //     and lock-manager flag.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 $userID = post_int('user_id') ?? 0;
 

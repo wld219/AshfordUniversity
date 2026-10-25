@@ -410,3 +410,100 @@ function faculty_rule_summary(array $violations): array
 
 	return $summary;
 }
+
+/*
+ * Validate that two faculty members can swap advisees.
+ *
+ * Rules:
+ *   - Both faculty must exist and be Full-Time (part-time may not have advisees).
+ *   - Both must share at least one department (via Faculty_Department).
+ *   - Neither may exceed 15 advisees after the swap.
+ *   - Each student being swapped must currently be assigned to one of the two
+ *     faculty members.
+ *   - The receiving faculty member's department must include the student's
+ *     major department (faculty may only advise within their departments).
+ *
+ * @return array{ok: bool, message: string}
+ */
+function advisees_can_swap(
+	PDO $pdo,
+	int $facultyID1,
+	int $facultyID2,
+	array $studentIDs
+): array {
+
+	$f1 = one(
+		$pdo,
+		'SELECT faculty_Type FROM Faculty WHERE faculty_ID = ?',
+		[$facultyID1]
+	);
+	$f2 = one(
+		$pdo,
+		'SELECT faculty_Type FROM Faculty WHERE faculty_ID = ?',
+		[$facultyID2]
+	);
+
+	if (!$f1 || !$f2) {
+		return [false, 'One or both faculty members not found.'];
+	}
+
+	if ($f1['faculty_Type'] !== 'Full-Time' || $f2['faculty_Type'] !== 'Full-Time') {
+		return [false, 'Only full-time faculty may have advisees.'];
+	}
+
+	// Both must share a department
+	$sharedDept = one(
+		$pdo,
+		'SELECT 1 FROM Faculty_Department fd1
+		 JOIN Faculty_Department fd2
+		   ON fd1.dept_ID = fd2.dept_ID
+		 WHERE fd1.faculty_ID = ? AND fd2.faculty_ID = ?
+		 LIMIT 1',
+		[$facultyID1, $facultyID2]
+	);
+
+	if (!$sharedDept) {
+		return [false, 'Faculty members must share a department to swap advisees.'];
+	}
+
+	// Current loads
+	$load1 = (int) (one(
+		$pdo,
+		'SELECT COUNT(*) AS total FROM Advisor WHERE faculty_ID = ?',
+		[$facultyID1]
+	)['total'] ?? 0);
+
+	$load2 = (int) (one(
+		$pdo,
+		'SELECT COUNT(*) AS total FROM Advisor WHERE faculty_ID = ?',
+		[$facultyID2]
+	)['total'] ?? 0);
+
+	$swapCount = count($studentIDs);
+
+	if ($load1 - $swapCount > 15 || $load2 + $swapCount > 15) {
+		return [false, 'Swap would exceed the 15-advisee limit for full-time faculty.'];
+	}
+
+	// Verify each student is assigned to one of the two faculty members
+	$assigned = all_rows(
+		$pdo,
+		'SELECT student_ID, faculty_ID FROM Advisor WHERE student_ID IN (' .
+			str_repeat('?,', count($studentIDs) - 1) . '?)',
+		$studentIDs
+	);
+
+	$assignedMap = [];
+	foreach ($assigned as $row) {
+		$assignedMap[(int) $row['student_ID']] = (int) $row['faculty_ID'];
+	}
+
+	foreach ($studentIDs as $sid) {
+		if (!isset($assignedMap[$sid]) ||
+			!in_array($assignedMap[$sid], [$facultyID1, $facultyID2], true)) {
+			return [false, 'Student ' . $sid . ' is not assigned to either faculty member.'];
+		}
+	}
+
+	return [true, 'OK'];
+}

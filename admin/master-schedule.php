@@ -7,7 +7,7 @@ require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
 
-require_role(['Admin']);
+require_role(['Admin', 'StatStaff']);
 
 // Access level for the current administrator
 $adminID = (int) $_SESSION['user_id'];
@@ -26,6 +26,8 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	csrf_verify();
+
+	require_write_access();
 
 	$action = post_str('action', 30);
 

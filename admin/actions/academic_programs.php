@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 // Academic actions: majors, minors, and their requirements.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 // Create a major
 if ($action === 'create_major') {

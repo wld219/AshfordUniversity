@@ -90,3 +90,21 @@ function role_home(string $role): string
 			return app_base_path() . '/index.php';
 	}
 }
+
+// Returns true if the logged-in user has read-only access (StatStaff).
+function is_read_only(): bool
+{
+	return ($_SESSION['user_type'] ?? '') === 'StatStaff';
+}
+
+// Block all state-changing operations for read-only users.
+function require_write_access(): void
+{
+	if (is_read_only()) {
+		http_response_code(403);
+
+		exit(
+			'403 - Read-only account: changes are not permitted.'
+		);
+	}
+}

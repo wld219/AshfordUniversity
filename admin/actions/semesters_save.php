@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 // Semesters action: update windows or create a semester.
 // Uses $pdo, $error from the entry point.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 $action = post_str('action', 20);
 

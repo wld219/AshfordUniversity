@@ -11,7 +11,6 @@ require_once '../includes/helpers.php';
 
 	// Get the logged-in student's ID
 	$studentID = (int) $_SESSION['user_id'];
-	$pdo = get_pdo();
 
 	/*
 	 * Students may update their own contact details. Protected fields

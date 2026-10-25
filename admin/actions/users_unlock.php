@@ -5,6 +5,9 @@ declare(strict_types=1);
 // Unlock a locked user account. Uses $pdo, $adminID, $error from the entry
 // point. Resets lock_var and no_Of_Tries so the user can log in again.
 // Full-Access administrators only.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 $userID = post_int('user_id') ?? 0;
 

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 // Cancel a section.
 //
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
+
 // Rules:
 //   - the semester must not have started,
 //   - fewer than 10 students may be enrolled,

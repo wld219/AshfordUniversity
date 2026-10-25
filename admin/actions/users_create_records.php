@@ -5,6 +5,9 @@ declare(strict_types=1);
 // User account creation (admin portal). Uses $pdo and the helpers loaded by
 // the entry point. Creates the shared User + Login rows and the role row,
 // all inside one transaction, then writes the audit entry.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 // Create the student's program rows (major, level, credit limits).
 function create_student_record(PDO $pdo, int $userID): void

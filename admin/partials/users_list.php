@@ -19,7 +19,7 @@ declare(strict_types=1);
 			<th>Failed attempts</th>
 			<th>Location</th>
 
-			<?php if ($isFullAccess || $isLockManager): ?>
+			<?php if (($isFullAccess || $isLockManager) && !$isReadOnly): ?>
 				<th>Action</th>
 			<?php endif; ?>
 
@@ -64,7 +64,7 @@ declare(strict_types=1);
 					) ?>
 				</td>
 
-				<?php if ($isFullAccess || $isLockManager): ?>
+				<?php if (($isFullAccess || $isLockManager) && !$isReadOnly): ?>
 
 					<td>
 

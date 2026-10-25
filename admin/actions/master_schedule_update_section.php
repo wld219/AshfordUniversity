@@ -8,6 +8,9 @@ declare(strict_types=1);
 // Optimistic concurrency: the posted version must match the stored one.
 // Schedule fields (faculty, time slot, room) lock once the semester starts;
 // only seat counts may change after that.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 if (!$isFullAccess) {
 	redirect_with_flash(

@@ -7,7 +7,7 @@ require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
 
-require_role(['Admin']);
+require_role(['Admin', 'StatStaff']);
 
 $adminID = (int) $_SESSION['user_id'];
 
@@ -21,7 +21,7 @@ $adminProfile = one(
 $securityLevel = $adminProfile['security_Level'] ?? 'Read-Only';
 $isFullAccess  = $securityLevel === 'Full-Access' && (int) ($adminProfile['lock_manager'] ?? 0) === 0;
 $isLockManager = (int) ($adminProfile['lock_manager'] ?? 0) === 1;
-$isReadOnly    = $securityLevel === 'Read-Only';
+$isReadOnly    = $securityLevel === 'Read-Only' || is_read_only();
 
 $error = '';
 
@@ -52,6 +52,8 @@ function next_user_id(PDO $pdo, string $role): int
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	csrf_verify();
+
+	require_write_access();
 
 	if (!$isFullAccess && !$isLockManager) {
 		redirect_with_flash(

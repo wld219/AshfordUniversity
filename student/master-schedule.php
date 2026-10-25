@@ -76,7 +76,7 @@ $dayMap = [];
 
 if (count($sections) > 0) {
 
-	$slotIDs = array_unique(array_column($sections, 'time_Slot_ID'));
+	$slotIDs = array_values(array_unique(array_column($sections, 'time_Slot_ID')));
 
 	$placeholders = implode(',', array_fill(0, count($slotIDs), '?'));
 

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 // User creation action. Uses $pdo, $error from the entry point.
 // Redirects on success; on failure sets the session error and returns.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 require_once __DIR__ . '/users_create_records.php';
 

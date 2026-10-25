@@ -5,6 +5,9 @@ declare(strict_types=1);
 // Master schedule status actions: create, publish, reopen.
 // Uses $pdo, $adminID, $isFullAccess from the entry point. Redirects on
 // success, or leaves $error set for the view.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 if (!$isFullAccess) {
 	redirect_with_flash(

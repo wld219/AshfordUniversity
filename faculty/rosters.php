@@ -11,7 +11,6 @@ require_once '../includes/helpers.php';
 
 	// Get the logged-in faculty member
 	$facultyID = (int) $_SESSION['user_id'];
-	$pdo = get_pdo();
 
 
 	// Get the courses taught by this faculty member

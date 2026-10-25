@@ -31,7 +31,10 @@ function nav_items(string $role): array
                 ['Master Schedule', 'master-schedule.php'],
                 ['Course Rosters', 'rosters.php'],
                 ['Attendance History', 'attendance-history.php'],
+                ['Attendance Calendar', 'attendance-calendar.php'],
+                ['Weekly Attendance', 'attendance-weekly.php'],
                 ['Advisees', 'advisees.php'],
+                ['Swap Advisees', 'advisee_swap.php'],
                 ['Catalog', 'catalog.php'],
                 ['My Profile', 'profile.php']
             ];
@@ -53,7 +56,17 @@ function nav_items(string $role): array
         case 'StatStaff':
             return [
                 ['Overview', 'dashboard.php'],
-                ['Anonymous Reports', 'reports.php']
+                ['Anonymous Reports', 'reports.php'],
+                ['Students', '../admin/users.php'],
+                ['Faculty', '../admin/users.php'],
+                ['Administrators', '../admin/users.php'],
+                ['Academic Records', '../admin/academic.php'],
+                ['Course Sections', '../admin/sections.php'],
+                ['Semesters', '../admin/semesters.php'],
+                ['Advisors', '../admin/advisors.php'],
+                ['Holds', '../admin/holds.php'],
+                ['Grade Exceptions', '../admin/exceptions.php'],
+                ['Audit Log', '../admin/audit.php'],
             ];
 
         default:

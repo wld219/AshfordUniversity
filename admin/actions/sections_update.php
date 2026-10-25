@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 // Update a section.
 //
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
+
 // Schedule fields (course, faculty, room, time slot) lock once the
 // semester has started; only the seat count may change after that.
 //

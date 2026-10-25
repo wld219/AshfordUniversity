@@ -72,6 +72,80 @@ function attendance_window_status(PDO $pdo, int $crn): array
 	return [true, 'Open'];
 }
 
+/*
+ * Is attendance allowed for a specific date on this section?
+ *
+ * Rules:
+ *   - The section must not be cancelled.
+ *   - The date must fall within the semester start and end dates.
+ *   - The date must be one of the section's meeting days.
+ *   - The date must not be in the future.
+ *
+ * @return array{ok: bool, message: string}
+ */
+function attendance_date_allowed(
+	PDO $pdo,
+	int $crn,
+	string $date
+): array {
+
+	if (section_is_cancelled($pdo, $crn)) {
+		return [false, 'This section has been cancelled.'];
+	}
+
+	$section = one(
+		$pdo,
+		'SELECT semester_ID, time_Slot_ID FROM Course_Section WHERE CRN = ?',
+		[$crn]
+	);
+
+	if (!$section) {
+		return [false, 'Section not found.'];
+	}
+
+	$semester = one(
+		$pdo,
+		'SELECT semester_Start FROM Semester WHERE semester_ID = ?',
+		[(int) $section['semester_ID']]
+	);
+
+	if (!$semester || $semester['semester_Start'] === null) {
+		return [false, 'Semester start date not configured.'];
+	}
+
+	$requested = new DateTimeImmutable($date);
+	$semesterStart = new DateTimeImmutable((string) $semester['semester_Start']);
+	$today = new DateTimeImmutable('today');
+
+	if ($requested < $semesterStart) {
+		return [false, 'Date is before the semester start.'];
+	}
+
+	if ($requested > $today) {
+		return [false, 'Cannot record attendance for a future date.'];
+	}
+
+	// The date must be one of the section's meeting days
+	$dayOfWeek = $requested->format('l'); // e.g. "Monday"
+
+	$meetingDay = one(
+		$pdo,
+		"SELECT 1
+		FROM Time_Slot_Day tsd
+		JOIN Day d ON d.day_ID = tsd.day_ID
+		WHERE tsd.time_Slot_ID = ?
+		  AND d.day_Of_Week = ?
+		LIMIT 1",
+		[(int) $section['time_Slot_ID'], $dayOfWeek]
+	);
+
+	if (!$meetingDay) {
+		return [false, 'The section does not meet on ' . $dayOfWeek . 's.'];
+	}
+
+	return [true, 'OK'];
+}
+
 // May a faculty member submit or change a grade for this student in this
 // section right now?
 //

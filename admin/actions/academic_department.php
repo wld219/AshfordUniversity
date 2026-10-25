@@ -3,8 +3,11 @@
 declare(strict_types=1);
 
 // Academic action: department contact details.
-
+//
 // Uses $pdo, $error from the entry point.
+//
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
 
 $deptID = post_int('dept_id') ?? 0;
 $email = post_str('email', 255);

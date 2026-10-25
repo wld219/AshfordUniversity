@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 // Create a section.
 //
+// Read-only users (StatStaff) are blocked from all write operations.
+require_write_access();
+
 // Enforces:
 //   - the course's department must be one of the faculty member's
 //     departments (faculty may only teach in their departments),
