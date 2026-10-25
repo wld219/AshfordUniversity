@@ -1,0 +1,263 @@
+========================================================================
+ASHFORD UNIVERSITY PORTAL - HOW TO RUN LOCALLY
+========================================================================
+
+WHAT YOU NEED
+-------------
+- XAMPP installed at C:\xampp
+- The project folder: C:\Users\jimmy\Desktop\AshfordFun
+- Nothing to install first. No Composer, no npm, no build step.
+
+
+IMPORTANT: USE XAMPP'S PHP, NOT THE SYSTEM PHP
+----------------------------------------------
+Your system PHP has no MySQL driver, so the site cannot reach the
+database with it. Every command below uses C:\xampp\php\php.exe
+deliberately. Do not swap it for plain "php".
+
+
+========================================================================
+STEP 1 - START THE DATABASE
+========================================================================
+
+Option A - easiest, no typing:
+  1. Open the XAMPP Control Panel.
+  2. Click "Start" next to MySQL.
+  3. Done. Your my.ini is already set to port 3300.
+
+Option B - command line:
+  Open PowerShell and run:
+
+    C:\xampp\mysql\bin\mysqld.exe --datadir=C:\xampp\mysql\data --port=3300
+
+  Leave this window open. That window IS the database. Closing it
+  stops the database.
+
+  Port 3300 is used because MySQL80 already holds port 3306 on this
+  machine, and its root password is unknown to this project.
+
+
+========================================================================
+STEP 2 - START THE WEB SERVER
+========================================================================
+
+Open a SECOND PowerShell window (the first stays busy running the
+database) and run this EXACT command, including router.php:
+
+    C:\xampp\php\php.exe -S localhost:8000 -t C:\Users\jimmy\Desktop\AshfordFun router.php
+
+Leave this window open too. It shows every request and any error.
+
+The trailing "router.php" is load-bearing. It is what sends
+http://localhost:8000/  to the public landing page. Without it,
+"/" would land on the sign-in page instead.
+
+Note the "-t" flag and the project path. Without them you will get
+"not found" errors for every page.
+
+
+========================================================================
+STEP 3 - OPEN THE SITE
+========================================================================
+
+    http://localhost:8000
+
+This opens the public landing page. The sign-in page stays at:
+
+    http://localhost:8000/index.php
+
+To stop the site, press Ctrl+C in both PowerShell windows.
+
+
+========================================================================
+SIGN-IN ACCOUNTS
+========================================================================
+
+Password for every account: Password123
+
+One real account per role, taken from the loaded data:
+
+    Role      Email
+    --------  ---------------------------
+    Admin     arianaaugustin@ashford.edu
+    Student   liamwalker@ashford.edu
+    Faculty   kevinbaptiste200001@ashford.edu
+    StatStaff ericjones400001@ashford.edu
+
+There are 1,985 accounts in total. Query Login to find more:
+
+    SELECT l.user_Type, l.user_Email
+    FROM Login l ORDER BY l.user_Type, l.user_ID LIMIT 20;
+
+
+========================================================================
+WHAT DATA IS LOADED
+========================================================================
+
+The full university dataset from the .sql files in database/ is loaded:
+
+    Users 1,985    Departments 10    Courses 240
+    Sections 2,533 Enrollments 7,246  Attendance 57,968
+    Majors 12      Minors 12         Semesters 14
+    Buildings 8    Rooms 725         Faculty 350
+
+The master schedule for Spring 2027 exists as a Draft at version 7.
+All 4 demo-era sections are fully assigned. With the full data loaded,
+real semesters have hunderds of sections each, so the admin schedule
+page takes a few seconds to build its validation report.
+
+IMPORTANT - LOCAL PASSWORDS:
+The supplied data seeds Login.user_Password with legacy 23-character
+hashes that PHP's password_verify() cannot read, so no account could
+sign in. Every account's password was rehashed locally to the single
+dev password above. Only the user_Password, no_Of_Tries, and lock_var
+columns were changed. This is a local development convenience, not a
+change to the university's data.
+
+
+========================================================================
+A TOUR OF THE FUNCTIONALITY
+========================================================================
+
+1. THE PUBLIC SITE (no sign-in needed)
+
+   http://localhost:8000/                       landing page, rail nav
+   http://localhost:8000/public/departments.php  10 departments
+   http://localhost:8000/public/courses.php      240 courses + prerequisites
+   http://localhost:8000/public/programs.php     12 majors, 12 minors
+   http://localhost:8000/public/schedule.php     master course schedule
+
+   On the schedule page:
+   - The Semester dropdown lists only terms that actually have
+     sections, ordered chronologically, Fall 2020 through Spring 2027.
+   - It defaults to Spring 2027, the newest term with data.
+   - The Department dropdown filters within the chosen term.
+   - "Show only sections with open seats" hides full sections without
+     reloading the page. The count line updates as you toggle it.
+   - With JavaScript switched off, every page still works: the toggle
+     simply does nothing and all sections stay visible.
+
+2. THE ADMIN MASTER SCHEDULE (the main feature)
+
+   Sign in as arianaaugustin@ashford.edu, then open:
+
+     http://localhost:8000/admin/master-schedule.php
+
+   - Statistics band: total sections, scheduled, unscheduled, missing
+     rooms, missing faculty, room conflicts, faculty conflicts,
+     validation errors.
+   - The table lists sections with course, meeting days and times,
+     room, faculty, status, and warnings, 50 per page.
+   - Filters: course code and title, department, faculty, meeting day,
+     building, room, status. Combine several at once, then Clear.
+   - "Update" on a row changes room, time slot, faculty, or seats. The
+     server validates and reports the specific reason if it refuses.
+   - "Create New Master Schedule", "Publish Schedule" (blocked while
+     any issue remains), and "Reopen for Editing".
+
+   Other admin pages:
+     /admin/users.php       /admin/academic.php    /admin/sections.php
+     /admin/semesters.php   /admin/advisors.php    /admin/holds.php
+     /admin/exceptions.php  /admin/audit.php
+
+3. THE STUDENT PORTAL (sign in as liamwalker@ashford.edu)
+   /student/dashboard.php, registration.php, master-schedule.php,
+   schedule.php, transcript.php, degree-audit.php, holds.php,
+   advisor.php, programs.php, catalog.php, buildings.php,
+   information.php
+
+4. THE FACULTY PORTAL (sign in as kevinbaptiste200001@ashford.edu)
+   /faculty/dashboard.php, schedule.php, master-schedule.php,
+   rosters.php, attendance-history.php, advisees.php, catalog.php,
+   profile.php
+
+
+========================================================================
+MANUAL VERIFICATION CHECKLIST
+========================================================================
+
+Run this after any change to the frontend or public pages.
+
+[ ] http://localhost:8000/ shows the landing page, not the sign-in page
+[ ] http://localhost:8000/index.php still shows the sign-in form
+[ ] Every public page (departments, courses, programs, schedule)
+    returns HTTP 200 with no PHP warning, notice, or fatal error
+[ ] Department, course, program, and section counts are non-zero and
+    come from the database, not hardcoded text
+[ ] Courses page shows prerequisites with minimum grades
+[ ] Programs page: expanding a major or minor lists required courses
+[ ] Schedule page dropdown lists only terms with sections, in order
+    from Fall 2020 to Spring 2027, defaulting to Spring 2027
+[ ] Schedule page: "Show only sections with open seats" hides full
+    sections and updates the "Showing N of M" count
+[ ] Schedule page with JavaScript disabled still lists everything
+[ ] A student session hitting /admin/master-schedule.php gets 403
+[ ] A student session hitting /student/* pages works
+[ ] Sign in as each of the four roles and confirm the landing portal
+    differs per role
+[ ] Public pages show no student names, GPAs, holds, or transcripts
+[ ] Student names in the Login table never appear in public output
+[ ] Run "Lighthouse" in your browser: the public pages should pass
+    Accessibility and Best Practices
+[ ] Tab through a public page with the keyboard only: the skip link
+    appears first, every control has a visible gold focus ring, and
+    the semester and department selects are reachable by keyboard
+[ ] Set your browser window to 375px, 768px, and 1440px wide and
+    confirm the tables scroll instead of overflowing the page
+[ ] Public page titles all read "<Page> | Ashford University"
+
+
+========================================================================
+LOADING THE FULL DATA AGAIN
+========================================================================
+
+To rebuild the database from the files in database/:
+
+    C:\xampp\mysql\bin\mysql.exe -u root --port 3300 -e "DROP DATABASE IF EXISTS ashford_university; CREATE DATABASE ashford_university CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+    C:\xampp\mysql\bin\mysql.exe -u root --port 3300 ashford_university < database\schema.sql
+
+Then import the per-table files in database\ (user.sql, login.sql,
+faculty.sql, course_section.sql, and so on), with foreign key checks
+disabled so load order does not matter:
+
+    C:\xampp\mysql\bin\mysql.exe -u root --port 3300 ashford_university --init-command="SET FOREIGN_KEY_CHECKS=0" -e "SOURCE C:\Users\jimmy\Desktop\AshfordFun\database\user.sql; SOURCE ..."
+
+Finally rehash the passwords as described above, or no account will
+be able to sign in.
+
+
+========================================================================
+TROUBLESHOOTING
+========================================================================
+
+"Database connection failed. Please check your MySQL settings."
+  The database is not running, or .env points at the wrong port.
+  Confirm: .env has DB_PORT=3300 and mysqld.exe is running.
+
+You see raw PHP code, or the page is empty text
+  You started the server with the system PHP. Rerun step 2 using
+  C:\xampp\php\php.exe, which has the MySQL driver.
+
+"/" shows the sign-in page instead of the landing page
+  You left "router.php" off the end of the start command in step 2.
+
+"Not Found" for every page, or a directory listing
+  You left out the "-t" flag. Use the full command from step 2.
+
+"Failed to listen on localhost:8000"
+  Another program holds port 8000. Pick a different port, e.g.
+    C:\xampp\php\php.exe -S localhost:8080 -t <project path> router.php
+  then open http://localhost:8080
+
+Sign-in always says "Invalid email or password"
+  The passwords were not rehashed after loading data. See the load
+  section above.
+
+A page fails and you see nothing useful in the browser
+  Look in the PowerShell window running the web server. Every error
+  and PHP warning is printed there.
+
+A page says you do not have permission
+  You are signed in as the wrong role. The admin pages need an Admin
+  account.

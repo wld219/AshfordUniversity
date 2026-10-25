@@ -1,0 +1,665 @@
+/* Public (unauthenticated) Ashford University pages.
+   Shares the brand tokens defined in assets/css/style.css, which is loaded
+   first by public/layout_public.php. No separate palette lives here. */
+
+.public-topbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	padding: 10px 24px;
+	background: var(--ashford-navy);
+	color: #eef2ff;
+	border-bottom: 1px solid var(--ashford-gold);
+}
+
+.public-topbar .public-brand {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 1.05rem;
+	color: #ffffff;
+}
+
+.public-topbar .public-brand b {
+	font-weight: 600;
+}
+
+.public-topbar .public-brand .seal {
+	display: grid;
+	place-items: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: var(--ashford-gold);
+	color: var(--ashford-navy);
+	font-weight: 800;
+}
+
+.public-topbar nav {
+	display: flex;
+	gap: 4px;
+	flex-wrap: wrap;
+}
+
+.public-topbar nav a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 8px 12px;
+	border-radius: var(--radius-sm);
+	color: #cbd6ea;
+	text-decoration: none;
+	font-size: 0.92rem;
+	font-weight: 600;
+	transition: color 0.18s ease, background 0.18s ease;
+}
+
+.public-topbar nav a:hover {
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.10);
+}
+
+/* Active state is marked by position and weight, not color alone. */
+.public-topbar nav a.active {
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.10);
+	box-shadow: inset 0 -3px 0 var(--ashford-gold);
+}
+
+.public-topbar nav a.public-signin {
+	background: var(--ashford-gold);
+	color: var(--ashford-navy);
+	font-weight: 700;
+}
+
+.public-topbar nav a.public-signin:hover {
+	background: #f0c419;
+	color: var(--ashford-navy);
+}
+
+.public-main {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 32px 20px 64px;
+}
+
+/* Skip link: first focusable element on every public page. */
+.skip-link {
+	position: absolute;
+	left: 12px;
+	top: -60px;
+	z-index: 100;
+	padding: 10px 16px;
+	border-radius: var(--radius-sm);
+	background: var(--ashford-navy);
+	color: #ffffff;
+	font-size: 14px;
+	font-weight: 600;
+	text-decoration: none;
+	transition: top 0.18s ease;
+}
+
+.skip-link:focus {
+	top: 12px;
+}
+
+/* Section eyebrow. The gold is small text on a light background in most
+   places, so the darker ink keeps AA contrast. */
+.eyebrow {
+	margin: 0 0 12px;
+	color: var(--ashford-gold-ink);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+/* On a navy surface the bright gold carries enough contrast; on light
+   backgrounds keep the base dark gold above. */
+.public-topbar .eyebrow,
+.landing-brand-panel .eyebrow {
+	color: var(--ashford-gold);
+}
+
+/* Stat band: one bordered container, hairline dividers, identical cells. */
+.stat-band {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 1px;
+	border: 1px solid var(--ashford-border);
+	border-radius: var(--radius);
+	background: var(--ashford-border);
+	overflow: hidden;
+	box-shadow: var(--shadow-soft);
+	margin-bottom: 40px;
+}
+
+.stat-band .stat {
+	padding: 26px 24px;
+	background: #ffffff;
+}
+
+.stat-band .num {
+	color: var(--ashford-navy);
+	font-size: clamp(30px, 3.4vw, 44px);
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: -0.03em;
+	font-variant-numeric: tabular-nums;
+}
+
+.stat-band .cap {
+	margin: 10px 0 0;
+	color: var(--ashford-muted);
+	font-size: 13px;
+	line-height: 1.4;
+}
+
+.public-grid {
+	display: grid;
+	gap: 16px;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.public-footer {
+	border-top: 1px solid var(--ashford-border);
+	margin-top: 48px;
+	padding: 20px 24px;
+	color: var(--ashford-muted);
+	font-size: 0.85rem;
+	text-align: center;
+}
+
+/* Error and empty states on the public pages. */
+.alert.error {
+	padding: 14px 16px;
+	margin: 0 0 20px;
+	border: 1px solid #e8b8b8;
+	border-radius: var(--radius-sm);
+	color: #8e2525;
+	background: #fff4f4;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+/* Screen-reader-only text, used for table captions. */
+.visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* Checkbox row on the schedule page. */
+.public-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 44px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.public-toggle input {
+	width: auto;
+	min-height: 0;
+	accent-color: var(--ashford-blue);
+}
+
+/* Required-course lists inside details/summary on the programs page. */
+.public-requirement-list {
+	margin: 8px 0 0;
+	padding-left: 18px;
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+details summary {
+	min-height: 44px;
+	display: flex;
+	align-items: center;
+	color: var(--ashford-blue);
+	font-weight: 600;
+	cursor: pointer;
+}
+
+details summary:focus-visible {
+	outline: 2px solid var(--ashford-gold);
+	outline-offset: 2px;
+}
+
+.public-footer a {
+	color: var(--ashford-gold-ink);
+	font-weight: 600;
+}
+
+@media (max-width: 640px) {
+	.public-topbar {
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 12px 16px;
+	}
+
+	.public-hero {
+		padding: 32px 22px;
+	}
+
+	.stat-band {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 420px) {
+	.stat-band {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+/* ======================================================================
+   LANDING PAGE (public/index.php)
+
+   Same brand tokens, same components. Only the marketing layout lives
+   here, so there is one public stylesheet instead of two.
+
+   Typography: Inter at its default weights (400, 600, 800).
+   ====================================================================== */
+
+:root {
+	--landing-section-pad: 96px;
+	--landing-rail-width: 264px;
+}
+
+.landing-hero {
+	display: grid;
+	grid-template-columns: 1.2fr 0.8fr;
+	gap: 56px;
+	align-items: center;
+	padding: clamp(56px, 8vw, 104px) clamp(24px, 5vw, 72px);
+	background:
+		radial-gradient(circle at 86% 14%, rgba(214, 168, 0, 0.16), transparent 42%),
+		linear-gradient(160deg, #ffffff 0%, var(--ashford-light) 100%);
+	border-bottom: 1px solid var(--ashford-border);
+}
+
+.landing-hero-copy h1 {
+	margin: 6px 0 0;
+	font-size: clamp(38px, 5vw, 62px);
+	font-weight: 800;
+	line-height: 1.05;
+	letter-spacing: -0.03em;
+	color: var(--ashford-navy);
+}
+
+.landing-hero-copy .lead {
+	margin-top: 20px;
+	max-width: 54ch;
+	color: var(--ashford-muted);
+	font-size: 18px;
+	line-height: 1.7;
+}
+
+.landing-hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+	margin-top: 32px;
+}
+
+.landing-hero-actions .btn {
+	min-height: 48px;
+	padding: 13px 22px;
+	font-size: 15px;
+}
+
+.landing-hero-actions .btn.gold {
+	background: var(--ashford-gold);
+	color: var(--ashford-navy);
+}
+
+.landing-hero-actions .btn.gold:hover {
+	background: #f0c419;
+}
+
+/* Hero side panel: the brand lockup plus the four portals. */
+.landing-brand-panel {
+	padding: 28px;
+	border: 1px solid var(--ashford-border);
+	border-radius: var(--radius);
+	background: var(--ashford-navy);
+	box-shadow: var(--shadow);
+}
+
+.landing-brand-panel .landing-lockup {
+	width: 100%;
+	height: auto;
+	border-radius: var(--radius-sm);
+}
+
+.landing-portals {
+	display: grid;
+	gap: 2px;
+	margin: 22px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.landing-portals li {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 11px 2px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+	color: #dbe3f2;
+	font-size: 14px;
+}
+
+.landing-portals li:last-child {
+	border-bottom: 0;
+}
+
+.landing-portals .who {
+	color: var(--ashford-gold);
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+}
+
+/* Sections. One uniform vertical rhythm. */
+.landing-shell > .landing-main > .landing-section {
+	padding: var(--landing-section-pad) clamp(24px, 5vw, 72px);
+	border-bottom: 1px solid var(--ashford-border);
+}
+
+.landing-shell > .landing-main > .landing-section:last-child {
+	border-bottom: 0;
+}
+
+.landing-section-head {
+	max-width: 620px;
+	margin-bottom: 44px;
+}
+
+.landing-section-head h2 {
+	font-size: clamp(26px, 3vw, 38px);
+	font-weight: 800;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+}
+
+.landing-section-head p {
+	margin: 16px 0 0;
+	color: var(--ashford-muted);
+	font-size: 17px;
+	line-height: 1.7;
+}
+
+/* Vertical rail navigation: the departure from the standard top bar. */
+.landing-shell {
+	display: grid;
+	grid-template-columns: var(--landing-rail-width) 1fr;
+	min-height: 100vh;
+}
+
+.landing-rail {
+	position: sticky;
+	top: 0;
+	align-self: start;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	gap: 26px;
+	padding: 26px 22px;
+	background: var(--ashford-navy);
+	color: #ffffff;
+}
+
+.landing-rail-logo {
+	display: block;
+	width: 100%;
+	height: auto;
+	border-radius: var(--radius-sm);
+}
+
+.landing-nav {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-top: 6px;
+}
+
+.landing-nav a {
+	display: grid;
+	grid-template-columns: 28px 1fr;
+	align-items: baseline;
+	gap: 10px;
+	min-height: 44px;
+	padding: 12px;
+	border-radius: var(--radius-sm);
+	color: #c6d0e4;
+	text-decoration: none;
+	font-size: 14px;
+	font-weight: 600;
+	transition: color 0.18s ease, background 0.18s ease;
+}
+
+.landing-nav a .idx {
+	color: var(--ashford-gold);
+	font-size: 11px;
+	font-weight: 800;
+	letter-spacing: 0.04em;
+}
+
+.landing-nav a:hover {
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.07);
+}
+
+/* Active marker uses position and weight, not color alone. */
+.landing-nav a.active {
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.10);
+	box-shadow: inset 3px 0 0 var(--ashford-gold);
+}
+
+.landing-rail-foot {
+	margin-top: auto;
+	display: grid;
+	gap: 14px;
+}
+
+.landing-rail-note {
+	margin: 0;
+	color: #8fa0c0;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.landing-rail-foot .btn {
+	width: 100%;
+}
+
+/* Program cards. */
+.landing-cards {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+}
+
+.landing-card {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 26px;
+	border: 1px solid var(--ashford-border);
+	border-radius: var(--radius);
+	background: #ffffff;
+	box-shadow: var(--shadow-soft);
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.landing-card:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--shadow);
+}
+
+.landing-card .tag {
+	color: var(--ashford-gold-ink);
+	font-size: 12px;
+	font-weight: 800;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.landing-card h3 {
+	font-size: 19px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
+}
+
+.landing-card p {
+	margin: 0;
+	color: var(--ashford-muted);
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+/* Admission steps. */
+.landing-steps {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.landing-steps li {
+	padding-top: 18px;
+	border-top: 2px solid var(--ashford-gold);
+}
+
+.landing-steps .n {
+	color: var(--ashford-gold-ink);
+	font-size: 13px;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+}
+
+.landing-steps h3 {
+	margin: 8px 0 6px;
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.landing-steps p {
+	margin: 0;
+	color: var(--ashford-muted);
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+/* Footer. */
+.landing-footer {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 30px clamp(24px, 5vw, 72px);
+	background: var(--ashford-navy);
+	color: #b9c4da;
+	font-size: 13px;
+}
+
+.landing-footer a {
+	color: var(--ashford-gold);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+/* Mobile: the rail becomes a top strip with a horizontal scroll-snap row of
+   the same numbered links. The links stay visible, no hamburger. */
+@media (max-width: 960px) {
+	.landing-shell {
+		grid-template-columns: 1fr;
+	}
+
+	.landing-rail {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		height: auto;
+		flex-direction: row;
+		align-items: center;
+		gap: 16px;
+		padding: 12px 16px;
+		overflow-x: auto;
+		scroll-snap-type: x proximity;
+	}
+
+	.landing-rail-logo {
+		width: 150px;
+		flex: 0 0 auto;
+	}
+
+	.landing-nav {
+		flex-direction: row;
+		margin-top: 0;
+	}
+
+	.landing-nav a {
+		grid-template-columns: auto;
+		white-space: nowrap;
+		padding: 10px 12px;
+		scroll-snap-align: center;
+	}
+
+	.landing-nav a .idx {
+		display: none;
+	}
+
+	.landing-nav a.active {
+		box-shadow: inset 0 -3px 0 var(--ashford-gold);
+	}
+
+	.landing-rail-foot {
+		margin-top: 0;
+		margin-left: auto;
+	}
+
+	.landing-rail-note {
+		display: none;
+	}
+
+	.landing-hero {
+		grid-template-columns: 1fr;
+		gap: 36px;
+	}
+
+	.landing-cards,
+	.landing-steps {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 560px) {
+	.landing-cards,
+	.landing-steps {
+		grid-template-columns: 1fr;
+	}
+
+	.landing-rail-logo {
+		width: 128px;
+	}
+}

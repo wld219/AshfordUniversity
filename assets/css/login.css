@@ -1,0 +1,176 @@
+/* Sign-in page styles. This page loads only login.css, so the brand tokens
+   are declared here instead of relying on assets/css/style.css. */
+
+:root {
+    --ashford-navy: #0d1b3e;
+    --ashford-blue: #1e3366;
+    --ashford-gold: #d6a800;
+    --ashford-gold-ink: #8a6d00;
+    --ashford-text: #172238;
+    --ashford-muted: #667085;
+    --ashford-border: #dce2eb;
+    --shadow: 0 10px 30px rgba(13, 27, 62, 0.10);
+    --radius-sm: 9px;
+    --radius: 14px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+.login-page {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: var(--ashford-text);
+    background: #f3f5f8;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+:focus-visible {
+    outline: 2px solid var(--ashford-gold);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+.login-card {
+    width: min(100%, 430px);
+    padding: 34px;
+    border: 1px solid var(--ashford-border);
+    border-radius: var(--radius);
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+
+.login-logo {
+    display: block;
+    width: 210px;
+    height: auto;
+    margin: 0 auto 30px;
+}
+
+.login-card h1 {
+    margin: 0 0 8px;
+    color: var(--ashford-navy);
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+.login-card > p {
+    margin: 0 0 26px;
+    color: var(--ashford-muted);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.login-form {
+    display: grid;
+    gap: 17px;
+}
+
+.login-form label {
+    display: grid;
+    gap: 7px;
+    color: var(--ashford-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.login-form input {
+    width: 100%;
+    height: 47px;
+    padding: 0 13px;
+    border: 1px solid #cfd6e1;
+    border-radius: var(--radius-sm);
+    outline: none;
+    color: var(--ashford-text);
+    background: #fff;
+    font: inherit;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.login-form input:focus {
+    border-color: var(--ashford-blue);
+    box-shadow: 0 0 0 3px rgba(30, 51, 102, 0.12);
+}
+
+.login-button {
+    width: 100%;
+    height: 48px;
+    margin-top: 2px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    color: #fff;
+    background: var(--ashford-blue);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.18s ease;
+}
+
+.login-button:hover {
+    background: #152b50;
+}
+
+.login-error {
+    margin-bottom: 17px;
+    padding: 11px 12px;
+    border: 1px solid #e8b8b8;
+    border-radius: var(--radius-sm);
+    color: #8e2525;
+    background: #fff4f4;
+    font-size: 13px;
+}
+
+.login-help {
+    margin: 24px 0 0;
+    color: var(--ashford-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+.login-help a {
+    color: var(--ashford-blue);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.login-help a:hover {
+    text-decoration: underline;
+}
+
+.login-footer {
+    margin: 24px 0 0;
+    color: var(--ashford-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        padding: 14px;
+    }
+
+    .login-card {
+        padding: 26px 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
