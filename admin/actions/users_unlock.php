@@ -8,6 +8,12 @@ declare(strict_types=1);
 
 $userID = post_int('user_id') ?? 0;
 
+// Defense in depth: only the lock manager may reach this action.
+if (!isset($isLockManager) || !$isLockManager) {
+	$error = 'Only the lock manager can unlock accounts.';
+	return;
+}
+
 $target = one(
     $pdo,
     'SELECT user_ID, user_Type FROM User WHERE user_ID = ?',

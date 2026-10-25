@@ -14,7 +14,12 @@ $role = post_str('user_role', 20);
 $password = (string) ($_POST['password'] ?? '');
 $confirm = (string) ($_POST['confirm_password'] ?? '');
 
-$allowedRoles = ['Student', 'Faculty', 'Admin', 'StatStaff'];
+$allowedRoles = ['Student', 'Faculty', 'StatStaff'];
+
+// Only the lock manager may create administrator accounts.
+if ($isLockManager) {
+    $allowedRoles[] = 'Admin';
+}
 
 if (
 	$firstName === '' ||

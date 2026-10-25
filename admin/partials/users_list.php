@@ -19,7 +19,7 @@ declare(strict_types=1);
 			<th>Failed attempts</th>
 			<th>Location</th>
 
-			<?php if ($isFullAccess): ?>
+			<?php if ($isFullAccess || $isLockManager): ?>
 				<th>Action</th>
 			<?php endif; ?>
 
@@ -64,11 +64,11 @@ declare(strict_types=1);
 					) ?>
 				</td>
 
-				<?php if ($isFullAccess): ?>
+				<?php if ($isFullAccess || $isLockManager): ?>
 
 					<td>
 
-						<?php if ((int) $user['lock_var'] === 1): ?>
+						<?php if ((int) $user['lock_var'] === 1 && $isLockManager): ?>
 
 							<form
 								method="post"
@@ -84,7 +84,10 @@ declare(strict_types=1);
 								</button>
 							</form>
 
-						<?php else: ?>
+						<?php elseif (
+							$isLockManager ||
+							($isFullAccess && $user['user_Type'] !== 'Admin')
+						): ?>
 
 							<a
 								href="users.php?edit=<?= e($user['user_ID']) ?>"
@@ -110,6 +113,8 @@ declare(strict_types=1);
 <section class="card">
 	<p class="muted">
 		Showing up to 25 users. Locked accounts show an Unlock button for
-		Full-Access administrators. Use the search box to find another user.
+		the lock manager. Edit is available to the lock manager for any
+		user, and to full-access administrators for non-admin users.
+		Use the search box to find another user.
 	</p>
 </section>

@@ -71,9 +71,11 @@ if (isset($_GET['edit'])) {
 	$editUser = one(
 		$pdo,
 		"SELECT u.user_ID, u.first_Name, u.last_Name, u.user_Type, u.city, u.state,
-				l.lock_var, l.no_Of_Tries
+				l.lock_var, l.no_Of_Tries,
+				a.security_Level, a.lock_manager
 			FROM User u
 			JOIN Login l ON l.user_ID = u.user_ID
+			LEFT JOIN Admin a ON a.user_ID = u.user_ID
 			WHERE u.user_ID = ?",
 		[$editID]
 	);

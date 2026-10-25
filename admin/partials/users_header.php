@@ -15,6 +15,9 @@ declare(strict_types=1);
 		</div>
 		<span class="badge">
 			<?= e($securityLevel) ?>
+			<?php if ($isLockManager): ?>
+				&nbsp;<span class="badge" style="background:#d6a800; color:#fff;">Lock Manager</span>
+			<?php endif; ?>
 		</span>
 	</div>
 

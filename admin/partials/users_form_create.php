@@ -61,8 +61,10 @@ declare(strict_types=1);
 			<select name="user_role" id="user_role" required>
 				<option value="Student">Student</option>
 				<option value="Faculty">Faculty</option>
-				<option value="Admin">Admin</option>
 				<option value="StatStaff">Statistics Staff</option>
+				<?php if ($isLockManager): ?>
+					<option value="Admin">Administrator</option>
+				<?php endif; ?>
 			</select>
 		</div>
 

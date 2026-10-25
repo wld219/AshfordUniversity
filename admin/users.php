@@ -11,13 +11,17 @@ require_role(['Admin']);
 
 $adminID = (int) $_SESSION['user_id'];
 
-$securityLevel = one(
+// Load this admin's security level and lock-manager flag
+$adminProfile = one(
     $pdo,
-    'SELECT security_Level FROM Admin WHERE user_ID = ?',
+    'SELECT security_Level, lock_manager FROM Admin WHERE user_ID = ?',
     [$adminID]
-)['security_Level'] ?? 'Read-Only';
+);
 
-$isFullAccess = $securityLevel === 'Full-Access';
+$securityLevel = $adminProfile['security_Level'] ?? 'Read-Only';
+$isFullAccess  = $securityLevel === 'Full-Access' && (int) ($adminProfile['lock_manager'] ?? 0) === 0;
+$isLockManager = (int) ($adminProfile['lock_manager'] ?? 0) === 1;
+$isReadOnly    = $securityLevel === 'Read-Only';
 
 $error = '';
 
@@ -49,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	csrf_verify();
 
-	if (!$isFullAccess) {
+	if (!$isFullAccess && !$isLockManager) {
 		redirect_with_flash(
 			url('admin/users.php'),
 			'error',
@@ -60,10 +64,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	$action = post_str('action', 20);
 
 	if ($action === 'create') {
+
+		// Lock manager may create any role including admins.
+		// Full-access may create any role except admins.
+		$role = post_str('user_role', 20);
+		$allowedRoles = ['Student', 'Faculty', 'StatStaff'];
+
+		if ($isLockManager) {
+			$allowedRoles[] = 'Admin';
+		}
+
+		if (!in_array($role, $allowedRoles, true)) {
+			$_SESSION['users_error'] = 'You are not permitted to create that role.';
+			header('Location: ' . url('admin/users.php'));
+			exit;
+		}
+
 		require_once __DIR__ . '/actions/users_create.php';
+
 	} elseif ($action === 'update') {
+
+		// Lock manager may edit any user including admins.
+		// Full-access may edit non-admin users only.
+		$userID = post_int('user_id') ?? 0;
+		$target = one(
+			$pdo,
+			'SELECT user_Type FROM User WHERE user_ID = ?',
+			[$userID]
+		);
+
+		if (!$target) {
+			$_SESSION['users_error'] = 'User not found.';
+			header('Location: ' . url('admin/users.php'));
+			exit;
+		}
+
+		if ($target['user_Type'] === 'Admin' && !$isLockManager) {
+			$_SESSION['users_error'] = 'Only the lock manager can edit administrator accounts.';
+			header('Location: ' . url('admin/users.php'));
+			exit;
+		}
+
 		require_once __DIR__ . '/actions/users_update.php';
+
 	} elseif ($action === 'unlock') {
+
+		// Only the lock manager can unlock accounts.
+		if (!$isLockManager) {
+			$_SESSION['users_error'] = 'Only the lock manager can unlock accounts.';
+			header('Location: ' . url('admin/users.php'));
+			exit;
+		}
+
 		require_once __DIR__ . '/actions/users_unlock.php';
 	}
 
