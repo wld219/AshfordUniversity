@@ -7,6 +7,8 @@ declare(strict_types=1);
 
 <div class="table-wrap">
 
+	<?= csrf_field() ?>
+
 	<table>
 
 		<tr>

@@ -12,9 +12,9 @@ require_role(['Admin']);
 $adminID = (int) $_SESSION['user_id'];
 
 $securityLevel = one(
-	$pdo,
-	'SELECT security_Level FROM Admin WHERE user_ID = ?',
-	[$adminID]
+    $pdo,
+    'SELECT security_Level FROM Admin WHERE user_ID = ?',
+    [$adminID]
 )['security_Level'] ?? 'Read-Only';
 
 $isFullAccess = $securityLevel === 'Full-Access';
@@ -35,9 +35,9 @@ function next_user_id(PDO $pdo, string $role): int
 	$row = one(
 		$pdo,
 		'SELECT COALESCE(MAX(user_ID), ?) AS max_id
-		FROM User
-		WHERE user_ID >= ?
-		AND user_ID < ?',
+		 FROM User
+		 WHERE user_ID >= ?
+		 AND user_ID < ?',
 		[$base, $base, $base + 100000]
 	);
 
@@ -78,9 +78,9 @@ $formError = $_SESSION['users_error'] ?? '';
 unset($_SESSION['users_error']);
 
 page_start(
-	'Users',
-	'Admin',
-	'users.php'
+    'Users',
+    'Admin',
+    'users.php'
 );
 
 flash();
