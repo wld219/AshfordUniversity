@@ -1,0 +1,129 @@
+ASHFORD UNIVERSITY PORTAL - LOCAL SERVER STARTUP INSTRUCTIONS
+
+These instructions guide you through starting the Ashford University Fullstack Information System on your local computer using the PHP built-in web server (bundled with XAMPP).
+
+----------------------------------------
+PREREQUISITES
+----------------------------------------
+
+1. XAMPP installed (PHP 8.2.4 included at /Applications/XAMPP/xamppfiles/bin/php)
+2. MySQL/MariaDB running on port 3306 (the existing ashford-stack MySQL instance is already running)
+3. The project folder at /Users/waleedbhatti/Documents/GitHub/AshfordUniversity
+4. A .env file in the project root with database credentials (already created)
+5. Database schema and migrations already imported (ashford_university database with Fall 2026 and Spring 2027 semesters)
+
+----------------------------------------
+STEP 1 - VERIFY MYSQL IS RUNNING
+----------------------------------------
+
+Open a terminal and run:
+
+    /Users/waleedbhatti/.local/bin/mysql -u root -e "SELECT 1;"
+
+Expected output:
+
+    1
+
+If MySQL is not running, start it with:
+
+    /Users/waleedbhatti/.local/bin/mysql --daemonize
+
+Or use the XAMPP control panel if available.
+
+----------------------------------------
+STEP 2 - START THE PHP BUILT-IN SERVER
+----------------------------------------
+
+Open a terminal and run this command from the project root folder:
+
+    /Applications/XAMPP/xamppfiles/bin/php -S localhost:8000 -t /Users/waleedbhatti/Documents/GitHub/AshfordUniversity router.php
+
+Expected output:
+
+    [Sat Oct 24 21:46:28 2026] PHP 8.2.4 Development Server (http://localhost:8000) started
+
+Keep this terminal window open. Closing it stops the web server.
+
+----------------------------------------
+STEP 3 - ACCESS THE APPLICATION
+----------------------------------------
+
+Open your web browser and navigate to:
+
+    http://localhost:8000/
+
+The router.php file ensures that the root URL (/) opens the public landing page. Other pages are served directly from the project folder.
+
+----------------------------------------
+ACCESS POINTS
+----------------------------------------
+
+| Page | URL |
+|------|-----|
+| Public landing page | http://localhost:8000/ |
+| Login page | http://localhost:8000/index.php |
+| Admin dashboard | http://localhost:8000/admin/dashboard.php |
+| User management | http://localhost:8000/admin/users.php |
+| Academic violations report | http://localhost:8000/admin/academic.php |
+| Student dashboard | http://localhost:8000/student/dashboard.php |
+| Faculty dashboard | http://localhost:8000/faculty/dashboard.php |
+| StatStaff dashboard | http://localhost:8000/statstaff/dashboard.php |
+
+----------------------------------------
+TEST ACCOUNTS
+----------------------------------------
+
+All accounts use the password: Password123
+
+| Role | Email | Capabilities |
+|------|-------|-------------|
+| Admin / Lock Manager | wbhatti1@oldwestbury.edu | Full access, unlock accounts, edit other admins |
+| Admin | arianaaugustin@ashford.edu | Full access (no lock/unlock, no admin edits) |
+| Student | liamwalker@ashford.edu | Student portal |
+| Faculty | kevinbaptiste200001@ashford.edu | Faculty portal |
+| StatStaff | ericjones400001@ashford.edu | Statistics portal |
+
+----------------------------------------
+STEP 4 - STOPPING THE SERVER
+----------------------------------------
+
+Press Ctrl+C in the terminal window running the PHP server.
+
+Or, from another terminal, stop it by finding the process ID:
+
+    ps aux | grep "php -S"
+
+Then:
+
+    kill <PID>
+
+----------------------------------------
+TROUBLESHOOTING
+----------------------------------------
+
+Port 8000 already in use:
+    Use a different port: php -S localhost:8080 -t /path/to/project router.php
+
+Database connection failed:
+    Confirm MySQL is running and the .env file has correct DB_HOST, DB_PORT, DB_USER, DB_PASS values.
+
+Raw PHP code displayed instead of rendered page:
+    You are not using the PHP built-in server. Make sure you started php -S and are accessing http://localhost:8000/ (not opening the .php file directly in the browser).
+
+Permission denied on XAMPP logs:
+    The PHP built-in server does not require XAMPP's Apache. It runs independently.
+
+----------------------------------------
+DATABASE SCOPE
+----------------------------------------
+
+Only two semesters are active:
+
+| Semester | Start | Registration | Drop Deadline | Grade Deadline |
+|----------|-------|-------------|---------------|----------------|
+| Fall 2026 | Aug 24, 2026 | Apr 6 – Aug 21, 2026 | Sep 7, 2026 | Dec 18, 2026 |
+| Spring 2027 | Jan 11, 2027 | Nov 9, 2026 – Jan 8, 2027 | Jan 25, 2027 | May 7, 2027 |
+
+All semesters prior to Spring 2026 have been removed from the database.
+
+----------------------------------------
