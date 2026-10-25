@@ -7,53 +7,59 @@ declare(strict_types=1);
 // Search
 $search = get_str('search', 100);
 
-if ($search !== '') {
+	if ($search !== '') {
 
-	$searchValue = '%' . $search . '%';
+		$searchValue = '%' . $search . '%';
 
-	$sql = "SELECT
-				user_ID,
-				first_Name,
-				last_Name,
-				user_Type,
-				city,
-				state
-			FROM User
-			WHERE
-				CAST(user_ID AS CHAR) LIKE ?
-				OR first_Name LIKE ?
-				OR last_Name LIKE ?
-			ORDER BY user_ID
-			LIMIT 25";
+		$sql = "SELECT
+					u.user_ID,
+					u.first_Name,
+					u.last_Name,
+					u.user_Type,
+					u.city,
+					u.state,
+					l.lock_var,
+					l.no_Of_Tries
+				FROM User u
+				JOIN Login l ON l.user_ID = u.user_ID
+				WHERE
+					CAST(u.user_ID AS CHAR) LIKE ?
+					OR u.first_Name LIKE ?
+					OR u.last_Name LIKE ?
+				ORDER BY u.user_ID
+				LIMIT 25";
 
-	$users = all_rows(
-		$pdo,
-		$sql,
-		[
-			$searchValue,
-			$searchValue,
-			$searchValue
-		]
-	);
+		$users = all_rows(
+			$pdo,
+			$sql,
+			[
+				$searchValue,
+				$searchValue,
+				$searchValue
+			]
+		);
 
-} else {
+	} else {
 
-	$sql = "SELECT
-				user_ID,
-				first_Name,
-				last_Name,
-				user_Type,
-				city,
-				state
-			FROM User
-			ORDER BY user_ID
-			LIMIT 25";
+		$sql = "SELECT
+					u.user_ID,
+					u.first_Name,
+					u.last_Name,
+					u.user_Type,
+					u.city,
+					u.state,
+					l.lock_var,
+					l.no_Of_Tries
+				FROM User u
+				JOIN Login l ON l.user_ID = u.user_ID
+				ORDER BY u.user_ID
+				LIMIT 25";
 
-	$users = all_rows(
-		$pdo,
-		$sql
-	);
-}
+		$users = all_rows(
+			$pdo,
+			$sql
+		);
+	}
 
 // Get one user for editing
 $editUser = null;
@@ -64,9 +70,11 @@ if (isset($_GET['edit'])) {
 
 	$editUser = one(
 		$pdo,
-		"SELECT user_ID, first_Name, last_Name, user_Type, city, state
-		FROM User
-		WHERE user_ID = ?",
+		"SELECT u.user_ID, u.first_Name, u.last_Name, u.user_Type, u.city, u.state,
+				l.lock_var, l.no_Of_Tries
+			FROM User u
+			JOIN Login l ON l.user_ID = u.user_ID
+			WHERE u.user_ID = ?",
 		[$editID]
 	);
 }

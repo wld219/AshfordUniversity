@@ -63,6 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		require_once __DIR__ . '/actions/users_create.php';
 	} elseif ($action === 'update') {
 		require_once __DIR__ . '/actions/users_update.php';
+	} elseif ($action === 'unlock') {
+		require_once __DIR__ . '/actions/users_unlock.php';
 	}
 
 	header('Location: ' . url('admin/users.php'));
