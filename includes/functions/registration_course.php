@@ -57,6 +57,10 @@ function check_prerequisites(PDO $pdo, int $studentID, array $section): ?string
 			FROM Student_History
 			WHERE student_ID = ?
 			AND course_ID = ?
+			AND Grade IN (
+				'A', 'A-', 'B+', 'B', 'B-',
+				'C+', 'C', 'C-', 'D+', 'D', 'F'
+			)
 			ORDER BY FIELD(
 				Grade,
 				'A', 'A-', 'B+', 'B', 'B-',
