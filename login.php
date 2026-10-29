@@ -82,6 +82,17 @@ if (!password_verify($password, $user['user_Password'])) {
 	exit;
 }
 
+// Validate the selected portal against the authenticated account.
+$selectedRole = (string) ($_POST['user_type'] ?? '');
+$allowedRoles = ['Student', 'Faculty', 'Admin', 'StatStaff'];
+
+if (!in_array($selectedRole, $allowedRoles, true)
+    || $selectedRole !== $user['user_Type']) {
+    $_SESSION['login_error'] = 'Invalid credentials for the selected account type.';
+    header('Location: ' . url('index.php'));
+    exit;
+}
+
 $sql = "UPDATE Login
 		SET no_Of_Tries = 0, lock_var = 0
 		WHERE user_ID = ?";
