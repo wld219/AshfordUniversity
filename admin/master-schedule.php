@@ -9,16 +9,11 @@ require_once '../includes/helpers.php';
 
 require_role(['Admin', 'StatStaff']);
 
-// Access level for the current administrator
+// Numeric levels are checked against the database, not browser input.
+require_once __DIR__ . '/../includes/admin_security.php';
 $adminID = (int) $_SESSION['user_id'];
-
-$securityLevel = one(
-	$pdo,
-	'SELECT security_Level FROM Admin WHERE user_ID = ?',
-	[$adminID]
-)['security_Level'] ?? 'Read-Only';
-
-$isFullAccess = $securityLevel === 'Full-Access';
+$adminLevel = ashford_admin_level($pdo, $adminID);
+$isFullAccess = ($_SESSION['user_type'] ?? '') === 'Admin' && $adminLevel <= 2;
 
 $error = '';
 
@@ -28,6 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	csrf_verify();
 
 	require_write_access();
+
+    ashford_admin_require_level($pdo, 2);
 
 	$action = post_str('action', 30);
 

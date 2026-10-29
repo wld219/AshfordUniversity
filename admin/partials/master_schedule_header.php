@@ -22,10 +22,32 @@ declare(strict_types=1);
 	</div>
 
 
-	<form method="get" class="filters" style="margin-top: 16px;">
+	
+<style>
+.ashford-semester-form {
+    display: block !important;
+    width: 100% !important;
+}
+.ashford-semester-form > div {
+    width: 100% !important;
+}
+.ashford-semester-form label {
+    display: block !important;
+    margin-bottom: 8px !important;
+    font-weight: 600;
+}
+.ashford-semester-form select {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+</style>
+
+<form method="get" class="ashford-semester-form" style="margin-top: 16px; width: 100%;">
 		<div>
 			<label for="semester">Semester</label>
-			<select name="semester" id="semester" onchange="this.form.submit()">
+			<select name="semester" id="semester" onchange="ashfordChangeSemester(this)">
 				<?php foreach ($semesters as $row): ?>
 					<option
 						value="<?= e($row['semester_ID']) ?>"
@@ -37,6 +59,17 @@ declare(strict_types=1);
 			</select>
 		</div>
 	</form>
+
+
+    <script>
+    function ashfordChangeSemester(select) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('semester', select.value);
+        url.searchParams.delete('page');
+        url.searchParams.delete('edit');
+        window.location.assign(url.toString());
+    }
+    </script>
 
 
 	<?php if ($semester !== null): ?>

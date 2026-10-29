@@ -42,11 +42,13 @@ function validate_schedule_row(array $row): array
 	// Room capacity: available seats must fit the room
 	if (
 		$row['room_Key'] !== null &&
-		(int) $row['available_Seats'] > (int) $row['capacity']
+		(int) ($row['enrolled'] ?? 0) > (int) ($row['room_Capacity'] ?? 0)
 	) {
-		$errors[] = 'Seats exceed room capacity ('
-			. (int) $row['capacity'] . ').';
+		$errors[] = 'Enrollment exceeds physical room capacity ('
+			. (int) ($row['room_Capacity'] ?? 0) . ').';
 	}
+
+	if ((int)($row['enrolled'] ?? 0) > 10) $errors[] = 'Enrollment exceeds 10-student section limit.';
 
 	// Meeting times must exist and be a positive interval
 	if (empty($row['start_Time']) || empty($row['end_Time'])) {

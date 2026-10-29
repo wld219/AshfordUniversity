@@ -1,0 +1,65 @@
+<?php
+declare(strict_types=1);
+// All filter controls submit through one GET form; no database writes.
+?>
+<style>
+#ashford-search-panel{padding:24px;margin-top:16px}
+#ashford-search-panel h2{margin:0 0 18px;font-size:1.3rem}
+#ashford-search-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px 20px;align-items:start}
+#ashford-search-form .as-field{min-width:0}
+#ashford-search-form .as-wide{grid-column:1/-1}
+#ashford-search-form label.as-label{display:block;font-size:.93rem;font-weight:650;margin-bottom:7px}
+#ashford-search-form input[type=search],#ashford-search-form select{width:100%;min-width:0;height:44px;padding:0 12px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#172b4d;font:inherit}
+#ashford-search-form input:focus,#ashford-search-form select:focus{outline:2px solid #315d99;outline-offset:1px}
+#ashford-search-form .as-days{display:flex;flex-wrap:wrap;gap:10px}
+#ashford-search-form .as-day{display:inline-flex;align-items:center;gap:9px;border:1px solid #cbd5e1;border-radius:8px;padding:10px 13px;cursor:pointer;font-size:.94rem;background:#fff}
+#ashford-search-form .as-day input{width:17px;height:17px;accent-color:#315d99;margin:0}
+#ashford-search-form .as-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:2px}
+#ashford-search-form .as-actions .btn{min-height:42px;display:inline-flex;align-items:center;justify-content:center;padding:0 18px;text-decoration:none}
+#ashford-search-form .as-hint{font-size:.83rem;color:#64748b;margin:7px 0 0}
+@media(max-width:650px){#ashford-search-panel{padding:17px}#ashford-search-form{grid-template-columns:1fr}}
+</style>
+<div class="card" id="ashford-search-panel">
+  <h2>Search &amp; filter</h2>
+  <form method="get" id="ashford-search-form" action="master-schedule.php">
+    <div class="as-field as-wide">
+      <label class="as-label" for="ashford-semester">Semester</label>
+      <select name="semester" id="ashford-semester">
+        <?php foreach ($semesters as $term): ?>
+          <option value="<?= e((string)$term['semester_ID']) ?>" <?= (int)$term['semester_ID'] === $semesterID ? 'selected' : '' ?>><?= e((string)$term['semester_Name']) ?></option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+    <div class="as-field">
+      <label class="as-label" for="ashford-department">Department</label>
+      <input type="search" id="ashford-department" name="department_name" list="ashford-departments" value="<?= e($filterDepartmentName) ?>" placeholder="Type department name" autocomplete="off">
+      <datalist id="ashford-departments"><?php foreach ($departments as $department): ?><option value="<?= e((string)$department['dept_Name']) ?>"></option><?php endforeach; ?></datalist>
+    </div>
+    <div class="as-field">
+      <label class="as-label" for="ashford-faculty">Faculty</label>
+      <input type="search" id="ashford-faculty" name="faculty_name" value="<?= e($filterFacultyName) ?>" placeholder="Type instructor name" autocomplete="off">
+      <p class="as-hint">Partial names accepted; no long dropdown.</p>
+    </div>
+    <div class="as-field">
+      <label class="as-label" for="ashford-course">Course ID or name</label>
+      <input type="search" id="ashford-course" name="course" value="<?= e($filterCourse) ?>" placeholder="e.g. CSCI 101">
+    </div>
+    <div class="as-field">
+      <label class="as-label" for="ashford-room">Building / room</label>
+      <input type="search" id="ashford-room" name="room" value="<?= e($filterRoom) ?>" placeholder="Type building or room">
+    </div>
+    <div class="as-field as-wide">
+      <label class="as-label">Meeting days</label>
+      <div class="as-days">
+        <label class="as-day"><input type="checkbox" name="days[]" value="MW" <?= in_array('MW',$selectedDayPatterns,true)?'checked':'' ?>>Monday / Wednesday</label>
+        <label class="as-day"><input type="checkbox" name="days[]" value="TT" <?= in_array('TT',$selectedDayPatterns,true)?'checked':'' ?>>Tuesday / Thursday</label>
+        <label class="as-day"><input type="checkbox" name="days[]" value="F" <?= in_array('F',$selectedDayPatterns,true)?'checked':'' ?>>Friday</label>
+      </div>
+      <p class="as-hint">Select one or more; leave all unchecked to show every meeting pattern.</p>
+    </div>
+    <div class="as-actions as-wide">
+      <button type="submit" class="btn">Search</button>
+      <a class="btn light" href="master-schedule.php?semester=<?= e((string)$semesterID) ?>">Clear filters</a>
+    </div>
+  </form>
+</div>

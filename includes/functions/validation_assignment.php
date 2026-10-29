@@ -55,7 +55,19 @@ function validate_room_choice(PDO $pdo, array $proposed, array &$errors): ?int
 		$errors[] = "Seats exceed room capacity ({$capacity}).";
 	}
 
-	return $capacity;
+	if ((int) $proposed['seats'] > 10) {
+        $errors[] = 'Section total seats exceed 10 students.';
+    }
+
+    if ($lectureID !== null && $capacity > 10) {
+        $errors[] = 'Lecture room capacity exceeds 10 seats.';
+    }
+
+    if ((int) $proposed['seats'] < 0) {
+        $errors[] = 'Available seats cannot be negative.';
+    }
+
+    return $capacity;
 }
 
 // The CRN of another section booking the same room at an overlapping time.
@@ -186,7 +198,8 @@ function validate_section_assignment(
 			$pdo,
 			$proposed['faculty_ID'],
 			$proposed['time_Slot_ID'],
-			$ignoreCRN
+			$ignoreCRN,
+			(int) $proposed['semester_ID']
 		);
 
 		if (!$canTeach) {
@@ -222,6 +235,58 @@ function validate_section_assignment(
 			$errors[] = 'Room conflict with CRN ' . $conflictCRN . '.';
 		}
 	}
+
+
+    // Check lecture capacity against the professor's 10-seat limit.
+    if (($proposed['lecture_ID'] ?? null) !== null) {
+        $lecture = one(
+            $pdo,
+            'SELECT avail_Seats FROM Lecture WHERE lecture_ID = ?',
+            [(int) $proposed['lecture_ID']]
+        );
+
+        if ($lecture && (int) $lecture['avail_Seats'] > 10) {
+            $errors[] = 'Lecture room capacity exceeds 10 seats.';
+        }
+    }
+
+    // Check meeting duration for four-credit, twice-weekly courses.
+    $credits = one(
+        $pdo,
+        'SELECT course_Credits FROM Course WHERE course_ID = ?',
+        [(int) $proposed['course_ID']]
+    );
+
+    if ($credits && (int) $credits['course_Credits'] === 4) {
+        $days = all_rows(
+            $pdo,
+            'SELECT day_ID FROM Time_Slot_Day WHERE time_Slot_ID = ?',
+            [(int) $proposed['time_Slot_ID']]
+        );
+
+        if (count($days) === 2) {
+            $period = one(
+                $pdo,
+                'SELECT MIN(p.start_Time) AS start_Time,
+                        MAX(p.end_Time) AS end_Time
+                 FROM Time_Slot_Period tsp
+                 JOIN Period p ON p.period_ID = tsp.period_ID
+                 WHERE tsp.time_Slot_ID = ?',
+                [(int) $proposed['time_Slot_ID']]
+            );
+
+            if (
+                $period
+                && $period['start_Time'] !== null
+                && $period['end_Time'] !== null
+                && time_to_minutes((string) $period['end_Time'])
+                   - time_to_minutes((string) $period['start_Time']) < 100
+            ) {
+                $errors[] = 'Four-credit twice-weekly courses require at least 100 minutes per meeting.';
+            }
+        }
+    }
+
 
 	return [count($errors) === 0, $errors];
 }

@@ -6,22 +6,24 @@ declare(strict_types=1);
 
 ?>
 
-<div class="table-wrap">
+<style>.as-schedule-table{width:100%;border-collapse:collapse;font-size:13px}.as-schedule-table th,.as-schedule-table td{padding:8px 7px;vertical-align:top;white-space:normal}.as-schedule-table th{white-space:nowrap}.as-schedule-table .as-numeric{text-align:center;white-space:nowrap}.as-schedule-table .as-room{min-width:140px}.as-schedule-table .as-name{min-width:165px}</style><div class="table-wrap">
 
-	<table>
+	<table class="as-schedule-table">
 		<tr>
 			<th>CRN</th>
-			<th>Course</th>
+			<th>Course ID</th>
+            <th>Course Name</th>
+            <th>Credits</th>
 			<th>Section</th>
-			<th>Department</th>
-			<th>Faculty</th>
+			<th>Instructor</th>
 			<th>Days</th>
 			<th>Time</th>
-			<th>Room</th>
+			<th>Building / Room</th>
 			<th>Capacity</th>
-			<th>Seats</th>
 			<th>Enrolled</th>
-			<th>Status</th>
+			<th>Available Seats</th>
+			<th>Mode</th>
+<th>Status</th>
 			<?php if ($isFullAccess && $schedule !== null): ?>
 				<th>Action</th>
 			<?php endif; ?>
@@ -30,7 +32,7 @@ declare(strict_types=1);
 		<?php if (count($pageRows) === 0): ?>
 
 			<tr>
-				<td colspan="13">No sections match the selected filters.</td>
+				<td colspan="<?= ($isFullAccess && $schedule !== null) ? 15 : 14 ?>">No sections match the selected filters.</td>
 			</tr>
 
 		<?php else: ?>
@@ -48,9 +50,11 @@ declare(strict_types=1);
 
 				<tr>
 					<td><?= e((string) $row['CRN']) ?></td>
-					<td><?= e((string) $row['course_ID']) ?> - <?= e((string) $row['course_Name']) ?></td>
+					<td><?= e((string) $row['course_ID']) ?></td>
+                    <td class="as-name"><?= e((string) $row['course_Name']) ?></td>
+                    <td><?= e((string) ($row['course_Credits'] ?? '—')) ?></td>
 					<td><?= e((string) $row['section_No']) ?></td>
-					<td><?= e((string) $row['dept_Name']) ?></td>
+					
 					<td><?= e((string) $row['faculty_Name']) ?></td>
 					<td><?= e(implode(', ', array_map(
 						static fn(string $day): string => substr($day, 0, 3),
@@ -64,10 +68,10 @@ declare(strict_types=1);
 								: 'TBA'
 						) ?>
 					</td>
-					<td><?= e((string) ($row['room_Label'] ?? 'Unassigned')) ?></td>
-					<td><?= e((string) $row['capacity']) ?></td>
-					<td><?= e((string) $row['available_Seats']) ?></td>
-					<td><?= e((string) $row['enrolled']) ?></td>
+					<td class="as-room"><?= e((string) ($row['room_Label'] ?? 'Unassigned')) ?></td>
+					<td class="as-numeric">10</td>
+					<td class="as-numeric"><?= e((string) $row['enrolled']) ?></td>
+                    <td class="as-numeric"><?= e((string) max(0, 10 - (int)$row['enrolled'])) ?></td><td><?= e((string)($row['instruction_Mode'] ?? 'In-Person')) ?></td>
 					<td><?= $status ?></td>
 
 					<?php if ($isFullAccess && $schedule !== null): ?>
@@ -99,13 +103,13 @@ declare(strict_types=1);
 	</p>
 
 	<?php if ($page > 1): ?>
-		<a class="btn light" href="master-schedule.php?semester=<?= e((string) $semesterID) ?>&page=<?= $page - 1 ?>">
+		<a class="btn light" href="?<?= e(http_build_query(array_merge($_GET, ['semester'=>$semesterID, 'page'=>$page-1]))) ?>">
 			Previous
 		</a>
 	<?php endif; ?>
 
 	<?php if ($page < $totalPages): ?>
-		<a class="btn" href="master-schedule.php?semester=<?= e((string) $semesterID) ?>&page=<?= $page + 1 ?>">
+		<a class="btn" href="?<?= e(http_build_query(array_merge($_GET, ['semester'=>$semesterID, 'page'=>$page+1]))) ?>">
 			Next
 		</a>
 	<?php endif; ?>

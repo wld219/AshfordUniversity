@@ -8,60 +8,7 @@ declare(strict_types=1);
 
 <?php if ($semester !== null): ?>
 
-	<section class="dashboard-stats" aria-label="Schedule statistics">
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Total sections</span>
-			<strong><?= e((string) ($validation['stats']['total_Sections'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">In this semester</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Scheduled</span>
-			<strong><?= e((string) ($validation['stats']['scheduled_Sections'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">Fully assigned</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Unscheduled</span>
-			<strong><?= e((string) ($validation['stats']['unscheduled_Sections'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">Need attention</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Missing room</span>
-			<strong><?= e((string) ($validation['stats']['missing_Room'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">No room assigned</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Missing faculty</span>
-			<strong><?= e((string) ($validation['stats']['missing_Faculty'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">No faculty assigned</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Room conflicts</span>
-			<strong><?= e((string) ($validation['stats']['room_Conflicts'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">Double-booked rooms</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Faculty conflicts</span>
-			<strong><?= e((string) ($validation['stats']['faculty_Conflicts'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">Overlapping teaching</span>
-		</article>
-
-		<article class="dashboard-stat card">
-			<span class="dashboard-stat-label">Validation errors</span>
-			<strong><?= e((string) ($validation['stats']['validation_Errors'] ?? 0)) ?></strong>
-			<span class="dashboard-stat-note">Other rule failures</span>
-		</article>
-
-	</section>
-
-
-	<section class="card">
+	<details class="card"><summary style="cursor:pointer;font-weight:600">Validation &amp; conflict report (<?= count($validation['issues']) ?> issues)</summary><div style="padding-top:12px">
 
 		<h2>Validation &amp; conflict report</h2>
 
@@ -98,6 +45,6 @@ declare(strict_types=1);
 
 		<?php endif; ?>
 
-	</section>
+	</div></details>
 
 <?php endif; ?>

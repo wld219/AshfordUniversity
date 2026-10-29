@@ -30,6 +30,7 @@ $sections = all_rows(
 			Course_Section.CRN,
 			Course.course_ID,
 			Course.course_Name,
+            Course.course_Credits,
 			Course_Section.section_No,
 			Semester.semester_Name,
 			Course_Section.available_Seats,
@@ -116,6 +117,7 @@ page_start(
 					<th>CRN</th>
 					<th>Course</th>
 					<th>Title</th>
+                    <th>Credits</th>
 					<th>Section</th>
 					<th>Faculty</th>
 					<th>Meeting time</th>
@@ -141,6 +143,7 @@ page_start(
 						<td>
 							<?= e($section['course_Name']) ?>
 						</td>
+<td><?= e($section['course_Credits']) ?></td>
 
 						<td>
 							<?= e($section['section_No']) ?>

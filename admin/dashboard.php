@@ -8,6 +8,8 @@ require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
 
 require_role(['Admin']);
+require_once __DIR__ . '/../includes/admin_security.php';
+$ashfordAdminLevel = ashford_admin_level($pdo, (int) $_SESSION['user_id']);
 
 $students = one(
     $pdo,
@@ -66,6 +68,10 @@ page_start(
 ?>
 
 <div class="dashboard-page">
+    <div style="padding:12px 16px;margin:12px 0;border:1px solid #d5dbe3;border-radius:8px;display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap">
+        <strong>Administrator Access</strong>
+        <span><?= e('Security Level ' . $ashfordAdminLevel . ' — ' . ashford_admin_level_name($ashfordAdminLevel)) ?></span>
+    </div>
 
     <section class="dashboard-header">
         <div class="header-title">

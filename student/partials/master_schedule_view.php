@@ -51,7 +51,7 @@ declare(strict_types=1);
 			<label for="day">Meeting day</label>
 			<select name="day" id="day">
 				<option value="">All</option>
-				<?php foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day): ?>
+				<?php foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as $day): ?>
 					<option value="<?= e($day) ?>" <?= $filterDay === $day ? 'selected' : '' ?>>
 						<?= e($day) ?>
 					</option>
@@ -60,7 +60,7 @@ declare(strict_types=1);
 		</div>
 
 		<div>
-			<label for="course">Course title</label>
+			<label for="course">Course ID or name</label>
 			<input
 				type="search"
 				id="course"

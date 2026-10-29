@@ -49,6 +49,7 @@ $sql = "SELECT
 			cs.lab_ID,
 			cs.available_Seats,
 			c.course_ID,
+			c.course_Code,
 			c.course_Name,
 			c.course_Credits,
 			c.course_Type,
@@ -71,7 +72,7 @@ if ($deptID !== null) {
 	$params[] = $deptID;
 }
 
-$sql .= ' ORDER BY d.dept_Name, c.course_ID, cs.section_No';
+$sql .= " ORDER BY MD5(CONCAT('ashford-2026-', cs.CRN)), cs.CRN";
 
 [$sections, $sectionsError] = public_load(
 	static fn(): array => all_rows($pdo, $sql, $params)
@@ -175,7 +176,7 @@ public_page_start('Master Schedule');
 
 						<tr data-open="<?= (int) $section['available_Seats'] > 0 ? '1' : '0' ?>">
 							<td><?= e($section['CRN']) ?></td>
-							<td><?= e($section['course_ID']) ?></td>
+							<td><?= e($section['course_Code']) ?></td>
 							<td><?= e($section['course_Name']) ?></td>
 							<td><?= e($section['section_No']) ?></td>
 							<td><?= e($section['instructor']) ?></td>

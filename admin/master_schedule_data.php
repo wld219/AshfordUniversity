@@ -15,8 +15,9 @@ $semesters = all_rows(
 	FROM Semester s
 	JOIN Course_Section cs
 		ON cs.semester_ID = s.semester_ID AND cs.is_Cancelled = 0
+	WHERE s.semester_Name IN ('Fall 2026', 'Spring 2027')
 	GROUP BY s.semester_ID, s.semester_Name
-	ORDER BY s.semester_Name ASC"
+	ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 ELSE 3 END"
 );
 
 $semesterIDs = array_map(
@@ -26,13 +27,12 @@ $semesterIDs = array_map(
 
 $semesterID = get_int('semester');
 
-// The dropdown is the authority: anything else in the query string falls
-// back to the newest semester that has sections to schedule.
+// Only Fall 2026 and Spring 2027 are selectable; invalid values default to Fall 2026.
 if ($semesterID === null || !in_array($semesterID, $semesterIDs, true)) {
 
 	$semesterID = $semesterIDs === []
 		? 0
-		: (int) end($semesterIDs);
+		: (int) reset($semesterIDs);
 }
 
 $semester = one(
@@ -54,7 +54,11 @@ $scheduleLocked = $semester !== null
 // Filter controls (server-side)
 $filterDepartment = get_int('dept');
 $filterFaculty = get_int('faculty');
-$filterDay = get_str('day', 10);
+$filterDays = $_GET['days'] ?? [];
+if (!is_array($filterDays)) $filterDays = [];
+$filterDays = array_values(array_intersect(['MW','TTH','M','TU','W','TH','F'], array_filter($filterDays,'is_string')));
+$filterMode = get_str('mode', 20);
+$filterPeriod = get_str('period', 20);
 $filterCourse = get_str('course', 100);
 $filterRoom = get_str('room', 50);
 
@@ -111,17 +115,32 @@ if ($filterFaculty !== null) {
 	));
 }
 
-if ($filterDay !== '') {
-	$rows = array_values(array_filter(
-		$rows,
-		static fn(array $row): bool => in_array($filterDay, $row['days'], true)
-	));
+if ($filterDays !== []) {
+    $patterns = ['MW'=>['Monday','Wednesday'],'TTH'=>['Tuesday','Thursday'],
+      'M'=>['Monday'],'TU'=>['Tuesday'],'W'=>['Wednesday'],'TH'=>['Thursday'],'F'=>['Friday']];
+    $rows = array_values(array_filter($rows, static function(array $row) use ($patterns,$filterDays): bool {
+        $actual = $row['days'] ?? []; sort($actual);
+        foreach ($filterDays as $key) { $wanted = $patterns[$key]; sort($wanted); if ($actual === $wanted) return true; }
+        return false;
+    }));
+}
+if (in_array($filterMode, ['In-Person','Hybrid','Online'], true)) {
+    $rows = array_values(array_filter($rows,
+      static fn(array $row): bool => ($row['instruction_Mode'] ?? 'In-Person') === $filterMode));
+}
+if ($filterPeriod !== '') {
+    $rows = array_values(array_filter($rows, static fn(array $row): bool =>
+        stripos((string)($row['start_Time'] ?? ''), $filterPeriod) !== false ||
+        stripos((string)($row['end_Time'] ?? ''), $filterPeriod) !== false));
 }
 
 if ($filterCourse !== '') {
 	$rows = array_values(array_filter(
 		$rows,
-		static fn(array $row): bool => stripos((string) $row['course_Name'], $filterCourse) !== false
+		static fn(array $row): bool => (
+            stripos((string) $row['course_Name'], $filterCourse) !== false
+            || stripos((string) $row['course_ID'], $filterCourse) !== false
+        )
 	));
 }
 

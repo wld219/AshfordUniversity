@@ -1,0 +1,280 @@
+<?php
+
+declare(strict_types=1);
+
+// Assignment validation for a single section (create or update).
+
+// Validate the room choice: exactly one room, it exists, seats fit.
+function validate_room_choice(PDO $pdo, array $proposed, array &$errors): ?int
+{
+	$lectureID = $proposed['lecture_ID'] !== null ? (int) $proposed['lecture_ID'] : null;
+	$labID = $proposed['lab_ID'] !== null ? (int) $proposed['lab_ID'] : null;
+
+	if ($lectureID === null && $labID === null) {
+		$errors[] = 'A lecture room or laboratory must be assigned.';
+		return null;
+	}
+
+	if ($lectureID !== null && $labID !== null) {
+		$errors[] = 'Assign either a lecture room or a laboratory, not both.';
+		return null;
+	}
+
+	$capacity = 0;
+
+	if ($lectureID !== null) {
+
+		$room = one(
+			$pdo,
+			'SELECT avail_Seats FROM Lecture WHERE lecture_ID = ?',
+			[$lectureID]
+		);
+
+		if (!$room) {
+			$errors[] = 'The selected lecture room was not found.';
+		} else {
+			$capacity = (int) $room['avail_Seats'];
+		}
+
+	} else {
+
+		$room = one(
+			$pdo,
+			'SELECT no_Of_Workstations FROM Lab WHERE lab_ID = ?',
+			[$labID]
+		);
+
+		if (!$room) {
+			$errors[] = 'The selected laboratory was not found.';
+		} else {
+			$capacity = (int) $room['no_Of_Workstations'];
+		}
+	}
+
+	if ($capacity > 0 && (int) $proposed['seats'] > $capacity) {
+		$errors[] = "Seats exceed room capacity ({$capacity}).";
+	}
+
+	return $capacity;
+}
+
+// The CRN of another section booking the same room at an overlapping time.
+function room_conflict_crn(
+	PDO $pdo,
+	int $timeSlotID,
+	int $semesterID,
+	int $roomID,
+	string $roomColumn,
+	?int $ignoreCRN = null
+): ?int {
+
+	$sql = "SELECT cs.CRN
+		FROM Course_Section cs
+		JOIN Time_Slot_Day my_day
+			ON my_day.time_Slot_ID = cs.time_Slot_ID
+		JOIN Time_Slot_Day new_day
+			ON new_day.day_ID = my_day.day_ID
+			AND new_day.time_Slot_ID = :slot
+		WHERE cs.semester_ID = :semester
+			AND cs.is_Cancelled = 0
+			AND cs.{$roomColumn} = :room
+			AND (:ignore IS NULL OR cs.CRN <> :ignore2)
+			AND EXISTS (
+				SELECT 1
+				FROM Time_Slot_Period my_period
+				JOIN Period my_time
+					ON my_time.period_ID = my_period.period_ID
+				JOIN Time_Slot_Period new_period
+					ON new_period.time_Slot_ID = :slot2
+				JOIN Period new_time
+					ON new_time.period_ID = new_period.period_ID
+				WHERE my_period.time_Slot_ID = cs.time_Slot_ID
+					AND my_time.start_Time < new_time.end_Time
+					AND new_time.start_Time < my_time.end_Time
+			)
+		LIMIT 1";
+
+	$stmt = $pdo->prepare($sql);
+
+	$stmt->execute([
+		'slot' => $timeSlotID,
+		'semester' => $semesterID,
+		'room' => $roomID,
+		'ignore' => $ignoreCRN,
+		'ignore2' => $ignoreCRN,
+		'slot2' => $timeSlotID,
+	]);
+
+	$row = $stmt->fetch();
+
+	return $row !== false ? (int) $row['CRN'] : null;
+}
+
+// The time slot must exist and define a valid meeting interval.
+function validate_time_slot(PDO $pdo, int $timeSlotID, array &$errors): void
+{
+	$slot = one(
+		$pdo,
+		"SELECT MIN(p.start_Time) AS start_Time, MAX(p.end_Time) AS end_Time
+		FROM Time_Slot_Period tsp
+		JOIN Period p ON p.period_ID = tsp.period_ID
+		WHERE tsp.time_Slot_ID = ?",
+		[$timeSlotID]
+	);
+
+	if (!$slot || $slot['start_Time'] === null) {
+		$errors[] = 'The selected time slot has no defined meeting period.';
+		return;
+	}
+
+	if (time_to_minutes((string) $slot['start_Time']) >= time_to_minutes((string) $slot['end_Time'])) {
+		$errors[] = 'The time slot ends before it starts.';
+	}
+}
+
+/**
+ * Validate a proposed section assignment before create or update.
+ * Reuses the same rules as the schedule validator plus DB lookups.
+ *
+ * @param array{faculty_ID: int, time_Slot_ID: int, lecture_ID: ?int,
+ *              lab_ID: ?int, seats: int, course_ID: int, semester_ID: int} $proposed
+ * @return array{ok: bool, errors: array<int, string>}
+ */
+function validate_section_assignment(
+	PDO $pdo,
+	array $proposed,
+	?int $ignoreCRN = null
+): array {
+
+	$errors = [];
+
+	$course = one(
+		$pdo,
+		'SELECT course_ID, dept_ID FROM Course WHERE course_ID = ?',
+		[$proposed['course_ID']]
+	);
+
+	if (!$course) {
+		return [false, ['Course not found.']];
+	}
+
+	// Faculty must exist and may only teach in its own departments
+	$faculty = one(
+		$pdo,
+		'SELECT faculty_ID, faculty_Type FROM Faculty WHERE faculty_ID = ?',
+		[$proposed['faculty_ID']]
+	);
+
+	if (!$faculty) {
+
+		$errors[] = 'Faculty record not found.';
+
+	} else {
+
+		$membership = one(
+			$pdo,
+			'SELECT 1 FROM Faculty_Department WHERE faculty_ID = ? AND dept_ID = ?',
+			[$proposed['faculty_ID'], (int) $course['dept_ID']]
+		);
+
+		if (!$membership) {
+			$errors[] = 'Faculty may only be assigned to sections in their departments.';
+		}
+
+		// Faculty workload and overlap rules
+		[$canTeach, $teachMessage] = faculty_can_teach_section(
+			$pdo,
+			$proposed['faculty_ID'],
+			$proposed['time_Slot_ID'],
+			$ignoreCRN,
+			(int) $proposed['semester_ID']
+		);
+
+		if (!$canTeach) {
+			$errors[] = $teachMessage;
+		}
+	}
+
+	// Room: existence, one-of rule, capacity
+	validate_room_choice($pdo, $proposed, $errors);
+
+	// Time slot interval
+	validate_time_slot($pdo, (int) $proposed['time_Slot_ID'], $errors);
+
+	// Room conflicts against other sections in the same semester
+	$lectureID = $proposed['lecture_ID'] !== null ? (int) $proposed['lecture_ID'] : null;
+	$labID = $proposed['lab_ID'] !== null ? (int) $proposed['lab_ID'] : null;
+
+	if ($lectureID !== null || $labID !== null) {
+
+		$roomColumn = $lectureID !== null ? 'lecture_ID' : 'lab_ID';
+		$roomID = $lectureID ?? $labID;
+
+		$conflictCRN = room_conflict_crn(
+			$pdo,
+			(int) $proposed['time_Slot_ID'],
+			(int) $proposed['semester_ID'],
+			(int) $roomID,
+			$roomColumn,
+			$ignoreCRN
+		);
+
+		if ($conflictCRN !== null) {
+			$errors[] = 'Room conflict with CRN ' . $conflictCRN . '.';
+		}
+	}
+
+
+    // Check lecture capacity against the professor's 10-seat limit.
+    if (($proposed['lecture_ID'] ?? null) !== null) {
+        $lecture = one(
+            $pdo,
+            'SELECT avail_Seats FROM Lecture WHERE lecture_ID = ?',
+            [(int) $proposed['lecture_ID']]
+        );
+
+        if ($lecture && (int) $lecture['avail_Seats'] > 10) {
+            $errors[] = 'Lecture room capacity exceeds 10 seats.';
+        }
+    }
+
+    // Check meeting duration for four-credit, twice-weekly courses.
+    $credits = one(
+        $pdo,
+        'SELECT course_Credits FROM Course WHERE course_ID = ?',
+        [(int) $proposed['course_ID']]
+    );
+
+    if ($credits && (int) $credits['course_Credits'] === 4) {
+        $days = all_rows(
+            $pdo,
+            'SELECT day_ID FROM Time_Slot_Day WHERE time_Slot_ID = ?',
+            [(int) $proposed['time_Slot_ID']]
+        );
+
+        if (count($days) === 2) {
+            $period = one(
+                $pdo,
+                'SELECT MIN(p.start_Time) AS start_Time,
+                        MAX(p.end_Time) AS end_Time
+                 FROM Time_Slot_Period tsp
+                 JOIN Period p ON p.period_ID = tsp.period_ID
+                 WHERE tsp.time_Slot_ID = ?',
+                [(int) $proposed['time_Slot_ID']]
+            );
+
+            if (
+                $period
+                && $period['start_Time'] !== null
+                && $period['end_Time'] !== null
+                && time_to_minutes((string) $period['end_Time'])
+                   - time_to_minutes((string) $period['start_Time']) < 100
+            ) {
+                $errors[] = 'Four-credit twice-weekly courses require at least 100 minutes per meeting.';
+            }
+        }
+    }
+
+
+	return [count($errors) === 0, $errors];
+}

@@ -26,20 +26,27 @@ function schedule_section_rows(PDO $pdo, int $semesterID): array
 			cs.faculty_ID,
 			CONCAT(u.first_Name, ' ', u.last_Name) AS faculty_Name,
 			f.faculty_Type,
+            COALESCE(csm.instruction_Mode, 'In-Person') AS instruction_Mode,
 			cs.time_Slot_ID,
 			cs.lecture_ID,
 			cs.lab_ID,
 			cs.available_Seats,
 			cs.is_Cancelled,
-			COALESCE(l.avail_Seats, b.no_Of_Workstations, 0) AS capacity,
+			COALESCE(l.avail_Seats, b.no_Of_Workstations, 0) AS room_Capacity,
+            10 AS capacity, bd.Bldg_Name AS building_Name, rm.room_Number AS room_Number,
+            bdisp.display_Code AS building_Code,
 			(SELECT COUNT(*) FROM Enrollment e WHERE e.CRN = cs.CRN) AS enrolled
 		FROM Course_Section cs
 		JOIN Course c ON c.course_ID = cs.course_ID
 		JOIN Department d ON d.dept_ID = c.dept_ID
 		JOIN User u ON u.user_ID = cs.faculty_ID
 		JOIN Faculty f ON f.faculty_ID = cs.faculty_ID
-		LEFT JOIN Lecture l ON l.lecture_ID = cs.lecture_ID
+		LEFT JOIN Course_Section_Mode csm ON csm.CRN = cs.CRN
+        LEFT JOIN Lecture l ON l.lecture_ID = cs.lecture_ID
 		LEFT JOIN Lab b ON b.lab_ID = cs.lab_ID
+        LEFT JOIN Room rm ON rm.room_ID = COALESCE(cs.lecture_ID,cs.lab_ID)
+        LEFT JOIN Building bd ON bd.Bldg_ID = rm.Bldg_ID
+        LEFT JOIN Building_Display bdisp ON bdisp.Bldg_ID = rm.Bldg_ID
 		WHERE cs.semester_ID = ?
 			AND cs.is_Cancelled = 0
 		ORDER BY d.dept_Name, c.course_ID, cs.section_No",
@@ -117,10 +124,10 @@ function schedule_section_rows(PDO $pdo, int $semesterID): array
 		// Room key identifies the physical room used by the section
 		if ($section['lecture_ID'] !== null) {
 			$section['room_Key'] = 'lecture-' . (int) $section['lecture_ID'];
-			$section['room_Label'] = 'Lecture room ' . (int) $section['lecture_ID'];
+			$section['room_Label'] = (string)($section['building_Code'] ?? $section['building_Name'] ?? 'Building') . (string)($section['room_Number'] ?? '');
 		} elseif ($section['lab_ID'] !== null) {
 			$section['room_Key'] = 'lab-' . (int) $section['lab_ID'];
-			$section['room_Label'] = 'Lab ' . (int) $section['lab_ID'];
+			$section['room_Label'] = (string)($section['building_Code'] ?? $section['building_Name'] ?? 'Building') . (string)($section['room_Number'] ?? '');
 		} else {
 			$section['room_Key'] = null;
 			$section['room_Label'] = null;

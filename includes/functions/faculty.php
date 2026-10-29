@@ -14,110 +14,119 @@ declare(strict_types=1);
 
 // Does this time slot overlap another slot for the given faculty member?
 function faculty_slot_overlaps(
-	PDO $pdo,
-	int $facultyID,
-	int $timeSlotID,
-	?int $ignoreCRN = null
+    PDO $pdo,
+    int $facultyID,
+    int $timeSlotID,
+    ?int $ignoreCRN = null,
+    ?int $semesterID = null
 ): bool {
+    if ($semesterID === null && $ignoreCRN !== null) {
+        $existing = one(
+            $pdo,
+            'SELECT semester_ID FROM Course_Section WHERE CRN = ?',
+            [$ignoreCRN]
+        );
+        $semesterID = $existing ? (int) $existing['semester_ID'] : null;
+    }
 
-	$sql = "SELECT 1
-		FROM Course_Section cs
-		JOIN Time_Slot_Day my_day
-			ON my_day.time_Slot_ID = cs.time_Slot_ID
-		JOIN Time_Slot_Day new_day
-			ON new_day.day_ID = my_day.day_ID
-			AND new_day.time_Slot_ID = :slot
-		WHERE cs.faculty_ID = :faculty
-			AND cs.is_Cancelled = 0
-			AND (:ignore IS NULL OR cs.CRN <> :ignore2)
-			AND EXISTS (
-				SELECT 1
-				FROM Time_Slot_Period my_period
-				JOIN Period my_time
-					ON my_time.period_ID = my_period.period_ID
-				JOIN Time_Slot_Period new_period
-					ON new_period.time_Slot_ID = :slot2
-				JOIN Period new_time
-					ON new_time.period_ID = new_period.period_ID
-				WHERE my_period.time_Slot_ID = cs.time_Slot_ID
-					AND my_time.start_Time < new_time.end_Time
-					AND new_time.start_Time < my_time.end_Time
-			)
-		LIMIT 1";
+    if ($semesterID === null) {
+        return true; // Fail closed when semester is unknown.
+    }
 
-	$stmt = $pdo->prepare($sql);
+    $sql = "SELECT 1
+        FROM Course_Section cs
+        JOIN Time_Slot_Day existing_day
+            ON existing_day.time_Slot_ID = cs.time_Slot_ID
+        JOIN Time_Slot_Day proposed_day
+            ON proposed_day.day_ID = existing_day.day_ID
+            AND proposed_day.time_Slot_ID = ?
+        WHERE cs.faculty_ID = ?
+            AND cs.semester_ID = ?
+            AND cs.is_Cancelled = 0";
 
-	$stmt->execute([
-		'slot' => $timeSlotID,
-		'ignore' => $ignoreCRN,
-		'faculty' => $facultyID,
-		'slot2' => $timeSlotID,
-		'ignore2' => $ignoreCRN,
-	]);
+    $params = [$timeSlotID, $facultyID, $semesterID];
 
-	return $stmt->fetch() !== false;
+    if ($ignoreCRN !== null) {
+        $sql .= " AND cs.CRN <> ?";
+        $params[] = $ignoreCRN;
+    }
+
+    $sql .= " AND EXISTS (
+        SELECT 1
+        FROM Time_Slot_Period ep
+        JOIN Period et ON et.period_ID = ep.period_ID
+        JOIN Time_Slot_Period np ON np.time_Slot_ID = ?
+        JOIN Period nt ON nt.period_ID = np.period_ID
+        WHERE ep.time_Slot_ID = cs.time_Slot_ID
+            AND et.start_Time < nt.end_Time
+            AND nt.start_Time < et.end_Time
+    ) LIMIT 1";
+
+    $params[] = $timeSlotID;
+
+    return one($pdo, $sql, $params) !== null;
 }
 
-// Can this faculty member be assigned to teach a section at this time slot?
 function faculty_can_teach_section(
-	PDO $pdo,
-	int $facultyID,
-	int $timeSlotID,
-	?int $ignoreCRN = null
+    PDO $pdo,
+    int $facultyID,
+    int $timeSlotID,
+    ?int $ignoreCRN = null,
+    ?int $semesterID = null
 ): array {
+    if ($semesterID === null && $ignoreCRN !== null) {
+        $existing = one(
+            $pdo,
+            'SELECT semester_ID FROM Course_Section WHERE CRN = ?',
+            [$ignoreCRN]
+        );
+        $semesterID = $existing ? (int) $existing['semester_ID'] : null;
+    }
 
-	$faculty = one(
-		$pdo,
-		'SELECT faculty_Type FROM Faculty WHERE faculty_ID = ?',
-		[$facultyID]
-	);
+    if ($semesterID === null) {
+        return [false, 'A valid semester is required to check faculty availability.'];
+    }
 
-	if (!$faculty) {
-		return [false, 'Faculty record not found.'];
-	}
+    $faculty = one(
+        $pdo,
+        'SELECT faculty_Type FROM Faculty WHERE faculty_ID = ?',
+        [$facultyID]
+    );
 
-	$isFullTime = $faculty['faculty_Type'] === 'Full-Time';
+    if (!$faculty) {
+        return [false, 'Faculty record not found.'];
+    }
 
-	$sql = "SELECT COUNT(*) AS total
-		FROM Course_Section
-		WHERE faculty_ID = ?
-			AND is_Cancelled = 0";
+    $isFullTime = $faculty['faculty_Type'] === 'Full-Time';
 
-	$params = [$facultyID];
+    $sql = "SELECT COUNT(*) AS total FROM Course_Section
+            WHERE faculty_ID = ? AND semester_ID = ?
+              AND is_Cancelled = 0";
 
-	if ($ignoreCRN !== null) {
-		$sql .= ' AND CRN <> ?';
-		$params[] = $ignoreCRN;
-	}
+    $params = [$facultyID, $semesterID];
 
-	$current = (int) (one($pdo, $sql, $params)['total'] ?? 0);
+    if ($ignoreCRN !== null) {
+        $sql .= " AND CRN <> ?";
+        $params[] = $ignoreCRN;
+    }
 
-	if ($isFullTime && $current >= 2) {
-		return [
-			false,
-			'Full-time faculty may teach at most two sections.'
-		];
-	}
+    $current = (int) (one($pdo, $sql, $params)['total'] ?? 0);
 
-	// Part-time faculty teach exactly one section, so a second assignment
-	// is refused. The "teaches none at all" side is a data report, not a
-	// create-time gate, because historical assignments cannot be invented.
-	if (!$isFullTime && $current >= 1) {
-		return [
-			false,
-			'Part-time faculty may teach exactly one section.'
-		];
-	}
+    if ($isFullTime && $current >= 2) {
+        return [false, 'Full-time faculty may teach at most two sections per semester.'];
+    }
 
-	// Full-time faculty may not teach two overlapping sections
-	if ($isFullTime && faculty_slot_overlaps($pdo, $facultyID, $timeSlotID, $ignoreCRN)) {
-		return [
-			false,
-			'Full-time faculty may not be assigned to overlapping sections.'
-		];
-	}
+    if (!$isFullTime && $current >= 1) {
+        return [false, 'Part-time faculty may teach at most one section per semester.'];
+    }
 
-	return [true, 'OK'];
+    if (faculty_slot_overlaps(
+        $pdo, $facultyID, $timeSlotID, $ignoreCRN, $semesterID
+    )) {
+        return [false, 'Faculty has an overlapping course section in this semester.'];
+    }
+
+    return [true, 'OK'];
 }
 
 // Is this faculty member assigned to a department that owns the course?

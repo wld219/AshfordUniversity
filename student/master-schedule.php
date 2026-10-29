@@ -63,7 +63,8 @@ if ($filterDepartment !== null) {
 }
 
 if ($filterCourse !== '') {
-	$sql .= ' AND c.course_Name LIKE ?';
+	$sql .= ' AND (c.course_Name LIKE ? OR c.course_ID LIKE ?)';
+	$params[] = '%' . $filterCourse . '%';
 	$params[] = '%' . $filterCourse . '%';
 }
 
