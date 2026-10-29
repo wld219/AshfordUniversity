@@ -89,6 +89,7 @@ declare(strict_types=1);
 				id="seats"
 				name="seats"
 				min="0"
+				max="10"
 				value="<?= e((string) $editSection['available_Seats']) ?>"
 			>
 		</div>

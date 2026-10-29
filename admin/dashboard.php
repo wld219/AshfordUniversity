@@ -58,7 +58,7 @@ $recentSections = all_rows(
 ) ?? [];
 
 page_start(
-    'Dashboard - ' . ($_SESSION['name'] ?? 'Admin'),
+    'Welcome, ' . ($_SESSION['name'] ?? 'Admin'),
     'Admin',
     'dashboard.php'
 );

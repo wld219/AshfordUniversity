@@ -20,18 +20,12 @@ $semesters = all_rows(
 	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
 );
 
-$departments = all_rows(
-	$pdo,
-	'SELECT dept_ID, dept_Name FROM Department ORDER BY dept_Name'
-);
-
 $semesterID = get_int('semester')
 	?? (int) (one(
 		$pdo,
 		'SELECT semester_ID FROM Semester ORDER BY semester_ID DESC LIMIT 1'
 	)['semester_ID'] ?? 0);
 
-$filterDepartment = get_int('dept');
 $filterDay = get_str('day', 10);
 $filterCourse = get_str('course', 100);
 
@@ -56,11 +50,6 @@ $sql = "SELECT
 			AND cs.is_Cancelled = 0";
 
 $params = [$semesterID];
-
-if ($filterDepartment !== null) {
-	$sql .= ' AND c.dept_ID = ?';
-	$params[] = $filterDepartment;
-}
 
 if ($filterCourse !== '') {
 	$sql .= ' AND c.course_Name LIKE ?';

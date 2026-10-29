@@ -97,6 +97,16 @@ $_SESSION['user_type'] = $user['user_Type'];
 $_SESSION['email'] = $user['user_Email'];
 $_SESSION['name'] = $user['first_Name'] . ' ' . $user['last_Name'];
 
+// Store admin security level in session for permission checks
+if ($user['user_Type'] === 'Admin') {
+	$adminLevel = one(
+		$pdo,
+		'SELECT security_Level FROM Admin WHERE user_ID = ?',
+		[(int) $user['user_ID']]
+	);
+	$_SESSION['security_level'] = $adminLevel['security_Level'] ?? 'Read-Only';
+}
+
 audit_log($pdo, 'Login', 'Login', (string) $user['user_ID']);
 
 header('Location: ' . role_home($user['user_Type']));

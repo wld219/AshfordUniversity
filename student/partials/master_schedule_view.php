@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 	<h2>Master Course Schedule</h2>
 
-	<p class="muted">
-		Browse sections by semester, department, meeting day, or course. To
-		register, use the Course Registration page.
-	</p>
+		<p class="muted">
+			Browse sections by semester, meeting day, or course. To
+			register, use the Course Registration page.
+		</p>
 
 	<form method="get" class="filters" style="margin-top: 18px;">
 
@@ -27,21 +27,6 @@ declare(strict_types=1);
 						<?= $semesterID === (int) $semester['semester_ID'] ? 'selected' : '' ?>
 					>
 						<?= e($semester['semester_Name']) ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-		</div>
-
-		<div>
-			<label for="dept">Department</label>
-			<select name="dept" id="dept">
-				<option value="">All</option>
-				<?php foreach ($departments as $department): ?>
-					<option
-						value="<?= e($department['dept_ID']) ?>"
-						<?= $filterDepartment === (int) $department['dept_ID'] ? 'selected' : '' ?>
-					>
-						<?= e($department['dept_Name']) ?>
 					</option>
 				<?php endforeach; ?>
 			</select>
@@ -89,7 +74,6 @@ declare(strict_types=1);
 				<th>CRN</th>
 				<th>Course</th>
 				<th>Section</th>
-				<th>Department</th>
 				<th>Instructor</th>
 				<th>Meeting time</th>
 				<th>Location</th>
@@ -104,7 +88,6 @@ declare(strict_types=1);
 					<td><?= e($section['CRN']) ?></td>
 					<td><?= e($section['course_ID']) ?> - <?= e($section['course_Name']) ?></td>
 					<td><?= e($section['section_No']) ?></td>
-					<td><?= e($section['dept_Name']) ?></td>
 					<td><?= e($section['instructor']) ?></td>
 					<td>
 						<?= e(

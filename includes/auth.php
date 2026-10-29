@@ -91,13 +91,25 @@ function role_home(string $role): string
 	}
 }
 
-// Returns true if the logged-in user has read-only access (StatStaff).
+// Returns true if the logged-in user has read-only access (StatStaff, or
+// an Administrator with security level Read-Only).
 function is_read_only(): bool
 {
-	return ($_SESSION['user_type'] ?? '') === 'StatStaff';
+	$userType = $_SESSION['user_type'] ?? '';
+
+	if ($userType === 'StatStaff') {
+		return true;
+	}
+
+	if ($userType === 'Admin') {
+		return ($_SESSION['security_level'] ?? 'Read-Only') === 'Read-Only';
+	}
+
+	return false;
 }
 
-// Block all state-changing operations for read-only users.
+// Block all state-changing operations for read-only users (StatStaff or
+// Read-Only Administrators).
 function require_write_access(): void
 {
 	if (is_read_only()) {
@@ -105,6 +117,30 @@ function require_write_access(): void
 
 		exit(
 			'403 - Read-only account: changes are not permitted.'
+		);
+	}
+}
+
+// Returns true if the logged-in Administrator has Full-Access (write)
+// privileges. Returns false for Read-Only Administrators and non-Admin users.
+function is_admin_full_access(): bool
+{
+	if (($_SESSION['user_type'] ?? '') !== 'Admin') {
+		return false;
+	}
+
+	return ($_SESSION['security_level'] ?? 'Read-Only') === 'Full-Access';
+}
+
+// Require Full-Access Administrator privileges for write operations.
+// Read-Only Administrators and StatStaff users are blocked.
+function require_admin_write_access(): void
+{
+	if (!is_admin_full_access()) {
+		http_response_code(403);
+
+		exit(
+			'403 - Full-Access administrator privileges required.'
 		);
 	}
 }

@@ -77,17 +77,28 @@ unset($_SESSION['flash']);
 				>
 			</label>
 
-			<label for="password">
-				Password
-				<input
-					type="password"
-					id="password"
-					name="password"
-					autocomplete="current-password"
-					placeholder="Enter your password"
-					required
-				>
-			</label>
+		<label for="password">
+			Password
+			<input
+				type="password"
+				id="password"
+				name="password"
+				autocomplete="current-password"
+				placeholder="Enter your password"
+				required
+			>
+		</label>
+
+		<label for="role">
+			Role
+			<select id="role" name="role" required>
+				<option value="">Select your role</option>
+				<option value="Admin">Admin</option>
+				<option value="Student">Student</option>
+				<option value="Faculty">Faculty</option>
+				<option value="Staff">Staff</option>
+			</select>
+		</label>
 
 		<button class="login-button" type="submit">Continue</button>
 	</form>

@@ -12,8 +12,9 @@ require_once __DIR__ . '/../includes/functions.php';
 
 $deptID = get_int('dept');
 $search = get_str('q', 100);
+$dayFilter = get_str('day', 10);
 
-$sql = "SELECT
+$sql = "SELECT DISTINCT
 		c.course_ID,
 		c.course_Name,
 		c.course_Credits,
@@ -22,6 +23,9 @@ $sql = "SELECT
 		d.dept_Name
 	FROM Course c
 	JOIN Department d ON d.dept_ID = c.dept_ID
+	LEFT JOIN Course_Section cs ON cs.course_ID = c.course_ID AND cs.is_Cancelled = 0
+	LEFT JOIN Time_Slot_Day tsd ON tsd.time_Slot_ID = cs.time_Slot_ID
+	LEFT JOIN Day dy ON dy.day_ID = tsd.day_ID
 	WHERE 1 = 1";
 
 $params = [];
@@ -29,6 +33,11 @@ $params = [];
 if ($deptID !== null) {
 	$sql .= ' AND c.dept_ID = ?';
 	$params[] = $deptID;
+}
+
+if ($dayFilter !== '') {
+	$sql .= ' AND dy.day_Of_Week = ?';
+	$params[] = $dayFilter;
 }
 
 if ($search !== '') {
@@ -101,6 +110,21 @@ public_page_start('Courses & Prerequisites');
 						<?= $deptID === (int) $department['dept_ID'] ? 'selected' : '' ?>
 					>
 						<?= e($department['dept_Name']) ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+
+		<div>
+			<label for="day">Meeting day</label>
+			<select name="day" id="day">
+				<option value="">All days</option>
+				<?php foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as $day): ?>
+					<option
+						value="<?= e($day) ?>"
+						<?= $dayFilter === $day ? 'selected' : '' ?>
+					>
+						<?= e($day) ?>
 					</option>
 				<?php endforeach; ?>
 			</select>
