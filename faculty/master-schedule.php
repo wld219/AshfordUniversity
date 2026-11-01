@@ -13,7 +13,7 @@ require_role(['Faculty']);
 // Semester filter (defaults to the most recent semester)
 $semesters = all_rows(
 	$pdo,
-	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
+	'SELECT semester_ID, semester_Name FROM Semester WHERE semester_ID IN (1, 2) ORDER BY semester_ID DESC'
 );
 
 $semesterID = get_int('semester')
@@ -37,7 +37,15 @@ $sections = all_rows(
 			Course_Section.lecture_ID,
 			Course_Section.lab_ID,
 			User.first_Name,
-			User.last_Name
+			User.last_Name,
+			(SELECT GROUP_CONCAT(dy.day_Of_Week ORDER BY dy.day_ID SEPARATOR ', ')
+			 FROM Time_Slot_Day tsd
+			 JOIN Day dy ON dy.day_ID = tsd.day_ID
+			 WHERE tsd.time_Slot_ID = Course_Section.time_Slot_ID) AS meeting_days,
+			(SELECT CONCAT(MIN(p.start_Time), ' - ', MAX(p.end_Time))
+			 FROM Time_Slot_Period tsp
+			 JOIN Period p ON p.period_ID = tsp.period_ID
+			 WHERE tsp.time_Slot_ID = Course_Section.time_Slot_ID) AS meeting_time
 		FROM Course_Section
 		JOIN Course
 			ON Course.course_ID = Course_Section.course_ID
@@ -50,8 +58,8 @@ $sections = all_rows(
 		ORDER BY
 			Course.course_ID,
 			Course_Section.section_No",
-	[$semesterID]
-);
+		[$semesterID]
+	);
 
 
 page_start(
@@ -118,7 +126,8 @@ page_start(
 					<th>Title</th>
 					<th>Section</th>
 					<th>Faculty</th>
-					<th>Meeting time</th>
+					<th>Days</th>
+					<th>Time</th>
 					<th>Location</th>
 					<th>Available Seats</th>
 				</tr>
@@ -153,12 +162,8 @@ page_start(
 							) ?>
 						</td>
 
-						<td>
-							<?= e(time_slot_label(
-								$pdo,
-								(int) $section['time_Slot_ID']
-							)) ?>
-						</td>
+						<td><?= e($section['meeting_days'] ?? '') ?></td>
+						<td><?= e($section['meeting_time'] ?? '') ?></td>
 
 						<td>
 							<?= e(section_room_label(
