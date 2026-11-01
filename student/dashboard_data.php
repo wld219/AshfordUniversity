@@ -15,7 +15,7 @@ $student = one(
 			Major.major_Name,
 			CONCAT(advisor_User.first_Name, ' ', advisor_User.last_Name) AS advisor_Name
 		FROM User
-		JOIN Student
+		LEFT JOIN Student
 			ON Student.student_ID = User.user_ID
 		LEFT JOIN Major
 			ON Major.major_ID = Student.major_ID

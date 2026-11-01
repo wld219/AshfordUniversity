@@ -139,7 +139,7 @@ $student = one(
 			Student.student_Type,
 			Major.major_Name
 		FROM User
-		JOIN Student
+		LEFT JOIN Student
 			ON Student.student_ID = User.user_ID
 		JOIN Login
 			ON Login.user_ID = User.user_ID

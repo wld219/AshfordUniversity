@@ -82,11 +82,13 @@ $declaredMajors = all_rows(
 	[$studentID]
 );
 
-$primaryMajorID = (int) (one(
+$primaryMajorRow = one(
 	$pdo,
 	'SELECT major_ID FROM Student WHERE student_ID = ?',
 	[$studentID]
-)['major_ID'] ?? 0);
+);
+
+$primaryMajorID = $primaryMajorRow ? (int) $primaryMajorRow['major_ID'] : 0;
 
 $declaredMinor = one(
 	$pdo,
