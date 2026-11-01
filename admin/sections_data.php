@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 $semesters = all_rows(
 	$pdo,
-	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
+	'SELECT semester_ID, semester_Name FROM Semester WHERE semester_ID IN (1, 2) ORDER BY semester_ID DESC'
 );
 
 $departments = all_rows(
