@@ -44,6 +44,9 @@
     announce('Unable to load course sections');
   }
 
+  const tbody = document.getElementById('sections-table-body');
+  let originalHTML = '';
+
   chips.forEach((chip) => {
     chip.addEventListener('click', () => {
       chips.forEach((c) => c.classList.remove('active'));
@@ -51,7 +54,27 @@
       const filter = chip.getAttribute('data-filter');
       announce('Filtered by ' + filter);
       showLoading();
-      setTimeout(showTable, 400);
+      setTimeout(() => {
+        if (!originalHTML) originalHTML = tbody.innerHTML;
+        tbody.innerHTML = originalHTML;
+
+        const rows = document.querySelectorAll('#sections-table tbody tr');
+        let visible = 0;
+        rows.forEach((row) => {
+          const badge = row.querySelector('.status-badge');
+          const isCancelled = badge && badge.classList.contains('status-cancelled');
+          let show = true;
+          if (filter === '0') show = !isCancelled;
+          if (filter === '1') show = isCancelled;
+          row.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        if (visible === 0) {
+          tbody.innerHTML = '<tr><td colspan="6"><div class="dashboard-empty" style="display:block; padding:24px; text-align:left;"><div class="empty-icon">&#8226;</div><h3>No sections match this filter</h3><p>Try a different filter or view all sections.</p></div></td></tr>';
+        }
+        showTable();
+      }, 400);
     });
   });
 

@@ -71,7 +71,7 @@ $sql .= ' ORDER BY d.dept_Name, c.course_ID';
 $prerequisiteMap = [];
 
 foreach ($prerequisiteRows as $prerequisite) {
-	$prerequisiteMap[(int) $prerequisite['course_ID']][] =
+	$prerequisiteMap[$prerequisite['course_ID']][] =
 		$prerequisite['prereq_ID'] . ' ' . $prerequisite['prereq_Name']
 		. ' (min grade ' . $prerequisite['min_Grade_Req'] . ')';
 }
@@ -179,9 +179,9 @@ public_page_start('Courses & Prerequisites');
 						<td>
 							<?php if ($prerequisitesError !== ''): ?>
 								<span class="muted">Unavailable</span>
-							<?php elseif (!empty($prerequisiteMap[(int) $course['course_ID']])): ?>
+							<?php elseif (!empty($prerequisiteMap[$course['course_ID']])): ?>
 								<ul class="public-requirement-list">
-									<?php foreach ($prerequisiteMap[(int) $course['course_ID']] as $label): ?>
+									<?php foreach ($prerequisiteMap[$course['course_ID']] as $label): ?>
 										<li><?= e($label) ?></li>
 									<?php endforeach; ?>
 								</ul>
