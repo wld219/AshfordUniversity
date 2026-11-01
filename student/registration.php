@@ -73,6 +73,9 @@ $sql .= ' ORDER BY
 
 $sections = all_rows($pdo, $sql, $params);
 
+// Eligible courses: sections the student is qualified to register for
+$eligible = get_eligible_courses($pdo, $studentID, (int) $registrationNotice);
+
 
 page_start(
 	'Course Registration',
