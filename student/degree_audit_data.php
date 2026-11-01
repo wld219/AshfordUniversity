@@ -17,10 +17,10 @@ $history = all_rows(
 
 $bestGrades = [];
 
-foreach ($history as $row) {
+	foreach ($history as $row) {
 
-	$courseID = (int) $row['course_ID'];
-	$points = grade_points($row['Grade']);
+		$courseID = $row['course_ID'];
+		$points = grade_points($row['Grade']);
 
 	if ($points === null) {
 		continue;
@@ -45,7 +45,7 @@ function audit_requirements(array $requirements, array $bestGrades): array
 
 	foreach ($requirements as $requirement) {
 
-		$courseID = (int) $requirement['course_ID'];
+		$courseID = $requirement['course_ID'];
 		$earned = $bestGrades[$courseID] ?? null;
 		$met = $earned !== null
 			&& grade_meets($earned['grade'], (string) $requirement['min_Grade_Req']);
