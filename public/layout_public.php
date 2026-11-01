@@ -61,6 +61,11 @@ function public_page_start(string $title): void
 			rel="stylesheet"
 			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
 		>
+		<link
+			rel="icon"
+			href="<?= e(url('assets/img/favicon.svg')) ?>"
+			type="image/svg+xml"
+		>
 		<link rel="stylesheet" href="<?= e(url('assets/css/style.css')) ?>">
 		<link rel="stylesheet" href="<?= e(url('assets/css/public.css')) ?>">
 	</head>

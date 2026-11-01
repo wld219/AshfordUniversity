@@ -111,6 +111,12 @@ function page_start(
 		</title>
 
 		<link
+			rel="icon"
+			href="<?= e(app_base_path() . '/assets/img/favicon.svg') ?>"
+			type="image/svg+xml"
+		>
+
+		<link
 			rel="stylesheet"
 			href="<?= e(app_base_path() . '/assets/css/style.css') ?>"
 		>

@@ -35,6 +35,11 @@ unset($_SESSION['flash']);
 		rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
 	>
+	<link
+		rel="icon"
+		href="<?= e(url('assets/img/favicon.svg')) ?>"
+		type="image/svg+xml"
+	>
 	<link rel="stylesheet" href="<?= e(url('assets/css/login.css')) ?>">
 </head>
 
