@@ -160,7 +160,21 @@ or if using Apache:
 
 http://localhost/AshfordUni1-main/index.php
 
-Sign in with the administrator account you created in Step 7.
+All 1,985 accounts use their individual seeded passwords from
+database/login.sql. Passwords are stored as bcrypt hashes and verified
+with password_verify(). Query the Login table to retrieve credentials:
+
+    SELECT l.user_Type, l.user_Email
+    FROM Login l ORDER BY l.user_Type, l.user_ID LIMIT 20;
+
+Sample accounts by role:
+
+    Role      Email
+    --------  -------------------------------------------
+    Admin     arianaaugustin@ashford.edu
+    Student   liamwalker@ashford.edu
+    Faculty   kevinbaptiste200001@ashford.edu
+    StatStaff ericjones400001@ashford.edu
 
 After sign in, you are redirected to your role-based dashboard:
 - Admin -> /admin/dashboard.php
@@ -179,6 +193,12 @@ As an administrator, use the admin portal to create the data the system needs:
 3. Admin -> Semesters: Create semester start dates and registration windows for Fall 2026 and Spring 2027.
 4. Admin -> Sections: Create course sections with rooms, meeting times, and faculty.
 5. Admin -> Master Schedule: Build and publish the master schedule.
+
+The current dataset already includes:
+- 1,985 user accounts (1,620 students, 422 faculty, 10 stat staff, 5 admin)
+- 28 departments, 919 courses, 148 majors, 12 minors
+- 1,136 course sections across 14 semesters
+- 28,899 enrollments and 16,655 academic history records
 
 Students may also self-register from the login page using register.php.
 
@@ -244,8 +264,9 @@ Port 8000 already in use:
 - Use a different port, for example php -S localhost:8080 -t . router.php
 
 Invalid login credentials:
-- Use the administrator account created during installation.
+- Use one of the accounts from database/login.sql.
 - If using the full dataset, sample accounts include arianaaugustin@ashford.edu for Admin.
+- Passwords are stored as bcrypt hashes; use the plaintext password from database/login.sql.
 
 Permission denied:
 - You are signed in as the wrong role. Admin pages require an Admin account.
