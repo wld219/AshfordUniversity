@@ -1,87 +1,65 @@
 <?php
-
 declare(strict_types=1);
-
 require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
-
 require_role(['Student']);
-
-// Get the logged-in student's ID
 $studentID = (int) $_SESSION['user_id'];
-
-// Search term for filtering course sections
-$search = get_str('search', 100);
-
-
-// Process a course registration
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-	csrf_verify();
-
-	$crn = (int) ($_POST['crn'] ?? 0);
-
-	require_once __DIR__ . '/registration_actions.php';
+    csrf_verify();
+    $crn = (int) ($_POST['crn'] ?? 0);
+    require_once __DIR__ . '/registration_actions.php';
 }
-
-
-// Registration window notice for the semester being registered for
 $registrationNotice = current_registration_semester($pdo);
-
-$windowOpen = true;
-$windowMessage = 'Open';
-
+$windowOpen = false;
+$windowMessage = 'No registration semester is available.';
+$semesterName = 'No semester available';
 if ($registrationNotice !== null) {
-
-	[$windowOpen, , $windowMessage] = registration_window_status(
-		$pdo,
-		$registrationNotice
-	);
+    [$windowOpen, , $windowMessage] = registration_window_status($pdo, (int) $registrationNotice);
+    $term = one($pdo, 'SELECT semester_Name FROM Semester WHERE semester_ID = ?', [(int) $registrationNotice]);
+    $semesterName = $term['semester_Name'] ?? $semesterName;
 }
-
-
-// Registration sections for the current semester
-$sql = "SELECT
-			Course.course_ID,
-			Course.course_Name,
-			Course.course_Credits,
-			Department.dept_Name,
-			Course_Section.CRN,
-			Course_Section.section_No,
-			Course_Section.available_Seats,
-			Course_Section.time_Slot_ID
-		FROM Course_Section
-		JOIN Course
-			ON Course.course_ID = Course_Section.course_ID
-		JOIN Department
-			ON Department.dept_ID = Course.dept_ID
-		WHERE Course_Section.semester_ID = ?
-			AND Course_Section.is_Cancelled = 0";
-
-$params = [$registrationNotice];
-
-if ($search !== '') {
-	$sql .= ' AND Course.course_Name LIKE ?';
-	$params[] = '%' . $search . '%';
+$search = trim((string) ($_GET['search'] ?? ''));
+$search = substr($search, 0, 100);
+$department = trim((string) ($_GET['department'] ?? ''));
+$department = substr($department, 0, 100);
+$departments = all_rows($pdo, 'SELECT dept_ID, dept_Name FROM Department ORDER BY dept_Name') ?? [];
+$sections = [];
+if ($registrationNotice !== null) {
+    $sql = 'SELECT c.course_ID, c.course_Name, c.course_Credits, d.dept_Name,
+                   cs.CRN, cs.section_No, cs.available_Seats, cs.time_Slot_ID,
+                   TRIM(CONCAT(u.first_Name, CHAR(32), u.last_Name)) AS faculty_Name
+            FROM Course_Section cs
+            JOIN Course c ON c.course_ID = cs.course_ID
+            JOIN Department d ON d.dept_ID = c.dept_ID
+            LEFT JOIN Faculty f ON f.faculty_ID = cs.faculty_ID
+            LEFT JOIN User u ON u.user_ID = f.faculty_ID
+            WHERE cs.semester_ID = ? AND cs.is_Cancelled = 0';
+    $params = [(int) $registrationNotice];
+    if ($search !== '') {
+        $sql .= ' AND (c.course_Name LIKE ? OR CAST(c.course_ID AS CHAR) LIKE ?)';
+        $params[] = '%' . $search . '%';
+        $params[] = '%' . $search . '%';
+    }
+    if ($department !== '' && ctype_digit($department)) {
+        $sql .= ' AND c.dept_ID = ?';
+        $params[] = (int) $department;
+    }
+    $sql .= ' ORDER BY c.course_ID, cs.section_No';
+    $sections = all_rows($pdo, $sql, $params) ?? [];
 }
-
-$sql .= ' ORDER BY
-			Course.course_ID,
-			Course_Section.section_No';
-
-$sections = all_rows($pdo, $sql, $params);
-
-
-page_start(
-	'Course Registration',
-	'Student',
-	'registration.php'
-);
-
+$creditRow = $registrationNotice === null ? null : one($pdo,
+    'SELECT COALESCE(SUM(c.course_Credits), 0) AS total FROM Enrollment en
+     JOIN Course_Section cs ON cs.CRN = en.CRN
+     JOIN Course c ON c.course_ID = cs.course_ID
+     WHERE en.student_ID = ? AND en.semester_ID = ?',
+    [$studentID, (int) $registrationNotice]);
+$registeredCredits = (int) ($creditRow['total'] ?? 0);
+$creditLimit = student_credit_limit($pdo, $studentID);
+$holdRow = one($pdo, 'SELECT COUNT(*) AS total FROM Student_Hold WHERE student_ID = ?', [$studentID]);
+$holdCount = (int) ($holdRow['total'] ?? 0);
+page_start('Course Registration', 'Student', 'registration.php');
 flash();
-
-require_once __DIR__ . '/partials/registration_view.php';
-
+require __DIR__ . '/partials/registration_view.php';
 page_end();

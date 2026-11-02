@@ -17,7 +17,9 @@ require_role(['Student']);
 
 $semesters = all_rows(
 	$pdo,
-	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
+	"SELECT semester_ID, semester_Name FROM Semester
+        WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+        ORDER BY FIELD(semester_Name, 'Fall 2026', 'Spring 2027')"
 );
 
 $departments = all_rows(
@@ -34,6 +36,7 @@ $semesterID = get_int('semester')
 $filterDepartment = get_int('dept');
 $filterDay = get_str('day', 10);
 $filterCourse = get_str('course', 100);
+$filterSeats = get_str('seats', 10);
 
 $sql = "SELECT
 			cs.CRN,
@@ -63,9 +66,8 @@ if ($filterDepartment !== null) {
 }
 
 if ($filterCourse !== '') {
-	$sql .= ' AND (c.course_Name LIKE ? OR c.course_ID LIKE ?)';
-	$params[] = '%' . $filterCourse . '%';
-	$params[] = '%' . $filterCourse . '%';
+    $sql .= " AND (c.course_Name LIKE ? OR CAST(c.course_ID AS CHAR) LIKE ? OR CAST(cs.CRN AS CHAR) LIKE ? OR CONCAT(u.first_Name, ' ', u.last_Name) LIKE ?)";
+    for ($i=0; $i<4; $i++) $params[] = '%' . $filterCourse . '%';
 }
 
 $sql .= ' ORDER BY d.dept_Name, c.course_ID, cs.section_No';
@@ -108,6 +110,19 @@ if ($filterDay !== '') {
 	));
 }
 
+
+// ashford-ms-v4: post-filter pagination
+if ($filterSeats === 'open') $sections = array_values(array_filter($sections, static fn($s) => (int)$s['available_Seats'] > 0));
+if ($filterSeats === 'full') $sections = array_values(array_filter($sections, static fn($s) => (int)$s['available_Seats'] <= 0));
+$totalSections = count($sections);
+$totalPages = max(1, (int)ceil($totalSections / 20));
+$pageNumber = max(1, min($totalPages, (int)(get_int('page') ?? 1)));
+$sections = array_slice($sections, ($pageNumber - 1) * 20, 20);
+$pageUrl = static function(int $page): string {
+    $q = $_GET;
+    $q['page'] = $page;
+    return 'master-schedule.php?' . http_build_query($q);
+};
 
 page_start(
 	'Master Schedule',

@@ -80,31 +80,28 @@ $credits = one(
 );
 
 
-// GPA from completed history (weighted average; not available when no grades)
+// Credit-weighted GPA from completed course history.
+// grade_points() excludes grades that do not contribute grade points.
 $historyGrades = all_rows(
-	$pdo,
-	"SELECT Grade
-		FROM Student_History
-		WHERE student_ID = ?
-			AND Grade IS NOT NULL",
-	[$studentID]
-);
+    $pdo,
+    "SELECT sh.Grade, c.course_Credits
+     FROM Student_History AS sh
+     JOIN Course AS c ON c.course_ID = sh.course_ID
+     WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
+    [$studentID]
+) ?? [];
 
 $gpa = null;
-
-$gradePoints = 0.0;
-$gradeCount = 0;
-
+$weightedPoints = 0.0;
+$gradedCredits = 0.0;
 foreach ($historyGrades as $row) {
-
-	$points = grade_points($row['Grade']);
-
-	if ($points !== null) {
-		$gradePoints += $points;
-		$gradeCount++;
-	}
+    $points = grade_points($row['Grade']);
+    $courseCredits = (float) $row['course_Credits'];
+    if ($points !== null && $courseCredits > 0) {
+        $weightedPoints += $points * $courseCredits;
+        $gradedCredits += $courseCredits;
+    }
 }
-
-if ($gradeCount > 0) {
-	$gpa = round($gradePoints / $gradeCount, 2);
+if ($gradedCredits > 0) {
+    $gpa = round($weightedPoints / $gradedCredits, 2);
 }

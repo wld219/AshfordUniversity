@@ -1,0 +1,658 @@
+========== student/dashboard.php ==========
+<?php
+
+declare(strict_types=1);
+
+require_once '../config/database.php';
+require_once '../includes/layout.php';
+require_once '../includes/functions.php';
+require_once '../includes/helpers.php';
+
+require_role(['Student']);
+
+// Get the logged-in student's ID
+$studentID = (int) $_SESSION['user_id'];
+
+// Page data
+require_once __DIR__ . '/dashboard_data.php';
+
+page_start(
+	'Welcome, ' . ($_SESSION['name'] ?? 'Student'),
+	'Student',
+	'dashboard.php'
+);
+
+flash();
+
+require_once __DIR__ . '/partials/dashboard_view.php';
+
+page_end();
+
+========== student/dashboard_data.php ==========
+<?php
+
+declare(strict_types=1);
+
+// Data for the student dashboard.
+
+// Student information
+$student = one(
+	$pdo,
+	"SELECT
+			User.user_ID,
+			User.first_Name,
+			User.last_Name,
+			Student.student_Type,
+			Major.major_Name,
+			CONCAT(advisor_User.first_Name, ' ', advisor_User.last_Name) AS advisor_Name
+		FROM User
+		JOIN Student
+			ON Student.student_ID = User.user_ID
+		LEFT JOIN Major
+			ON Major.major_ID = Student.major_ID
+		LEFT JOIN Advisor
+			ON Advisor.student_ID = Student.student_ID
+		LEFT JOIN User AS advisor_User
+			ON advisor_User.user_ID = Advisor.faculty_ID
+		WHERE User.user_ID = ?",
+	[$studentID]
+);
+
+
+// Current semester courses
+$currentSemester = current_registration_semester($pdo);
+
+$schedule = all_rows(
+	$pdo,
+	"SELECT
+			Course_Section.CRN,
+			Course.course_ID,
+			Course.course_Name,
+			Course.course_Credits,
+			Enrollment.Grade
+		FROM Enrollment
+		JOIN Course_Section
+			ON Course_Section.CRN = Enrollment.CRN
+		JOIN Course
+			ON Course.course_ID = Course_Section.course_ID
+		WHERE Enrollment.student_ID = ?
+			AND Enrollment.semester_ID = ?
+		ORDER BY Course.course_ID",
+	[$studentID, $currentSemester]
+);
+
+
+// Registration holds
+$holds = all_rows(
+	$pdo,
+	"SELECT
+			Hold.hold_Type
+		FROM Student_Hold
+		JOIN Hold
+			ON Hold.hold_ID = Student_Hold.hold_ID
+		WHERE Student_Hold.student_ID = ?",
+	[$studentID]
+);
+
+
+// Credit totals
+$credits = one(
+	$pdo,
+	"SELECT
+			COALESCE(SUM(Course.course_Credits), 0) AS total
+		FROM Enrollment
+		JOIN Course_Section
+			ON Course_Section.CRN = Enrollment.CRN
+		JOIN Course
+			ON Course.course_ID = Course_Section.course_ID
+		WHERE Enrollment.student_ID = ?
+			AND Enrollment.semester_ID = ?",
+	[$studentID, $currentSemester]
+);
+
+
+// GPA from completed history (weighted average; not available when no grades)
+$historyGrades = all_rows(
+	$pdo,
+	"SELECT Grade
+		FROM Student_History
+		WHERE student_ID = ?
+			AND Grade IS NOT NULL",
+	[$studentID]
+);
+
+$gpa = null;
+
+$gradePoints = 0.0;
+$gradeCount = 0;
+
+foreach ($historyGrades as $row) {
+
+	$points = grade_points($row['Grade']);
+
+	if ($points !== null) {
+		$gradePoints += $points;
+		$gradeCount++;
+	}
+}
+
+if ($gradeCount > 0) {
+	$gpa = round($gradePoints / $gradeCount, 2);
+}
+
+========== student/partials/dashboard_view.php ==========
+<?php
+
+declare(strict_types=1);
+
+// Student dashboard view: information, notices, schedule, actions.
+
+?>
+
+<div class="dashboard-page">
+
+	<section class="dashboard-hero">
+		<div>
+			<p class="dashboard-eyebrow">Student</p>
+			<h2>My dashboard</h2>
+			<p>Current academic activity and quick links</p>
+		</div>
+	</section>
+
+
+	<section class="dashboard-stats" aria-label="Academic summary">
+
+		<article class="dashboard-stat card">
+			<span class="dashboard-stat-label">Current courses</span>
+			<strong><?= count($schedule) ?></strong>
+			<span class="dashboard-stat-note">Fall 2026</span>
+		</article>
+
+		<article class="dashboard-stat card">
+			<span class="dashboard-stat-label">Current credits</span>
+			<strong><?= e((int) ($credits['total'] ?? 0)) ?></strong>
+			<span class="dashboard-stat-note">
+				Limit: <?= e(student_credit_limit($pdo, $studentID)) ?>
+			</span>
+		</article>
+
+		<article class="dashboard-stat card">
+			<span class="dashboard-stat-label">Cumulative GPA</span>
+			<strong><?= $gpa !== null ? e($gpa) : '—' ?></strong>
+			<span class="dashboard-stat-note">
+				<?= $gpa !== null ? 'Completed coursework' : 'Not available yet' ?>
+			</span>
+		</article>
+
+		<article class="dashboard-stat card">
+			<span class="dashboard-stat-label">Holds</span>
+			<strong><?= count($holds) ?></strong>
+			<span class="dashboard-stat-note">Registration holds</span>
+		</article>
+
+	</section>
+
+
+	<section class="dashboard-section">
+		<div class="dashboard-section-heading">
+			<div>
+				<p class="dashboard-eyebrow">Profile</p>
+				<h2>Student information</h2>
+			</div>
+			<a class="btn light" href="information.php">Update information</a>
+		</div>
+
+		<div class="card grid2">
+
+			<p>
+				<strong>Name</strong>
+				<br>
+				<?= e(
+					($student['first_Name'] ?? '') . ' ' .
+					($student['last_Name'] ?? '')
+				) ?>
+			</p>
+
+			<p>
+				<strong>Level</strong>
+				<br>
+				<?= e($student['student_Type'] ?? '') ?>
+			</p>
+
+			<p>
+				<strong>Major</strong>
+				<br>
+				<?= e($student['major_Name'] ?? 'Undeclared') ?>
+			</p>
+
+			<p>
+				<strong>Academic advisor</strong>
+				<br>
+				<?= e($student['advisor_Name'] ?? 'Not assigned') ?>
+			</p>
+
+		</div>
+	</section>
+
+
+	<?php if (count($holds) > 0): ?>
+
+		<div class="alert error">
+			You have <?= count($holds) ?> registration hold(s). Resolve them
+			before registering for courses. See the Holds page for details.
+		</div>
+
+	<?php endif; ?>
+
+
+	<section class="dashboard-section">
+		<div class="dashboard-section-heading">
+			<div>
+				<p class="dashboard-eyebrow">Registration</p>
+				<h2>Current schedule</h2>
+			</div>
+			<a class="btn" href="registration.php">Register for courses</a>
+		</div>
+
+		<?php if (count($schedule) > 0): ?>
+
+			<div class="table-wrap">
+				<table>
+					<thead>
+						<tr>
+							<th>Course</th>
+							<th>Title</th>
+							<th>Credits</th>
+							<th>CRN</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ($schedule as $course): ?>
+							<tr>
+								<td><?= e($course['course_ID']) ?></td>
+								<td><?= e($course['course_Name']) ?></td>
+								<td><?= e($course['course_Credits']) ?></td>
+								<td><?= e($course['CRN']) ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+
+		<?php else: ?>
+
+			<div class="card">
+				<p>No courses registered for Fall 2026.</p>
+			</div>
+
+		<?php endif; ?>
+	</section>
+
+</div>
+
+========== student/registration_actions.php ==========
+<?php
+
+declare(strict_types=1);
+
+// Registration action: check every rule, then register with a row lock so
+// two students cannot claim the same last seat.
+// Uses $pdo, $studentID from the entry point.
+
+$canRegister = false;
+
+if ($crn > 0) {
+
+	[$canRegister, $message] = registration_check(
+		$pdo,
+		$studentID,
+		$crn
+	);
+
+	if ($canRegister) {
+
+		try {
+
+			$pdo->beginTransaction();
+
+			// Lock the section row so two students cannot claim the
+			// last remaining seat at the same time.
+			$section = one(
+				$pdo,
+				"SELECT semester_ID, available_Seats
+				FROM Course_Section
+				WHERE CRN = ?
+				FOR UPDATE",
+				[$crn]
+			);
+
+			if (!$section) {
+
+				$pdo->rollBack();
+
+				$_SESSION['flash'] = [
+					'type' => 'error',
+					'message' => 'This course section no longer exists.'
+				];
+
+			} elseif ((int) $section['available_Seats'] <= 0) {
+
+				$pdo->rollBack();
+
+				$_SESSION['flash'] = [
+					'type' => 'error',
+					'message' => 'This course section is full.'
+				];
+
+			} else {
+
+				// Add the student to the course
+				$pdo->prepare(
+					"INSERT INTO Enrollment
+						(student_ID, CRN, semester_ID)
+					VALUES (?, ?, ?)"
+				)->execute([
+					$studentID,
+					$crn,
+					$section['semester_ID']
+				]);
+
+				// Reduce the number of available seats
+				$pdo->prepare(
+					"UPDATE Course_Section
+					SET available_Seats = available_Seats - 1
+					WHERE CRN = ?
+					AND available_Seats > 0"
+				)->execute([$crn]);
+
+				$pdo->commit();
+
+				audit_log(
+					$pdo,
+					'Create',
+					'Enrollment',
+					(string) $crn,
+					'Student registration'
+				);
+
+				$_SESSION['flash'] = [
+					'type' => 'success',
+					'message' => 'Course registration successful.'
+				];
+			}
+
+		} catch (Throwable $error) {
+
+			if ($pdo->inTransaction()) {
+				$pdo->rollBack();
+			}
+
+			error_log('Registration failed: ' . $error->getMessage());
+
+			$_SESSION['flash'] = [
+				'type' => 'error',
+				'message' => 'Registration could not be completed.'
+			];
+		}
+
+	} else {
+
+		$_SESSION['flash'] = [
+			'type' => 'error',
+			'message' => $message
+		];
+	}
+}
+
+header('Location: registration.php');
+exit;
+
+========== includes/functions/registration_check.php ==========
+<?php
+
+declare(strict_types=1);
+
+// Section eligibility: run every registration check in order and return
+// the first blocking message, or "Eligible".
+
+// Check if a student is allowed to register for a course
+function registration_check(
+	PDO $pdo,
+	int $studentID,
+	int $crn
+): array {
+
+	$section = registration_section($pdo, $crn);
+
+	if (!$section) {
+		return [false, 'Course section not found.'];
+	}
+
+	if (section_is_cancelled($pdo, $crn)) {
+		return [false, 'Registration blocked: this section has been cancelled.'];
+	}
+
+	[$windowOpen, , $windowMessage] = registration_window_status(
+		$pdo,
+		(int) $section['semester_ID']
+	);
+
+	if (!$windowOpen) {
+		return [false, 'Registration blocked: ' . $windowMessage];
+	}
+
+	// Order matters: checks that describe the student's own state come
+	// first so the message names the real reason. A student who is already
+	// enrolled in a section should be told that, not that the section is
+	// full.
+	$checks = [
+		check_already_registered($pdo, $studentID, $crn),
+		check_course_already_passed($pdo, $studentID, $section),
+		check_student_holds($pdo, $studentID),
+		check_course_level($pdo, $studentID, $section),
+		check_prerequisites($pdo, $studentID, $section),
+		check_credit_limit($pdo, $studentID, $section),
+		check_time_conflict($pdo, $studentID, $section),
+		check_duplicate_course_semester($pdo, $studentID, $section),
+		check_section_seats($section),
+	];
+
+	foreach ($checks as $message) {
+
+		if ($message !== null) {
+			return [false, $message];
+		}
+	}
+
+	return [true, 'Eligible'];
+}
+
+========== includes/functions/registration_course.php ==========
+<?php
+
+declare(strict_types=1);
+
+// Course-side registration checks: level, prerequisites, credits, time.
+
+// Undergraduate and graduate levels cannot mix.
+function check_course_level(PDO $pdo, int $studentID, array $section): ?string
+{
+	$student = one(
+		$pdo,
+		"SELECT student_Type
+		FROM Student
+		WHERE student_ID = ?",
+		[$studentID]
+	);
+
+	if (!$student) {
+		return null;
+	}
+
+	if (
+		$student['student_Type'] === 'Undergraduate' &&
+		$section['course_Type'] === 'Graduate'
+	) {
+		return 'Undergraduate students cannot register for graduate courses.';
+	}
+
+	if (
+		$student['student_Type'] === 'Graduate' &&
+		$section['course_Type'] === 'Undergraduate'
+	) {
+		return 'Graduate students cannot register for undergraduate courses.';
+	}
+
+	return null;
+}
+
+// Every prerequisite must be completed at the required minimum grade.
+function check_prerequisites(PDO $pdo, int $studentID, array $section): ?string
+{
+	$prerequisites = all_rows(
+		$pdo,
+		"SELECT prerequisite_course_ID, min_Grade_Req
+		FROM Course_Prerequisite
+		WHERE course_ID = ?",
+		[$section['course_ID']]
+	);
+
+	foreach ($prerequisites as $prerequisite) {
+
+		// Order by grade so the best recorded attempt is compared, not an
+		// arbitrary row from an unordered LIMIT 1.
+		$completed = one(
+			$pdo,
+			"SELECT Grade
+			FROM Student_History
+			WHERE student_ID = ?
+			AND course_ID = ?
+			AND Grade IN (
+				'A', 'A-', 'B+', 'B', 'B-',
+				'C+', 'C', 'C-', 'D+', 'D', 'F'
+			)
+			ORDER BY FIELD(
+				Grade,
+				'A', 'A-', 'B+', 'B', 'B-',
+				'C+', 'C', 'C-', 'D+', 'D', 'F'
+			)
+			LIMIT 1",
+			[$studentID, $prerequisite['prerequisite_course_ID']]
+		);
+
+		if (
+			!$completed ||
+			!grade_meets(
+				$completed['Grade'],
+				(string) $prerequisite['min_Grade_Req']
+			)
+		) {
+			return 'Registration blocked: prerequisite requirements are not satisfied.';
+		}
+	}
+
+	return null;
+}
+
+// Current credits plus the new course must stay within the credit limit.
+function check_credit_limit(PDO $pdo, int $studentID, array $section): ?string
+{
+	$credits = one(
+		$pdo,
+		"SELECT
+			COALESCE(SUM(Course.course_Credits), 0) AS total
+		FROM Enrollment
+		JOIN Course_Section
+			ON Course_Section.CRN = Enrollment.CRN
+		JOIN Course
+			ON Course.course_ID = Course_Section.course_ID
+		WHERE Enrollment.student_ID = ?
+		AND Enrollment.semester_ID = ?",
+		[$studentID, $section['semester_ID']]
+	);
+
+	$creditLimit = student_credit_limit($pdo, $studentID);
+
+	$currentCredits = (int) ($credits['total'] ?? 0);
+	$courseCredits = (int) $section['course_Credits'];
+
+	return $currentCredits + $courseCredits > $creditLimit
+		? "Registration blocked: this would exceed your {$creditLimit}-credit limit."
+		: null;
+}
+
+// No overlapping meeting time with an already registered section.
+function check_time_conflict(PDO $pdo, int $studentID, array $section): ?string
+{
+	$sql = "SELECT 1
+			FROM Enrollment
+			JOIN Course_Section
+				ON Course_Section.CRN = Enrollment.CRN
+			JOIN Time_Slot_Day my_day
+				ON my_day.time_Slot_ID = Course_Section.time_Slot_ID
+			JOIN Time_Slot_Day new_day
+				ON new_day.day_ID = my_day.day_ID
+				AND new_day.time_Slot_ID = ?
+			WHERE Enrollment.student_ID = ?
+				AND Enrollment.semester_ID = ?
+				AND EXISTS (
+					SELECT 1
+					FROM Time_Slot_Period my_period
+					JOIN Period my_time
+						ON my_time.period_ID = my_period.period_ID
+					JOIN Time_Slot_Period new_period
+						ON new_period.time_Slot_ID = ?
+					JOIN Period new_time
+						ON new_time.period_ID = new_period.period_ID
+					WHERE my_period.time_Slot_ID = Course_Section.time_Slot_ID
+						AND my_time.start_Time < new_time.end_Time
+						AND new_time.start_Time < my_time.end_Time
+				)
+			LIMIT 1";
+
+	$conflict = one(
+		$pdo,
+		$sql,
+		[
+			$section['time_Slot_ID'],
+			$studentID,
+			$section['semester_ID'],
+			$section['time_Slot_ID']
+		]
+	);
+
+	return $conflict
+		? 'Registration blocked: this course has a time conflict.'
+		: null;
+}
+
+// A student cannot register for the same course more than once per semester
+// (even under a different section/CRN).
+function check_duplicate_course_semester(
+	PDO $pdo,
+	int $studentID,
+	array $section
+): ?string {
+	$duplicate = one(
+		$pdo,
+		"SELECT 1
+			FROM Enrollment e
+			JOIN Course_Section cs ON cs.CRN = e.CRN
+			WHERE e.student_ID = ?
+				AND e.semester_ID = ?
+				AND cs.course_ID = ?
+				AND e.CRN <> ?
+			LIMIT 1",
+		[
+			$studentID,
+			$section['semester_ID'],
+			$section['course_ID'],
+			$section['CRN']
+		]
+	);
+
+	return $duplicate
+		? 'Registration blocked: you are already registered for this course this semester.'
+		: null;
+}
+

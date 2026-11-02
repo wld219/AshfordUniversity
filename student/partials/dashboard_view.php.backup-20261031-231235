@@ -1,0 +1,96 @@
+<?php
+declare(strict_types=1);
+// Shared Admin dashboard classes; student-specific content and access only.
+?>
+<div class="dashboard-page">
+    <section class="dashboard-header">
+        <div class="header-title">
+            <p class="header-eyebrow">Student Portal</p>
+            <h2>My academic overview</h2>
+            <p class="header-subtitle">Courses, academic progress and student services</p>
+        </div>
+        <div class="dashboard-actions">
+            <a class="btn" href="<?= e(app_base_path() . '/student/registration.php') ?>">Register for courses</a>
+            <a class="btn light" href="<?= e(app_base_path() . '/student/master-schedule.php') ?>">Master schedule</a>
+        </div>
+    </section>
+
+    <div class="dashboard-metrics" aria-label="Academic summary">
+        <article class="dashboard-metric">
+            <span class="metric-label">Current courses</span>
+            <strong class="metric-value"><?= e(count($schedule)) ?></strong>
+            <span class="metric-caption"><?= e($semesterLabel) ?></span>
+        </article>
+        <article class="dashboard-metric">
+            <span class="metric-label">Current credits</span>
+            <strong class="metric-value"><?= e((int) ($credits['total'] ?? 0)) ?></strong>
+            <span class="metric-caption">Credit limit: <?= e(student_credit_limit($pdo, $studentID)) ?></span>
+        </article>
+        <article class="dashboard-metric">
+            <span class="metric-label">Cumulative GPA</span>
+            <strong class="metric-value"><?= $gpa !== null ? e(number_format((float) $gpa, 2)) : '—' ?></strong>
+            <span class="metric-caption"><?= $gpa !== null ? 'Credit-weighted completed coursework' : 'Not available yet' ?></span>
+        </article>
+        <article class="dashboard-metric">
+            <span class="metric-label">Registration holds</span>
+            <strong class="metric-value"><?= e(count($holds)) ?></strong>
+            <span class="metric-caption"><a href="<?= e(app_base_path() . '/student/holds.php') ?>">View my holds</a></span>
+        </article>
+    </div>
+
+    <?php if (!empty($holds)): ?>
+        <div class="alert error" role="alert">
+            You have <?= e(count($holds)) ?> registration hold(s).
+            <a href="<?= e(app_base_path() . '/student/holds.php') ?>">View hold details</a> before registering.
+        </div>
+    <?php endif; ?>
+
+    <section class="dashboard-table-section" aria-label="Student information">
+        <div class="dashboard-table-header">
+            <div><h3>Student information</h3></div>
+            <div class="dashboard-table-actions">
+                <a class="btn light" href="<?= e(app_base_path() . '/student/information.php') ?>">Update information</a>
+            </div>
+        </div>
+        <div class="card grid2">
+            <p><strong>Student ID</strong><br><?= e($student['user_ID'] ?? $studentID) ?></p>
+            <p><strong>Name</strong><br><?= e(trim(($student['first_Name'] ?? '') . ' ' . ($student['last_Name'] ?? ''))) ?></p>
+            <p><strong>Student type</strong><br><?= e($student['student_Type'] ?? 'Not available') ?></p>
+            <p><strong>Major</strong><br><?= e($student['major_Name'] ?? 'Undeclared') ?></p>
+            <p><strong>Academic advisor</strong><br><?= e($student['advisor_Name'] ?? 'Not assigned') ?></p>
+        </div>
+    </section>
+
+    <section class="dashboard-table-section" aria-label="Current course schedule">
+        <div class="dashboard-table-header">
+            <div>
+                <h3>Current schedule</h3>
+                <p class="header-subtitle"><?= e($semesterLabel) ?></p>
+            </div>
+            <div class="dashboard-table-actions">
+                <a class="btn" href="<?= e(app_base_path() . '/student/schedule.php') ?>">View full schedule</a>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="dashboard-table-compact">
+                <thead>
+                    <tr><th scope="col">Course</th><th scope="col">Title</th><th scope="col">Credits</th><th scope="col">CRN</th></tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($schedule)): ?>
+                        <tr><td colspan="4"><div class="dashboard-empty" style="padding:24px;text-align:left;">No courses registered for <?= e($semesterLabel) ?>.</div></td></tr>
+                    <?php else: ?>
+                        <?php foreach ($schedule as $course): ?>
+                            <tr>
+                                <td class="mono"><?= e($course['course_ID']) ?></td>
+                                <td><?= e($course['course_Name']) ?></td>
+                                <td><?= e($course['course_Credits']) ?></td>
+                                <td class="mono"><?= e($course['CRN']) ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

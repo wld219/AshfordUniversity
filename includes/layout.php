@@ -115,9 +115,13 @@ function page_start(
 			href="<?= e(app_base_path() . '/assets/css/style.css') ?>"
 		>
 
+        <?php if ($role === 'Student'): ?>
+        <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/student-portal-theme.css') ?>">
+        <?php endif; ?>
+
 	</head>
 
-    <body>
+    <body class="<?= $role === 'Student' ? 'student-portal-theme' : '' ?>">
 
     <header class="topbar">
 

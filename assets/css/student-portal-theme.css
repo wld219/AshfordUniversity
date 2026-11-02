@@ -1,0 +1,30 @@
+/* Ashford Student Portal — consistent presentation across all navigation pages. */
+body.student-portal-theme { --student-navy:#122849; --student-accent:#5548aa; --student-border:#e2e7f0; background:#f4f6fb; color:#26344b; font-size:16px; }
+.student-portal-theme .topbar { background:#122849; color:#fff; border-bottom:1px solid #304466; box-shadow:0 2px 12px rgba(17,37,70,.12); }
+.student-portal-theme .topbar .brand, .student-portal-theme .topbar .brand b, .student-portal-theme .topbar .brand small, .student-portal-theme .topbar .account strong, .student-portal-theme .topbar .account small { color:#fff; }
+.student-portal-theme .seal { background:#fff; color:#122849; border-radius:12px; }
+.student-portal-theme .shell { background:#f4f6fb; }
+.student-portal-theme .sidebar { background:#fff; border-right:1px solid var(--student-border); }
+.student-portal-theme .sidebar a { border-radius:9px; font-weight:600; color:#44546d; transition:background .15s ease; }
+.student-portal-theme .sidebar a:hover { background:#f1f0fc; color:#342b86; }
+.student-portal-theme .sidebar a.active { background:#ebe9fb; color:#42349a; }
+.student-portal-theme .content { min-width:0; padding:28px; }
+.student-portal-theme .content > h1 { font-size:clamp(24px,2.4vw,32px); font-weight:750; letter-spacing:-.025em; color:#172c4c; margin-bottom:22px; }
+.student-portal-theme .content h2 { color:#172c4c; }
+.student-portal-theme .card, .student-portal-theme .dashboard-metric, .student-portal-theme .dashboard-table-section, .student-portal-theme .dashboard-section, .student-portal-theme .table-wrap { background:#fff; border:1px solid var(--student-border); border-radius:12px; box-shadow:0 2px 8px rgba(25,43,77,.035); }
+.student-portal-theme .card, .student-portal-theme .dashboard-section { padding:20px; }
+.student-portal-theme .dashboard-metric { padding:20px; }
+.student-portal-theme .table-wrap { overflow-x:auto; }
+.student-portal-theme table { width:100%; border-collapse:collapse; font-size:14px; }
+.student-portal-theme th { background:#f1f4fa; color:#36465f; text-align:left; font-size:13px; font-weight:750; letter-spacing:.01em; white-space:nowrap; }
+.student-portal-theme th, .student-portal-theme td { padding:13px 15px; border-bottom:1px solid #e8ecf3; vertical-align:middle; }
+.student-portal-theme tbody tr:nth-child(even) { background:#fbfcff; }
+.student-portal-theme tbody tr:hover { background:#f5f6fc; }
+.student-portal-theme .btn { background:#5548aa; color:#fff; border-radius:8px; font-weight:650; }
+.student-portal-theme .btn:hover { background:#44358e; }
+.student-portal-theme .btn.light { background:#f0eefb; color:#45378e; border:1px solid #dcd7f5; }
+.student-portal-theme .btn.danger { background:#a72e42; color:#fff; }
+.student-portal-theme input, .student-portal-theme select, .student-portal-theme textarea { border-radius:8px; border:1px solid #cfd7e5; font-size:15px; max-width:100%; }
+.student-portal-theme input:focus-visible, .student-portal-theme select:focus-visible, .student-portal-theme a:focus-visible, .student-portal-theme button:focus-visible { outline:3px solid #b4a8fa; outline-offset:2px; }
+.student-portal-theme .alert { border-radius:9px; }
+@media (max-width:900px) { .student-portal-theme .content { padding:18px; } .student-portal-theme .card { padding:16px; } }

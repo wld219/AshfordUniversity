@@ -1,0 +1,77 @@
+ASHFORD UNIVERSITY — STUDENT PORTAL AUDIT
+============================================================
+
+1. PHP SYNTAX
+PASS: student/advisor.php
+PASS: student/buildings.php
+PASS: student/catalog.php
+PASS: student/dashboard.php
+PASS: student/dashboard_data.php
+PASS: student/degree-audit.php
+PASS: student/degree_audit_data.php
+PASS: student/holds.php
+PASS: student/information.php
+PASS: student/master-schedule.php
+PASS: student/partials/dashboard_view.php
+PASS: student/partials/degree_audit_view.php
+PASS: student/partials/information_view.php
+PASS: student/partials/master_schedule_view.php
+PASS: student/partials/programs_view.php
+PASS: student/partials/registration_view.php
+PASS: student/partials/schedule_view.php
+PASS: student/programs.php
+PASS: student/programs_actions.php
+PASS: student/programs_data.php
+PASS: student/registration.php
+PASS: student/registration_actions.php
+PASS: student/schedule.php
+PASS: student/schedule_actions.php
+PASS: student/transcript.php
+
+2. STUDENT PAGE SECURITY
+PASS: dashboard.php
+PASS: registration.php
+PASS: master-schedule.php
+PASS: schedule.php
+PASS: transcript.php
+PASS: degree-audit.php
+PASS: holds.php
+PASS: advisor.php
+PASS: programs.php
+PASS: catalog.php
+PASS: buildings.php
+PASS: information.php
+
+3. STUDENT LINKS
+REVIEW: student/partials/dashboard_view.php -> information.php
+REVIEW: student/partials/dashboard_view.php -> registration.php
+REVIEW: student/partials/degree_audit_view.php -> programs.php
+REVIEW: student/partials/master_schedule_view.php -> master-schedule.php
+REVIEW: student/partials/registration_view.php -> registration.php
+
+4. REGISTRATION AND SCHEDULE CHECKS
+FOUND: Registration window
+FOUND: CSRF protection
+FOUND: Seat availability
+FOUND: Student identity
+FOUND: Registration holds
+FOUND: Prerequisites
+REVIEW: Schedule conflicts
+FOUND: Drop deadline
+
+5. STUDENT PAGE LINKS FROM NAVIGATION
+PASS: Overview -> dashboard.php
+PASS: Course Registration -> registration.php
+PASS: Master Schedule -> master-schedule.php
+PASS: My Schedule -> schedule.php
+PASS: Unofficial Transcript -> transcript.php
+PASS: Degree Audit -> degree-audit.php
+PASS: Holds -> holds.php
+PASS: My Advisor -> advisor.php
+PASS: Majors & Minors -> programs.php
+PASS: Catalog -> catalog.php
+PASS: Buildings -> buildings.php
+PASS: My Information -> information.php
+
+NOTE: This is a static audit. It cannot confirm that database
+queries, registration actions, or authenticated pages work.

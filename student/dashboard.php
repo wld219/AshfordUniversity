@@ -15,6 +15,13 @@ $studentID = (int) $_SESSION['user_id'];
 // Page data
 require_once __DIR__ . '/dashboard_data.php';
 
+
+$semesterLabel = 'Semester unavailable';
+if (!empty($currentSemester)) {
+    $semesterRow = one($pdo, 'SELECT semester_Name FROM Semester WHERE semester_ID = ?', [(int) $currentSemester]);
+    $semesterLabel = (string) ($semesterRow['semester_Name'] ?? 'Semester unavailable');
+}
+
 page_start(
 	'Welcome, ' . ($_SESSION['name'] ?? 'Student'),
 	'Student',
