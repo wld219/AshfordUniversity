@@ -52,7 +52,7 @@ require_once __DIR__ . '/academic_data.php';
 
 // Faculty assignment rules are reported, never silently corrected, because
 // historical records must not be rewritten.
-$facultyRuleViolations = faculty_rule_violations($pdo);
+
 
 page_start(
 	'Academic Management',

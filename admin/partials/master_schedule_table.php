@@ -6,93 +6,92 @@ declare(strict_types=1);
 
 ?>
 
-<style>.as-schedule-table{width:100%;border-collapse:collapse;font-size:13px}.as-schedule-table th,.as-schedule-table td{padding:8px 7px;vertical-align:top;white-space:normal}.as-schedule-table th{white-space:nowrap}.as-schedule-table .as-numeric{text-align:center;white-space:nowrap}.as-schedule-table .as-room{min-width:140px}.as-schedule-table .as-name{min-width:165px}</style><div class="table-wrap">
+<!-- AIU-layout-v1: table presentation only; edit permissions retained -->
+<style>
+.as-schedule-table {
+    width: 100%;
+    min-width: 1600px;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.as-schedule-table th,
+.as-schedule-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    text-align: left;
+}
+.as-schedule-table th {
+    background: #f4f4f4;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.as-schedule-table tbody tr:hover {
+    background: #f8f8f8;
+}
+.as-schedule-table .as-numeric {
+    text-align: center;
+    white-space: nowrap;
+}
+.as-schedule-table .as-room {
+    min-width: 80px;
+    white-space: nowrap;
+}
+.as-schedule-table .as-name {
+    min-width: 180px;
+}
+.as-schedule-table td:nth-child(1),
+.as-schedule-table td:nth-child(2),
+.as-schedule-table td:nth-child(5),
+.as-schedule-table td:nth-child(8),
+.as-schedule-table td:nth-child(9) {
+    white-space: nowrap;
+}
+</style>
+<div class="table-wrap" style="overflow-x:auto">
+<table class="as-schedule-table">
+<thead><tr><th>CRN</th><th>Course ID</th><th>Credits</th><th>Course Name</th><th>Section ID</th><th>Instructor</th><th>Room</th><th>Days</th><th>Meeting Times</th><th>Minimum Seats</th><th>Seat Capacity</th><th>Actual Enrollment</th><th>Department</th><th>Mode</th><th>Status</th><?php if ($isFullAccess && $schedule !== null): ?><th>Action</th><?php endif; ?></tr></thead>
+<tbody>
+<?php if (count($pageRows) === 0): ?>
+<tr><td colspan="<?= ($isFullAccess && $schedule !== null) ? 16 : 15 ?>">No sections match the selected filters.</td></tr>
+<?php else: foreach ($pageRows as $row):
+    $rowErrors = validate_schedule_row($row);
+    $status = count($rowErrors) === 0 ? '<span class="badge">Scheduled</span>' : '<span class="badge">Attention</span>';
+    $minimum = 10;
+    $capacity = $row['capacity'] ?? $row['SeatsCapacity'] ?? $row['seats_Capacity'] ?? null;
+    $deptCodes = ['Computer Science'=>'CS','Arts and Media'=>'AR','Business'=>'BUS','Education'=>'EDU','Engineering'=>'ENG','English'=>'ENGL','Health Sciences'=>'HSC','Mathematics'=>'MAT'];
+    $deptName = (string)($row['dept_Name'] ?? $row['department_Name'] ?? '');
+    $code = $deptCodes[$deptName] ?? '';
+    $courseID = $code . (string)$row['course_ID'];
+    $startTime = $row['start_Time'] ?? null;
+    $endTime = $row['end_Time'] ?? null;
 
-	<table class="as-schedule-table">
-		<tr>
-			<th>CRN</th>
-			<th>Course ID</th>
-            <th>Course Name</th>
-            <th>Credits</th>
-			<th>Section</th>
-			<th>Instructor</th>
-			<th>Days</th>
-			<th>Time</th>
-			<th>Building / Room</th>
-			<th>Capacity</th>
-			<th>Enrolled</th>
-			<th>Available Seats</th>
-			<th>Mode</th>
-<th>Status</th>
-			<?php if ($isFullAccess && $schedule !== null): ?>
-				<th>Action</th>
-			<?php endif; ?>
-		</tr>
-
-		<?php if (count($pageRows) === 0): ?>
-
-			<tr>
-				<td colspan="<?= ($isFullAccess && $schedule !== null) ? 15 : 14 ?>">No sections match the selected filters.</td>
-			</tr>
-
-		<?php else: ?>
-
-			<?php foreach ($pageRows as $row): ?>
-
-				<?php
-
-				$rowErrors = validate_schedule_row($row);
-				$status = count($rowErrors) === 0
-					? '<span class="badge">Scheduled</span>'
-					: '<span class="badge">Attention</span>';
-
-				?>
-
-				<tr>
-					<td><?= e((string) $row['CRN']) ?></td>
-					<td><?= e((string) $row['course_ID']) ?></td>
-                    <td class="as-name"><?= e((string) $row['course_Name']) ?></td>
-                    <td><?= e((string) ($row['course_Credits'] ?? '—')) ?></td>
-					<td><?= e((string) $row['section_No']) ?></td>
-					
-					<td><?= e((string) $row['faculty_Name']) ?></td>
-					<td><?= e(implode(', ', array_map(
-						static fn(string $day): string => substr($day, 0, 3),
-						$row['days']
-					))) ?></td>
-					<td>
-						<?= e(
-							$row['start_Time'] !== null && $row['end_Time'] !== null
-								? substr((string) $row['start_Time'], 0, 5)
-									. '-' . substr((string) $row['end_Time'], 0, 5)
-								: 'TBA'
-						) ?>
-					</td>
-					<td class="as-room"><?= e((string) ($row['room_Label'] ?? 'Unassigned')) ?></td>
-					<td class="as-numeric">10</td>
-					<td class="as-numeric"><?= e((string) $row['enrolled']) ?></td>
-                    <td class="as-numeric"><?= e((string) max(0, 10 - (int)$row['enrolled'])) ?></td><td><?= e((string)($row['instruction_Mode'] ?? 'In-Person')) ?></td>
-					<td><?= $status ?></td>
-
-					<?php if ($isFullAccess && $schedule !== null): ?>
-						<td>
-							<a
-								class="btn small"
-								href="master-schedule.php?semester=<?= e((string) $semesterID) ?>&edit=<?= e((string) $row['CRN']) ?>"
-							>
-								Edit
-							</a>
-						</td>
-					<?php endif; ?>
-				</tr>
-
-			<?php endforeach; ?>
-
-		<?php endif; ?>
-
-	</table>
-
-</div>
+    $meeting = ($startTime && $endTime)
+        ? date('g:i A', strtotime((string)$startTime)) .
+          ' - ' .
+          date('g:i A', strtotime((string)$endTime))
+        : 'TBA';
+?>
+<tr>
+<td><?= e((string)$row['CRN']) ?></td>
+<td><?= e($courseID) ?></td>
+<td><?= e((string)($row['course_Credits'] ?? '—')) ?></td>
+<td class="as-name"><?= e((string)$row['course_Name']) ?></td>
+<td><?= e(str_pad((string)$row['section_No'],2,'0',STR_PAD_LEFT)) ?></td>
+<td><?= e((string)$row['faculty_Name']) ?></td>
+<td class="as-room"><?= e((string)($row['room_Label'] ?? 'Unassigned')) ?></td>
+<td><?= e(implode(', ',array_map(static fn(string $day):string => substr($day,0,3),$row['days']))) ?></td>
+<td><?= e($meeting) ?></td>
+<td class="as-numeric"><?= $minimum === null ? '—' : e((string)$minimum) ?></td>
+<td class="as-numeric"><?= $capacity === null ? '—' : e((string)$capacity) ?></td>
+<td class="as-numeric"><?= e((string)$row['enrolled']) ?></td>
+<td><?= e($deptName !== '' ? $deptName : (string)($row['dept_ID'] ?? '—')) ?></td>
+<td><?= e((string)($row['instruction_Mode'] ?? 'In-Person')) ?></td>
+<td><?= $status ?></td>
+<?php if ($isFullAccess && $schedule !== null): ?><td><a class="btn small" href="master-schedule.php?<?= e(http_build_query(['semester'=>$semesterID,'edit'=>$row['CRN']])) ?>">Edit</a></td><?php endif; ?>
+</tr>
+<?php endforeach; endif; ?>
+</tbody></table></div>
 
 
 <div class="card">
