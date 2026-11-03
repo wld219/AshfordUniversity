@@ -1,0 +1,180 @@
+-- MariaDB dump 10.19  Distrib 10.4.28-MariaDB, for osx10.10 (x86_64)
+--
+-- Host: 127.0.0.1    Database: ashford_university
+-- ------------------------------------------------------
+-- Server version	8.4.6
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `Major`
+--
+
+/*!40000 ALTER TABLE `Major` DISABLE KEYS */;
+INSERT INTO `Major` VALUES 
+    (1,'Computer Science',1),
+    (2,'Cybersecurity',1),
+    (3,'Business Administration',2),
+    (4,'Accounting',2),
+    (5,'Mathematics',3),
+    (6,'Biology',4),
+    (7,'Engineering',5),
+    (8,'English',6),
+    (9,'Psychology',7),
+    (10,'Education',8),
+    (11,'Health Sciences',9),
+    (12,'Media Studies',10),
+    (13,'Adolescence Education: Chemistry (7-12), B.A.',12),
+    (14,'Adolescence Education: Social Studies (7-12), B.A.',12),
+    (15,'American Studies, B.A.',20),
+    (16,'Biological Sciences, B.A.',13),
+    (17,'Black Studies, B.A.',20),
+    (18,'Chemistry, B.A.',14),
+    (19,'English, B.A.',6),
+    (20,'Environmental Studies, B.A.',17),
+    (21,'History, B.A.',17),
+    (22,'Industrial and Labor Relations, B.A.',22),
+    (23,'Liberal Arts, B.A.',20),
+    (24,'Media and Communications, B.A.',20),
+    (25,'Philosophy and Religion, B.A.',17),
+    (26,'Politics, Economics & Law, B.A.',22),
+    (27,'Psychology, B.A.',23),
+    (28,'Sociology, B.A.',26),
+    (29,'Spanish Language, Hispanic Literature & Culture, B.A.',21),
+    (30,'Visual Arts, B.A.',27),
+    (31,'Women’s, Gender, and Sexuality Studies, B.A.',28),
+    (32,'Visual Arts, B.F.A.',27),
+    (33,'Professional Studies, B.P.S.',25),
+    (34,'Accounting, B.S.',11),
+    (35,'Adolescence Education: Biology (7-12), B.S.',12),
+    (36,'Adolescence Education: Chemistry (7-12), B.S.',12),
+    (37,'Adolescence Education: Mathematics (7-12), B.S.',12),
+    (38,'Biochemistry, B.S.',14),
+    (39,'Bioinformatics and Computational Biology, B.S.',13),
+    (40,'Biological Sciences, B.S.',13),
+    (41,'Business Administration, B.S.',18),
+    (42,'Chemistry, B.S.',14),
+    (43,'Childhood Education (1-6), B.S.',15),
+    (44,'Childhood Education with Bilingual Extension (1-6), B.S.',15),
+    (45,'Computer & Information Sciences Degree',19),
+    (46,'Criminology, B.S.',26),
+    (47,'Economics, B.S.',22),
+    (48,'Finance, B.S.',18),
+    (49,'Industrial and Labor Relations, B.S.',22),
+    (50,'Management Information Systems, B.S.',19),
+    (51,'Marketing, B.S.',18),
+    (52,'Mathematics, B.S.',19),
+    (53,'Physics, B.S.',14),
+    (54,'Psychology, B.S.',23),
+    (55,'Public Health, B.S.',24),
+    (56,'Sociology, B.S.',26),
+    (57,'Students with Disabilities (All Grades), B.S.',16),
+    (58,'Visual Arts: Electronic Media, B.S.',27),
+    (59,'Liberal Studies, M.A.',20),
+    (60,'Adolescence Education: Biology (7-12), M.A.T.',12),
+    (61,'Adolescence Education: English Language Arts (7-12), M.A.T.',12),
+    (62,'Adolescence Education: Mathematics (7-12), M.A.T.',12),
+    (63,'Adolescence Education: Social Studies (7-12), M.A.T.',12),
+    (64,'Adolescence Education: Spanish (7-12), M.A.T.',12),
+    (65,'Accounting, M.S.',11),
+    (66,'Data Science Master\'s Degree',19),
+    (67,'Forensic Accounting',11),
+    (68,'Healthcare Management, M.S.',18),
+    (69,'Integrative Neuroscience, M.S.',13),
+    (70,'Literacy Education, M.S.',15),
+    (71,'Mental Health Counseling, M.S.',23),
+    (72,'Special Education, M.S.',16),
+    (73,'Taxation, M.S.',25),
+    (74,'Teaching English as a New Language, M.S.',12),
+    (75,'The Online M.S. in Accounting',25),
+    (76,'B.A./B.S./M.A. in Sociology/Liberal Studies',20),
+    (77,'B.A./M.A. in American Studies/Liberal Studies',20),
+    (78,'B.A./M.A. in Black Studies/Liberal Studies',20),
+    (79,'B.A./M.A. in English/Liberal Studies',6),
+    (80,'B.A./M.A. in History/Liberal Studies',17),
+    (81,'B.A./M.A. in Media & Communications/Liberal Studies',20),
+    (82,'B.A./M.A. in Politics, Economics, & Law/Liberal Studies',22),
+    (83,'B.S./M.A. in Criminology/Liberal Studies',20),
+    (84,'B.S./M.S. in Accounting',11),
+    (85,'B.S./M.S. in Taxation',11),
+    (88,'Biochemistry & Doctor of Osteopathic Medicine, B.S./D.O.',14),
+    (89,'Biological Sciences & Doctor of Osteopathic Medicine, B.S./D.O.',13),
+    (90,'Advanced Certificate in Taxation',11),
+    (91,'Advanced Certificate Programs in Adolescence Education (7-12)',12),
+    (92,'Teaching English as a New Language, ADV. CRT.',12),
+    (93,'Advanced TV/Video Production Microcredential',20),
+    (94,'AI & Society Microcredential',19),
+    (95,'Business Taxation Microcredential',11),
+    (96,'Diversity, Equity, Inclusion, and Justice in the Workplace Microcredential',20),
+    (97,'Estate, Gift & Trust Taxation Microcredential',11),
+    (98,'Foundational Counseling Skills Microcredential',23),
+    (99,'Foundations in Applied Behavior Change Microcredential',23),
+    (100,'Foundations of Creative Writing Microcredential',6),
+    (101,'Foundations of Forensic Accounting Microcredential',11),
+    (102,'Foundations of Neuropsychopharmacology Microcredential',23),
+    (103,'Foundations of Nonprofit Management Microcredential',18),
+    (104,'Foundations of Spanish Translation Microcredential',21),
+    (105,'Fundamentals of Non-Fiction Video Production Microcredential',20),
+    (106,'Fundamentals of Television News Production Microcredential',20),
+    (107,'Multimedia Journalism Microcredential',20),
+    (108,'PR & Strategic Communications Microcredential',20),
+    (109,'Professional Skills for the Workplace Microcredential',18),
+    (110,'Psychological Foundations of Substance Use Microcredential',23),
+    (111,'The Foundations of Cognitive Neuropsychology Microcredential',23),
+    (112,'Workplace Communication and Information Technology Microcredential',20),
+    (113,'Accounting Minor',11),
+    (114,'African American Studies and the African Diaspora, Minor',20),
+    (115,'Applied Mathematics Minor',19),
+    (116,'Chemistry Minor',14),
+    (117,'Community Action Psychology',23),
+    (118,'Computer and Information Sciences Minor',19),
+    (119,'Congregational Leadership Minor',17),
+    (120,'Consumer Psychology, Minor',23),
+    (121,'Digital Design Marketing Minor',27),
+    (122,'Economics Minor',22),
+    (123,'Entertainment and Sports Management Minor',18),
+    (124,'Environmental Studies Minor',17),
+    (125,'French Studies Minor',21),
+    (126,'General Business Minor',18),
+    (127,'Global Studies Minor',6),
+    (128,'Hispanic Cultural Studies Minor',17),
+    (129,'Industrial and Labor Relations Minor',22),
+    (130,'Islamic Studies Minor',17),
+    (131,'Italian Cultural Studies Minor',21),
+    (132,'Marketing Minor',18),
+    (133,'Mathematics Minor',19),
+    (134,'Media and Communications Minor',20),
+    (135,'Media Design Minor',20),
+    (136,'Multicultural US/British Literature Minor',6),
+    (137,'Neuropsychology Minor',23),
+    (138,'Philosophy and Religion Minor',17),
+    (139,'Physics Minor',14),
+    (140,'Pre Health Professions Minor',13),
+    (141,'Pre-Law Studies Minor',20),
+    (142,'Psychology Minor',23),
+    (143,'Public Health Minor',22),
+    (144,'Public Policy Minor',22),
+    (145,'Social Work Minor',26),
+    (146,'Spanish Minor',21),
+    (147,'Visual Arts Minor',27),
+    (148,'Women & Gender Studies Minor',20)
+;
+/*!40000 ALTER TABLE `Major` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-11-02 19:19:23
