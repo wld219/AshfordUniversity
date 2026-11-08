@@ -39,10 +39,13 @@ function mailbox_body(string $body):string {
 }
 function mailbox_security_body(array $message): string {
  $template=(string)($message['template']??'');
- if(!in_array($template,['reset_code','password_changed'],true)){
+ if(!in_array($template,['reset_code','login_code','password_changed'],true)){
   $oldBody=(string)($message['body']??'');
   $from=strtolower(trim((string)($message['from']??'')));
-  if($from==='security@ashford.edu' && preg_match('/verification code is:\s*[0-9]{6}/i',$oldBody))$template='reset_code';
+  if($from==='security@ashford.edu' && preg_match('/verification code is:\s*[0-9]{6}/i',$oldBody)){
+   $subject=strtolower((string)($message['subject']??''));
+   $template=(str_contains($subject,'sign-in') || str_contains($subject,'sign in') || stripos($oldBody,'sign-in verification code')!==false) ? 'login_code' : 'reset_code';
+  }
   else return nl2br(mailbox_body($oldBody));
  }
  $raw=(string)($message['body']??'');
@@ -52,10 +55,14 @@ function mailbox_security_body(array $message): string {
  $header='<div style="background:#082c52;color:#fff;padding:22px 28px;font-size:22px;font-weight:700;letter-spacing:.3px">◆ Ashford University <span style="font-size:12px;font-weight:400;opacity:.85"> | Security</span></div>';
  $start='<div style="max-width:680px;margin:18px auto;background:#fff;border:1px solid #dce3ed;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px #122b4510;font-family:Arial,sans-serif;line-height:1.6">'.$header.'<div style="padding:28px 34px;color:#1c2b3b">';
  $end='<hr style="border:0;border-top:1px solid #e3e8f0;margin:26px 0 16px"><div style="font-size:13px;color:#66788b">Ashford University Security<br>Account Protection &amp; Support<br><span style="font-size:11px">Internal university demonstration mail</span></div></div></div>';
- if($template==='reset_code'){
+ if($template==='reset_code' || $template==='login_code'){
   if(!preg_match('/verification code is:\s*([0-9]{6})/i',$raw,$matches))return nl2br(mailbox_body($raw));
   $code=mail_h($matches[1]);
-  return $start.'<h2 style="font-size:24px;color:#102e51;margin:0 0 20px">Password Reset Verification</h2><p><strong>'.$hello.'</strong></p><p>We received a request to reset your Ashford University account password. Enter the code below to continue.</p><div style="text-align:center;background:#eaf3ff;border-radius:10px;padding:22px;margin:24px 0"><div style="font-size:13px;font-weight:bold;color:#17529a">YOUR VERIFICATION CODE</div><div style="font-size:38px;letter-spacing:8px;font-weight:800;color:#0b2e55">'.$code.'</div></div><p style="font-size:14px;color:#526579">⏱ Expires in 10 minutes &nbsp; • &nbsp; One-time use only</p><p style="font-size:14px">If you did not request a password reset, you can safely ignore this email.</p>'.$end;
+  $isLogin=$template==='login_code';
+  $heading=$isLogin?'Sign-In Verification Code':'Password Reset Verification';
+  $intro=$isLogin?'We received a request to sign in to your Ashford University account. Enter the code below to complete your sign-in.':'We received a request to reset your Ashford University account password. Enter the code below to continue.';
+  $warning=$isLogin?'If you did not attempt to sign in, please contact university support.':'If you did not request a password reset, you can safely ignore this email.';
+  return $start.'<h2 style="font-size:24px;color:#102e51;margin:0 0 20px">'.$heading.'</h2><p><strong>'.$hello.'</strong></p><p>'.$intro.'</p><div style="text-align:center;background:#eaf3ff;border-radius:10px;padding:22px;margin:24px 0"><div style="font-size:13px;font-weight:bold;color:#17529a">YOUR VERIFICATION CODE</div><div style="font-size:38px;letter-spacing:8px;font-weight:800;color:#0b2e55">'.$code.'</div></div><p style="font-size:14px;color:#526579">⏱ Expires in 10 minutes &nbsp; • &nbsp; One-time use only</p><p style="font-size:14px">'.$warning.'</p>'.$end;
  }
  return $start.'<h2 style="font-size:24px;color:#102e51;margin:0 0 20px">Your Password Was Changed</h2><p><strong>'.$hello.'</strong></p><div style="background:#eaf7ee;color:#14633a;padding:16px;border-radius:9px;font-weight:bold">✓ Password changed successfully</div><p>Your Ashford University account password was successfully updated.</p><p>If you made this change, no further action is required.</p><p><strong>Didn’t make this change?</strong> Contact university support immediately.</p>'.$end;
 }
