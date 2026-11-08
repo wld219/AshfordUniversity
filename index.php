@@ -163,7 +163,7 @@ unset($_SESSION['flash']);
 	</form>
 
 	<p class="login-help">
-		<a href="<?= e(url('forgot_password.php')) ?>">Forgot password?</a>
+		<a href="<?= e(url('forgot_password.php')) ?>" id="forgot-password-trigger">Forgot password?</a>
 	</p>
 
 	<p class="login-help">
@@ -179,5 +179,14 @@ unset($_SESSION['flash']);
 		</p>
 	</main>
 
+<dialog id="reset-dialog" aria-label="Password recovery" style="width:min(95vw,540px);height:min(90vh,690px);border:0;border-radius:16px;padding:0;box-shadow:0 24px 90px #0005;">
+<button id="reset-close" type="button" aria-label="Close password recovery" style="position:absolute;right:12px;top:9px;border:0;background:#f1f5f9;border-radius:50%;width:32px;height:32px;cursor:pointer;z-index:2">×</button>
+<iframe title="Password recovery" src="<?=e(url('forgot_password.php'))?>" style="width:100%;height:100%;border:0"></iframe>
+</dialog>
+<script>
+const resetDialog=document.getElementById('reset-dialog');
+document.getElementById('forgot-password-trigger').addEventListener('click',e=>{if(typeof resetDialog.showModal==='function'){e.preventDefault();resetDialog.showModal();}});
+document.getElementById('reset-close').addEventListener('click',()=>resetDialog.close());
+</script>
 </body>
 </html>

@@ -1,238 +1,83 @@
 <?php
-
 declare(strict_types=1);
+require_once __DIR__.'/auth.php';
+require_once __DIR__.'/functions.php';
+require_once __DIR__.'/helpers.php';
+require_once __DIR__.'/dev_mail.php';
 
-require_once __DIR__ . '/auth.php';
-require_once __DIR__ . '/functions.php';
-require_once __DIR__ . '/helpers.php';
-require_once __DIR__ . '/mail.php';
-
-/**
- * Password-reset workflow, plain functions.
- *
- * Storage model (table Password_Reset):
- *   user_ID     - who requested the reset
- *   token_Hash  - SHA-256 of the random token (the token itself is never stored)
- *   expires_At  - when the link stops working
- *   used_At     - set once the link has been consumed
- *
- * Flow: requestPassword() creates and emails the token, resetTokenStatus()
- * checks a link, and completePasswordReset() consumes it and sets the new
- * password. Requests never reveal whether an address is registered.
- */
-
-// The values from config/auth.php, read once.
-function auth_config(): array
-{
-	static $config = null;
-
-	if ($config === null) {
-		$config = require dirname(__DIR__) . '/config/auth.php';
-	}
-
-	return $config;
+function reset_local_only(): bool {
+    $remote=(string)($_SERVER['REMOTE_ADDR']??'');
+    $host=strtolower((string)($_SERVER['HTTP_HOST']??''));
+    return in_array($remote,['127.0.0.1','::1'],true) && preg_match('/^(localhost|127\.0\.0\.1)(:\d+)?$/',$host)===1;
 }
-
-// Start a password reset for an email address (no-op when unknown).
-function request_password_reset(PDO $pdo, string $email): void
-{
-	$email = strtolower(trim($email));
-
-	if ($email === '') {
-		return;
-	}
-
-	// Look the account up; unknown addresses are silently ignored.
-	$user = one(
-		$pdo,
-		"SELECT u.user_ID, u.first_Name, u.last_Name
-		FROM Login l
-		JOIN User u ON u.user_ID = l.user_ID
-		WHERE l.user_Email = ?
-		LIMIT 1",
-		[$email]
-	);
-
-	if (!$user) {
-		return;
-	}
-
-	$userId = (int) $user['user_ID'];
-
-	// Rate limit: one request per cooldown window.
-	$recent = one(
-		$pdo,
-		"SELECT 1 FROM Password_Reset
-		WHERE user_ID = ?
-		AND requested_At > DATE_SUB(NOW(), INTERVAL ? SECOND)
-		LIMIT 1",
-		[$userId, auth_config()['reset_cooldown']]
-	);
-
-	if ($recent) {
-		return;
-	}
-
-	// Random token; only its SHA-256 hash is stored.
-	$token = bin2hex(random_bytes(32));
-	$tokenHash = hash('sha256', $token);
-	$ttl = (int) auth_config()['reset_ttl'];
-
-	// Any previous unused links for this account stop working.
-	$pdo->prepare('DELETE FROM Password_Reset WHERE user_ID = ? AND used_At IS NULL')
-		->execute([$userId]);
-
-	$pdo->prepare(
-		'INSERT INTO Password_Reset (user_ID, token_Hash, expires_At)
-		VALUES (?, ?, DATE_ADD(NOW(), INTERVAL ? SECOND))'
-	)->execute([$userId, $tokenHash, $ttl]);
-
-	$name = trim((string) $user['first_Name'] . ' ' . (string) $user['last_Name']);
-	$resetUrl = url('reset_password.php?token=' . urlencode($token));
-
-	try {
-		send_password_reset_email($email, $name, $resetUrl);
-	} catch (Throwable $e) {
-		// Never tell the requester whether delivery failed.
-		error_log('Password reset email failed: ' . $e->getMessage());
-	}
-
-	audit_log($pdo, 'PasswordResetRequest', 'Login', (string) $userId);
+function reset_account(PDO $pdo,string $email): ?array {
+    $q=$pdo->prepare('SELECT l.user_ID,l.user_Email,u.first_Name,u.last_Name FROM Login l JOIN User u ON u.user_ID=l.user_ID WHERE LOWER(l.user_Email)=? LIMIT 1');
+    $q->execute([strtolower(trim($email))]);
+    $row=$q->fetch(PDO::FETCH_ASSOC);
+    return $row?:null;
 }
-
-// Is this reset link usable right now? 'valid' or 'invalid'.
-function reset_token_status(PDO $pdo, string $token): string
-{
-	$token = trim($token);
-
-	if ($token === '' || preg_match('/^[A-Za-z0-9]+$/', $token) !== 1) {
-		return 'invalid';
-	}
-
-	$row = one(
-		$pdo,
-		"SELECT expires_At, used_At
-		FROM Password_Reset
-		WHERE token_Hash = ?
-		LIMIT 1",
-		[hash('sha256', $token)]
-	);
-
-	if (!$row || $row['used_At'] !== null) {
-		return 'invalid';
-	}
-
-	if (strtotime((string) $row['expires_At']) <= time()) {
-		return 'invalid';
-	}
-
-	return 'valid';
+function request_password_reset(PDO $pdo,string $email): void {
+    if (!reset_local_only()) throw new RuntimeException('Demo password reset is localhost only.');
+    $user=reset_account($pdo,$email);
+    if (!$user) return;
+    $uid=(int)$user['user_ID'];
+    $pdo->beginTransaction();
+    try {
+        $q=$pdo->prepare('SELECT requested_At FROM Password_Reset_Code WHERE user_ID=? FOR UPDATE');
+        $q->execute([$uid]);$existing=$q->fetch(PDO::FETCH_ASSOC);
+        if($existing && strtotime((string)$existing['requested_At'])>time()-60){$pdo->commit();return;}
+        $code=(string)random_int(100000,999999);
+        $hash=password_hash($code,PASSWORD_DEFAULT);
+        $q=$pdo->prepare('INSERT INTO Password_Reset_Code (user_ID,code_hash,expires_At,requested_At,attempts,used_At) VALUES (?,?,DATE_ADD(NOW(),INTERVAL 10 MINUTE),NOW(),0,NULL) ON DUPLICATE KEY UPDATE code_hash=VALUES(code_hash),expires_At=VALUES(expires_At),requested_At=NOW(),attempts=0,used_At=NULL');
+        $q->execute([$uid,$hash]);
+        $pdo->commit();
+    } catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();throw $e;}
+    $name=trim($user['first_Name'].' '.$user['last_Name']);
+    try {
+        dev_mail_deliver((string)$user['user_Email'],'Your Password Reset Verification Code',"Hello {$name},\n\nWe received a request to reset your Ashford University account password.\n\nYour verification code is: {$code}\n\nThis code expires in 10 minutes and can only be used once.\n\nIf you did not request this change, you can ignore this message.\n\nAshford University Security",'reset_code');
+    } catch(Throwable $e){error_log('Local password reset delivery failed: '.$e->getMessage());}
+    audit_log($pdo,'PasswordResetRequest','Login',(string)$uid);
 }
-
-// Consume a token and set the new password.
-function complete_password_reset(
-	PDO $pdo,
-	string $token,
-	string $password,
-	string $confirm
-): array {
-
-	$token = trim($token);
-
-	if (reset_token_status($pdo, $token) !== 'valid') {
-		return [false, 'This password reset link is invalid, expired, or already used.'];
-	}
-
-	if ($password !== $confirm) {
-		return [false, 'Passwords do not match.'];
-	}
-
-	[$policyOk, $policyMessage] = password_policy_ok($password);
-
-	if (!$policyOk) {
-		return [false, $policyMessage];
-	}
-
-	[$same, $sameMessage] = password_is_same_as_current($pdo, (int) $row['user_ID'], $password);
-
-	if ($same) {
-		return [false, $sameMessage];
-	}
-
-	[$reused, $reusedMessage] = password_is_reused($pdo, (int) $row['user_ID'], $password);
-
-	if ($reused) {
-		return [false, $reusedMessage];
-	}
-
-	$row = one(
-		$pdo,
-		"SELECT reset_ID, user_ID
-		FROM Password_Reset
-		WHERE token_Hash = ?
-		LIMIT 1",
-		[hash('sha256', $token)]
-	);
-
-	if (!$row) {
-		return [false, 'This password reset link is invalid, expired, or already used.'];
-	}
-
-	try {
-
-		$pdo->beginTransaction();
-
-		// Preserve the old hash in Password_History to enforce no-reuse.
-		$oldHash = one(
-			$pdo,
-			'SELECT user_Password FROM Login WHERE user_ID = ?',
-			[(int) $row['user_ID']]
-		);
-		if ($oldHash) {
-			$pdo->prepare(
-				'INSERT INTO Password_History (user_ID, password_hash) VALUES (?, ?)'
-			)->execute([(int) $row['user_ID'], $oldHash['user_Password']]);
-
-			// Retain only the last 5 hashes per user.
-			$pdo->prepare(
-				'DELETE ph FROM Password_History ph
-				 LEFT JOIN (
-					 SELECT history_ID FROM Password_History
-					 WHERE user_ID = ?
-					 ORDER BY changed_At DESC LIMIT 5
-				 ) keep ON keep.history_ID = ph.history_ID
-				 WHERE ph.user_ID = ? AND keep.history_ID IS NULL'
-			)->execute([(int) $row['user_ID'], (int) $row['user_ID']]);
-		}
-
-		// New hashed password, and the account is unlocked again.
-		$pdo->prepare(
-			'UPDATE Login
-			SET user_Password = ?, no_Of_Tries = 0, lock_var = 0
-			WHERE user_ID = ?'
-		)->execute([
-			password_hash($password, PASSWORD_DEFAULT),
-			(int) $row['user_ID'],
-		]);
-
-		// Single use: mark the token consumed.
-		$pdo->prepare('UPDATE Password_Reset SET used_At = NOW() WHERE reset_ID = ?')
-			->execute([(int) $row['reset_ID']]);
-
-		$pdo->commit();
-
-	} catch (Throwable $e) {
-
-		if ($pdo->inTransaction()) {
-			$pdo->rollBack();
-		}
-
-		error_log('Password reset failed: ' . $e->getMessage());
-
-		return [false, 'The password could not be updated. Please try again.'];
-	}
-
-	audit_log($pdo, 'PasswordReset', 'Login', (string) $row['user_ID']);
-
-	return [true, 'Your password has been updated. You can now sign in.'];
+function complete_password_reset(PDO $pdo,string $email,string $code,string $password,string $confirm): array {
+    $email=strtolower(trim($email));$code=trim($code);
+    $invalid='Invalid, expired, or already used verification code.';
+    if(!reset_local_only())return [false,'Local demonstration only.'];
+    if(!preg_match('/^[0-9]{6}$/',$code))return [false,$invalid];
+    if($password!==$confirm)return [false,'Passwords do not match.'];
+    [$ok,$policyMessage]=password_policy_ok($password);
+    if(!$ok)return [false,$policyMessage];
+    try {
+        $pdo->beginTransaction();
+        $q=$pdo->prepare('SELECT l.user_ID,r.code_hash,r.expires_At,r.used_At,r.attempts FROM Login l JOIN Password_Reset_Code r ON r.user_ID=l.user_ID WHERE LOWER(l.user_Email)=? FOR UPDATE');
+        $q->execute([$email]);$row=$q->fetch(PDO::FETCH_ASSOC);
+        if(!$row || $row['used_At']!==null || strtotime((string)$row['expires_At'])<=time() || (int)$row['attempts']>=5){$pdo->rollBack();return [false,$invalid];}
+        $uid=(int)$row['user_ID'];
+        if(!password_verify($code,(string)$row['code_hash'])){
+            $pdo->prepare('UPDATE Password_Reset_Code SET attempts=attempts+1 WHERE user_ID=?')->execute([$uid]);
+            $pdo->commit();return [false,$invalid];
+        }
+        [$same,$sameMessage]=password_is_same_as_current($pdo,$uid,$password);
+        if($same){$pdo->rollBack();return [false,$sameMessage];}
+        [$reused,$reusedMessage]=password_is_reused($pdo,$uid,$password);
+        if($reused){$pdo->rollBack();return [false,$reusedMessage];}
+        $q=$pdo->prepare('SELECT user_Password FROM Login WHERE user_ID=? FOR UPDATE');$q->execute([$uid]);$oldHash=$q->fetchColumn();
+        if($oldHash!==false){
+            $pdo->prepare('INSERT INTO Password_History (user_ID,password_hash) VALUES (?,?)')->execute([$uid,$oldHash]);
+            $pdo->prepare('DELETE ph FROM Password_History ph LEFT JOIN (SELECT history_ID FROM Password_History WHERE user_ID=? ORDER BY changed_At DESC LIMIT 5) keep ON keep.history_ID=ph.history_ID WHERE ph.user_ID=? AND keep.history_ID IS NULL')->execute([$uid,$uid]);
+        }
+        $pdo->prepare('UPDATE Login SET user_Password=?,no_Of_Tries=0,lock_var=0 WHERE user_ID=?')->execute([password_hash($password,PASSWORD_DEFAULT),$uid]);
+        $pdo->prepare('UPDATE Password_Reset_Code SET used_At=NOW() WHERE user_ID=?')->execute([$uid]);
+        $pdo->commit();
+        audit_log($pdo,'PasswordReset','Login',(string)$uid);
+        // Send the confirmation only after the password change has committed.
+        try {
+            $account=one($pdo,'SELECT l.user_Email,u.first_Name,u.last_Name FROM Login l JOIN User u ON u.user_ID=l.user_ID WHERE l.user_ID=? LIMIT 1',[$uid]);
+            if ($account) {
+                $fullName=trim((string)$account['first_Name'].' '.(string)$account['last_Name']);
+                dev_mail_deliver((string)$account['user_Email'],'Your Ashford University Password Was Changed',
+                    "Hello {$fullName},\n\nYour Ashford University account password was successfully changed.\n\nIf you made this change, no further action is needed. If you did not authorize it, contact university support immediately.\n\nAshford University Security",'password_changed');
+            }
+        } catch (Throwable $mailError) { error_log('Password change confirmation delivery failed: '.$mailError->getMessage()); }
+        return [true,'Your password has been updated. You can now sign in.'];
+    } catch(Throwable $e){if($pdo->inTransaction())$pdo->rollBack();error_log('Password reset failed: '.$e->getMessage());return [false,'Unable to reset password. Please try again.'];}
 }
