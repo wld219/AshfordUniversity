@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 $semesters = all_rows(
 	$pdo,
-	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
+	'SELECT semester_ID, semester_Name FROM Semester WHERE semester_Name IN (\'Fall 2026\', \'Spring 2027\') ORDER BY semester_ID ASC'
 );
 
 $departments = all_rows(

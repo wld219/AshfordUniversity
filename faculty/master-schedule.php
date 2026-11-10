@@ -12,15 +12,28 @@ require_role(['Faculty']);
 
 // Semester filter (defaults to the most recent semester)
 $semesters = all_rows(
-	$pdo,
-	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
+    $pdo,
+    "SELECT semester_ID, semester_Name
+     FROM Semester
+     WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+     ORDER BY CASE semester_Name
+         WHEN 'Fall 2026' THEN 1
+         WHEN 'Spring 2027' THEN 2
+         ELSE 3 END"
 );
 
-$semesterID = get_int('semester')
-	?? (int) (one(
-		$pdo,
-		'SELECT semester_ID FROM Semester ORDER BY semester_ID DESC LIMIT 1'
-	)['semester_ID'] ?? 0);
+$semesterIDs = array_map(
+    static fn(array $term): int => (int)$term['semester_ID'],
+    $semesters
+);
+
+$semesterID = get_int('semester');
+
+if ($semesterID === null || !in_array($semesterID, $semesterIDs, true)) {
+    $semesterID = $semesterIDs === []
+        ? 0
+        : (int)reset($semesterIDs);
+}
 
 
 // Get all active course sections for the selected semester

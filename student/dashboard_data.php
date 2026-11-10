@@ -29,7 +29,31 @@ $student = one(
 
 
 // Current semester courses
-$currentSemester = current_registration_semester($pdo);
+$availableSemesters = all_rows(
+    $pdo,
+    "SELECT semester_ID, semester_Name
+     FROM Semester
+     WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+     ORDER BY CASE semester_Name
+         WHEN 'Fall 2026' THEN 1
+         WHEN 'Spring 2027' THEN 2
+     END"
+);
+
+$semesterIDs = array_map(
+    static fn(array $row): int => (int) $row['semester_ID'],
+    $availableSemesters
+);
+
+$requestedSemester = filter_input(INPUT_GET, 'semester', FILTER_VALIDATE_INT);
+
+$currentSemester = (
+    $requestedSemester !== null
+    && $requestedSemester !== false
+    && in_array($requestedSemester, $semesterIDs, true)
+)
+    ? $requestedSemester
+    : ($semesterIDs[0] ?? null);
 
 $schedule = all_rows(
 	$pdo,

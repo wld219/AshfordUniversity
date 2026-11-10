@@ -5,6 +5,7 @@ declare(strict_types=1);
 // Section table with per-row status and pagination.
 
 ?>
+<div id="ashford-schedule-results">
 
 <!-- AIU-layout-v1: table presentation only; edit permissions retained -->
 <style>
@@ -47,7 +48,35 @@ declare(strict_types=1);
 .as-schedule-table td:nth-child(9) {
     white-space: nowrap;
 }
+
+/* Hide Department column */
+.as-schedule-table th:nth-child(13),
+.as-schedule-table td:nth-child(13) {
+    display: none !important;
+}
+
 </style>
+<div class="card">
+
+	<p class="muted">
+		Showing <?= count($pageRows) ?> of <?= $totalRows ?> sections
+		(page <?= $page ?> of <?= $totalPages ?>).
+	</p>
+
+	<?php if ($page > 1): ?>
+		<a class="btn light" href="?<?= e(http_build_query(array_merge($_GET, ['semester'=>$semesterID, 'page'=>$page-1]))) ?>">
+			Previous
+		</a>
+	<?php endif; ?>
+
+	<?php if ($page < $totalPages): ?>
+		<a class="btn" href="?<?= e(http_build_query(array_merge($_GET, ['semester'=>$semesterID, 'page'=>$page+1]))) ?>">
+			Next
+		</a>
+	<?php endif; ?>
+
+</div>
+
 <div class="table-wrap" style="overflow-x:auto">
 <table class="as-schedule-table">
 <thead><tr><th>CRN</th><th>Course ID</th><th>Credits</th><th>Course Name</th><th>Section ID</th><th>Instructor</th><th>Room</th><th>Days</th><th>Meeting Times</th><th>Minimum Seats</th><th>Seat Capacity</th><th>Actual Enrollment</th><th>Department</th><th>Mode</th><th>Status</th><?php if ($isFullAccess && $schedule !== null): ?><th>Action</th><?php endif; ?></tr></thead>
@@ -59,7 +88,18 @@ declare(strict_types=1);
     $status = count($rowErrors) === 0 ? '<span class="badge">Scheduled</span>' : '<span class="badge">Attention</span>';
     $minimum = 10;
     $capacity = $row['capacity'] ?? $row['SeatsCapacity'] ?? $row['seats_Capacity'] ?? null;
-    $deptCodes = ['Computer Science'=>'CS','Arts and Media'=>'AR','Business'=>'BUS','Education'=>'EDU','Engineering'=>'ENG','English'=>'ENGL','Health Sciences'=>'HSC','Mathematics'=>'MAT'];
+    $deptCodes = [
+    'Computer Science' => 'CS',
+    'Business' => 'BUS',
+    'Mathematics' => 'MAT',
+    'Natural Sciences' => 'SCI',
+    'Engineering' => 'ENG',
+    'English' => 'ENGL',
+    'Social Sciences' => 'SOC',
+    'Education' => 'EDU',
+    'Health Sciences' => 'HSC',
+    'Arts and Media' => 'AR',
+];
     $deptName = (string)($row['dept_Name'] ?? $row['department_Name'] ?? '');
     $code = $deptCodes[$deptName] ?? '';
     $courseID = $code . (string)$row['course_ID'];
@@ -92,25 +132,5 @@ declare(strict_types=1);
 </tr>
 <?php endforeach; endif; ?>
 </tbody></table></div>
-
-
-<div class="card">
-
-	<p class="muted">
-		Showing <?= count($pageRows) ?> of <?= $totalRows ?> sections
-		(page <?= $page ?> of <?= $totalPages ?>).
-	</p>
-
-	<?php if ($page > 1): ?>
-		<a class="btn light" href="?<?= e(http_build_query(array_merge($_GET, ['semester'=>$semesterID, 'page'=>$page-1]))) ?>">
-			Previous
-		</a>
-	<?php endif; ?>
-
-	<?php if ($page < $totalPages): ?>
-		<a class="btn" href="?<?= e(http_build_query(array_merge($_GET, ['semester'=>$semesterID, 'page'=>$page+1]))) ?>">
-			Next
-		</a>
-	<?php endif; ?>
 
 </div>

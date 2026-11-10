@@ -14,16 +14,80 @@
   </div><div class="actions"><button type="submit" class="action">Search Sections</button><a class="action light" href="master-schedule.php">Clear Filters</a></div></form></section>
   <section class="panel"><div class="results-head"><h3>Course Sections</h3><span class="muted"><?= (int)$totalSections ?> sections found · Page <?= (int)$pageNumber ?> of <?= (int)$totalPages ?></span></div>
   <?php if (!$sections): ?><p>No sections match the selected filters.</p><?php else: ?>
-  <div class="table-scroll"><table><thead><tr><th>CRN</th><th>Course / Section</th><th>Department</th><th>Instructor</th><th>Meeting Time</th><th>Location</th><th>Credits</th><th>Seats</th></tr></thead><tbody>
-  <?php foreach($sections as $section): ?>
-  <?php $seats=(int)$section['available_Seats']; $deptName=(string)$section['dept_Name']; $prefix=strcasecmp($deptName,'Computer Science')===0 ? 'CS ' : ''; ?>
-  <tr><td><a class="crn" href="course-details.php?crn=<?= (int)$section['CRN'] ?>"><?= e($section['CRN']) ?></a></td>
-  <td><div class="code"><?= e($prefix . $section['course_ID']) ?>-<?= e(str_pad((string)$section['section_No'],2,'0',STR_PAD_LEFT)) ?></div><div class="course-title"><?= e($section['course_Name']) ?></div><div class="sub"><?= e($section['course_Type']) ?></div></td>
-  <td><?= e($deptName) ?></td><td><?= e($section['instructor']) ?></td>
-  <td><?= e((string)time_slot_label($pdo,(int)$section['time_Slot_ID'])) ?></td>
-  <td><?= e(section_room_label($pdo,$section['lecture_ID'] !== null ? (int)$section['lecture_ID'] : null,$section['lab_ID'] !== null ? (int)$section['lab_ID'] : null)) ?></td>
-  <td><?= e($section['course_Credits']) ?></td><td><span class="status <?= $seats>0?'open':'full' ?>"><?= $seats>0 ? e($seats).' open' : 'Full' ?></span></td></tr>
-  <?php endforeach; ?></tbody></table></div>
+  <!-- AIU-layout-v1: table presentation only; filters and registration unchanged -->
+<div class="table-scroll"><table>
+<thead><tr><th>CRN</th><th>Course ID</th><th>Credits</th><th>Course Name</th><th>Section ID</th><th>Instructor</th><th>Room</th><th>Days</th><th>Meeting Times</th><th>Available Seats</th><th>Seat Capacity</th><th>Actual Enrollment</th><th>Department</th><th>Mode</th><th>Status</th></tr></thead>
+<tbody>
+<?php
+// ashford-student-seat-data-v1
+// Fetch seat details for the sections on the current page.
+$seatStats = [];
+
+if (!empty($sections)) {
+    $crns = array_map(
+        static fn(array $section): int => (int)$section['CRN'],
+        $sections
+    );
+
+    $placeholders = implode(',', array_fill(0, count($crns), '?'));
+
+    $sql = "
+        SELECT
+            cs.CRN,
+            cs.available_Seats,
+            COALESCE(
+                l.avail_Seats,
+                lab.no_Of_Workstations
+            ) AS seat_Capacity,
+            (
+                SELECT COUNT(*)
+                FROM Enrollment e
+                WHERE e.CRN = cs.CRN
+            ) AS actual_Enrollment
+        FROM Course_Section cs
+        LEFT JOIN Lecture l ON l.lecture_ID = cs.lecture_ID
+        LEFT JOIN Lab lab ON lab.lab_ID = cs.lab_ID
+        WHERE cs.CRN IN ($placeholders)
+    ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($crns);
+
+    foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $seatStats[(int)$row['CRN']] = $row;
+    }
+}
+?>
+
+<?php foreach ($sections as $section):
+    $deptName = (string)$section['dept_Name'];
+    $deptCodes = ['Computer Science'=>'CS','Arts and Media'=>'AR','Business'=>'BUS','Education'=>'EDU','Engineering'=>'ENG','English'=>'ENGL','Health Sciences'=>'HSC','Mathematics'=>'MAT'];
+    $code = $deptCodes[$deptName] ?? '';
+    $courseCode = (string)$section['course_ID'];
+    $days = $dayMap[(int)$section['time_Slot_ID']] ?? [];
+    $room = section_room_label($pdo, $section['lecture_ID'] !== null ? (int)$section['lecture_ID'] : null, $section['lab_ID'] !== null ? (int)$section['lab_ID'] : null);
+?>
+<tr>
+<td><a class="crn" href="course-details.php?crn=<?= (int)$section['CRN'] ?>"><?= e((string)$section['CRN']) ?></a></td>
+<td><span class="code"><?= e($courseCode) ?></span></td>
+<td><?= e((string)$section['course_Credits']) ?></td>
+<td><div class="course-title"><?= e((string)$section['course_Name']) ?></div><div class="sub"><?= e($section['course_Type'] === 'Undergraduate' ? 'UG' : ($section['course_Type'] === 'Graduate' ? 'GR' : (string)$section['course_Type'])) ?></div></td>
+<td><?= e(str_pad((string)$section['section_No'], 2, '0', STR_PAD_LEFT)) ?></td>
+<td><?= e((string)$section['instructor']) ?></td>
+<td><?= e((string)$room) ?></td>
+<td><?= e(implode(', ', array_map(static fn($d) => substr((string)$d, 0, 3), $days))) ?></td>
+<td><?= e((string)time_slot_label($pdo, (int)$section['time_Slot_ID'])) ?></td>
+<?php $seat = $seatStats[(int)$section['CRN']] ?? null; ?>
+<td><?= $seat !== null ? (int)$seat['available_Seats'] : '—' ?></td>
+<td><?= $seat !== null && $seat['seat_Capacity'] !== null
+    ? (int)$seat['seat_Capacity'] : '—' ?></td>
+<td><?= $seat !== null ? (int)$seat['actual_Enrollment'] : '—' ?></td>
+<td><?= e($deptName) ?></td>
+<td><?= e((string)($section['instruction_Mode'] ?? 'Not specified')) ?></td>
+<td><?= !empty($section['is_Cancelled']) ? 'Cancelled' : 'Active' ?></td>
+</tr>
+<?php endforeach; ?>
+</tbody></table></div>
   <?php if($totalPages>1): ?><nav class="pager"><?php if($pageNumber>1): ?><a href="<?= e($pageUrl($pageNumber-1)) ?>">Previous</a><?php endif; ?><span>Page <?= (int)$pageNumber ?> of <?= (int)$totalPages ?></span><?php if($pageNumber<$totalPages): ?><a href="<?= e($pageUrl($pageNumber+1)) ?>">Next</a><?php endif; ?></nav><?php endif; ?>
   <?php endif; ?></section><p class="muted">Select a CRN to view course details and registration eligibility.</p>
 </div>

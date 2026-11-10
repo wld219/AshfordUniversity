@@ -130,7 +130,7 @@ function faculty_can_teach_section(
 }
 
 // Is this faculty member assigned to a department that owns the course?
-function faculty_teaches_department(PDO $pdo, int $facultyID, int $courseID): bool
+function faculty_teaches_department(PDO $pdo, int $facultyID, string $courseID): bool
 {
 	$deptOfCourse = one(
 		$pdo,

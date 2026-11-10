@@ -3,3 +3,17 @@
 *.log
 vendor/
 .DS_Store
+.env
+.env.backup*
+*.bak
+*.bak2
+*.backup
+*.backup.*
+*.backup-*
+*.backup_*
+*.before*
+backup-*/
+*_backup_*/
+academic_backup_*/
+academic_v2_backup_*/
+storage/

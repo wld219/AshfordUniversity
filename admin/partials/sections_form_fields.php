@@ -14,7 +14,7 @@ declare(strict_types=1);
 		<?php foreach ($courses as $course): ?>
 			<option
 				value="<?= e($course['course_ID']) ?>"
-				<?= $editSection !== null && (int) $editSection['course_ID'] === (int) $course['course_ID'] ? 'selected' : '' ?>
+				<?= $editSection !== null && (string) $editSection['course_ID'] === (string) $course['course_ID'] ? 'selected' : '' ?>
 			>
 				<?= e($course['course_ID']) ?> -
 				<?= e($course['course_Name']) ?>
@@ -68,7 +68,7 @@ declare(strict_types=1);
 </div>
 
 <div>
-	<label for="time_slot_id">Time slot</label>
+	<label for="time_slot_id">Meeting day and time</label>
 	<select name="time_slot_id" id="time_slot_id" required <?= $locked ? 'disabled' : '' ?>>
 		<option value="">Select time slot</option>
 		<?php foreach ($timeSlots as $slot): ?>
@@ -76,7 +76,6 @@ declare(strict_types=1);
 				value="<?= e($slot['time_Slot_ID']) ?>"
 				<?= $editSection !== null && (int) $editSection['time_Slot_ID'] === (int) $slot['time_Slot_ID'] ? 'selected' : '' ?>
 			>
-				Slot <?= e($slot['time_Slot_ID']) ?> -
 				<?= e(time_slot_label($pdo, (int) $slot['time_Slot_ID'])) ?>
 			</option>
 		<?php endforeach; ?>
@@ -92,7 +91,7 @@ declare(strict_types=1);
 </div>
 
 <div>
-	<label for="room_id">Room</label>
+	<label for="room_id">Classroom / laboratory</label>
 	<select name="room_id" id="room_id" <?= $locked ? 'disabled' : '' ?>>
 		<option value="">Select room</option>
 		<?php foreach ($lectureRooms as $room): ?>
@@ -125,8 +124,10 @@ declare(strict_types=1);
 		id="seats"
 		name="seats"
 		min="0"
-		value="<?= e((string) ($editSection['available_Seats'] ?? '')) ?>"
+		max="10"
+		value="<?= e((string) ($editSection['available_Seats'] ?? '10')) ?>"
 	>
+	<small>Maximum 10 available seats. Existing enrollment is retained.</small>
 </div>
 
 <?php if ($locked): ?>

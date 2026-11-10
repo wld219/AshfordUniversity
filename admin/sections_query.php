@@ -35,6 +35,20 @@ $sql = "SELECT
 
 $params = [];
 
+// Respect the semester selected by the Admin.
+// Default to Spring 2027 only when no semester is selected.
+if ($filterSemester === null) {
+    $defaultSemester = $pdo->query(
+        "SELECT semester_ID FROM Semester
+         WHERE semester_Name = 'Spring 2027'
+         LIMIT 1"
+    )->fetchColumn();
+
+    if ($defaultSemester !== false) {
+        $filterSemester = (int) $defaultSemester;
+    }
+}
+
 if ($filterSemester !== null) {
 	$sql .= ' AND cs.semester_ID = ?';
 	$params[] = $filterSemester;
@@ -55,14 +69,5 @@ $sql .= ' ORDER BY s.semester_ID DESC, d.dept_Name, c.course_ID, cs.section_No L
 
 $sections = all_rows($pdo, $sql, $params);
 
-$editCRN = get_int('edit');
-
+$editCRN = null;
 $editSection = null;
-
-if ($editCRN !== null) {
-	$editSection = one(
-		$pdo,
-		'SELECT * FROM Course_Section WHERE CRN = ?',
-		[$editCRN]
-	);
-}

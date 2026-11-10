@@ -1,172 +1,189 @@
 <?php
-
 declare(strict_types=1);
 
-// Weekly attendance save action.
-// Uses $pdo, $facultyID from the entry point.
-//
-// Receives attendance[student_ID][date] = Present|Absent|'' and saves
-// each cell individually in a transaction.
+require_once '../config/database.php';
+require_once '../includes/functions.php';
+require_once '../includes/helpers.php';
 
-$crn = (int) ($_POST['crn'] ?? 0);
-$weekStart = post_date('week_start') ?? date('Y-m-d');
+require_role(['Faculty']);
+require_once __DIR__ . '/attendance-window.php';
 
-// Verify the section belongs to this faculty member
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    exit('Method not allowed.');
+}
+
+csrf_verify();
+
+$facultyID = (int) $_SESSION['user_id'];
+$crn = filter_var($_POST['crn'] ?? null, FILTER_VALIDATE_INT);
+$crn = $crn ?: 0;
+
+$redirect = url('faculty/attendance-weekly.php?crn=' . $crn);
+
+function attendance_finish(string $redirect, string $type, string $message): void
+{
+    $_SESSION['flash'] = [
+        'type' => $type,
+        'message' => $message
+    ];
+    header('Location: ' . $redirect);
+    exit;
+}
+
 $section = one(
-	$pdo,
-	"SELECT course_ID, semester_ID
-		FROM Course_Section
-		WHERE CRN = ?
-		AND faculty_ID = ?
-		AND is_Cancelled = 0",
-	[$crn, $facultyID]
+    $pdo,
+    "SELECT cs.course_ID
+     FROM Course_Section cs
+     JOIN Semester s ON s.semester_ID = cs.semester_ID
+     WHERE cs.CRN = ?
+       AND cs.faculty_ID = ?
+       AND cs.is_Cancelled = 0
+       AND s.semester_Name = 'Fall 2026'",
+    [$crn, $facultyID]
 );
 
 if (!$section) {
-	$_SESSION['flash'] = [
-		'type' => 'error',
-		'message' => 'Section not found or not assigned to you.'
-	];
-	header('Location: ' . url('faculty/attendance-weekly.php'));
-	exit;
+    attendance_finish(
+        $redirect, 'error',
+        'This course section is not assigned to you.'
+    );
 }
 
-// Compute all 7 dates of the week
-$weekDates = [];
-$dateObj = new DateTimeImmutable($weekStart);
-$dateObj = $dateObj->modify('Monday this week');
-for ($i = 0; $i < 7; $i++) {
-	$weekDates[] = $dateObj->format('Y-m-d');
-	$dateObj = $dateObj->modify('+1 day');
+
+[$attendanceOpen, $attendanceMessage] =
+    attendance_date_allowed(
+        $pdo, $crn,
+        (new DateTimeImmutable(
+            'now',
+            new DateTimeZone('America/New_York')
+        ))->format('Y-m-d')
+    );
+
+if (!$attendanceOpen) {
+    attendance_finish($redirect, 'error', $attendanceMessage);
 }
 
-// Verify all dates are allowed
-foreach ($weekDates as $d) {
-	[$allowed, $message] = attendance_date_allowed($pdo, $crn, $d);
-	if (!$allowed) {
-		$_SESSION['flash'] = [
-			'type' => 'error',
-			'message' => $message . ' (' . e($d) . ')'
-		];
-		header('Location: ' . url('faculty/attendance-weekly.php?crn=' . $crn . '&week=' . $weekStart));
-		exit;
-	}
+$data = $_POST['attendance'] ?? [];
+
+if (!is_array($data)) {
+    attendance_finish($redirect, 'error', 'Invalid attendance submission.');
 }
 
-$attendanceData = $_POST['attendance'] ?? [];
+$today = new DateTimeImmutable('today', new DateTimeZone('America/New_York'));
+$monday = $today->modify('Monday this week');
+$sunday = $monday->modify('+6 days');
 
-if (!is_array($attendanceData)) {
-	$attendanceData = [];
+$roster = all_rows(
+    $pdo,
+    "SELECT student_ID FROM Enrollment WHERE CRN = ?",
+    [$crn]
+);
+
+$validStudents = [];
+foreach ($roster as $row) {
+    $validStudents[(int)$row['student_ID']] = true;
 }
 
-$savedCount = 0;
+$updates = [];
+
+foreach ($data as $studentIDRaw => $dates) {
+    if (!ctype_digit((string)$studentIDRaw)) {
+        attendance_finish($redirect, 'error', 'Invalid student ID.');
+    }
+
+    $studentID = (int)$studentIDRaw;
+
+    if (!isset($validStudents[$studentID]) || !is_array($dates)) {
+        attendance_finish($redirect, 'error', 'Invalid student enrollment.');
+    }
+
+    foreach ($dates as $dateString => $status) {
+        if (!is_string($dateString) ||
+            !preg_match('/^\d{4}-\d{2}-\d{2}$/', $dateString)) {
+            attendance_finish($redirect, 'error', 'Invalid attendance date.');
+        }
+
+        $date = DateTimeImmutable::createFromFormat('!Y-m-d', $dateString);
+
+        if (!$date || $date->format('Y-m-d') !== $dateString ||
+            $dateString !== $today->format('Y-m-d')) {
+            attendance_finish(
+                $redirect, 'error',
+                'Attendance is permitted only for today.'
+            );
+        }
+
+        // An unmarked cell does not change an existing record.
+        if ($status === '') {
+            continue;
+        }
+
+        if ($status !== 'Present' && $status !== 'Absent') {
+            attendance_finish($redirect, 'error', 'Invalid attendance status.');
+        }
+
+        [$allowed, $message] = attendance_date_allowed(
+            $pdo, $crn, $dateString
+        );
+
+        if (!$allowed) {
+            attendance_finish($redirect, 'error', $message);
+        }
+
+        $updates[] = [$studentID, $dateString, $status];
+    }
+}
 
 try {
+    $pdo->beginTransaction();
 
-	$pdo->beginTransaction();
+    $save = $pdo->prepare(
+        "INSERT INTO Attendance
+         (student_ID, CRN, course_ID, attendance_Date, Present_Absent)
+         VALUES (?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE
+         Present_Absent = VALUES(Present_Absent)"
+    );
 
-	foreach ($attendanceData as $studentIDRaw => $dateValues) {
-		$studentID = (int) $studentIDRaw;
+    foreach ($updates as [$studentID, $dateString, $status]) {
+        $save->execute([
+            $studentID,
+            $crn,
+            $section['course_ID'],
+            $dateString,
+            $status
+        ]);
 
-		// Verify the student is enrolled in this section
-		$enrolled = one(
-			$pdo,
-			'SELECT 1 FROM Enrollment WHERE student_ID = ? AND CRN = ?',
-			[$studentID, $crn]
-		);
+        audit_log(
+            $pdo,
+            'Update',
+            'Attendance',
+            (string)$studentID,
+            'Weekly attendance: ' . $status .
+            ' for CRN ' . $crn . ' on ' . $dateString
+        );
+    }
 
-		if (!$enrolled) {
-			continue;
-		}
+    $pdo->commit();
 
-		if (!is_array($dateValues)) {
-			continue;
-		}
-
-		foreach ($dateValues as $attendanceDate => $value) {
-
-			// Only process dates within this week
-			if (!in_array($attendanceDate, $weekDates, true)) {
-				continue;
-			}
-
-			// Validate the value
-			$presentAbsent = null;
-			if ($value === 'Present') {
-				$presentAbsent = 'Present';
-			} elseif ($value === 'Absent') {
-				$presentAbsent = 'Absent';
-			}
-
-			if ($presentAbsent !== null) {
-
-				$pdo->prepare(
-					"INSERT INTO Attendance
-						(student_ID, CRN, course_ID, attendance_Date, Present_Absent)
-					VALUES (?, ?, ?, ?, ?)
-					ON DUPLICATE KEY UPDATE Present_Absent = VALUES(Present_Absent)"
-				)->execute([
-					$studentID,
-					$crn,
-					$section['course_ID'],
-					$attendanceDate,
-					$presentAbsent
-				]);
-
-				audit_log(
-					$pdo,
-					'Update',
-					'Attendance',
-					(string) $studentID,
-					'Weekly attendance: ' . $presentAbsent . ' for CRN ' . $crn . ' on ' . $attendanceDate
-				);
-
-				$savedCount++;
-
-			} else {
-
-				$pdo->prepare(
-					'DELETE FROM Attendance
-					WHERE student_ID = ? AND CRN = ? AND attendance_Date = ?'
-				)->execute([
-					$studentID,
-					$crn,
-					$attendanceDate
-				]);
-
-				audit_log(
-					$pdo,
-					'Delete',
-					'Attendance',
-					(string) $studentID,
-					'Weekly attendance removed for CRN ' . $crn . ' on ' . $attendanceDate
-				);
-
-				$savedCount++;
-			}
-		}
-	}
-
-	$pdo->commit();
-
-	$_SESSION['flash'] = [
-		'type' => 'success',
-		'message' => 'Weekly attendance saved for ' . $savedCount . ' cell(s).'
-	];
+    attendance_finish(
+        $redirect,
+        'success',
+        'Attendance saved successfully for ' .
+        count($updates) . ' student/date entries.'
+    );
 
 } catch (Throwable $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
 
-	if ($pdo->inTransaction()) {
-		$pdo->rollBack();
-	}
+    error_log('Weekly attendance error: ' . $e->getMessage());
 
-	error_log('Weekly attendance save failed: ' . $e->getMessage());
-
-	$_SESSION['flash'] = [
-		'type' => 'error',
-		'message' => 'Could not save weekly attendance.'
-	];
+    attendance_finish(
+        $redirect,
+        'error',
+        'Unable to save attendance. Please try again.'
+    );
 }
-
-header('Location: ' . url('faculty/attendance-weekly.php?crn=' . $crn . '&week=' . $weekStart));
-exit;

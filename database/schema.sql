@@ -29,6 +29,8 @@ CREATE TABLE Login (
 CREATE TABLE Admin (
     user_ID INT PRIMARY KEY,
     security_Level ENUM('Full-Access', 'Read-Only') NOT NULL DEFAULT 'Read-Only',
+    is_full_time TINYINT(1) NOT NULL DEFAULT 1,
+    employment_Status ENUM('Full-Time', 'Part-Time') NOT NULL DEFAULT 'Full-Time',
     FOREIGN KEY (user_ID) REFERENCES User(user_ID)
 );
 
@@ -177,7 +179,7 @@ CREATE TABLE Hold (
 );
 
 CREATE TABLE Course (
-    course_ID INT PRIMARY KEY,
+    course_ID VARCHAR(10) PRIMARY KEY,
     dept_ID INT NOT NULL,
     course_Name VARCHAR(255) NOT NULL,
     course_Credits INT NOT NULL,
@@ -221,7 +223,7 @@ CREATE TABLE Semester (
 
 CREATE TABLE Course_Section (
     CRN INT PRIMARY KEY,
-    course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
     section_No INT NOT NULL,
     faculty_ID INT NOT NULL,
     time_Slot_ID INT NOT NULL,
@@ -257,8 +259,8 @@ CREATE TABLE Student_Hold (
 );
 
 CREATE TABLE Course_Prerequisite (
-    course_ID INT NOT NULL,
-    prerequisite_course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
+    prerequisite_course_ID VARCHAR(10) NOT NULL,
     min_Grade_Req VARCHAR(5) NOT NULL,
     PRIMARY KEY (course_ID, prerequisite_course_ID),
     FOREIGN KEY (course_ID) REFERENCES Course(course_ID),
@@ -279,7 +281,7 @@ CREATE TABLE Enrollment (
 CREATE TABLE Attendance (
     student_ID INT NOT NULL,
     CRN INT NOT NULL,
-    course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
     attendance_Date DATE NOT NULL,
     Present_Absent ENUM('Present', 'Absent') NOT NULL,
     PRIMARY KEY (student_ID, CRN, attendance_Date),
@@ -291,7 +293,7 @@ CREATE TABLE Attendance (
 CREATE TABLE Student_History (
     student_ID INT NOT NULL,
     CRN INT NOT NULL,
-    course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
     semester_ID INT NOT NULL,
     Grade VARCHAR(5),
     PRIMARY KEY (student_ID, CRN),
@@ -304,7 +306,7 @@ CREATE TABLE Student_History (
 CREATE TABLE Faculty_History (
     faculty_ID INT NOT NULL,
     CRN INT NOT NULL,
-    course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
     semester_ID INT NOT NULL,
     PRIMARY KEY (faculty_ID, CRN),
     FOREIGN KEY (faculty_ID) REFERENCES Faculty(faculty_ID),
@@ -412,7 +414,7 @@ CREATE TABLE Master_Schedule (
 -- Degree requirement definitions per major.
 CREATE TABLE Major_Requirement (
     major_ID INT NOT NULL,
-    course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
     min_Grade_Req VARCHAR(5) NOT NULL,
     PRIMARY KEY (major_ID, course_ID),
     FOREIGN KEY (major_ID) REFERENCES Major(major_ID),
@@ -422,7 +424,7 @@ CREATE TABLE Major_Requirement (
 -- Degree requirement definitions per minor.
 CREATE TABLE Minor_Requirement (
     minor_ID INT NOT NULL,
-    course_ID INT NOT NULL,
+    course_ID VARCHAR(10) NOT NULL,
     min_Grade_Req VARCHAR(5) NOT NULL,
     PRIMARY KEY (minor_ID, course_ID),
     FOREIGN KEY (minor_ID) REFERENCES Minor(minor_ID),
@@ -547,11 +549,6 @@ CREATE TABLE IF NOT EXISTS System_Field_Restriction (
 ALTER TABLE User
     ADD COLUMN is_active TINYINT(1) NOT NULL DEFAULT 1 AFTER user_Type;
 
--- -----------------------------------------------------
--- Admin: add employment status (Full-Time required per SRS)
--- -----------------------------------------------------
-ALTER TABLE Admin
-    ADD COLUMN employment_Status ENUM('Full-Time','Part-Time') NOT NULL DEFAULT 'Full-Time' AFTER security_Level;
 
 -- -----------------------------------------------------
 -- StatStaff: constrain access_Level to valid values

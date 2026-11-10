@@ -75,6 +75,22 @@ $isAdminTarget   = $editUser['user_Type'] === 'Admin';
 				>
 			</div>
 
+            <div><label>Middle name</label><input name="middle_name" maxlength="50" value="<?= e($editUser['middle_Name'] ?? '') ?>"></div>
+            <div><label>Date of birth</label><input type="date" name="dob" required value="<?= e($editUser['DOB'] ?? '') ?>"></div>
+            <div><label>Gender</label><select name="gender" required><?php foreach (['Male','Female','Other'] as $g): ?><option value="<?= e($g) ?>" <?= $editUser['gender'] === $g ? 'selected' : '' ?>><?= e($g) ?></option><?php endforeach; ?></select></div>
+            <div><label>Street address</label><input name="street" maxlength="100" required value="<?= e($editUser['street'] ?? '') ?>"></div>
+            <div><label>ZIP code</label><input name="zip_code" maxlength="10" required value="<?= e($editUser['zip_Code'] ?? '') ?>"></div>
+            <div><label>University email</label><input type="email" name="user_email" maxlength="255" required value="<?= e($editUser['user_Email'] ?? '') ?>"></div>
+            <div><label>Account status</label><select name="is_active"><option value="1" <?= (int)$editUser['is_active'] === 1 ? 'selected' : '' ?>>Active</option><option value="0" <?= (int)$editUser['is_active'] === 0 ? 'selected' : '' ?>>Inactive</option></select></div>
+            <?php if ($editUser['user_Type'] === 'Student'): ?>
+              <div style="grid-column:1/-1"><h3>Student academic information</h3></div>
+              <div><label>Student type</label><select name="student_type"><?php foreach (['Undergraduate','Graduate'] as $t): ?><option value="<?= e($t) ?>" <?= $editUser['student_Type'] === $t ? 'selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?></select></div>
+              <div><label>Academic year</label><select name="student_year"><?php for ($yr=1;$yr<=8;$yr++): ?><option value="<?= $yr ?>" <?= (int)$editUser['student_Year'] === $yr ? 'selected' : '' ?>><?= $yr ?><?= $yr <= 4 ? ' — '.['Freshman','Sophomore','Junior','Senior'][$yr-1] : '' ?></option><?php endfor; ?></select></div>
+              <div><label>Primary major</label><select name="major_id" required><?php foreach ($majors as $m): ?><option value="<?= e($m['major_ID']) ?>" <?= (int)$editUser['major_ID'] === (int)$m['major_ID'] ? 'selected' : '' ?>><?= e($m['major_Name']) ?></option><?php endforeach; ?></select></div>
+              <div><label>Additional majors (Ctrl/Cmd-click to select multiple)</label><select name="major_ids[]" multiple size="5"><?php foreach ($majors as $m): ?><option value="<?= e($m['major_ID']) ?>" <?= in_array((int)$m['major_ID'],$studentMajors,true) ? 'selected' : '' ?>><?= e($m['major_Name']) ?></option><?php endforeach; ?></select></div>
+              <div><label>Minors (Ctrl/Cmd-click to select multiple)</label><select name="minor_ids[]" multiple size="5"><?php foreach ($minors as $m): ?><option value="<?= e($m['minor_ID']) ?>" <?= in_array((int)$m['minor_ID'],$studentMinors,true) ? 'selected' : '' ?>><?= e($m['minor_Name']) ?></option><?php endforeach; ?></select></div>
+            <?php endif; ?>
+
 			<?php if ($canEditSecurity): ?>
 
 				<div>
@@ -124,7 +140,7 @@ $isAdminTarget   = $editUser['user_Type'] === 'Admin';
 				<button type="submit" class="btn">
 					Save changes
 				</button>
-				<a href="users.php" class="btn light">
+				<a href="users.php" class="btn light" data-users-close-edit>
 					Cancel
 				</a>
 			</div>

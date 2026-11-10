@@ -121,13 +121,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		require_once __DIR__ . '/actions/users_unlock.php';
 	}
 
-	header('Location: ' . url('admin/users.php'));
+	$redirect = url('admin/users.php');
+    if (($action ?? '') === 'update' && isset($userID) && $userID > 0) $redirect .= '?edit=' . $userID;
+    header('Location: ' . $redirect);
 	exit;
 }
 
 // Page data (search results, edit target, form options)
 require_once __DIR__ . '/users_data.php';
 
+$usersSaveResult = $_SESSION['users_save_result'] ?? null;
+unset($_SESSION['users_save_result']);
 $formError = $_SESSION['users_error'] ?? '';
 unset($_SESSION['users_error']);
 

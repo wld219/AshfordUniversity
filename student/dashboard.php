@@ -23,7 +23,7 @@ if (!empty($currentSemester)) {
 }
 
 page_start(
-	'Welcome, ' . ($_SESSION['name'] ?? 'Student'),
+	'',
 	'Student',
 	'dashboard.php'
 );

@@ -214,6 +214,10 @@ page_start(
 <?php endif; ?>
 
 
+<?php /* ASHFORD_ALL_ENHANCEMENTS_V2 */ ?>
+<link rel="stylesheet" href="<?= e(url('assets/ashford-enhancements/enhancements.css')) ?>">
+<script defer src="<?= e(url('assets/ashford-enhancements/enhancements.js')) ?>"></script>
+
 <?php
 
 page_end();

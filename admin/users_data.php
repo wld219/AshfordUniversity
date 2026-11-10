@@ -70,12 +70,13 @@ if (isset($_GET['edit'])) {
 
 	$editUser = one(
 		$pdo,
-		"SELECT u.user_ID, u.first_Name, u.last_Name, u.user_Type, u.city, u.state,
-				l.lock_var, l.no_Of_Tries,
-				a.security_Level, a.lock_manager
+		"SELECT u.*, l.user_Email, l.lock_var, l.no_Of_Tries,
+                a.security_Level, a.lock_manager,
+                st.major_ID, st.student_Year, st.student_Type
 			FROM User u
 			JOIN Login l ON l.user_ID = u.user_ID
 			LEFT JOIN Admin a ON a.user_ID = u.user_ID
+            LEFT JOIN Student st ON st.student_ID = u.user_ID
 			WHERE u.user_ID = ?",
 		[$editID]
 	);
@@ -100,3 +101,12 @@ $majors = all_rows(
 	FROM Major
 	ORDER BY major_Name"
 );
+
+// Academic selections for student profile editing.
+$minors = all_rows($pdo, 'SELECT minor_ID, minor_Name FROM Minor ORDER BY minor_Name');
+$studentMajors = [];
+$studentMinors = [];
+if ($editUser && $editUser['user_Type'] === 'Student') {
+    $studentMajors = array_map('intval', array_column(all_rows($pdo, 'SELECT major_ID FROM Student_Major WHERE student_ID = ?', [(int)$editUser['user_ID']]), 'major_ID'));
+    $studentMinors = array_map('intval', array_column(all_rows($pdo, 'SELECT minor_ID FROM Student_Minor WHERE student_ID = ?', [(int)$editUser['user_ID']]), 'minor_ID'));
+}

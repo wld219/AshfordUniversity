@@ -1,0 +1,9 @@
+
+.ashford-tools{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:12px 0;padding:12px;border:1px solid #d8dde4;border-radius:10px;background:#fafbfc}
+.ashford-tools input,.ashford-tools select{padding:9px 11px;border:1px solid #b9c2cd;border-radius:7px;max-width:100%}
+.ashford-tools input{min-width:180px;flex:1}.ashford-tools button{padding:9px 12px;border:1px solid #aab5c1;background:white;border-radius:7px;cursor:pointer}
+.ashford-tools .ashford-count{font-size:12px;color:#526071}.ashford-sort{cursor:pointer;user-select:none}
+.ashford-sort:focus-visible{outline:2px solid #165da6}.ashford-sort::after{content:" ↕";font-size:11px;color:#677585}
+.ashford-table-wrap{max-width:100%;overflow:auto;border-radius:8px}
+.ashford-table-wrap thead th{position:sticky;top:0;z-index:1;background:#f3f5f7}
+@media(max-width:640px){.ashford-tools{align-items:stretch;flex-direction:column}.ashford-tools input{width:100%;min-width:0}}

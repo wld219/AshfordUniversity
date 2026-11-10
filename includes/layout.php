@@ -119,7 +119,12 @@ function page_start(
         <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/student-portal-theme.css') ?>">
         <?php endif; ?>
 
-	</head>
+	
+        <!-- ASHFORD_UNIVERSAL_UI_V2: shared enhancements for all authenticated portals -->
+        <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/ashford-universal-ui/tables.css') ?>">
+        <script defer src="<?= e(app_base_path() . '/assets/ashford-universal-ui/tables.js') ?>"></script>
+
+    </head>
 
     <body class="<?= $role === 'Student' ? 'student-portal-theme' : '' ?>">
 

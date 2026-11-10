@@ -110,11 +110,11 @@ declare(strict_types=1);
 
 </div>
 
-<section class="card">
-	<p class="muted">
+<div class="muted" style="margin-top:16px;">
+	<p>
 		Showing up to 25 users. Locked accounts show an Unlock button for
 		the lock manager. Edit is available to the lock manager for any
 		user, and to full-access administrators for non-admin users.
 		Use the search box to find another user.
 	</p>
-</section>
+</div>

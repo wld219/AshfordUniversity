@@ -1,0 +1,11 @@
+
+.as-ui-toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:12px 0;padding:10px 12px;border:1px solid #d7dce3;border-radius:9px;background:#f8fafc}
+.as-ui-toolbar input,.as-ui-toolbar select{border:1px solid #9facbb;border-radius:7px;padding:9px;font:inherit;background:#fff}
+.as-ui-toolbar input{min-width:170px;flex:1}.as-ui-toolbar button,.as-copy-crn{border:1px solid #9facbb;border-radius:6px;background:white;padding:7px 11px;cursor:pointer}
+.as-ui-toolbar button:hover,.as-copy-crn:hover{background:#e8eff7}.as-ui-count{color:#53606d}
+.as-enhanced-table{overflow-x:auto;max-width:100%}.as-enhanced-table th.as-ui-sort{cursor:pointer;white-space:nowrap}
+.as-enhanced-table th.as-ui-sort:after{content:" ↕";font-size:11px;color:#667}
+.as-copy-crn{display:inline-block;font-size:11px;padding:3px 5px;margin-left:6px}
+.as-enhanced-table thead th{position:sticky;top:0;background:#f1f4f8;z-index:1}
+.as-ui-toolbar :focus-visible,.as-enhanced-table th:focus-visible{outline:2px solid #1767aa;outline-offset:1px}
+@media(max-width:640px){.as-ui-toolbar{align-items:stretch;flex-direction:column}.as-ui-toolbar input,.as-ui-toolbar select,.as-ui-toolbar button{width:100%;min-width:0;box-sizing:border-box}}

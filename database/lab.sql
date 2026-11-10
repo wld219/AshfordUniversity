@@ -1,50 +1,78 @@
--- Seeds campus laboratories.
+-- MariaDB dump 10.19  Distrib 10.4.28-MariaDB, for osx10.10 (x86_64)
+--
+-- Host: 127.0.0.1    Database: ashford_university
+-- ------------------------------------------------------
+-- Server version	8.4.6
 
-INSERT INTO Lab (lab_ID, no_Of_Workstations) VALUES
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-(3151, 35),
-(3152, 35),
-(3153, 35),
-(3154, 35),
-(3155, 35),
-(3156, 35),
-(3157, 35),
-(3158, 35),
-(3159, 35),
-(3160, 35),
-(3161, 35),
-(3162, 35),
+--
+-- Dumping data for table `Lab`
+--
 
-(5151, 35),
-(5152, 35),
-(5153, 35),
-(5154, 35),
-(5155, 35),
-(5156, 35),
-(5157, 35),
-(5158, 35),
-(5159, 35),
-(5160, 35),
-(5161, 35),
-(5162, 35),
+/*!40000 ALTER TABLE `Lab` DISABLE KEYS */;
+INSERT INTO `Lab` VALUES 
+    (2151,10),
+    (2152,10),
+    (2153,10),
+    (2154,10),
+    (2155,10),
+    (2156,10),
+    (2157,10),
+    (2158,10),
+    (2159,10),
+    (2160,10),
+    (2161,10),
+    (2162,10),
+    (2163,10),
+    (2164,10),
+    (2165,10),
+    (2166,10),
+    (2167,10),
+    (2168,10),
+    (2169,10),
+    (2170,10),
+    (3151,10),
+    (3152,10),
+    (3153,10),
+    (3154,10),
+    (3155,10),
+    (3156,10),
+    (3157,10),
+    (3158,10),
+    (3159,10),
+    (3160,10),
+    (3161,10),
+    (3162,10),
+    (5151,10),
+    (5152,10),
+    (5153,10),
+    (5154,10),
+    (5155,10),
+    (5156,10),
+    (5157,10),
+    (5158,10),
+    (5159,10),
+    (5160,10),
+    (5161,10),
+    (5162,10)
+;
+/*!40000 ALTER TABLE `Lab` ENABLE KEYS */;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
-(2151, 35),
-(2152, 35),
-(2153, 35),
-(2154, 35),
-(2155, 35),
-(2156, 35),
-(2157, 35),
-(2158, 35),
-(2159, 35),
-(2160, 35),
-(2161, 35),
-(2162, 35),
-(2163, 35),
-(2164, 35),
-(2165, 35),
-(2166, 35),
-(2167, 35),
-(2168, 35),
-(2169, 35),
-(2170, 35);
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2026-11-02 19:19:23

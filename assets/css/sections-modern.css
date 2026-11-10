@@ -1,0 +1,175 @@
+/* Ashford University — Modern Admin Sections Controls */
+
+/* Buttons and action links */
+button,
+input[type="submit"],
+input[type="button"],
+a.btn,
+.btn,
+.button {
+    border-radius: 10px !important;
+    padding: 10px 18px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    transition: background-color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.2s ease,
+                border-color 0.2s ease;
+}
+
+button:not(:disabled):hover,
+input[type="submit"]:not(:disabled):hover,
+a.btn:hover,
+.btn:hover,
+.button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+}
+
+button:active,
+input[type="submit"]:active,
+a.btn:active,
+.btn:active,
+.button:active {
+    transform: translateY(0);
+}
+
+/* Search boxes and filters */
+input[type="search"],
+input[type="text"],
+select {
+    border-radius: 9px;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+input[type="search"]:focus,
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #64748b;
+    box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.12);
+}
+
+/* Accessible keyboard navigation */
+button:focus-visible,
+a.btn:focus-visible,
+.btn:focus-visible,
+.button:focus-visible {
+    outline: 2px solid #64748b;
+    outline-offset: 3px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    button,
+    input,
+    select,
+    a.btn,
+    .btn,
+    .button {
+        transition: none !important;
+        transform: none !important;
+    }
+}
+
+/* Consistent form controls */
+select,
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"] {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #ffffff;
+    color: #172b4d;
+    font-size: 15px;
+    line-height: 1.4;
+    transition: border-color 0.2s ease,
+                box-shadow 0.2s ease;
+}
+
+select:focus,
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #45658f;
+    box-shadow: 0 0 0 3px rgba(69, 101, 143, 0.12);
+}
+
+/* Form labels */
+label {
+    font-weight: 600;
+}
+
+/* Create Section button */
+button[type="submit"],
+input[type="submit"] {
+    min-height: 46px;
+    padding: 11px 22px;
+    border-radius: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button[type="submit"]:not(:disabled):hover,
+input[type="submit"]:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(20, 40, 75, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    button[type="submit"],
+    input[type="submit"] {
+        transition: none;
+    }
+}
+
+/* Admin Sections — Compact bubble action buttons */
+.sections-actions {
+    min-width: 180px !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+}
+
+.sections-actions form {
+    display: inline-flex !important;
+    margin: 0 0 0 6px !important;
+    vertical-align: middle !important;
+}
+
+.sections-actions a,
+.sections-actions button,
+.sections-actions input[type="submit"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-height: 38px !important;
+    padding: 8px 15px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    transition: transform .2s ease, box-shadow .2s ease !important;
+}
+
+.sections-actions a:hover,
+.sections-actions button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, .12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sections-actions a,
+    .sections-actions button {
+        transition: none !important;
+        transform: none !important;
+    }
+}

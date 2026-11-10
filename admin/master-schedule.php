@@ -49,4 +49,73 @@ flash();
 // View partials (same variable scope)
 require_once __DIR__ . '/partials/master_schedule_view.php';
 
+
+?>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const resultsId = 'ashford-schedule-results';
+
+    document.addEventListener('click', async function (event) {
+        const link = event.target.closest(
+            '#ashford-schedule-results a[href]'
+        );
+
+        if (!link) return;
+
+        const url = new URL(link.href, window.location.href);
+
+        // Intercept only pagination links.
+        if (!url.searchParams.has('page')) return;
+
+        event.preventDefault();
+
+        const results = document.getElementById(resultsId);
+        if (!results) return;
+
+        results.setAttribute('aria-busy', 'true');
+
+        try {
+            const response = await fetch(url.toString(), {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                credentials: 'same-origin'
+            });
+
+            if (!response.ok) {
+                throw new Error('Unable to load schedule page');
+            }
+
+            const html = await response.text();
+            const documentFragment = new DOMParser()
+                .parseFromString(html, 'text/html');
+
+            const updatedResults = documentFragment
+                .getElementById(resultsId);
+
+            if (!updatedResults) {
+                throw new Error('Schedule results not found');
+            }
+
+            results.replaceWith(updatedResults);
+
+            window.history.pushState(
+                {},
+                '',
+                url.pathname + url.search
+            );
+
+        } catch (error) {
+            console.error(error);
+            window.location.assign(url.toString());
+        } finally {
+            const current = document.getElementById(resultsId);
+            if (current) {
+                current.removeAttribute('aria-busy');
+            }
+        }
+    });
+});
+</script>
+<?php
 page_end();

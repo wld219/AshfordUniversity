@@ -124,7 +124,7 @@ declare(strict_types=1);
         <fieldset class="ashford-meeting-days ashford-filter-wide">
             <legend>Meeting Days</legend>
             <div class="ashford-day-options">
-                <?php foreach (['MW' => 'Mon/Wed', 'TTH' => 'Tue/Thu', 'M' => 'Mon only', 'TU' => 'Tue only', 'W' => 'Wed only', 'TH' => 'Thu only', 'F' => 'Friday only'] as $value => $label): ?>
+                <?php foreach (['MW' => 'Monday / Wednesday', 'TTH' => 'Tuesday / Thursday', 'F' => 'Friday'] as $value => $label): ?>
                     <label class="ashford-day-option">
                         <input type="checkbox" name="days[]" value="<?= e($value) ?>" <?= in_array($value, $filterDays, true) ? 'checked' : '' ?>>
                         <span><?= e($label) ?></span>

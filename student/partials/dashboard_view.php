@@ -52,7 +52,19 @@ $deptCode = static function(string $name): string {
 </style>
 <div class="dashboard-page ash-student">
  <header class="ash-head"><h2>Welcome, <?= e($displayName) ?></h2><p class="ash-sub">Student Dashboard · <?= e($semesterLabel ?? 'Current semester') ?></p></header>
- <div class="ash-grid">
+ <form method="get" action="dashboard.php" style="margin:0 0 20px">
+  <label for="semester" style="font-weight:650;margin-right:10px">Academic Semester</label>
+  <select id="semester" name="semester" onchange="this.form.submit()" style="padding:10px;border:1px solid #d9deeb;border-radius:8px">
+    <?php foreach ($availableSemesters as $term): ?>
+      <option value="<?= (int)$term['semester_ID'] ?>"
+        <?= (int)$currentSemester === (int)$term['semester_ID'] ? 'selected' : '' ?>>
+        <?= e($term['semester_Name']) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</form>
+
+<div class="ash-grid">
   <main>
    <section class="ash-metrics" aria-label="Academic overview">
     <article class="ash-card"><span class="ash-metric-label">Enrolled Courses</span><strong class="ash-metric-number"><?= count($schedule ?? []) ?></strong><span class="ash-metric-note">Current semester</span></article>

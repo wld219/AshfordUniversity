@@ -1,6 +1,6 @@
 -- Seeds historical course sections.
 
-INSERT INTO Course_Section
+INSERT IGNORE INTO Course_Section
 (CRN, course_ID, section_No, faculty_ID, time_Slot_ID, lecture_ID, lab_ID, semester_ID, available_Seats)
 VALUES
 
