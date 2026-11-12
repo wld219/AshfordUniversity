@@ -35,6 +35,11 @@ unset($_SESSION['flash']);
 		rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
 	>
+	<link
+		rel="icon"
+		href="<?= e(url('assets/img/favicon.svg')) ?>"
+		type="image/svg+xml"
+	>
 	<link rel="stylesheet" href="<?= e(url('assets/css/login.css')) ?>">
 </head>
 
@@ -77,17 +82,28 @@ unset($_SESSION['flash']);
 				>
 			</label>
 
-			<label for="password">
-				Password
-				<input
-					type="password"
-					id="password"
-					name="password"
-					autocomplete="current-password"
-					placeholder="Enter your password"
-					required
-				>
-			</label>
+		<label for="password">
+			Password
+			<input
+				type="password"
+				id="password"
+				name="password"
+				autocomplete="current-password"
+				placeholder="Enter your password"
+				required
+			>
+		</label>
+
+		<label for="role">
+			Role
+			<select id="role" name="role" required>
+				<option value="">Select your role</option>
+				<option value="Admin">Admin</option>
+				<option value="Student">Student</option>
+				<option value="Faculty">Faculty</option>
+				<option value="Staff">Staff</option>
+			</select>
+		</label>
 
 		<button class="login-button" type="submit">Continue</button>
 	</form>

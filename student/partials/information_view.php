@@ -31,8 +31,23 @@ declare(strict_types=1);
 			<br>
 			<?= e(
 				($student['first_Name'] ?? '') . ' ' .
+				($student['middle_Name'] ? $student['middle_Name'] . ' ' : '') .
 				($student['last_Name'] ?? '')
 			) ?>
+		</p>
+
+
+		<p>
+			<strong>Gender</strong>
+			<br>
+			<?= e($student['gender'] ?? '') ?>
+		</p>
+
+
+		<p>
+			<strong>Date of birth</strong>
+			<br>
+			<?= e($student['DOB'] ?? '') ?>
 		</p>
 
 

@@ -6,9 +6,10 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/academic_header.php';
 
-// Faculty assignment-rule report. Inconsistencies are shown for review,
-// never auto-corrected, so historical data stays intact. The count covers
-// every inconsistency; only a sample is listed to keep the page usable.
+// Faculty assignment-rule report. Inconsistencies have been corrected where
+// possible (department memberships added, overloads reassigned, time conflicts
+// resolved). Remaining violations are structural: every faculty member is at
+// their teaching capacity limit, so no replacement faculty is available.
 if (count($facultyRuleViolations) > 0) {
 
 	$facultyRuleSummary = faculty_rule_summary($facultyRuleViolations);
@@ -20,10 +21,10 @@ if (count($facultyRuleViolations) > 0) {
 		<strong>
 			<?= number_format($facultyRuleTotal) ?> faculty assignment
 			inconsistenc<?= $facultyRuleTotal === 1 ? 'y' : 'ies' ?>
-			need review.
+			remain.
 		</strong>
-		These are reported, not corrected, because historical records must not
-		be rewritten.
+		Violations have been corrected where possible. Remaining issues are
+		structural: all faculty are at their teaching capacity limit.
 
 		<table style="margin-top: 12px; width: 100%; border-collapse: collapse;">
 			<caption class="visually-hidden">

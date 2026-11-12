@@ -53,7 +53,7 @@ if (count($courses) > 0) {
 	);
 
 	foreach ($prerequisites as $prerequisite) {
-		$prerequisiteMap[(int) $prerequisite['course_ID']][] =
+		$prerequisiteMap[$prerequisite['course_ID']][] =
 			$prerequisite['prereq_ID'] . ' ' . $prerequisite['prereq_Name']
 			. ' (min grade ' . $prerequisite['min_Grade_Req'] . ')';
 	}
@@ -114,9 +114,9 @@ page_start(
 				</td>
 
 				<td>
-					<?php if (!empty($prerequisiteMap[(int) $course['course_ID']])): ?>
+					<?php if (!empty($prerequisiteMap[$course['course_ID']])): ?>
 						<ul style="margin: 0; padding-left: 18px;">
-							<?php foreach ($prerequisiteMap[(int) $course['course_ID']] as $label): ?>
+							<?php foreach ($prerequisiteMap[$course['course_ID']] as $label): ?>
 								<li>
 									<?= e($label) ?>
 								</li>

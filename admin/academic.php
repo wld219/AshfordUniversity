@@ -50,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Page data
 require_once __DIR__ . '/academic_data.php';
 
-// Faculty assignment rules are reported, never silently corrected, because
-// historical records must not be rewritten.
+// Faculty assignment rules have been corrected where possible. Remaining
+// violations are structural (no faculty with available teaching capacity).
 $facultyRuleViolations = faculty_rule_violations($pdo);
 
 page_start(

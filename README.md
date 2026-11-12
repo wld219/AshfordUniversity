@@ -138,12 +138,26 @@ Configure semester dates and registration windows through Admin Semesters. Unset
 
 ## Sign In Accounts
 
-When using the full university dataset, one account exists per role with the password Password123:
+All 1,985 accounts in the system use their individual seeded passwords from
+`database/login.sql`. Passwords are stored as bcrypt hashes and verified with
+`password_verify()`. Query the Login table to retrieve account credentials:
 
-Admin: arianaaugustin@ashford.edu
-Student: liamwalker@ashford.edu
-Faculty: kevinbaptiste200001@ashford.edu
-StatStaff: ericjones400001@ashford.edu
+    SELECT user_ID, user_Email, user_Type FROM Login ORDER BY user_Type, user_ID;
+
+Sample accounts by role:
+
+Role      Email
+--------  -------------------------------------------
+Admin     arianaaugustin@ashford.edu
+Admin     asewell3@oldwestbury.edu
+Admin     sraza9@oldwestbury.edu
+Admin     wbhatti1@oldwestbury.edu
+Admin     zshah2@oldwestbury.edu
+Student   liamwalker@ashford.edu
+Student   vanessahill@ashford.edu
+Student   rachelrobinson@ashford.edu
+Faculty   kevinbaptiste200001@ashford.edu
+StatStaff ericjones400001@ashford.edu
 
 Each account lands on its own portal automatically after sign in:
 

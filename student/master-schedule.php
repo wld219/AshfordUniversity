@@ -17,12 +17,7 @@ require_role(['Student']);
 
 $semesters = all_rows(
 	$pdo,
-	'SELECT semester_ID, semester_Name FROM Semester ORDER BY semester_ID DESC'
-);
-
-$departments = all_rows(
-	$pdo,
-	'SELECT dept_ID, dept_Name FROM Department ORDER BY dept_Name'
+	'SELECT semester_ID, semester_Name FROM Semester WHERE semester_ID IN (1, 2) ORDER BY semester_ID DESC'
 );
 
 $semesterID = get_int('semester')
@@ -31,7 +26,6 @@ $semesterID = get_int('semester')
 		'SELECT semester_ID FROM Semester ORDER BY semester_ID DESC LIMIT 1'
 	)['semester_ID'] ?? 0);
 
-$filterDepartment = get_int('dept');
 $filterDay = get_str('day', 10);
 $filterCourse = get_str('course', 100);
 
@@ -42,12 +36,23 @@ $sql = "SELECT
 			cs.lecture_ID,
 			cs.lab_ID,
 			cs.time_Slot_ID,
+			cs.faculty_ID,
+			cs.semester_ID,
 			c.course_ID,
 			c.course_Name,
 			c.course_Credits,
 			c.course_Type,
 			d.dept_Name,
-			CONCAT(u.first_Name, ' ', u.last_Name) AS instructor
+			CONCAT(u.first_Name, ' ', u.last_Name) AS instructor,
+			(SELECT COUNT(*) FROM Enrollment e WHERE e.CRN = cs.CRN) AS enrolled,
+			(SELECT GROUP_CONCAT(dy.day_Of_Week ORDER BY dy.day_ID SEPARATOR ', ')
+			 FROM Time_Slot_Day tsd
+			 JOIN Day dy ON dy.day_ID = tsd.day_ID
+			 WHERE tsd.time_Slot_ID = cs.time_Slot_ID) AS meeting_days,
+			(SELECT CONCAT(MIN(p.start_Time), ' - ', MAX(p.end_Time))
+			 FROM Time_Slot_Period tsp
+			 JOIN Period p ON p.period_ID = tsp.period_ID
+			 WHERE tsp.time_Slot_ID = cs.time_Slot_ID) AS meeting_time
 		FROM Course_Section cs
 		JOIN Course c ON c.course_ID = cs.course_ID
 		JOIN Department d ON d.dept_ID = c.dept_ID
@@ -56,11 +61,6 @@ $sql = "SELECT
 			AND cs.is_Cancelled = 0";
 
 $params = [$semesterID];
-
-if ($filterDepartment !== null) {
-	$sql .= ' AND c.dept_ID = ?';
-	$params[] = $filterDepartment;
-}
 
 if ($filterCourse !== '') {
 	$sql .= ' AND c.course_Name LIKE ?';

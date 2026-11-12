@@ -73,7 +73,12 @@ ACCESS POINTS
 TEST ACCOUNTS
 ----------------------------------------
 
-All accounts use the password: Password123
+All 1,985 accounts use their individual seeded passwords from
+database/login.sql. Passwords are stored as bcrypt hashes and verified
+with password_verify(). Query the Login table to retrieve credentials:
+
+    SELECT l.user_Type, l.user_Email
+    FROM Login l ORDER BY l.user_Type, l.user_ID LIMIT 20;
 
 | Role | Email | Capabilities |
 |------|-------|-------------|
@@ -82,6 +87,9 @@ All accounts use the password: Password123
 | Student | liamwalker@ashford.edu | Student portal |
 | Faculty | kevinbaptiste200001@ashford.edu | Faculty portal |
 | StatStaff | ericjones400001@ashford.edu | Statistics portal |
+
+Sample account credentials are in database/login.sql (user_ID, email, plaintext password).
+Use the plaintext password to sign in; it is verified against the bcrypt hash stored in Login.user_Password.
 
 ----------------------------------------
 STEP 4 - STOPPING THE SERVER

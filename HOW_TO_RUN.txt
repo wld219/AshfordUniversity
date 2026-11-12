@@ -73,23 +73,29 @@ To stop the site, press Ctrl+C in both PowerShell windows.
 
 ======================================================================
 SIGN-IN ACCOUNTS
-======================================================================
+================
 
-Password for every account: Password123
-
-One real account per role, taken from the loaded data:
-
-    Role      Email
-    --------  ---------------------------
-    Admin     arianaaugustin@ashford.edu
-    Student   liamwalker@ashford.edu
-    Faculty   kevinbaptiste200001@ashford.edu
-    StatStaff ericjones400001@ashford.edu
-
-There are 1,985 accounts in total. Query Login to find more:
+All 1,985 accounts in the system use their individual seeded passwords from
+database/login.sql. Passwords are stored as bcrypt hashes and verified with
+password_verify(). Query the Login table to retrieve account credentials:
 
     SELECT l.user_Type, l.user_Email
     FROM Login l ORDER BY l.user_Type, l.user_ID LIMIT 20;
+
+Sample accounts by role:
+
+    Role      Email
+    --------  -------------------------------------------
+    Admin     arianaaugustin@ashford.edu
+    Admin     asewell3@oldwestbury.edu
+    Admin     sraza9@oldwestbury.edu
+    Admin     wbhatti1@oldwestbury.edu
+    Admin     zshah2@oldwestbury.edu
+    Student   liamwalker@ashford.edu
+    Student   vanessahill@ashford.edu
+    Student   rachelrobinson@ashford.edu
+    Faculty   kevinbaptiste200001@ashford.edu
+    StatStaff ericjones400001@ashford.edu
 
 Each account lands on its own portal automatically:
     Admin     -> /admin/dashboard.php
@@ -99,22 +105,21 @@ Each account lands on its own portal automatically:
 
 To sign out, click "Logout" in the top right of the header.
 
-
 ======================================================================
 WHAT DATA IS LOADED
 ======================================================================
 
 The full university dataset from the .sql files in database/ is loaded:
 
-    Users 1,985    Departments 10    Courses 240
-    Sections 2,533 Enrollments 7,246  Attendance 57,968
-    Majors 12      Minors 12         Semesters 14
-    Buildings 8    Rooms 725         Faculty 350
+    Users      1,985    Departments 28     Courses   919
+    Students   1,620    Majors        148    Minors    12
+    Faculty      422    StatStaff       10   Admin         5
+    Sections   1,136    Semesters       14   Buildings      8
+    Rooms        743    Enrollments 28,899  History  16,655
 
-The master schedule for Spring 2027 exists as a Draft at version 7.
-With the full data loaded, real semesters have hundreds of sections
-each, so the admin schedule page takes a few seconds to build its
-validation report.
+Twelve majors and all twelve minors have published course requirements.
+The master schedule exists across all 14 semesters (Fall 2020 through
+Spring 2027), with sections scheduled for terms 3 through 10.
 
 To rebuild the database, the schema is in database/schema.sql and the
 schema changes are in database/migrations/ (0002 through 0005).
@@ -205,8 +210,10 @@ You see raw PHP code, or the page is empty text
    then open http://localhost:8080
 
 Sign-in always says "Invalid email or password"
-   Use one of the real accounts above. ada.reyes / riley.chen /
-   dana.whitfield style accounts do not exist in this database.
+    Use one of the real accounts listed above. Use the email and
+    password from database/login.sql for that account. Example-style
+    accounts (ada.reyes, riley.chen, dana.whitfield) do not exist in
+    this database.
 
 A page fails and you see nothing useful in the browser
    Look in the PowerShell window running the web server. Every error

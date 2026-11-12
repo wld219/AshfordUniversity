@@ -118,16 +118,17 @@ declare(strict_types=1);
 	</select>
 </div>
 
-<div>
-	<label for="seats">Available seats</label>
-	<input
-		type="number"
-		id="seats"
-		name="seats"
-		min="0"
-		value="<?= e((string) ($editSection['available_Seats'] ?? '')) ?>"
-	>
-</div>
+		<div>
+			<label for="seats">Available seats</label>
+			<input
+				type="number"
+				id="seats"
+				name="seats"
+				min="0"
+				max="10"
+				value="<?= e((string) ($editSection['available_Seats'] ?? '')) ?>"
+			>
+		</div>
 
 <?php if ($locked): ?>
 	<?php /* Disabled fields are not submitted; keep the values server-side. */ ?>

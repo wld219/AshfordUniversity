@@ -14,7 +14,8 @@ declare(strict_types=1);
 			<th>Course</th>
 			<th>Section</th>
 			<th>Instructor</th>
-			<th>Meeting time</th>
+			<th>Days</th>
+			<th>Time</th>
 			<th>Location</th>
 			<th>Semester</th>
 			<th>Enrolled</th>
@@ -36,7 +37,8 @@ declare(strict_types=1);
 				<td><?= e($section['course_ID']) ?> - <?= e($section['course_Name']) ?></td>
 				<td><?= e($section['section_No']) ?></td>
 				<td><?= e($section['instructor']) ?></td>
-				<td><?= e(time_slot_label($pdo, (int) $section['time_Slot_ID'])) ?></td>
+				<td><?= e($section['meeting_days'] ?? '') ?></td>
+				<td><?= e($section['meeting_time'] ?? '') ?></td>
 				<td>
 					<?= e(section_room_label(
 						$pdo,

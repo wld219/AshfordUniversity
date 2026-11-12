@@ -13,7 +13,6 @@ declare(strict_types=1);
 			<th>CRN</th>
 			<th>Course</th>
 			<th>Section</th>
-			<th>Department</th>
 			<th>Faculty</th>
 			<th>Days</th>
 			<th>Time</th>
@@ -30,7 +29,7 @@ declare(strict_types=1);
 		<?php if (count($pageRows) === 0): ?>
 
 			<tr>
-				<td colspan="13">No sections match the selected filters.</td>
+				<td colspan="12">No sections match the selected filters.</td>
 			</tr>
 
 		<?php else: ?>
@@ -50,7 +49,6 @@ declare(strict_types=1);
 					<td><?= e((string) $row['CRN']) ?></td>
 					<td><?= e((string) $row['course_ID']) ?> - <?= e((string) $row['course_Name']) ?></td>
 					<td><?= e((string) $row['section_No']) ?></td>
-					<td><?= e((string) $row['dept_Name']) ?></td>
 					<td><?= e((string) $row['faculty_Name']) ?></td>
 					<td><?= e(implode(', ', array_map(
 						static fn(string $day): string => substr($day, 0, 3),

@@ -77,6 +77,11 @@ if ($firstName === '' || $lastName === '' || $email === '') {
 
 			audit_log($pdo, 'Install', 'User', (string) $nextId, 'First administrator');
 
+			// Hash all seeded login passwords from database/login.sql so they
+			// work with password_verify(). The seed file stores plaintext
+			// passwords; bcrypt hashes are required by the login path.
+			seedLoginPasswords($pdo);
+
 			redirect_with_flash(
 				url('index.php'),
 				'success',
@@ -93,4 +98,52 @@ if ($firstName === '' || $lastName === '' || $email === '') {
 				: 'Installation failed. Please check the database and try again.';
 		}
 	}
+}
+
+/**
+ * Hash all plaintext login passwords from database/login.sql so they work
+ * with password_verify(). The seed file stores plaintext passwords; bcrypt
+ * hashes are required by the login path. Passwords already hashed (starting
+ * with $2y$ or $2a$) are skipped.
+ */
+function seedLoginPasswords(PDO $pdo): void
+{
+	$sqlFile = __DIR__ . '/../database/login.sql';
+
+	if (!is_file($sqlFile)) {
+		return;
+	}
+
+	$lines = file($sqlFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+	$update = $pdo->prepare(
+		'UPDATE Login SET user_Password = ?, no_Of_Tries = 0, lock_var = 0 WHERE user_ID = ?'
+	);
+
+	$count = 0;
+
+	foreach ($lines as $line) {
+		$line = trim($line);
+
+		if (!preg_match("/^\(\s*(\d+)\s*,\s*'[^']+'\s*,\s*'([^']+)'\s*,/", $line, $m)) {
+			continue;
+		}
+
+		$userId = (int) $m[1];
+		$password = $m[2];
+
+		// Skip if already hashed
+		if (str_starts_with($password, '$2y$') || str_starts_with($password, '$2a$')) {
+			continue;
+		}
+
+		$hash = password_hash($password, PASSWORD_DEFAULT);
+
+		if ($hash !== false) {
+			$update->execute([$hash, $userId]);
+			$count++;
+		}
+	}
+
+	error_log('Seed login passwords hashed: ' . $count);
 }

@@ -14,21 +14,6 @@ declare(strict_types=1);
 		<input type="hidden" name="semester" value="<?= e((string) $semesterID) ?>">
 
 		<div>
-			<label for="dept">Department</label>
-			<select name="dept" id="dept">
-				<option value="">All</option>
-				<?php foreach ($departments as $department): ?>
-					<option
-						value="<?= e($department['dept_ID']) ?>"
-						<?= $filterDepartment === (int) $department['dept_ID'] ? 'selected' : '' ?>
-					>
-						<?= e($department['dept_Name']) ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-		</div>
-
-		<div>
 			<label for="faculty">Faculty</label>
 			<select name="faculty" id="faculty">
 				<option value="">All</option>
