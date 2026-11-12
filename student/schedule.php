@@ -44,7 +44,12 @@ $schedule = all_rows(
 			ON User.user_ID = Course_Section.faculty_ID
 		WHERE Enrollment.student_ID = ?
 		ORDER BY
-			Semester.semester_ID,
+			RIGHT(Semester.semester_Name, 4) DESC,
+			CASE
+				WHEN Semester.semester_Name LIKE 'Fall %' THEN 2
+				WHEN Semester.semester_Name LIKE 'Spring %' THEN 1
+				ELSE 0
+			END DESC,
 			Course.course_ID",
 	[$studentID]
 );

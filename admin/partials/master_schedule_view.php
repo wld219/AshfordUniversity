@@ -9,7 +9,7 @@ require_once __DIR__ . '/master_schedule_header.php';
 require_once __DIR__ . '/master_schedule_stats.php';
 require_once __DIR__ . '/master_schedule_filters.php';
 
-if ($editSection !== null && $isFullAccess) {
+if ($editSection !== null && $isFullAccess && !$isReadOnly) {
 	require_once __DIR__ . '/master_schedule_edit.php';
 }
 

@@ -19,6 +19,7 @@ $securityLevel = one(
 )['security_Level'] ?? 'Read-Only';
 
 $isFullAccess = $securityLevel === 'Full-Access';
+$isReadOnly   = $securityLevel === 'Read-Only' || is_read_only();
 
 $error = '';
 

@@ -19,7 +19,7 @@ declare(strict_types=1);
 					<td><?= e($department['Email']) ?></td>
 					<td><?= e($department['Phone_No']) ?></td>
 					<td>
-						<?php if ($isFullAccess): ?>
+						<?php if ($isFullAccess && !$isReadOnly): ?>
 							<form method="post" class="filters">
 								<?= csrf_field() ?>
 								<input type="hidden" name="action" value="update_department">

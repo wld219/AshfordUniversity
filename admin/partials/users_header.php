@@ -34,6 +34,17 @@ declare(strict_types=1);
 			>
 		</div>
 
+		<div>
+			<label for="role_filter">Role</label>
+			<select name="role" id="role_filter">
+				<option value="">All roles</option>
+				<option value="Student" <?= ($roleFilter === 'Student' ? 'selected' : '') ?>>Student</option>
+				<option value="Faculty" <?= ($roleFilter === 'Faculty' ? 'selected' : '') ?>>Faculty</option>
+				<option value="Admin" <?= ($roleFilter === 'Admin' ? 'selected' : '') ?>>Admin</option>
+				<option value="StatStaff" <?= ($roleFilter === 'StatStaff' ? 'selected' : '') ?>>StatStaff</option>
+			</select>
+		</div>
+
 		<div style="align-self: end;">
 			<button type="submit" class="btn">
 				Search users

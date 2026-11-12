@@ -36,7 +36,8 @@ function nav_items(string $role): array
                 ['Weekly Attendance', 'attendance-weekly.php'],
                 ['Advisees', 'advisees.php'],
                 ['Appointments', 'appointments.php'],
-                ['Swap Advisees', 'advisee_swap.php'],
+                ['Availability', 'availability.php'],
+                ['Reschedule Appointments', 'advisee_swap.php'],
                 ['Catalog', 'catalog.php'],
                 ['My Profile', 'profile.php']
             ];

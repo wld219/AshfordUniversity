@@ -30,10 +30,11 @@ function create_student_record(PDO $pdo, int $userID): void
 	$pdo->prepare(
 		'INSERT INTO Student
 			(student_ID, major_ID, student_Year, student_Type)
-		VALUES (?, ?, 1, ?)'
+		VALUES (?, ?, ?, ?)'
 	)->execute([
 		$userID,
 		$majorID,
+		'Freshman',
 		$isGraduate ? 'Graduate' : 'Undergraduate',
 	]);
 

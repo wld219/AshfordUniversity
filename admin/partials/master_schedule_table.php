@@ -21,7 +21,7 @@ declare(strict_types=1);
 			<th>Seats</th>
 			<th>Enrolled</th>
 			<th>Status</th>
-			<?php if ($isFullAccess && $schedule !== null): ?>
+			<?php if ($isFullAccess && !$isReadOnly && $schedule !== null): ?>
 				<th>Action</th>
 			<?php endif; ?>
 		</tr>
@@ -68,7 +68,7 @@ declare(strict_types=1);
 					<td><?= e((string) $row['enrolled']) ?></td>
 					<td><?= $status ?></td>
 
-					<?php if ($isFullAccess && $schedule !== null): ?>
+					<?php if ($isFullAccess && !$isReadOnly && $schedule !== null): ?>
 						<td>
 							<a
 								class="btn small"

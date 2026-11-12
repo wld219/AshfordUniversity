@@ -25,7 +25,7 @@ declare(strict_types=1);
 	<?php endif; ?>
 
 
-	<?php if ($isFullAccess): ?>
+	<?php if ($isFullAccess && !$isReadOnly): ?>
 
 		<form method="post" class="filters" style="margin-top: 16px;">
 			<?= csrf_field() ?>
@@ -78,7 +78,7 @@ declare(strict_types=1);
 			<th>Student</th>
 			<th>Hold</th>
 			<th>Date</th>
-			<?php if ($isFullAccess): ?>
+			<?php if ($isFullAccess && !$isReadOnly): ?>
 				<th>Actions</th>
 			<?php endif; ?>
 		</tr>
@@ -89,8 +89,8 @@ declare(strict_types=1);
 				<td><?= e($hold['student_Name']) ?></td>
 				<td><?= e($hold['hold_Type']) ?></td>
 				<td><?= e($hold['hold_Date']) ?></td>
-				<?php if ($isFullAccess): ?>
-					<td>
+					<?php if ($isFullAccess && !$isReadOnly): ?>
+						<td>
 						<form method="post" style="display: inline-block;">
 							<?= csrf_field() ?>
 							<input type="hidden" name="action" value="remove_hold">

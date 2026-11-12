@@ -7,7 +7,7 @@ require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
 
-require_role(['Admin']);
+require_role(['Admin', 'StatStaff']);
 
 /*
  * Audit log viewer. Records are append-only: this page and every other
@@ -18,6 +18,9 @@ $action = get_str('action', 30);
 $entityType = get_str('entity', 50);
 $page = max(1, get_int('page') ?? 1);
 $perPage = 50;
+
+$isFullAccess = false;
+$isReadOnly   = true;
 
 // Listing query
 $sql = "SELECT

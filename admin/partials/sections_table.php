@@ -19,7 +19,7 @@ declare(strict_types=1);
 			<th>Semester</th>
 			<th>Enrolled</th>
 			<th>Seats</th>
-			<?php if ($isFullAccess): ?>
+			<?php if ($isFullAccess && !$isReadOnly): ?>
 				<th>Actions</th>
 			<?php endif; ?>
 		</tr>
@@ -48,7 +48,7 @@ declare(strict_types=1);
 				<td><?= e((int) $section['enrolled']) ?></td>
 				<td><?= e((int) $section['available_Seats']) ?></td>
 
-				<?php if ($isFullAccess): ?>
+				<?php if ($isFullAccess && !$isReadOnly): ?>
 
 					<td>
 						<a class="btn small" href="sections.php?edit=<?= e($section['CRN']) ?>">

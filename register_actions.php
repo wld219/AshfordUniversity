@@ -141,7 +141,7 @@ if (
 				)->execute([
 					$userID,
 					$majorID,
-					1,
+					'Freshman',
 					'Undergraduate'
 				]);
 

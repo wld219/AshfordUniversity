@@ -9,6 +9,79 @@ declare(strict_types=1);
 
 	<?= csrf_field() ?>
 
+	<!-- Locked accounts section: quick lock/unlock handling -->
+	<?php $lockedUsers = array_filter($users, function ($u) { return (int) ($u['lock_var'] ?? 0) === 1; }); ?>
+
+	<?php if ($isLockManager && count($lockedUsers) > 0): ?>
+
+		<div class="card">
+			<div class="dashboard-section-heading">
+				<div>
+					<p class="dashboard-eyebrow">Account Locks</p>
+					<h2>Locked Accounts (<?= count($lockedUsers) ?>)</h2>
+				</div>
+			</div>
+
+			<p class="muted" style="margin-top: 10px;">
+				These accounts are locked due to repeated failed login attempts.
+				Only the lock manager can unlock them. Unlocking resets the
+				failed-attempt counter so the user can sign in again.
+			</p>
+
+			<div class="table-wrap">
+				<table>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Role</th>
+						<th>Failed attempts</th>
+						<th>Location</th>
+						<th>Action</th>
+					</tr>
+
+					<?php foreach ($lockedUsers as $user): ?>
+
+						<tr>
+							<td><?= e($user['user_ID']) ?></td>
+							<td><?= e($user['first_Name'] . ' ' . $user['last_Name']) ?></td>
+							<td><?= e($user['user_Type']) ?></td>
+							<td><?= e((int) ($user['no_Of_Tries'] ?? 0)) ?></td>
+							<td><?= e($user['city'] . ', ' . $user['state']) ?></td>
+							<td>
+								<form
+									method="post"
+									action="users.php"
+									style="display:inline;"
+									onsubmit="return confirm('Unlock account <?= e($user['user_ID']) ?>?');"
+								>
+									<?= csrf_field() ?>
+									<input type="hidden" name="action" value="unlock">
+									<input type="hidden" name="user_id" value="<?= e($user['user_ID']) ?>">
+									<button type="submit" class="btn small">Unlock</button>
+								</form>
+							</td>
+						</tr>
+
+					<?php endforeach; ?>
+
+				</table>
+			</div>
+		</div>
+
+	<?php elseif ($isLockManager): ?>
+
+		<div class="card">
+			<div class="dashboard-section-heading">
+				<div>
+					<p class="dashboard-eyebrow">Account Locks</p>
+					<h2>Locked Accounts</h2>
+				</div>
+			</div>
+			<p class="muted">No accounts are currently locked.</p>
+		</div>
+
+	<?php endif; ?>
+
 	<table>
 
 		<tr>

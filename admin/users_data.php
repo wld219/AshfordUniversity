@@ -6,40 +6,53 @@ declare(strict_types=1);
 
 // Search
 $search = get_str('search', 100);
+$roleFilter = get_str('role', 20);
 
+if (!in_array($roleFilter, ['Student', 'Faculty', 'Admin', 'StatStaff'], true)) {
+	$roleFilter = '';
+}
+
+if ($search !== '' || $roleFilter !== '') {
+
+	$searchValue = '%' . $search . '%';
+	$params = [];
+
+	$whereParts = [];
 	if ($search !== '') {
+		$whereParts[] = '(CAST(u.user_ID AS CHAR) LIKE ? OR u.first_Name LIKE ? OR u.last_Name LIKE ?)';
+		$params[] = $searchValue;
+		$params[] = $searchValue;
+		$params[] = $searchValue;
+	}
+	if ($roleFilter !== '') {
+		$whereParts[] = 'u.user_Type = ?';
+		$params[] = $roleFilter;
+	}
 
-		$searchValue = '%' . $search . '%';
+	$whereSql = implode(' AND ', $whereParts);
 
-		$sql = "SELECT
-					u.user_ID,
-					u.first_Name,
-					u.last_Name,
-					u.user_Type,
-					u.city,
-					u.state,
-					l.lock_var,
-					l.no_Of_Tries
-				FROM User u
-				JOIN Login l ON l.user_ID = u.user_ID
-				WHERE
-					CAST(u.user_ID AS CHAR) LIKE ?
-					OR u.first_Name LIKE ?
-					OR u.last_Name LIKE ?
-				ORDER BY u.user_ID
-				LIMIT 25";
+	$sql = "SELECT
+				u.user_ID,
+				u.first_Name,
+				u.last_Name,
+				u.user_Type,
+				u.city,
+				u.state,
+				l.lock_var,
+				l.no_Of_Tries
+			FROM User u
+			JOIN Login l ON l.user_ID = u.user_ID
+			WHERE $whereSql
+			ORDER BY u.user_ID
+			LIMIT 25";
 
-		$users = all_rows(
-			$pdo,
-			$sql,
-			[
-				$searchValue,
-				$searchValue,
-				$searchValue
-			]
-		);
+	$users = all_rows(
+		$pdo,
+		$sql,
+		$params
+	);
 
-	} else {
+} else {
 
 		$sql = "SELECT
 					u.user_ID,

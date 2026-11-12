@@ -19,7 +19,7 @@ declare(strict_types=1);
 					<td><?= e($course['course_Credits']) ?></td>
 					<td><?= e($course['course_Type']) ?></td>
 					<td>
-						<?php if ($isFullAccess): ?>
+						<?php if ($isFullAccess && !$isReadOnly): ?>
 							<a class="btn small" href="academic.php?edit_course=<?= e($course['course_ID']) ?>">Edit</a>
 						<?php endif; ?>
 					</td>
@@ -41,7 +41,7 @@ declare(strict_types=1);
 					<td><?= e($prerequisite['prerequisite_course_ID']) ?> - <?= e($prerequisite['prereq_Name']) ?></td>
 					<td><?= e($prerequisite['min_Grade_Req']) ?></td>
 					<td>
-						<?php if ($isFullAccess): ?>
+						<?php if ($isFullAccess && !$isReadOnly): ?>
 							<form method="post" style="display: inline-block;">
 								<?= csrf_field() ?>
 								<input type="hidden" name="action" value="remove_prerequisite">

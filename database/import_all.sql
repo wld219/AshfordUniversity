@@ -35,6 +35,11 @@ SOURCE database/schema.sql;
 SOURCE database/migrations/0006_appointments.sql;
 
 -- --------------------------------------------------------
+-- 3. Migration 0007: lock-manager flag on administrators
+-- --------------------------------------------------------
+SOURCE database/migrations/0007_lock_manager.sql;
+
+-- --------------------------------------------------------
 -- 3. Temporarily drop business-logic triggers so historical data loads
 -- --------------------------------------------------------
 DROP TRIGGER IF EXISTS trg_attendance_current_day;
@@ -166,6 +171,42 @@ DELIMITER ;
 --    Run after Login data is imported
 -- --------------------------------------------------------
 SOURCE database/migrations/0005_admin.sql;
+
+-- --------------------------------------------------------
+-- 7. Migration 0008: correct faculty assignment violations
+--    (idempotent: only cancels sections currently in violation)
+-- --------------------------------------------------------
+SOURCE database/migrations/0008_faculty_assignment_fix.sql;
+
+-- --------------------------------------------------------
+-- 8. Migration 0009: faculty availability table
+-- --------------------------------------------------------
+SOURCE database/migrations/0009_faculty_availability.sql;
+
+-- --------------------------------------------------------
+-- 9. Migration 0010: create login accounts for faculty missing them
+-- --------------------------------------------------------
+SOURCE database/migrations/0010_faculty_logins.sql;
+
+-- --------------------------------------------------------
+-- 10. Migration 0012: correct enrollment data (replaces bad data from 0011)
+--     Clears all enrollment records and re-enrolls students realistically:
+--     3-5 sections per student, varied section fill rates, never exceeds capacity.
+-- --------------------------------------------------------
+SOURCE database/migrations/0012_correct_enrollment.sql;
+
+-- --------------------------------------------------------
+-- 11. Migration 0013: Replace numerical student_Year values with academic classifications.
+--     Changes student_Year from INT to ENUM ('Freshman','Sophomore','Junior','Senior','Graduate').
+-- --------------------------------------------------------
+SOURCE database/migrations/0013_student_year_labels.sql;
+
+-- --------------------------------------------------------
+-- 12. (Re)create all business-logic triggers, including the faculty
+--     workload and availability enforcement triggers. Must run AFTER data
+--     load and the 0008 fix so seed import is not blocked by the new rules.
+-- --------------------------------------------------------
+SOURCE database/triggers.sql;
 
 -- --------------------------------------------------------
 -- Done

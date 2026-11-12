@@ -27,7 +27,7 @@ declare(strict_types=1);
 	<?php endif; ?>
 
 
-	<?php if ($isFullAccess): ?>
+	<?php if ($isFullAccess && !$isReadOnly): ?>
 
 		<form method="post" class="filters" style="margin-top: 16px;">
 			<?= csrf_field() ?>
@@ -89,7 +89,7 @@ declare(strict_types=1);
 			<th>Reason</th>
 			<th>Approved by</th>
 			<th>Approved at</th>
-			<?php if ($isFullAccess): ?>
+			<?php if ($isFullAccess && !$isReadOnly): ?>
 				<th>Actions</th>
 			<?php endif; ?>
 		</tr>
@@ -102,8 +102,8 @@ declare(strict_types=1);
 				<td><?= e($exception['reason']) ?></td>
 				<td><?= e($exception['approver_Name'] ?? 'Unknown') ?></td>
 				<td><?= e($exception['created_At']) ?></td>
-				<?php if ($isFullAccess): ?>
-					<td>
+					<?php if ($isFullAccess && !$isReadOnly): ?>
+						<td>
 						<form method="post" style="display: inline-block;">
 							<?= csrf_field() ?>
 							<input type="hidden" name="action" value="remove">

@@ -45,6 +45,45 @@ if ($user['lock_var']) {
 	exit;
 }
 
+// Validate that the selected role matches the account type on record.
+$selectedRole = trim((string) ($_POST['role'] ?? ''));
+$validRoles = ['Student', 'Faculty', 'Admin', 'StatStaff'];
+
+if (!in_array($selectedRole, $validRoles, true) || $selectedRole !== $user['user_Type']) {
+
+	$tries = (int) $user['no_Of_Tries'] + 1;
+	$locked = $tries >= $maxAttempts ? 1 : 0;
+
+	$sql = "UPDATE Login
+			SET no_Of_Tries = ?, lock_var = ?
+			WHERE user_ID = ?";
+
+	$stmt = $pdo->prepare($sql);
+
+	$stmt->execute([
+		$tries,
+		$locked,
+		$user['user_ID']
+	]);
+
+	audit_log(
+		$pdo,
+		'LoginFailed',
+		'Login',
+		(string) $user['user_ID']
+	);
+
+	if ($locked) {
+		$_SESSION['login_error'] =
+			"Account locked after {$maxAttempts} unsuccessful attempts.";
+	} else {
+		$_SESSION['login_error'] = 'Invalid role, email, or password.';
+	}
+
+	header('Location: ' . url('index.php'));
+	exit;
+}
+
 // Hashed comparison only: plaintext seeds are no longer accepted.
 if (!password_verify($password, $user['user_Password'])) {
 

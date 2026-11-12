@@ -26,7 +26,7 @@ declare(strict_types=1);
 	<?php endif; ?>
 
 
-	<?php if ($isFullAccess): ?>
+	<?php if ($isFullAccess && !$isReadOnly): ?>
 
 		<form method="post" class="filters" style="margin-top: 16px;">
 			<?= csrf_field() ?>
@@ -85,7 +85,7 @@ declare(strict_types=1);
 			<th>Student ID</th>
 			<th>Student</th>
 			<th>Appointed</th>
-			<?php if ($isFullAccess): ?>
+			<?php if ($isFullAccess && !$isReadOnly): ?>
 				<th>Actions</th>
 			<?php endif; ?>
 		</tr>
@@ -97,7 +97,7 @@ declare(strict_types=1);
 				<td><?= e($assignment['student_ID']) ?></td>
 				<td><?= e($assignment['student_Name']) ?></td>
 				<td><?= e($assignment['date_Of_Appnt']) ?></td>
-				<?php if ($isFullAccess): ?>
+				<?php if ($isFullAccess && !$isReadOnly): ?>
 					<td>
 						<form method="post" style="display: inline-block;">
 							<?= csrf_field() ?>

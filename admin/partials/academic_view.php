@@ -61,7 +61,7 @@ if (count($facultyRuleViolations) > 0) {
 	<?php
 }
 
-if ($isFullAccess) {
+if ($isFullAccess && !$isReadOnly) {
 	require_once __DIR__ . '/academic_forms.php';
 	require_once __DIR__ . '/academic_program_forms.php';
 }

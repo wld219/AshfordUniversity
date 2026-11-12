@@ -19,7 +19,7 @@ $adminProfile = one(
 );
 
 $securityLevel = $adminProfile['security_Level'] ?? 'Read-Only';
-$isFullAccess  = $securityLevel === 'Full-Access' && (int) ($adminProfile['lock_manager'] ?? 0) === 0;
+$isFullAccess  = $securityLevel === 'Full-Access';
 $isLockManager = (int) ($adminProfile['lock_manager'] ?? 0) === 1;
 $isReadOnly    = $securityLevel === 'Read-Only' || is_read_only();
 

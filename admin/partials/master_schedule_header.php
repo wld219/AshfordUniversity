@@ -75,7 +75,7 @@ declare(strict_types=1);
 		<?php endif; ?>
 
 
-		<?php if ($isFullAccess): ?>
+		<?php if ($isFullAccess && !$isReadOnly): ?>
 
 			<div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
 

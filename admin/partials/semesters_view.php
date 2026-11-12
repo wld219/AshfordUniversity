@@ -29,7 +29,7 @@ declare(strict_types=1);
 </div>
 
 
-<?php if ($isFullAccess): ?>
+<?php if ($isFullAccess && !$isReadOnly): ?>
 
 	<section class="card">
 
@@ -149,7 +149,7 @@ declare(strict_types=1);
 			<th>Registration</th>
 			<th>Drop deadline</th>
 			<th>Grade deadline</th>
-			<?php if ($isFullAccess): ?>
+			<?php if ($isFullAccess && !$isReadOnly): ?>
 				<th>Action</th>
 			<?php endif; ?>
 		</tr>
@@ -167,7 +167,7 @@ declare(strict_types=1);
 				</td>
 				<td><?= e($semester['drop_Deadline'] ?? '—') ?></td>
 				<td><?= e($semester['grade_Deadline'] ?? '—') ?></td>
-				<?php if ($isFullAccess): ?>
+				<?php if ($isFullAccess && !$isReadOnly): ?>
 					<td>
 						<a class="btn small" href="semesters.php?edit=<?= e($semester['semester_ID']) ?>">
 							Edit

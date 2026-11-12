@@ -6,11 +6,11 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/users_header.php';
 
-if ($isFullAccess) {
+if ($isFullAccess && !$isReadOnly) {
 	require_once __DIR__ . '/users_form_create.php';
 }
 
-if ($editUser && $isFullAccess) {
+if ($editUser && $isFullAccess && !$isReadOnly) {
 	require_once __DIR__ . '/users_form_edit.php';
 }
 
