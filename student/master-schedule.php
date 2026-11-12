@@ -129,6 +129,41 @@ $totalSections = count($sections);
 $totalPages = max(1, (int)ceil($totalSections / 20));
 $pageNumber = max(1, min($totalPages, (int)(get_int('page') ?? 1)));
 $sections = array_slice($sections, ($pageNumber - 1) * 20, 20);
+
+// ashford-prereq-popup-v1: load read-only course details for visible sections.
+$courseDetails = [];
+$visibleCourseIDs = array_values(array_unique(array_map(
+    static fn(array $row): string => (string)$row['course_ID'],
+    $sections
+)));
+if ($visibleCourseIDs !== []) {
+    $marks = implode(',', array_fill(0, count($visibleCourseIDs), '?'));
+    $detailRows = all_rows($pdo, "
+        SELECT c.course_ID, c.course_Name, c.course_Credits,
+               c.course_DSC, c.course_Type
+        FROM Course c WHERE c.course_ID IN ($marks)
+    ", $visibleCourseIDs);
+    foreach ($detailRows as $row) {
+        $row['prerequisites'] = [];
+        $courseDetails[(string)$row['course_ID']] = $row;
+    }
+    $prereqRows = all_rows($pdo, "
+        SELECT cp.course_ID, cp.prerequisite_course_ID,
+               cp.min_Grade_Req, p.course_Name AS prerequisite_Name,
+               p.course_Type AS prerequisite_Type
+        FROM Course_Prerequisite cp
+        JOIN Course p ON p.course_ID = cp.prerequisite_course_ID
+        WHERE cp.course_ID IN ($marks)
+        ORDER BY cp.course_ID, cp.prerequisite_course_ID
+    ", $visibleCourseIDs);
+    foreach ($prereqRows as $row) {
+        $id = (string)$row['course_ID'];
+        if (isset($courseDetails[$id])) {
+            $courseDetails[$id]['prerequisites'][] = $row;
+        }
+    }
+}
+
 $pageUrl = static function(int $page): string {
     $q = $_GET;
     $q['page'] = $page;

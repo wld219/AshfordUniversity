@@ -114,7 +114,7 @@ declare(strict_types=1);
 ?>
 <tr>
 <td><?= e((string)$row['CRN']) ?></td>
-<td><?= e($courseID) ?></td>
+<td><button type="button" class="ash-course-prereq-link" data-course-prereq="<?= e((string)$row['course_ID']) ?>" aria-label="View prerequisites for <?= e((string)$row['course_ID']) ?>"><?= e((string)$row['course_ID']) ?></button></td>
 <td><?= e((string)($row['course_Credits'] ?? '—')) ?></td>
 <td class="as-name"><?= e((string)$row['course_Name']) ?></td>
 <td><?= e(str_pad((string)$row['section_No'],2,'0',STR_PAD_LEFT)) ?></td>

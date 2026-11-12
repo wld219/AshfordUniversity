@@ -1,55 +1,8 @@
-<?php
-
-declare(strict_types=1);
-
-// Users page header: access level and search box.
-
-?>
-
-<section class="card" aria-label="User management">
-
-	<div class="dashboard-section-heading">
-		<div>
-			<p class="dashboard-eyebrow">Directory</p>
-			<h2>User access</h2>
-		</div>
-		<span class="badge">
-			<?= e($securityLevel) ?>
-			<?php if ($isLockManager): ?>
-				&nbsp;<span class="badge" style="background:#d6a800; color:#fff;">Lock Manager</span>
-			<?php endif; ?>
-		</span>
-	</div>
-
-	<form method="get" class="filters" style="margin-top: 18px;">
-
-		<div>
-			<label for="search">Search users</label>
-			<input
-				type="search"
-				name="search"
-				id="search"
-				value="<?= e($search) ?>"
-				placeholder="ID, first name, or last name"
-			>
-		</div>
-
-		<div style="align-self: end;">
-			<button type="submit" class="btn">
-				Search users
-			</button>
-		</div>
-
-		<?php if ($search !== ''): ?>
-
-			<div style="align-self: end;">
-				<a href="users.php" class="btn light">
-					Clear search
-				</a>
-			</div>
-
-		<?php endif; ?>
-
-	</form>
-
-</section>
+<?php declare(strict_types=1); ?>
+<div class="users-directory-header"><h3>University User Directory</h3><p class="muted">Find students, faculty, administrators, and statistics staff.</p></div>
+<form method="get" action="users.php" class="users-directory-search">
+ <div class="search-field"><label for="users-search">Search Users</label><input type="search" name="search" id="users-search" value="<?= e($search) ?>" placeholder="User ID, name, or email"></div>
+ <div class="users-role-field"><label for="users-role">User Role</label><select name="role" id="users-role"><option value="">All Roles</option><?php foreach (['Student'=>'Students','Faculty'=>'Faculty','Admin'=>'Administrators','StatStaff'=>'Statistics Staff'] as $value=>$label): ?><option value="<?= e($value) ?>" <?= $roleFilter===$value?'selected':'' ?>><?= e($label) ?></option><?php endforeach; ?></select></div>
+ <div class="users-status-field"><label for="users-status-filter">Status (current page)</label><select id="users-status-filter"><option value="">All Statuses</option><option value="Active">Active</option><option value="Locked">Locked</option></select></div>
+ <div class="search-actions"><button type="submit" class="btn">Search</button><a href="users.php" class="btn light">Clear</a><button type="button" class="btn light" id="users-export-csv">Export CSV</button></div>
+</form>

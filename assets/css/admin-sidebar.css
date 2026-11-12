@@ -1,0 +1,71 @@
+/* Scoped to Admin; no Master Schedule data or page logic is changed. */
+body.ashford-admin-collapsible .shell { position:relative; }
+body.ashford-admin-collapsible .sidebar { flex:0 0 238px; width:238px; box-sizing:border-box; transition:width .2s ease,flex-basis .2s ease; }
+body.ashford-admin-collapsible .sidebar a { display:flex; align-items:center; gap:12px; white-space:nowrap; }
+body.ashford-admin-collapsible .admin-nav-icon { display:inline-flex; align-items:center; justify-content:center; width:24px; min-width:24px; font-size:19px; line-height:1; }
+body.ashford-admin-collapsible .admin-nav-label { overflow:hidden; text-overflow:ellipsis; }
+body.ashford-admin-collapsible .admin-sidebar-toggle { position:fixed; z-index:100; bottom:20px; left:16px; background:#eaf1fc; color:#17365e; border:2px solid #8da9ce; border-radius:12px; padding:10px 14px; font-size:20px; cursor:pointer; box-shadow:0 5px 20px #10233f33; }
+body.ashford-admin-collapsible .admin-sidebar-toggle:focus-visible { outline:3px solid #64a5ff; outline-offset:3px; }
+body.ashford-admin-collapsible.admin-sidebar-collapsed .sidebar { flex-basis:70px; width:70px; padding-left:8px; padding-right:8px; }
+body.ashford-admin-collapsible.admin-sidebar-collapsed .sidebar a { justify-content:center; padding:12px 6px; }
+body.ashford-admin-collapsible.admin-sidebar-collapsed .admin-nav-label { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+@media(max-width:700px) { body.ashford-admin-collapsible.admin-sidebar-collapsed .sidebar { flex-basis:0; width:0; padding:0; overflow:hidden; border:0; } }
+@media(prefers-reduced-motion:reduce) { body.ashford-admin-collapsible .sidebar { transition:none; } }
+
+/* Keep the menu button at the top; give the menu a compact, stable width. */
+body.ashford-admin-collapsible .sidebar { flex: 0 0 250px; width:250px; min-width:0; padding-top:64px; }
+body.ashford-admin-collapsible .sidebar a { min-width:0; }
+body.ashford-admin-collapsible .admin-sidebar-toggle { position:absolute; top:12px; bottom:auto; left:14px; width:42px; height:42px; padding:0; display:flex; align-items:center; justify-content:center; border-radius:10px; font-size:23px; }
+body.ashford-admin-collapsible.admin-sidebar-collapsed .sidebar { flex:0 0 72px; width:72px; min-width:72px; padding-top:64px; }
+body.ashford-admin-collapsible.admin-sidebar-collapsed .admin-sidebar-toggle { left:14px; }
+body.ashford-admin-collapsible .admin-nav-icon svg { display:block; flex-shrink:0; }
+body.ashford-admin-collapsible .content { min-width:0; }
+@media(max-width:700px) { body.ashford-admin-collapsible .admin-sidebar-toggle { top:10px; } body.ashford-admin-collapsible.admin-sidebar-collapsed .sidebar { flex:0 0 0; width:0; min-width:0; padding:0; } }
+
+
+/* ===== Sticky sidebar navigation toggle ===== */
+
+body.ashford-admin-collapsible .admin-sidebar-toggle,
+body.ashford-admin-collapsible.admin-sidebar-collapsed .admin-sidebar-toggle {
+    position: fixed !important;
+
+    /* Below the university header, inside the sidebar area */
+    top: 100px !important;
+    left: 16px !important;
+    bottom: auto !important;
+
+    width: 46px;
+    height: 46px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(30, 57, 89, 0.82);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.16);
+    z-index: 9999;
+
+    transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+body.ashford-admin-collapsible .admin-sidebar-toggle:hover {
+    background: rgba(30, 57, 89, 0.95);
+}
+
+@media (max-width: 700px) {
+    body.ashford-admin-collapsible .admin-sidebar-toggle,
+    body.ashford-admin-collapsible.admin-sidebar-collapsed .admin-sidebar-toggle {
+        top: 96px !important;
+        left: 12px !important;
+    }
+}

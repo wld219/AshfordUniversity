@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 <div>
 	<label for="<?= e($fieldIdPrefix) ?>course_id">Course</label>
-	<select name="course_id" id="<?= e($fieldIdPrefix) ?>course_id" required <?= $identityLocked ? 'disabled' : '' ?>>
+	<select name="course_id" id="<?= e($fieldIdPrefix) ?>course_id" required >
 		<option value="">Select course</option>
 		<?php foreach ($courses as $course): ?>
 			<option
-				value="<?= e($course['course_ID']) ?>"
+				value="<?= e($course['course_ID']) ?>" data-dept="<?= e($course['dept_Name']) ?>"
 				<?= $editSection !== null && (string) $editSection['course_ID'] === (string) $course['course_ID'] ? 'selected' : '' ?>
 			>
 				<?= e($course['course_ID']) ?> -
@@ -33,17 +33,17 @@ declare(strict_types=1);
 		min="1"
 		value="<?= e((string) ($editSection['section_No'] ?? '')) ?>"
 		required
-		<?= $locked ? 'disabled' : '' ?>
+		
 	>
 </div>
 
 <div>
 	<label for="<?= e($fieldIdPrefix) ?>faculty_id">Instructor</label>
-	<select name="faculty_id" id="<?= e($fieldIdPrefix) ?>faculty_id" required <?= $locked ? 'disabled' : '' ?>>
+	<select name="faculty_id" id="<?= e($fieldIdPrefix) ?>faculty_id" required >
 		<option value="">Select faculty</option>
 		<?php foreach ($faculty as $member): ?>
 			<option
-				value="<?= e($member['faculty_ID']) ?>"
+				value="<?= e($member['faculty_ID']) ?>" data-faculty-type="<?= e($member['faculty_Type']) ?>"
 				<?= $editSection !== null && (int) $editSection['faculty_ID'] === (int) $member['faculty_ID'] ? 'selected' : '' ?>
 			>
 				<?= e($member['name']) ?> (<?= e($member['faculty_Type']) ?>)
@@ -54,7 +54,7 @@ declare(strict_types=1);
 
 <div>
 	<label for="<?= e($fieldIdPrefix) ?>semester_id">Semester</label>
-	<select name="semester_id" id="<?= e($fieldIdPrefix) ?>semester_id" required <?= $identityLocked ? 'disabled' : '' ?>>
+	<select name="semester_id" id="<?= e($fieldIdPrefix) ?>semester_id" required >
 		<option value="">Select semester</option>
 		<?php foreach ($semesters as $semester): ?>
 			<option
@@ -67,9 +67,10 @@ declare(strict_types=1);
 	</select>
 </div>
 
-<div>
-	<label for="<?= e($fieldIdPrefix) ?>time_slot_id">Meeting day and time</label>
-	<select name="time_slot_id" id="<?= e($fieldIdPrefix) ?>time_slot_id" required <?= $locked ? 'disabled' : '' ?>>
+<div class="meeting-schedule-card">
+  <div class="meeting-slot-control">
+	<label for="<?= e($fieldIdPrefix) ?>time_slot_id">Meeting Schedule</label>
+	<select name="time_slot_id" id="<?= e($fieldIdPrefix) ?>time_slot_id" required >
 		<option value="">Select time slot</option>
 		<?php foreach ($timeSlots as $slot): ?>
 			<option
@@ -79,24 +80,31 @@ declare(strict_types=1);
 				<?= e(time_slot_label($pdo, (int) $slot['time_Slot_ID'])) ?>
 			</option>
 		<?php endforeach; ?>
-	</select>
+</select>
+  </div>
+  <div class="meeting-preview-row">
+    <div><span class="meeting-preview-label">Meeting Days</span><strong data-meeting-days>—</strong></div>
+    <div><span class="meeting-preview-label">Meeting Time</span><strong data-meeting-time>—</strong></div>
+  </div>
 </div>
 
-<div>
-	<label for="<?= e($fieldIdPrefix) ?>room_type">Room type</label>
-	<select name="room_type" id="<?= e($fieldIdPrefix) ?>room_type" <?= $locked ? 'disabled' : '' ?>>
+<div class="room-assignment-card">
+  <h3>Room Assignment</h3>
+  <div class="room-assignment-row">
+    <div>
+	<label for="<?= e($fieldIdPrefix) ?>room_type">Room Type</label>
+	<select name="room_type" id="<?= e($fieldIdPrefix) ?>room_type" >
 		<option value="lecture" <?= $editSection !== null && $editSection['lecture_ID'] !== null ? 'selected' : '' ?>>Lecture room</option>
 		<option value="lab" <?= $editSection !== null && $editSection['lab_ID'] !== null ? 'selected' : '' ?>>Laboratory</option>
-	</select>
-</div>
-
-<div>
-	<label for="<?= e($fieldIdPrefix) ?>room_id">Classroom / laboratory</label>
-	<select name="room_id" id="<?= e($fieldIdPrefix) ?>room_id" <?= $locked ? 'disabled' : '' ?>>
+</select>
+    </div>
+    <div>
+	<label for="<?= e($fieldIdPrefix) ?>room_id">Available Room / Laboratory</label>
+	<select name="room_id" id="<?= e($fieldIdPrefix) ?>room_id" >
 		<option value="">Select room</option>
 		<?php foreach ($lectureRooms as $room): ?>
 			<option
-				value="<?= e($room['lecture_ID']) ?>"
+				value="<?= e($room['lecture_ID']) ?>" data-capacity="<?= (int) $room['avail_Seats'] ?>"
 				data-room-type="lecture"
 				<?= $editSection !== null && $editSection['lecture_ID'] !== null && (int) $editSection['lecture_ID'] === (int) $room['lecture_ID'] ? 'selected' : '' ?>
 			>
@@ -106,7 +114,7 @@ declare(strict_types=1);
 		<?php endforeach; ?>
 		<?php foreach ($labRooms as $room): ?>
 			<option
-				value="<?= e($room['lab_ID']) ?>"
+				value="<?= e($room['lab_ID']) ?>" data-capacity="<?= (int) $room['no_Of_Workstations'] ?>"
 				data-room-type="lab"
 				<?= $editSection !== null && $editSection['lab_ID'] !== null && (int) $editSection['lab_ID'] === (int) $room['lab_ID'] ? 'selected' : '' ?>
 			>
@@ -114,23 +122,28 @@ declare(strict_types=1);
 				(workstations <?= e($room['no_Of_Workstations']) ?>)
 			</option>
 		<?php endforeach; ?>
-	</select>
+</select>
+    </div>
+  </div>
 </div>
 
-<div>
-	<label for="<?= e($fieldIdPrefix) ?>seats">Available seats</label>
-	<input
-		type="number"
-		id="<?= e($fieldIdPrefix) ?>seats"
-		name="seats"
-		min="0"
-		max="10"
-		value="<?= e((string) ($editSection['available_Seats'] ?? '10')) ?>"
-	>
-	<small>Maximum 10 available seats. Existing enrollment is retained.</small>
+<div class="enrollment-panel">
+  <div class="enrollment-title"><h3>Enrollment</h3><span>Maximum 10 students</span></div>
+  <div class="enrollment-row">
+    <div>
+      <label for="<?= e($fieldIdPrefix) ?>demo_enrolled">Currently Enrolled</label>
+      <input type="number" id="<?= e($fieldIdPrefix) ?>demo_enrolled" name="demo_enrolled" min="0" max="10" step="1" value="<?= e((string) ($ashfordDemoOverrides[$editCRN] ?? (int) ($editSection['enrolled'] ?? 0))) ?>" required>
+    </div>
+    <div>
+      <label for="<?= e($fieldIdPrefix) ?>seats">Seats Remaining</label>
+      <input type="number" id="<?= e($fieldIdPrefix) ?>seats" name="seats" min="0" max="10" step="1" value="<?= e((string) ($editSection['available_Seats'] ?? '10')) ?>" required>
+    </div>
+  </div>
+  <small>Both values are manually entered (0–10 each). Their combined total cannot exceed 10. Actual registrations are unchanged.</small>
+  <small class="actual-enrollment-note">Actual registrations: <?= (int) ($editSection['enrolled'] ?? 0) ?></small>
 </div>
 
-<?php if ($locked || $identityLocked): ?>
+<?php if (false): ?>
 	<?php /* Disabled fields are not submitted; keep the values server-side. */ ?>
 	<input type="hidden" name="course_id" value="<?= e((string) $editSection['course_ID']) ?>">
 	<input type="hidden" name="section_no" value="<?= e((string) $editSection['section_No']) ?>">

@@ -1,0 +1,36 @@
+/* User Management only. No styles on Master Schedule or other Admin pages. */
+#users-workspace{--users-ink:#142a47;--users-navy:#183a63;--users-border:#c8d5e5;--users-muted:#52657c;color:var(--users-ink);max-width:1480px;margin-inline:auto}
+#users-workspace .dashboard-section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+#users-workspace .dashboard-section-heading h2{font-size:clamp(1.55rem,2.4vw,2rem);letter-spacing:-.03em;color:var(--users-ink);margin:2px 0 4px}
+#users-workspace .users-page-description{color:var(--users-muted);font-size:.94rem;line-height:1.5;margin:0;max-width:62ch}
+#users-workspace .users-tabs{border-bottom:1px solid var(--users-border);padding-bottom:12px}
+#users-workspace .users-tab{border-radius:9px;min-height:44px;font-weight:700}
+#users-workspace .users-panel[data-users-panel=search]{border:1px solid var(--users-border);border-radius:16px;padding:clamp(16px,2.5vw,28px);box-shadow:0 6px 25px rgba(21,44,74,.06)}
+#users-workspace .users-directory-header h3{font-size:1.25rem;color:var(--users-ink)}
+#users-workspace .users-directory-search{display:grid;grid-template-columns:minmax(220px,1fr) minmax(190px,240px) auto;align-items:end;gap:12px;margin:0 0 22px}
+#users-workspace .users-directory-search label{display:block;font-weight:700;color:#213a58;font-size:.87rem;margin-bottom:7px}
+#users-workspace .users-directory-search input,#users-workspace .users-directory-search select{display:block;width:100%;min-height:44px;padding:10px 12px;border:1px solid #9aafc7;border-radius:9px;background:#fff;color:#152e4b;font:inherit}
+#users-workspace .users-directory-search .search-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#users-workspace .users-directory-search .btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+#users-workspace .table-wrap{overflow-x:auto;border:1px solid #d8e2ed;border-radius:12px}
+#users-workspace .table-wrap table{border-collapse:collapse;width:100%;min-width:790px}
+#users-workspace .table-wrap th{padding:14px 12px;text-align:left;background:#e9f0f9;color:#173456;font-size:.83rem;letter-spacing:.015em;white-space:nowrap}
+#users-workspace .table-wrap td{padding:12px;border-bottom:1px solid #e1e8f1;vertical-align:middle;color:#213650;font-size:.92rem}
+#users-workspace .table-wrap tbody tr:nth-child(even){background:#f8fafd}
+#users-workspace .table-wrap tbody tr:hover{background:#edf4fd}
+#users-workspace .table-wrap .btn{margin:2px;white-space:nowrap}
+#users-workspace .users-pagination{font-size:.9rem;color:var(--users-muted)}
+#users-workspace .users-empty-state{border:1px dashed #a8bdd5;background:#f5f8fc;border-radius:12px;text-align:center;padding:35px 18px;color:#263f5e}
+#users-workspace .users-empty-state p{color:var(--users-muted);margin:7px 0 0}
+#users-workspace .users-student-detail{border-radius:16px;box-shadow:0 4px 20px rgba(18,42,76,.05)}
+#users-workspace .users-record-nav{position:relative;display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:thin}
+#users-workspace .users-record-nav a{white-space:nowrap;flex-shrink:0}
+#users-workspace .users-record-section{scroll-margin-top:24px}
+#users-workspace .users-detail-grid>div{border:1px solid #dbe5f0;background:#f7faff;padding:14px;border-radius:10px}
+#users-workspace .users-record-section h4{letter-spacing:-.02em}
+#users-workspace :is(button,a,input,select,textarea):focus-visible,#users-edit-dialog :is(button,a,input,select,textarea):focus-visible{outline:3px solid #2473c8;outline-offset:3px}
+#users-edit-dialog{width:min(960px,calc(100vw - 24px));max-height:92vh;border-radius:18px}
+#users-edit-dialog .form-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:850px){#users-workspace .users-directory-search{grid-template-columns:1fr 1fr}#users-workspace .users-directory-search .search-actions{grid-column:1/-1}}
+@media(max-width:620px){#users-workspace .users-directory-search{grid-template-columns:1fr}#users-workspace .users-directory-search .search-actions{grid-column:auto}#users-workspace .users-directory-search .search-actions .btn{flex:1}#users-edit-dialog .form-grid{grid-template-columns:1fr}#users-edit-dialog .form-grid>div{grid-column:1!important}}
+@media(prefers-reduced-motion:reduce){#users-workspace *{scroll-behavior:auto!important;transition:none!important}}

@@ -17,8 +17,10 @@ if ($term) {
     $termCounts = one($pdo, 'SELECT COUNT(*) AS total, COALESCE(SUM(CASE WHEN is_Cancelled = 0 THEN 1 ELSE 0 END), 0) AS active FROM Course_Section WHERE semester_ID = ?', [(int)$term['semester_ID']]);
 }
 $recentSections = all_rows($pdo, '
-    SELECT cs.CRN, c.course_Name, cs.section_No, cs.is_Cancelled, s.semester_Name
+    SELECT cs.CRN, c.course_Name, cs.section_No, cs.is_Cancelled, s.semester_Name,
+           cs.available_Seats, COALESCE(de.demo_enrolled, (SELECT COUNT(*) FROM Enrollment en WHERE en.CRN = cs.CRN)) AS display_enrolled
     FROM Course_Section cs
+    LEFT JOIN Course_Section_Demo_Enrollment de ON de.CRN = cs.CRN
     JOIN Course c ON c.course_ID = cs.course_ID
     JOIN Semester s ON s.semester_ID = cs.semester_ID
     ORDER BY cs.CRN DESC LIMIT 5
@@ -64,14 +66,16 @@ page_start('Admin Overview', 'Admin', 'dashboard.php');
     <div class="ao-term"><h3>Recent Course Sections</h3>
       <a class="ao-link" href="<?= e(app_base_path() . '/admin/sections.php') ?>">View All Sections</a></div>
     <div class="table-wrap" style="overflow-x:auto"><table>
-      <thead><tr><th>CRN</th><th>Course</th><th>Section</th><th>Semester</th><th>Status</th></tr></thead>
+      <thead><tr><th>CRN</th><th>Course</th><th>Section</th><th>Semester</th><th>Enrolled (Demo)</th><th>Seats Remaining</th><th>Status</th></tr></thead>
       <tbody>
-      <?php if (!$recentSections): ?><tr><td colspan="5">No sections available.</td></tr>
+      <?php if (!$recentSections): ?><tr><td colspan="7">No sections available.</td></tr>
       <?php else: foreach ($recentSections as $section): ?>
         <tr><td><?= e((string)$section['CRN']) ?></td>
         <td><?= e((string)$section['course_Name']) ?></td>
         <td><?= e(str_pad((string)$section['section_No'], 2, '0', STR_PAD_LEFT)) ?></td>
         <td><?= e((string)$section['semester_Name']) ?></td>
+        <td><?= e((int)$section['display_enrolled']) ?></td>
+        <td><?= e((int)$section['available_Seats']) ?></td>
         <td><?= e((int)$section['is_Cancelled'] === 1 ? 'Cancelled' : 'Active') ?></td></tr>
       <?php endforeach; endif; ?>
       </tbody>

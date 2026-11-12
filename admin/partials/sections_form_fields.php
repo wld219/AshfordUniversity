@@ -8,12 +8,28 @@ declare(strict_types=1);
 ?>
 
 <div>
+	<label for="semester_id">Semester</label>
+	<select name="semester_id" id="semester_id" required <?= $locked ? 'disabled' : '' ?>>
+		<option value="">Select semester</option>
+		<?php foreach ($semesters as $semester): ?>
+			<option
+				value="<?= e($semester['semester_ID']) ?>"
+				<?= $editSection !== null && (int) $editSection['semester_ID'] === (int) $semester['semester_ID'] ? 'selected' : '' ?>
+			>
+				<?= e($semester['semester_Name']) ?>
+			</option>
+		<?php endforeach; ?>
+	</select>
+</div>
+
+<div>
 	<label for="course_id">Course</label>
 	<select name="course_id" id="course_id" required <?= $locked ? 'disabled' : '' ?>>
 		<option value="">Select course</option>
 		<?php foreach ($courses as $course): ?>
 			<option
 				value="<?= e($course['course_ID']) ?>"
+            data-dept="<?= e((string) ($course['dept_ID'] ?? '')) ?>"
 				<?= $editSection !== null && (string) $editSection['course_ID'] === (string) $course['course_ID'] ? 'selected' : '' ?>
 			>
 				<?= e($course['course_ID']) ?> -
@@ -25,16 +41,16 @@ declare(strict_types=1);
 </div>
 
 <div>
-	<label for="section_no">Section number</label>
-	<input
-		type="number"
-		id="section_no"
-		name="section_no"
-		min="1"
-		value="<?= e((string) ($editSection['section_No'] ?? '')) ?>"
-		required
-		<?= $locked ? 'disabled' : '' ?>
-	>
+    <label for="section_no">Section number</label>
+    <select name="section_no" id="section_no" required <?= $locked ? 'disabled' : '' ?>>
+        <option value="">Select section number</option>
+        <?php for ($n = 1; $n <= 999; $n++): ?>
+            <option value="<?= $n ?>" <?= $editSection !== null && (int)$editSection['section_No'] === $n ? 'selected' : '' ?>>
+                <?= str_pad((string)$n, 3, '0', STR_PAD_LEFT) ?>
+            </option>
+        <?php endfor; ?>
+    </select>
+    <small id="create-section-availability" role="status" aria-live="polite">Choose semester and course to check availability.</small>
 </div>
 
 <div>
@@ -52,20 +68,7 @@ declare(strict_types=1);
 	</select>
 </div>
 
-<div>
-	<label for="semester_id">Semester</label>
-	<select name="semester_id" id="semester_id" required <?= $locked ? 'disabled' : '' ?>>
-		<option value="">Select semester</option>
-		<?php foreach ($semesters as $semester): ?>
-			<option
-				value="<?= e($semester['semester_ID']) ?>"
-				<?= $editSection !== null && (int) $editSection['semester_ID'] === (int) $semester['semester_ID'] ? 'selected' : '' ?>
-			>
-				<?= e($semester['semester_Name']) ?>
-			</option>
-		<?php endforeach; ?>
-	</select>
-</div>
+
 
 <div>
 	<label for="time_slot_id">Meeting day and time</label>
@@ -117,17 +120,15 @@ declare(strict_types=1);
 	</select>
 </div>
 
-<div>
-	<label for="seats">Available seats</label>
-	<input
-		type="number"
-		id="seats"
-		name="seats"
-		min="0"
-		max="10"
-		value="<?= e((string) ($editSection['available_Seats'] ?? '10')) ?>"
-	>
-	<small>Maximum 10 available seats. Existing enrollment is retained.</small>
+<div style="grid-column:1/-1;border:1px solid #e0e7f0;border-radius:14px;padding:16px;background:#f8faff">
+  <h3 style="margin:0 0 12px">Enrollment</h3>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+    <div><label for="create_enrolled">Currently Enrolled</label>
+      <input type="number" id="create_enrolled" name="demo_enrolled" min="0" max="10" step="1" value="0" required></div>
+    <div><label for="seats">Seats Remaining</label>
+      <input type="number" id="seats" name="seats" min="0" max="10" step="1" value="10" required></div>
+  </div>
+  <small id="create-enrollment-validation" role="status" aria-live="polite">Both values must be 0–10, and their sum cannot exceed 10.</small>
 </div>
 
 <?php if ($locked): ?>

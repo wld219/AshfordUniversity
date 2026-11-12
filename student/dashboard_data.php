@@ -28,6 +28,26 @@ $student = one(
 );
 
 
+
+// ASHFORD_STUDENT_MINOR_OVERVIEW_V1
+$studentMinorNames = [];
+
+$minorRows = all_rows(
+    $pdo,
+    "SELECT DISTINCT m.minor_Name
+     FROM Student_Minor sm
+     JOIN Minor m ON m.minor_ID = sm.minor_ID
+     WHERE sm.student_ID = ?
+     ORDER BY m.minor_Name",
+    [$studentID]
+);
+
+foreach ($minorRows as $minorRow) {
+    $studentMinorNames[] = (string)$minorRow['minor_Name'];
+}
+
+$studentMinorDisplay = implode(', ', $studentMinorNames);
+
 // Current semester courses
 $availableSemesters = all_rows(
     $pdo,

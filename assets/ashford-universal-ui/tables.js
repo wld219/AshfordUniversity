@@ -29,7 +29,7 @@
 
 function boot(){
  document.querySelectorAll('main table, .content table').forEach(function(table,index){
-  if(table.dataset.asUiReady==='1')return;
+  if(table.dataset.asUiReady==='1'||table.dataset.ashfordEnhanced==='1')return;
   const body=table.tBodies[0];
   if(!body)return;
   let head=table.tHead, header;

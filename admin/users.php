@@ -19,9 +19,11 @@ $adminProfile = one(
 );
 
 $securityLevel = $adminProfile['security_Level'] ?? 'Read-Only';
-$isFullAccess  = $securityLevel === 'Full-Access' && (int) ($adminProfile['lock_manager'] ?? 0) === 0;
-$isLockManager = (int) ($adminProfile['lock_manager'] ?? 0) === 1;
-$isReadOnly    = $securityLevel === 'Read-Only' || is_read_only();
+$isReadOnly = $securityLevel === 'Read-Only' || is_read_only();
+
+$isFullAccess = !$isReadOnly && $securityLevel === 'Full-Access';
+
+$isLockManager = $isFullAccess && (int) ($adminProfile['lock_manager'] ?? 0) === 1;
 
 $error = '';
 
@@ -108,6 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		}
 
 		require_once __DIR__ . '/actions/users_update.php';
+
+    } elseif ($action === 'add_hold' || $action === 'remove_hold') {
+        if (!$isFullAccess) {
+            $_SESSION['users_error'] = 'Only Full-Access administrators may manage student holds.';
+        } else {
+            require __DIR__ . '/actions/users_holds_manage.php';
+            if ($error !== '') $_SESSION['users_error'] = $error;
+        }
+        $studentID = post_int('student_id') ?? 0;
+        header('Location: ' . url('admin/users.php') . ($studentID > 0 ? '?view=' . $studentID : ''));
+        exit;
 
 	} elseif ($action === 'unlock') {
 

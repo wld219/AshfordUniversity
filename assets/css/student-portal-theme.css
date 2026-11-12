@@ -28,3 +28,188 @@ body.student-portal-theme { --student-navy:#122849; --student-accent:#5548aa; --
 .student-portal-theme input:focus-visible, .student-portal-theme select:focus-visible, .student-portal-theme a:focus-visible, .student-portal-theme button:focus-visible { outline:3px solid #b4a8fa; outline-offset:2px; }
 .student-portal-theme .alert { border-radius:9px; }
 @media (max-width:900px) { .student-portal-theme .content { padding:18px; } .student-portal-theme .card { padding:16px; } }
+
+
+/* ASHFORD_STUDENT_NAVIGATION_FINAL */
+
+/* Match the working Admin shell alignment */
+body.student-portal-theme.ashford-admin-collapsible .shell {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Expanded white sidebar */
+body.student-portal-theme.ashford-admin-collapsible .shell > .sidebar {
+    position: relative;
+    flex: 0 0 250px;
+    width: 250px;
+    min-width: 250px;
+    box-sizing: border-box;
+    align-self: stretch;
+    margin: 0;
+    padding: 64px 12px 16px;
+    background: #ffffff;
+    color: #44546d;
+    border: 0;
+    border-right: 1px solid #e2e7f0;
+    border-radius: 0;
+    box-shadow: none;
+    transition: width .2s ease, flex-basis .2s ease;
+}
+
+/* Student navigation appearance */
+body.student-portal-theme.ashford-admin-collapsible .sidebar a {
+    color: #44546d;
+    background: transparent;
+    border-color: transparent;
+}
+
+body.student-portal-theme.ashford-admin-collapsible .sidebar a:hover {
+    background: #f1f0fc;
+    color: #342b86;
+}
+
+body.student-portal-theme.ashford-admin-collapsible .sidebar a.active {
+    background: #ebe9fb;
+    color: #42349a;
+}
+
+/* Hamburger above Overview */
+body.student-portal-theme.ashford-admin-collapsible
+.sidebar > .student-header-toggle {
+    position: absolute !important;
+    inset: 12px auto auto 14px !important;
+    transform: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    margin: 0;
+    background: #f0eefb;
+    color: #42349a;
+    border: 1px solid #dcd7f5;
+    border-radius: 10px;
+    box-shadow: none;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Collapsed sidebar keeps only the hamburger */
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.shell > .sidebar {
+    flex: 0 0 72px;
+    width: 72px;
+    min-width: 72px;
+    max-width: 72px;
+    padding: 64px 8px 16px;
+    overflow: hidden;
+    visibility: visible;
+}
+
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.sidebar a {
+    display: flex;
+}
+
+/* Main content fills remaining space */
+body.student-portal-theme.ashford-admin-collapsible .content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.student-portal-theme.ashford-admin-collapsible .sidebar {
+        transition: none;
+    }
+}
+
+
+/* ASHFORD_STUDENT_FLUSH_SIDEBAR_FINAL */
+
+/* Align Student navigation directly below the header */
+body.student-portal-theme.ashford-admin-collapsible .shell {
+    display: flex;
+    align-items: stretch;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Override the shared sticky offset */
+body.student-portal-theme.ashford-admin-collapsible .shell > .sidebar {
+    position: relative !important;
+    top: 0 !important;
+    align-self: stretch !important;
+    height: auto !important;
+    min-height: calc(100vh - 76px);
+    margin-top: 0 !important;
+    padding-top: 64px;
+}
+
+/* Keep hamburger above Overview */
+body.student-portal-theme.ashford-admin-collapsible
+.sidebar > .student-header-toggle {
+    position: absolute !important;
+    top: 12px !important;
+    left: 14px !important;
+    transform: none !important;
+}
+
+/* Preserve collapsed width */
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.shell > .sidebar {
+    top: 0 !important;
+    align-self: stretch !important;
+    height: auto !important;
+    min-height: calc(100vh - 76px);
+}
+
+
+/* ASHFORD_STUDENT_COLLAPSED_ICONS_V1 */
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.sidebar a {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    padding: 10px 4px !important;
+    margin: 2px 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.sidebar .admin-nav-icon {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+}
+
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.sidebar .admin-nav-icon svg {
+    display: block !important;
+    width: 21px;
+    height: 21px;
+}
+
+body.student-portal-theme.ashford-admin-collapsible.admin-sidebar-collapsed
+.sidebar .admin-nav-label {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}

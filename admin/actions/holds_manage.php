@@ -41,6 +41,45 @@ if ($action === 'add_hold') {
 
 		audit_log($pdo, 'Create', 'Student_Hold', (string) $studentID, "Hold {$holdID} added");
 
+		// Notify the student only after the hold is successfully saved.
+		try {
+			require_once dirname(__DIR__, 2) . '/includes/mail.php';
+			require_once dirname(__DIR__, 2) . '/includes/functions/notifications.php';
+
+			$holdDetails = one(
+				$pdo,
+				'SELECT hold_Type FROM Hold WHERE hold_ID = ?',
+				[$holdID]
+			);
+
+			$holdType = (string) ($holdDetails['hold_Type'] ?? 'Student hold');
+
+			$subject = 'Ashford University - Hold Added';
+
+			$message = "A hold has been placed on your student account.\n\n"
+				. "Hold Type: {$holdType}\n"
+				. "Date: {$holdDate}\n\n"
+				. "Please sign in to your Student Portal to review your hold.\n"
+				. "Contact the appropriate university office if you need assistance.\n\n"
+				. "Ashford University";
+
+			$senderID = (int) ($_SESSION['user_id'] ?? 0);
+
+			if ($senderID > 0) {
+				send_student_notification(
+					$pdo,
+					$senderID,
+					$studentID,
+					$subject,
+					$message
+				);
+			}
+		} catch (Throwable $notificationError) {
+			error_log(
+				'Hold notification failed: ' . $notificationError->getMessage()
+			);
+		}
+
 		redirect_with_flash(url('admin/holds.php'), 'success', 'Hold added.');
 
 	} catch (Throwable $e) {
