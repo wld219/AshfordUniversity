@@ -1,0 +1,1 @@
+Fixes missing sidebar JS (page_end did not have $role in scope), moves toggle to top, replaces placeholder symbols with SVG icons, improves compact mode. Backup includes/layout.php before installing. Master Schedule page files unchanged.

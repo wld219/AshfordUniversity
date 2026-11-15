@@ -8,6 +8,8 @@ require_once '../includes/helpers.php';
 
 require_role(['Faculty']);
 $facultyID = (int) $_SESSION['user_id'];
+// ASHFORD_MIDTERM_AJAX_V1
+// ASHFORD_OVERALL_AJAX_V1
 
 $semester = ($_GET['term'] ?? 'fall') === 'spring' ? 'spring' : 'fall';
 $sections = [];
@@ -53,6 +55,12 @@ if ($semester === 'fall') {
                 u.last_Name,
                 l.user_Email,
                 e.Grade,
+                fg.final_Grade AS final_draft_grade,
+                fg.is_Published AS final_published,
+                mg.midterm_Grade,
+                mg.is_Published AS midterm_published,
+                og.overall_Grade,
+                og.is_Published AS overall_published,
                 st.major_ID,
                 st.student_Year,
                 st.student_Type,
@@ -63,6 +71,9 @@ if ($semester === 'fall') {
              JOIN User u ON u.user_ID = e.student_ID
              LEFT JOIN Login l ON l.user_ID = e.student_ID
              LEFT JOIN Student st ON st.student_ID = e.student_ID
+            LEFT JOIN Midterm_Grade mg ON mg.student_ID = e.student_ID AND mg.CRN = e.CRN
+                LEFT JOIN Overall_Grade og ON og.student_ID = e.student_ID AND og.CRN = e.CRN
+                LEFT JOIN Final_Grade fg ON fg.student_ID = e.student_ID AND fg.CRN = e.CRN
              JOIN Course_Section cs ON cs.CRN = e.CRN
              JOIN Semester sem ON sem.semester_ID = cs.semester_ID
              LEFT JOIN (

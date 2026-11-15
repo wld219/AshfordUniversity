@@ -43,6 +43,7 @@ function nav_items(string $role): array
             return [
                 ['Dashboard', 'dashboard.php'],
                 ['User Management', 'users.php'],
+                ['Approvals', 'approvals.php'],
                 ['Degree Audit', 'degree-audit.php'],
                 ['Course Management', 'academic.php'],
                 ['Course Sections', 'sections.php'],
@@ -117,6 +118,9 @@ function page_start(
         <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/admin-sidebar.css') ?>">
         <?php endif; ?>
 
+        <?php if ($role === 'Admin'): ?>
+        <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/admin-responsive.css') ?>?v=1">
+        <?php endif; ?>
         <?php if ($role === 'Student'): ?>
         <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/student-portal-theme.css') ?>">
         <?php endif; ?>
@@ -219,7 +223,8 @@ function page_start(
                     title="<?= e($label) ?>"
                 >
                     <?php if ($role === 'Admin'): ?>
-                    <?php $icons = ['Dashboard'=>'⌂', 'User Management'=>'♧', 'Course Management'=>'▤', 'Course Sections'=>'▥', 'Master Schedule'=>'▦', 'Security & Logs'=>'◇']; ?>
+                    <?php $icons = ['Dashboard'=>'⌂', 'Degree Audit'=>'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4.5V3h6v1.5"/><path d="m9 14 2 2 4-4"/>',
+                            'User Management'=>'♧', 'Course Management'=>'▤', 'Course Sections'=>'▥', 'Master Schedule'=>'▦', 'Security & Logs'=>'◇']; ?>
                     <span class="admin-nav-icon" aria-hidden="true">
                     <?php $paths = [
                         'Dashboard'=>'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
@@ -245,7 +250,7 @@ $studentIcons = [
                         'Master Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
                         'Course Registration' => '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>',
                         'My Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/><path d="m9 16 2 2 4-4"/>',
-                        'Degree Audit' => '<path d="m3 10 9-6 9 6-9 6-9-6Z"/><path d="M7 13v5c3 2 7 2 10 0v-5"/>',
+                        'Degree Audit' => '<path d="M2 9 12 4l10 5-10 5L2 9Z"/><path d="M6 12v5c3.5 2.5 8.5 2.5 12 0v-5"/><path d="M22 9v7"/><path d="m9 18 2 2 4-4"/>',
                         'Unofficial Transcript' => '<path d="M6 2h9l5 5v15H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>',
                         'Holds' => '<path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v4M12 17h.01"/>',
                         'My Advisor' => '<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',

@@ -101,6 +101,33 @@ document.addEventListener('submit', async e => {
   const w = root(), form = e.target;
   if (!w || !w.contains(form)) return;
   const data = new FormData(form), action = data.get('action');
+
+  // Validate the edit form before the AJAX request begins.
+  if (action === 'update' && form.closest('#users-edit-dialog')) {
+    if (!form.reportValidity()) {
+      e.preventDefault();
+      notify('Please complete the required fields.', true);
+      return;
+    }
+
+    const academicError = form.querySelector('.academic-error.is-visible');
+    const profileError = form.querySelector('.ashford-profile-invalid');
+
+    if (academicError || profileError) {
+      e.preventDefault();
+      notify(
+        academicError?.textContent ||
+        'Please correct the highlighted profile fields.',
+        true
+      );
+      return;
+    }
+  }
+  if (
+    action === 'faculty_dept_add' ||
+    action === 'faculty_dept_remove'
+  ) return;
+
   if (action === 'add_hold' || action === 'remove_hold') return; // Native POST preserves hold action redirects and flash messages.
   e.preventDefault();
   if (action === 'unlock' && !confirm('Unlock this account?')) return;
@@ -149,12 +176,35 @@ document.addEventListener('submit', async e => {
       return;
     }
 
-    // The server confirmed success. Refresh the directory.
+    // Refresh saved information and keep Edit Student open.
     const nextUrl = new URL(response.url || location.href);
-    nextUrl.searchParams.delete('edit');
 
-    await load(nextUrl.href, {tab:'search',replace:true});
+    if (action === 'update' && targetId) {
+      nextUrl.searchParams.set('edit', targetId);
+      await load(nextUrl.href, {
+        tab: 'search',
+        openEdit: true,
+        replace: true
+      });
+    } else {
+      nextUrl.searchParams.delete('edit');
+      await load(nextUrl.href, {
+        tab: 'search',
+        replace: true
+      });
+    }
+
     notify(serverNotice, false);
+
+    if (action === 'update') {
+      const dialog = root()?.querySelector('#users-edit-dialog');
+      const messageBox = dialog?.querySelector('#users-edit-error');
+
+      if (messageBox) {
+        messageBox.textContent = serverNotice;
+        messageBox.className = 'users-message';
+      }
+    }
 
   } catch(ex) {
     notify('Save failed: ' + ex.message, true);
@@ -173,22 +223,52 @@ if (new URL(location.href).searchParams.has('edit')) showDialog();
 })();
 
 
-/* ASHFORD_AJAX_MAJOR_VALIDATION_V3
-   Delegated listeners survive AJAX popup replacement. */
+/* ASHFORD_ACADEMIC_REMOVE_V1 */
+document.addEventListener('click', function (event) {
+    const button = event.target.closest(
+        '#users-edit-dialog .academic-remove'
+    );
+
+    if (!button) return;
+
+    event.preventDefault();
+
+    const select = button.parentElement.querySelector(
+        '.academic-declaration-select'
+    );
+
+    if (!select) return;
+
+    select.value = '';
+
+    select.dispatchEvent(new Event('change', {
+        bubbles: true
+    }));
+});
+
+/* ASHFORD_AJAX_MAJOR_VALIDATION_V4 */
 (function () {
     function validateAcademic(form) {
         const primary = form.querySelector('[name="major_id"]');
         const second = form.querySelector('[name="second_major_id"]');
-        const minor = form.querySelector('[name="minor_ids[]"]');
+        const minors = [...form.querySelectorAll('[name="minor_ids[]"]')];
+        const type = form.querySelector('[name="student_type"]');
 
-        if (!primary || !second || !minor) return true;
+        if (!primary || !second || minors.length !== 2) return true;
+
+        const majorValues = [primary.value, second.value].filter(Boolean);
+        const minorValues = minors.map(field => field.value).filter(Boolean);
 
         let message = '';
 
-        if (second.value && second.value === primary.value) {
-            message = 'Primary and second major cannot be the same.';
-        } else if (second.value && minor.value) {
-            message = 'You cannot select two majors and a minor. Remove either the second major or the minor.';
+        if (new Set(majorValues).size !== majorValues.length) {
+            message = 'Duplicate majors are not allowed.';
+        } else if (new Set(minorValues).size !== minorValues.length) {
+            message = 'Duplicate minors are not allowed.';
+        } else if (majorValues.length + minorValues.length > 2) {
+            message = 'A student may declare at most two academic programs.';
+        } else if (type?.value === 'Graduate' && !primary.value) {
+            message = 'Graduate students must have a primary major.';
         }
 
         let error = form.querySelector('.academic-error');
@@ -197,38 +277,34 @@ if (new URL(location.href).searchParams.has('edit')) showDialog();
             error = document.createElement('div');
             error.className = 'academic-error';
             error.setAttribute('role', 'alert');
-            minor.parentElement.after(error);
+            minors[minors.length - 1].parentElement.after(error);
         }
 
         error.textContent = message;
         error.classList.toggle('is-visible', !!message);
 
-        [second, minor].forEach(function (field) {
+        [primary, second, ...minors].forEach(field => {
             field.classList.toggle('academic-invalid', !!message);
             field.setAttribute('aria-invalid', message ? 'true' : 'false');
         });
 
         const save = form.querySelector('[type="submit"]');
+
         if (save) {
-            save.disabled = !!message || !!form.querySelector('.ashford-profile-invalid');
+            save.disabled = !!message ||
+                !!form.querySelector('.ashford-profile-invalid');
         }
 
         return !message;
     }
 
     document.addEventListener('change', function (event) {
-        const form = event.target.closest(
-            '#users-edit-dialog form'
-        );
-
+        const form = event.target.closest('#users-edit-dialog form');
         if (form) validateAcademic(form);
     });
 
     document.addEventListener('submit', function (event) {
-        const form = event.target.closest(
-            '#users-edit-dialog form'
-        );
-
+        const form = event.target.closest('#users-edit-dialog form');
         if (!form) return;
 
         if (!validateAcademic(form)) {
@@ -245,6 +321,7 @@ if (new URL(location.href).searchParams.has('edit')) showDialog();
         if (!button) return;
 
         const form = button.closest('form');
+
         if (form && !validateAcademic(form)) {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -444,6 +521,15 @@ if (new URL(location.href).searchParams.has('edit')) showDialog();
         const form = e.target.closest('#users-edit-dialog form');
         if (!form) return;
 
+        // ASHFORD_FACULTY_VALIDATION_BYPASS_V1
+        if (form.querySelector(
+            'input[name="action"][value^="faculty_dept_"]'
+        )) return;
+
+        if (form.querySelector(
+            'input[name="action"][value^="faculty_dept_"]'
+        )) return;
+
         if (!validate(form, true)) {
             e.preventDefault();
             e.stopImmediatePropagation();
@@ -455,6 +541,14 @@ if (new URL(location.href).searchParams.has('edit')) showDialog();
             '#users-edit-dialog button[type="submit"]'
         );
         if (!button) return;
+
+        if (button.closest('form')?.querySelector(
+            'input[name="action"][value^="faculty_dept_"]'
+        )) return;
+
+        if (button.closest('form')?.querySelector(
+            'input[name="action"][value^="faculty_dept_"]'
+        )) return;
 
         if (!validate(button.closest('form'), true)) {
             e.preventDefault();

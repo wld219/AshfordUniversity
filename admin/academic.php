@@ -19,6 +19,41 @@ $securityLevel = one(
 
 $isFullAccess = $securityLevel === 'Full-Access';
 
+
+// Authenticated course ID availability check for Full-Access admins.
+if (isset($_GET['check_course_id'])) {
+    header('Content-Type: application/json; charset=utf-8');
+    header('Cache-Control: no-store');
+
+    if (!$isFullAccess) {
+        http_response_code(403);
+        echo json_encode(['error' => 'Not authorized']);
+        exit;
+    }
+
+    $id = trim((string) $_GET['check_course_id']);
+    $existing = trim((string) ($_GET['existing_course_id'] ?? ''));
+
+    if ($id === '' || mb_strlen($id) > 10) {
+        http_response_code(422);
+        echo json_encode(['error' => 'Course ID must contain 1–10 characters.']);
+        exit;
+    }
+
+    $row = one($pdo, 'SELECT course_ID, course_Name FROM Course WHERE course_ID = ?', [$id]);
+    $available = $row === null || (
+        $existing !== '' && $row['course_ID'] === $existing
+    );
+
+    echo json_encode([
+        'available' => $available,
+        'message' => $available
+            ? 'Course ID is available.'
+            : 'Already used by: ' . $row['course_Name']
+    ]);
+    exit;
+}
+
 $error = '';
 
 // Dispatch form submissions to the matching action file

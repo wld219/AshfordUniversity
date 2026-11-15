@@ -316,7 +316,208 @@ $initialTab = 'search';
 <?php if ($canEditSelected): ?>
 <dialog id="users-edit-dialog" aria-label="Edit user profile">
   <div class="users-dialog-header"><strong>Edit User Information</strong><button type="button" class="users-dialog-close" data-users-close-edit aria-label="Close edit user popup">✕ Close</button></div>
-  <div id="users-edit-error" aria-live="polite"></div>
+  
+
+<style>
+/* ASHFORD_FACULTY_VISIBILITY_FIX_V2 */
+#users-edit-dialog #faculty-department-panel[hidden],
+#users-edit-dialog form[hidden] {
+    display: none !important;
+}
+#users-edit-dialog #faculty-department-panel:not([hidden]) {
+    display: block;
+}
+</style>
+
+
+<style>
+/* ASHFORD_FACULTY_SIMPLE_LIST_STYLE_V1 */
+#users-edit-dialog .faculty-assigned-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 14px 0 20px;
+}
+#users-edit-dialog .faculty-assigned-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 14px 16px;
+    background: #f6f9fd;
+    border: 1px solid #d4dfed;
+    border-radius: 10px;
+}
+#users-edit-dialog .faculty-assigned-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+#users-edit-dialog .faculty-assigned-details span {
+    font-size: 13px;
+    color: #64748b;
+}
+</style>
+
+<!-- ASHFORD_FACULTY_DEPARTMENT_UI_V1 -->
+<?php if (($editUser['user_Type'] ?? '') === 'Faculty'): ?>
+<div class="ashford-faculty-actions">
+    <div class="ashford-faculty-identity">
+        <strong>
+            <?= e(trim(($editUser['first_Name'] ?? '') . ' ' . ($editUser['last_Name'] ?? ''))) ?>
+        </strong>
+        <span>Faculty ID: <?= e($editUser['user_ID']) ?></span>
+    </div>
+
+    <div class="ashford-faculty-choice">
+        <button type="button" class="btn" id="faculty-edit-information">
+            Edit Faculty Information
+        </button>
+        <button type="button" class="btn light" id="faculty-edit-departments">
+            Edit Assigned Departments
+        </button>
+    </div>
+</div>
+
+<div id="faculty-department-panel" hidden>
+    <!-- ASHFORD_FACULTY_MANAGEMENT_V1 -->
+    <h3>Edit Assigned Departments</h3>
+    <p class="muted">Faculty ID: <?= e($editUser['user_ID']) ?></p>
+
+    <?php
+    $facultyAssignments = [];
+    $availableDepartments = [];
+
+    try {
+        $stmt = $pdo->prepare(
+            'SELECT d.dept_ID, d.dept_Name
+             FROM Faculty_Department fd
+             JOIN Department d ON d.dept_ID = fd.dept_ID
+             WHERE fd.faculty_ID = ?
+             ORDER BY d.dept_Name'
+        );
+        $stmt->execute([(int)$editUser['user_ID']]);
+        $facultyAssignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $assignedIDs = array_map(
+            'intval',
+            array_column($facultyAssignments, 'dept_ID')
+        );
+
+        $departments = $pdo->query(
+            'SELECT dept_ID, dept_Name FROM Department ORDER BY dept_Name'
+        )->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($departments as $department) {
+            if (!in_array((int)$department['dept_ID'], $assignedIDs, true)) {
+                $availableDepartments[] = $department;
+            }
+        }
+    } catch (Throwable $e) {
+        error_log('Faculty department list: ' . $e->getMessage());
+        echo '<p role="alert">Unable to load departments.</p>';
+    }
+    ?>
+
+    <h4>Current Departments</h4>
+
+    <div class="faculty-assigned-list">
+        <?php foreach ($facultyAssignments as $assignment): ?>
+            <div class="faculty-assigned-item">
+                <div class="faculty-assigned-details">
+                    <strong><?= e($assignment['dept_Name']) ?></strong>
+                    <span>Department ID: <?= e($assignment['dept_ID']) ?></span>
+                </div>
+
+                <form method="post" action="<?= e(url('admin/users.php')) ?>">
+                    <?= csrf_field() ?>
+                    <input type="hidden" name="action" value="faculty_dept_remove">
+                    <input type="hidden" name="faculty_id" value="<?= e($editUser['user_ID']) ?>">
+                    <input type="hidden" name="department_id" value="<?= e($assignment['dept_ID']) ?>">
+                    <button type="submit" class="btn light"
+                        >
+                        Remove
+                    </button>
+                </form>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <h4>Add Department</h4>
+
+    <form method="post" action="<?= e(url('admin/users.php')) ?>">
+        <?= csrf_field() ?>
+        <input type="hidden" name="action" value="faculty_dept_add">
+        <input type="hidden" name="faculty_id" value="<?= e($editUser['user_ID']) ?>">
+
+        <label for="faculty-new-department">Select Department</label>
+        <select id="faculty-new-department" name="department_id" required>
+            <option value="">Select department</option>
+            <?php foreach ($availableDepartments as $department): ?>
+                <option value="<?= e($department['dept_ID']) ?>">
+                    <?= e($department['dept_Name']) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <button type="submit" class="btn"
+            <?= !$availableDepartments ? 'disabled' : '' ?>>
+            Add Department
+        </button>
+    </form>
+
+<button type="button" class="btn light" id="faculty-back-information">
+        Back to Faculty Information
+    </button>
+</div>
+
+<style>
+#users-edit-dialog .ashford-faculty-actions {
+    padding: 16px;
+    margin: 0 0 16px;
+    background: #f2f6fc;
+    border: 1px solid #d4dfed;
+    border-radius: 12px;
+}
+#users-edit-dialog .ashford-faculty-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 14px;
+}
+#users-edit-dialog .ashford-faculty-identity span {
+    color: #52657d;
+    font-size: 13px;
+}
+#users-edit-dialog .ashford-faculty-choice {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+#users-edit-dialog #faculty-department-panel {
+    padding: 18px;
+    border: 1px solid #d4dfed;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+#users-edit-dialog .faculty-department-placeholder {
+    padding: 16px;
+    margin: 14px 0;
+    background: #f8fafc;
+    border-radius: 10px;
+}
+#users-edit-dialog .faculty-department-placeholder select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+</style>
+
+
+<?php endif; ?>
+
+<div id="users-edit-error" aria-live="polite"></div>
   <?php require __DIR__ . '/users_form_edit.php'; ?>
 </dialog>
 <?php endif; ?>
@@ -700,3 +901,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 }
 </style>
+
+
+<!-- ASHFORD_FACULTY_CLICK_FIX_V3 -->
+<script src="<?= e(url('admin/assets/faculty_departments_ui.js')) ?>?v=10" defer></script>

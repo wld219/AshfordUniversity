@@ -20,14 +20,18 @@ $currentMajors = all_rows(
 		$currentMajors
 	);
 
-	$currentMinor = one(
-		$pdo,
-		'SELECT minor_ID FROM Student_Minor WHERE student_ID = ? LIMIT 1',
-		[$studentID]
-	);
+	$currentMinors = all_rows(
+        $pdo,
+        'SELECT minor_ID FROM Student_Minor WHERE student_ID = ?',
+        [$studentID]
+    );
+    $currentMinorIDs = array_map(
+        'intval',
+        array_column($currentMinors, 'minor_ID')
+    );
 
 	// Combined majors + minors must never exceed two.
-	$currentTotal = count($currentMajorIDs) + (int) ($currentMinor !== null);
+	$currentTotal = count($currentMajorIDs) + count($currentMinorIDs);
 
 	if ($action === 'add_major') {
 
@@ -126,13 +130,7 @@ if ($action === 'remove_major') {
 		);
 	}
 
-	if (count($currentMajorIDs) <= 1) {
-		redirect_with_flash(
-			url('student/programs.php'),
-			'error',
-			'You must keep at least one major. Declare another major first.'
-		);
-	}
+	
 
 	try {
 
@@ -160,7 +158,7 @@ if ($action === 'remove_major') {
 			$pdo->prepare(
 				'UPDATE Student SET major_ID = ? WHERE student_ID = ?'
 			)->execute([
-				(int) ($remaining[0]['major_ID'] ?? 0),
+				isset($remaining[0]['major_ID']) ? (int) $remaining[0]['major_ID'] : null,
 				$studentID
 			]);
 		}
@@ -218,22 +216,24 @@ if ($action === 'set_primary_major') {
 
 		$minorID = post_int('minor_id') ?? 0;
 
-		// A minor requires at least one declared major.
-		if (count($currentMajorIDs) < 1) {
-			redirect_with_flash(
-				url('student/programs.php'),
-				'error',
-				'You must declare a major before declaring a minor.'
-			);
-		}
+		// A minor can be declared without a major.
+        if (in_array($minorID, $currentMinorIDs, true)) {
+            redirect_with_flash(
+                url('student/programs.php'),
+                'error',
+                'You have already declared that minor.'
+            );
+        }
 
-		if ($currentMinor) {
-			redirect_with_flash(
-				url('student/programs.php'),
-				'error',
-				'You may declare at most one minor. Remove your current minor first.'
-			);
-		}
+        if (count($currentMinorIDs) >= 2) {
+            redirect_with_flash(
+                url('student/programs.php'),
+                'error',
+                'You may declare at most two minors.'
+            );
+        }
+
+        
 
 		if ($currentTotal >= 2) {
 			redirect_with_flash(
@@ -275,7 +275,7 @@ if ($action === 'set_primary_major') {
 
 	$minorID = post_int('minor_id') ?? 0;
 
-	if (!$currentMinor || (int) $currentMinor['minor_ID'] !== $minorID) {
+	if (!in_array($minorID, $currentMinorIDs, true)) {
 		redirect_with_flash(
 			url('student/programs.php'),
 			'error',

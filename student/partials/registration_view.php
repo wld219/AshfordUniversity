@@ -573,6 +573,31 @@ declare(strict_types=1);
 
   </div>
 
+  <!-- ASHFORD_REG_DAY_TIME_FILTER_V2 -->
+  <div class="ash-reg-flex-grid">
+    <div>
+      <label for="regDay">Day</label>
+      <select id="regDay" name="day">
+        <option value="">All Days</option>
+        <?php foreach ($allowedDays as $day): ?>
+          <option value="<?= e($day) ?>" <?= $dayFilter === $day ? 'selected' : '' ?>>
+            <?= e($day) ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+    </div>
+
+    <div>
+      <label for="regTime">Time</label>
+      <select id="regTime" name="time">
+        <option value="">Any Time</option>
+        <option value="morning" <?= $timeFilter === 'morning' ? 'selected' : '' ?>>Morning (before 12 PM)</option>
+        <option value="afternoon" <?= $timeFilter === 'afternoon' ? 'selected' : '' ?>>Afternoon (12–5 PM)</option>
+        <option value="evening" <?= $timeFilter === 'evening' ? 'selected' : '' ?>>Evening (after 5 PM)</option>
+      </select>
+    </div>
+  </div>
+
   <div class="ashford-search-actions">
     <button class="btn" type="submit">Search Courses</button>
     <a class="btn light" href="registration.php">Clear Filters</a>

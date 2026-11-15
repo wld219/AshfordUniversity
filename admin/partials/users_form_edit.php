@@ -14,12 +14,7 @@ $isAdminTarget   = $editUser['user_Type'] === 'Admin';
 
 <section class="card">
 
-	<div class="dashboard-section-heading">
-		<div>
-			<p class="dashboard-eyebrow">Profile</p>
-			<h2>Edit user <?= e($editUser['user_ID']) ?></h2>
-		</div>
-	</div>
+	
 
 	<?php if (!$isFullAccess && !$isLockManager): ?>
 		<div class="alert error">
@@ -27,7 +22,7 @@ $isAdminTarget   = $editUser['user_Type'] === 'Admin';
 		</div>
 	<?php else: ?>
 
-		<form method="post" action="<?= e(url('admin/users.php')) ?>" class="form-grid" style="margin-top: 18px;">
+		<form method="post" action="<?= e(url('admin/users.php')) ?>" class="form-grid ashford-student-validation" style="margin-top: 18px;">
 
 			<?= csrf_field() ?>
 			<input type="hidden" name="action" value="update">
@@ -151,28 +146,123 @@ foreach ($ashfordStates as $code => $name) {
             <div><label>University email</label><input type="email" name="user_email" maxlength="255" required value="<?= e($editUser['user_Email'] ?? '') ?>"></div>
             <div><label>Account status</label><select name="is_active"><option value="1" <?= (int)$editUser['is_active'] === 1 ? 'selected' : '' ?>>Active</option><option value="0" <?= (int)$editUser['is_active'] === 0 ? 'selected' : '' ?>>Inactive</option></select></div>
             <?php if ($editUser['user_Type'] === 'Student'): ?>
-              <div class="academic-section-title"><h3>Academic information</h3><p>Choose two majors or one major and one minor.</p></div>
-              <div><label>Student type</label><select name="student_type"><?php foreach (['Undergraduate','Graduate'] as $t): ?><option value="<?= e($t) ?>" <?= $editUser['student_Type'] === $t ? 'selected' : '' ?>><?= e($t) ?></option><?php endforeach; ?></select></div>
-              <div><label>Academic year</label><select name="student_year"><?php for ($yr=1;$yr<=8;$yr++): ?><option value="<?= $yr ?>" <?= (int)$editUser['student_Year'] === $yr ? 'selected' : '' ?>><?= $yr ?><?= $yr <= 4 ? ' — '.['Freshman','Sophomore','Junior','Senior'][$yr-1] : '' ?></option><?php endfor; ?></select></div>
-              <div><label>Primary major <span class="academic-required">Required</span></label><select name="major_id" required><?php foreach ($majors as $m): ?><option value="<?= e($m['major_ID']) ?>" <?= (int)$editUser['major_ID'] === (int)$m['major_ID'] ? 'selected' : '' ?>><?= e($m['major_Name']) ?></option><?php endforeach; ?></select></div>
-              <div>
-<label>Second major <span class="academic-optional">Optional</span></label>
-<select name="second_major_id" id="edit-second-major">
-<option value="">No second major</option>
-<?php foreach ($majors as $m): ?>
-<?php if ((int)$m['major_ID'] !== (int)$editUser['major_ID']): ?>
-<option value="<?= (int)$m['major_ID'] ?>"
-<?= in_array((int)$m['major_ID'], $studentMajors, true) ? 'selected' : '' ?>>
-<?= e($m['major_Name']) ?>
-</option>
-<?php endif; ?>
-<?php endforeach; ?>
-</select>
+              <div class="academic-section-title">
+    <h3>Academic information</h3>
+    <p>Choose up to two declarations: two majors, two minors, or one of each.</p>
 </div>
-<div><label>Minor <span class="academic-optional">Optional</span></label><select name="minor_ids[]" id="edit-minor"><option value="">No minor</option><?php foreach ($minors as $m): ?><option value="<?= e($m['minor_ID']) ?>" <?= in_array((int)$m['minor_ID'],$studentMinors,true) ? 'selected' : '' ?>><?= e($m['minor_Name']) ?></option><?php endforeach; ?></select></div>
-              <?php if (count($studentMajors) > 1 || count($studentMinors) > 1): ?>
-              <div class="academic-existing-warning" role="status">This student currently has multiple major or minor records. Please review existing academic declarations before saving.</div>
-              <?php endif; ?>
+
+<div>
+    <label>Student type</label>
+    <select name="student_type" id="edit-student-type">
+        <?php foreach (['Undergraduate','Graduate'] as $t): ?>
+            <option value="<?= e($t) ?>" <?= $editUser['student_Type'] === $t ? 'selected' : '' ?>>
+                <?= e($t) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+<div>
+    <label>Academic year</label>
+    <select name="student_year">
+        <?php for ($yr=1; $yr<=8; $yr++): ?>
+            <option value="<?= $yr ?>" <?= (int)$editUser['student_Year'] === $yr ? 'selected' : '' ?>>
+                <?= $yr ?><?= $yr <= 4 ? ' — '.['Freshman','Sophomore','Junior','Senior'][$yr-1] : '' ?>
+            </option>
+        <?php endfor; ?>
+    </select>
+</div>
+
+<?php
+$primaryMajor = (int)($editUser['major_ID'] ?? 0);
+$otherMajors = array_values(array_filter(
+    $studentMajors,
+    static fn($id) => (int)$id !== $primaryMajor
+));
+$minorChoices = array_values(array_unique(array_map('intval', $studentMinors)));
+$academicSlots = [
+    ['Primary major', 'major_id', $primaryMajor, $majors, 'major_ID', 'major_Name'],
+    ['Second major', 'second_major_id', (int)($otherMajors[0] ?? 0), $majors, 'major_ID', 'major_Name'],
+    ['First minor', 'minor_ids[]', (int)($minorChoices[0] ?? 0), $minors, 'minor_ID', 'minor_Name'],
+    ['Second minor', 'minor_ids[]', (int)($minorChoices[1] ?? 0), $minors, 'minor_ID', 'minor_Name'],
+];
+?>
+
+<?php foreach ($academicSlots as $slot): ?>
+    <div class="academic-declaration-slot">
+        <label><?= e($slot[0]) ?> <span class="academic-optional">Optional</span></label>
+        <div style="display:flex;gap:8px;align-items:center">
+            <select name="<?= e($slot[1]) ?>" class="academic-declaration-select">
+                <option value="">None declared</option>
+                <?php foreach ($slot[3] as $option): ?>
+                    <option value="<?= (int)$option[$slot[4]] ?>"
+                        <?= (int)$option[$slot[4]] === (int)$slot[2] ? 'selected' : '' ?>>
+                        <?= e($option[$slot[5]]) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <button type="button" class="btn light academic-remove">Remove</button>
+        </div>
+    </div>
+<?php endforeach; ?>
+
+<div id="academic-declaration-error"
+     role="alert"
+     style="display:none;color:#b42318;grid-column:1/-1"></div>
+
+<?php if (count($studentMajors) > 2 || count($studentMinors) > 2): ?>
+    <div class="academic-existing-warning" role="status">
+        Existing academic declarations exceed the supported limits. Review before saving.
+    </div>
+<?php endif; ?>
+
+<script>
+(() => {
+    const form = document.querySelector('#users-edit-dialog form.ashford-student-validation');
+    if (!form || form.dataset.academicUiReady === '1') return;
+    form.dataset.academicUiReady = '1';
+
+    const selects = [...form.querySelectorAll('.academic-declaration-select')];
+    const error = form.querySelector('#academic-declaration-error');
+    const type = form.querySelector('#edit-student-type');
+
+    function validate() {
+        const majors = selects.slice(0, 2).map(s => s.value).filter(Boolean);
+        const minors = selects.slice(2).map(s => s.value).filter(Boolean);
+        let message = '';
+
+        if (new Set(majors).size !== majors.length ||
+            new Set(minors).size !== minors.length) {
+            message = 'Duplicate majors or minors are not allowed.';
+        } else if (majors.length + minors.length > 2) {
+            message = 'A student may declare at most two academic programs.';
+        } else if (type.value === 'Graduate' && !selects[0].value) {
+            message = 'Graduate students must have a primary major.';
+        }
+
+        error.textContent = message;
+        error.style.display = message ? 'block' : 'none';
+        return !message;
+    }
+
+    form.querySelectorAll('.academic-remove').forEach(button => {
+        button.addEventListener('click', () => {
+            button.parentElement.querySelector('select').value = '';
+            validate();
+        });
+    });
+
+    selects.forEach(select => select.addEventListener('change', validate));
+    type.addEventListener('change', validate);
+
+    form.addEventListener('submit', event => {
+        if (!validate()) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+    }, true);
+})();
+</script>
             <?php endif; ?>
 
 			<?php if ($canEditSecurity): ?>
@@ -559,4 +649,130 @@ document.addEventListener('DOMContentLoaded', function () {
 
     validateMajors();
 });
+</script>
+
+
+<!-- ASHFORD_STUDENT_REQUIRED_UI_V2 -->
+<style>
+.ashford-student-validation .ashford-required-star {
+    color: #c62828;
+    font-weight: 700;
+    margin-left: 4px;
+}
+.ashford-student-validation .ashford-field-error {
+    color: #b91c1c;
+    font-size: 0.82rem;
+    margin-top: 5px;
+}
+.ashford-student-validation .ashford-invalid {
+    border: 2px solid #dc2626 !important;
+}
+</style>
+<script>
+(function () {
+    function initStudentValidation() {
+        document.querySelectorAll(
+            'form.ashford-student-validation'
+        ).forEach(function (form) {
+            if (form.dataset.studentValidationReady) return;
+
+            // Only activate for Student records.
+            if (!form.querySelector('[name="student_type"]')) return;
+
+            form.dataset.studentValidationReady = '1';
+            form.noValidate = true;
+
+            const fields = form.querySelectorAll(
+                'input[required], select[required], textarea[required]'
+            );
+
+            fields.forEach(function (field) {
+                const container = field.parentElement;
+                const label = container &&
+                    container.querySelector('label');
+
+                if (label &&
+                    !label.querySelector('.ashford-required-star')) {
+                    const star = document.createElement('span');
+                    star.className = 'ashford-required-star';
+                    star.textContent = ' *';
+                    star.setAttribute('aria-hidden', 'true');
+                    label.appendChild(star);
+                }
+
+                function validate() {
+                    const existing = container &&
+                        container.querySelector('.ashford-field-error');
+
+                    if (existing) existing.remove();
+                    field.classList.remove('ashford-invalid');
+
+                    const empty = !String(field.value || '').trim();
+                    const invalid = empty || !field.checkValidity();
+
+                    if (invalid) {
+                        field.classList.add('ashford-invalid');
+
+                        const error = document.createElement('div');
+                        error.className = 'ashford-field-error';
+                        error.textContent = empty
+                            ? 'This field is required.'
+                            : 'Please enter a valid value.';
+
+                        if (container) container.appendChild(error);
+                    }
+
+                    return !invalid;
+                }
+
+                field.addEventListener('change', validate);
+                field.addEventListener('input', function () {
+                    if (field.classList.contains('ashford-invalid')) {
+                        validate();
+                    }
+                });
+            });
+
+            form.addEventListener('submit', function (event) {
+                let firstInvalid = null;
+
+                fields.forEach(function (field) {
+                    const empty = !String(field.value || '').trim();
+                    const invalid = empty || !field.checkValidity();
+
+                    const container = field.parentElement;
+                    const previous = container &&
+                        container.querySelector('.ashford-field-error');
+
+                    if (previous) previous.remove();
+                    field.classList.toggle('ashford-invalid', invalid);
+
+                    if (invalid) {
+                        const error = document.createElement('div');
+                        error.className = 'ashford-field-error';
+                        error.textContent = empty
+                            ? 'This field is required.'
+                            : 'Please enter a valid value.';
+
+                        if (container) container.appendChild(error);
+                        if (!firstInvalid) firstInvalid = field;
+                    }
+                });
+
+                if (firstInvalid) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    firstInvalid.focus();
+                }
+            }, true);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', initStudentValidation);
+
+    new MutationObserver(initStudentValidation).observe(
+        document.documentElement,
+        {childList: true, subtree: true}
+    );
+})();
 </script>

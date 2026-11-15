@@ -73,7 +73,7 @@ if ($locked) {
     'periods'=>$ashfordSlotPeriods
   ], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT) ?>;
   const get = name => form.elements.namedItem(name);
-  const semester=get('semester_id'), course=get('course_id'), section=get('section_no');
+  const semester=get('semester_id'), department=get('department_id'), course=get('course_id'), section=get('section_no');
   const faculty=get('faculty_id'), slot=get('time_slot_id'), roomType=get('room_type'), room=get('room_id');
   const enrolled=get('demo_enrolled'), seats=get('seats');
   const sectionMsg=document.getElementById('create-section-availability');
@@ -102,20 +102,66 @@ if ($locked) {
   }
   function resetDisabled(s){if(s.value && s.selectedOptions[0]?.disabled)s.value='';}
   function refresh(){
-    const hasSemester=!!semester.value, hasCourse=hasSemester&&!!course.value;
-    choices(course).forEach(o=>mark(o,!hasSemester?'Select semester first':''));
+    const hasSemester=!!semester.value;
+    const hasDepartment=hasSemester&&!!department.value;
+    const hasCourse=hasDepartment&&!!course.value;
+    department.disabled=!hasSemester;
+    course.disabled=!hasDepartment;
+
+
+    // Show only courses belonging to the selected department.
+    department.disabled = !semester.value;
+    course.disabled = !semester.value || !department.value;
+
+
+    // Course choices depend on Department, not Semester.
+    department.disabled = !semester.value;
+    course.disabled = !semester.value || !department.value;
+
+    choices(course).forEach(o => {
+      const matches = !!department.value &&
+        eq(deptOf(o.value), department.value);
+
+      o.hidden = !matches;
+      o.disabled = !matches;
+      o.textContent = o.dataset.label;
+    });
+
+    resetDisabled(course);
+
     choices(section).forEach(o=>{
       const used=hasCourse&&data.taken.some(x=>eq(x.semester_ID,semester.value)&&eq(x.course_ID,course.value)&&eq(x.section_No,o.value));
       mark(o,!hasCourse?'Select course first':used?'Already exists':'');
     }); resetDisabled(section);
     sectionMsg.textContent=!hasCourse?'Choose semester and course to check section availability.':'Existing section numbers are disabled.';
     const dept=deptOf(course.value);
-    choices(faculty).forEach(o=>{
-      const eligible=hasCourse&&dept!=null&&facultyInDept(o.value,dept);
-      const full=eligible&&workload(o.value)>=facultyLimit(o.value);
-      const conflict=eligible&&!!slot.value&&assignments().some(x=>eq(x.faculty_ID,o.value)&&overlapping(x.time_Slot_ID,slot.value));
-      mark(o,!hasCourse?'Select course first':!eligible?'Outside course department':full?'Teaching limit reached':conflict?'Time conflict':'',!eligible&&hasCourse);
-    }); resetDisabled(faculty);
+
+    // Show only faculty assigned to the selected department.
+
+    // Faculty choices depend on Department.
+    faculty.disabled = !hasDepartment;
+    choices(faculty).forEach(o => {
+      const matches = !!department.value &&
+        facultyInDept(o.value, department.value);
+
+      const full = matches &&
+        workload(o.value) >= facultyLimit(o.value);
+
+      const conflict = matches && !!slot.value &&
+        assignments().some(x =>
+          eq(x.faculty_ID, o.value) &&
+          overlapping(x.time_Slot_ID, slot.value)
+        );
+
+      o.hidden = !matches;
+      o.disabled = !matches || full || conflict;
+      o.textContent = o.dataset.label +
+        (full ? ' — Teaching limit reached' :
+         conflict ? ' — Time conflict' : '');
+    });
+
+    resetDisabled(faculty);
+
     choices(slot).forEach(o=>{
       const conflict=!!faculty.value&&assignments().some(x=>eq(x.faculty_ID,faculty.value)&&overlapping(x.time_Slot_ID,o.value));
       mark(o,!faculty.value?'Select faculty first':conflict?'Instructor time conflict':'');
@@ -131,16 +177,86 @@ if ($locked) {
     const capacityOK=okA&&okB&&Number(enrolled.value)+Number(seats.value)<=10;
     capacityMsg.textContent=capacityOK?'Enrollment valid ('+(Number(enrolled.value)+Number(seats.value))+' of 10).':'Enter whole numbers 0–10; total cannot exceed 10.';
     capacityMsg.style.color=capacityOK?'#147d48':'#b42318';
-    submit.disabled=!(capacityOK&&semester.value&&course.value&&section.value&&faculty.value&&slot.value&&room.value);
+    submit.disabled=!(capacityOK&&semester.value&&department.value&&course.value&&section.value&&faculty.value&&slot.value&&room.value);
     return !submit.disabled;
   }
-  const downstream={semester_id:[course,section,faculty,slot,room],course_id:[section,faculty,slot,room],section_no:[],faculty_id:[slot,room],time_slot_id:[room],room_type:[room],room_id:[]};
-  [semester,course,section,faculty,slot,roomType,room].forEach(el=>el.addEventListener('change',()=>{
+  const downstream={semester_id:[department,course,section,faculty,slot,room],department_id:[course,section,faculty,slot,room],course_id:[section,faculty,slot,room],section_no:[],faculty_id:[slot,room],time_slot_id:[room],room_type:[room],room_id:[]};
+  [semester,department,course,section,faculty,slot,roomType,room].forEach(el=>el.addEventListener('change',()=>{
     (downstream[el.name]||[]).forEach(s=>s.value='');
     refresh();
   }));
   [enrolled,seats].forEach(el=>el.addEventListener('input',refresh));
   form.addEventListener('submit',event=>{if(!refresh())event.preventDefault();});
+
+
+  // ashfordNativeDepartmentFilter
+  const originalCourses = Array.from(course.options).map(o => {
+    const copy = o.cloneNode(true);
+    copy.disabled = false;
+    copy.hidden = false;
+    return copy;
+  });
+
+  const originalFaculty = Array.from(faculty.options).map(o => {
+    const copy = o.cloneNode(true);
+    copy.disabled = false;
+    copy.hidden = false;
+    return copy;
+  });
+
+  function filterNativeDropdowns() {
+    const dept = department.value;
+    const oldCourse = course.value;
+    const oldFaculty = faculty.value;
+
+    course.replaceChildren(...originalCourses
+      .filter(o => !o.value || (dept && eq(deptOf(o.value), dept)))
+      .map(o => {
+        const copy = o.cloneNode(true);
+        copy.disabled = false;
+        copy.hidden = false;
+        return copy;
+      }));
+
+    faculty.replaceChildren(...originalFaculty
+      .filter(o => !o.value || (dept && facultyInDept(o.value, dept)))
+      .map(o => {
+        const copy = o.cloneNode(true);
+        copy.disabled = false;
+        copy.hidden = false;
+        return copy;
+      }));
+
+    course.value = Array.from(course.options).some(o => o.value === oldCourse)
+      ? oldCourse : '';
+
+    faculty.value = Array.from(faculty.options).some(o => o.value === oldFaculty)
+      ? oldFaculty : '';
+
+    course.disabled = !semester.value || !dept;
+    faculty.disabled = !semester.value || !dept;
+
+    [course, faculty].forEach(select => {
+      choices(select).forEach(o => {
+        o.dataset.label = o.textContent.trim();
+      });
+    });
+
+    console.table({
+      semester: semester.value,
+      department: dept,
+      courseDropdownDisabled: course.disabled,
+      facultyDropdownDisabled: faculty.disabled,
+      availableCourses: choices(course).length,
+      enabledCourses: choices(course).filter(o => !o.disabled).length,
+      availableFaculty: choices(faculty).length
+    });
+  }
+
+  department.addEventListener('change', filterNativeDropdowns);
+  semester.addEventListener('change', filterNativeDropdowns);
+  filterNativeDropdowns();
+
   refresh();
 })();
 </script>

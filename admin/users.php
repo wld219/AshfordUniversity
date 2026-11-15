@@ -111,6 +111,65 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 		require_once __DIR__ . '/actions/users_update.php';
 
+    } elseif ($action === 'faculty_dept_add' || $action === 'faculty_dept_remove') {
+        // ASHFORD_FACULTY_MANAGEMENT_V1
+        require __DIR__ . '/actions/users_faculty_departments.php';
+
+        // ASHFORD_FACULTY_JSON_V10
+        if (($_POST['faculty_ajax'] ?? '') === '1') {
+            $result = $_SESSION['users_save_result'] ?? null;
+            $error = $_SESSION['users_error'] ?? null;
+
+            unset($_SESSION['users_save_result'], $_SESSION['users_error']);
+
+            $success = is_array($result)
+                && ($result['type'] ?? '') === 'success';
+
+            $message = $error
+                ?: ($result['message'] ?? 'Department update was not confirmed.');
+
+            $facultyID = post_int('faculty_id') ?? 0;
+            $assignments = [];
+            $available = [];
+
+            if ($facultyID > 0) {
+                $stmt = $pdo->prepare(
+                    'SELECT fd.dept_ID, d.dept_Name
+                     FROM Faculty_Department fd
+                     JOIN Department d ON d.dept_ID = fd.dept_ID
+                     WHERE fd.faculty_ID = ?
+                     ORDER BY d.dept_Name'
+                );
+                $stmt->execute([$facultyID]);
+                $assignments = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                $stmt = $pdo->prepare(
+                    'SELECT d.dept_ID, d.dept_Name
+                     FROM Department d
+                     WHERE NOT EXISTS (
+                         SELECT 1 FROM Faculty_Department fd
+                         WHERE fd.dept_ID = d.dept_ID
+                           AND fd.faculty_ID = ?
+                     )
+                     ORDER BY d.dept_Name'
+                );
+                $stmt->execute([$facultyID]);
+                $available = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+
+            header('Content-Type: application/json; charset=utf-8');
+            http_response_code($success ? 200 : 422);
+
+            echo json_encode([
+                'success' => $success,
+                'message' => $message,
+                'assignments' => $assignments,
+                'available' => $available
+            ]);
+            exit;
+        }
+
+
     } elseif ($action === 'add_hold' || $action === 'remove_hold') {
         if (!$isFullAccess) {
             $_SESSION['users_error'] = 'Only Full-Access administrators may manage student holds.';
@@ -136,6 +195,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	$redirect = url('admin/users.php');
     if (($action ?? '') === 'update' && isset($userID) && $userID > 0) $redirect .= '?edit=' . $userID;
+    if (in_array($action ?? '', ['faculty_dept_add', 'faculty_dept_remove'], true)) {
+        $redirect .= '?edit=' . (int)($_POST['faculty_id'] ?? 0);
+    }
+
     header('Location: ' . $redirect);
 	exit;
 }

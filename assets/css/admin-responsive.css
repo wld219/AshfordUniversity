@@ -1,0 +1,101 @@
+
+/* ASHFORD ADMIN RESPONSIVE V1 */
+/* Admin only: preserve other portal layouts. */
+
+@media (max-width: 1100px) {
+  body.ashford-admin-collapsible:not(.student-portal-theme) .shell {
+    display: flex;
+    min-width: 0;
+    align-items: stretch;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .sidebar {
+    position: sticky;
+    top: 76px;
+    flex: 0 0 250px;
+    width: 250px;
+    height: calc(100vh - 76px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    align-self: flex-start;
+  }
+
+  body.ashford-admin-collapsible.admin-sidebar-collapsed:not(.student-portal-theme) .sidebar {
+    flex: 0 0 72px;
+    width: 72px;
+    min-width: 72px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .content {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 0;
+    max-width: none;
+    padding: 20px 14px 48px;
+    overflow-x: auto;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .content > * {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .card,
+  body.ashford-admin-collapsible:not(.student-portal-theme) .panel {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) #users-edit-dialog {
+    max-width: calc(100vw - 24px);
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 700px) {
+  body.ashford-admin-collapsible:not(.student-portal-theme) .shell {
+    display: flex;
+  }
+
+  body.ashford-admin-collapsible.admin-sidebar-collapsed:not(.student-portal-theme) .sidebar {
+    flex: 0 0 0;
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .content {
+    width: 0;
+    padding: 18px 12px 40px;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .form-grid,
+  body.ashford-admin-collapsible:not(.student-portal-theme) #users-edit-dialog .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) .form-grid > div {
+    grid-column: 1 / -1;
+  }
+
+  body.ashford-admin-collapsible:not(.student-portal-theme) #users-edit-dialog {
+    max-width: calc(100vw - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+}

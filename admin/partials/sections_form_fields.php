@@ -22,6 +22,29 @@ declare(strict_types=1);
 	</select>
 </div>
 
+
+<div>
+  <label for="department_id">Department</label>
+  <select name="department_id" id="department_id"
+          required <?= $locked ? 'disabled' : '' ?>>
+    <option value="">Select department</option>
+    <?php
+    $sectionDepartments = $pdo->query(
+      'SELECT dept_ID, dept_Name FROM Department ORDER BY dept_Name'
+    )->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($sectionDepartments as $department):
+    ?>
+      <option value="<?= e((string)$department['dept_ID']) ?>"
+        <?= $editSection !== null &&
+            (string)($editSection['dept_ID'] ?? '') ===
+            (string)$department['dept_ID'] ? 'selected' : '' ?>>
+        <?= e($department['dept_Name']) ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</div>
+
 <div>
 	<label for="course_id">Course</label>
 	<select name="course_id" id="course_id" required <?= $locked ? 'disabled' : '' ?>>

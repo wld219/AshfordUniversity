@@ -66,7 +66,8 @@ $courseOptions = all_rows(
 	ORDER BY d.dept_Name, c.course_ID"
 );
 
-$editCourseID = get_int('edit_course');
+$editCourseID = get_str('edit_course', 10);
+$editCourseID = $editCourseID !== '' ? $editCourseID : null;
 
 $editCourse = null;
 

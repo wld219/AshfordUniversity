@@ -1,0 +1,1 @@
+User Management visual refinement only. Install after the earlier Admin UI Overhaul ZIP. Does not change Master Schedule, database, PHP actions, or shared navigation. Test search, role filter, student detail, edit, and holds.

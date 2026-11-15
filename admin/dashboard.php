@@ -45,6 +45,7 @@ page_start('Admin Overview', 'Admin', 'dashboard.php');
 @media(max-width:650px){.ao-summary{grid-template-columns:1fr}.ao-card{padding:12px}}
 </style>
 <div class="ao-wrap">
+  <p><a href="final_grade_requests.php">Review Final Grade Correction Requests</a></p>
   <header class="ao-header">
     <div><p class="dashboard-eyebrow">Administration</p><h2>University Overview</h2>
       <p class="ao-muted">Academic administration at a glance</p></div>

@@ -67,23 +67,29 @@ $majorIDs = $majorID ? [$majorID] : [];
 if ($secondMajorID) {
     $majorIDs[] = $secondMajorID;
 }
-$minorIDs = array_values(array_unique(array_map('intval', (array)($_POST['minor_ids'] ?? []))));
+$minorIDs = array_values(array_filter(
+    array_map('intval', (array)($_POST['minor_ids'] ?? [])),
+    static fn(int $id): bool => $id > 0
+));
 // Empty optional minor values are allowed; normalize them before validation.
 $minorIDs = array_values(array_filter($minorIDs, static fn(int $id): bool => $id > 0));
-// Enforce SRS: one required major, up to two majors total,
-// at most one minor, and no more than two declarations combined.
+// Academic declaration policy:
+// Up to two total declarations, including minor-only undergraduates.
 if ($isStudentTarget && (
     ($secondMajorID && $secondMajorID === $majorID) ||
     count($majorIDs) > 2 ||
-    count($minorIDs) > 1 ||
+    count($minorIDs) > 2 ||
+    count($minorIDs) !== count(array_unique($minorIDs)) ||
     count($majorIDs) + count($minorIDs) > 2
 )) {
     $_SESSION['users_save_result'] = [
         'type' => 'error',
-        'message' => 'Choose two majors or one major and one minor. Duplicate majors are not allowed.'
+        'message' => 'Choose at most two declarations without duplicates.'
     ];
     return;
 }
+
+
 
 
 // ASHFORD_PROFILE_VALIDATION_V4
@@ -235,13 +241,14 @@ if (!$firstName || !$lastName || !$city || !$state || !$street || !$zipCode ||
     !$validDate || $validDate->format('Y-m-d') !== $dob ||
     !filter_var($email, FILTER_VALIDATE_EMAIL) || !in_array($active, [0,1], true) ||
     ($isStudentTarget && (!in_array($studentType, ['Undergraduate','Graduate'],true) ||
-        !$studentYear || $studentYear < 1 || $studentYear > 8 || !$majorID))) {
+        !$studentYear || $studentYear < 1 || $studentYear > 8 ||
+        ($studentType === 'Graduate' && !$majorID)))) {
     $_SESSION['users_save_result'] = ['type'=>'error','message'=>'Please enter valid user information. All required fields must be completed.'];
     return;
 }
 if ($isStudentTarget) {
-    // Student.major_ID is NOT NULL and references Major.major_ID.
-    if (!one($pdo, 'SELECT major_ID FROM Major WHERE major_ID = ?', [$majorID])) {
+    // Student.major_ID is nullable for undeclared undergraduates.
+    if ($majorID && !one($pdo, 'SELECT major_ID FROM Major WHERE major_ID = ?', [$majorID])) {
         $_SESSION['users_save_result'] = [
             'type' => 'error',
             'message' => 'Please select a valid primary major.'
@@ -250,7 +257,9 @@ if ($isStudentTarget) {
     }
 
     // The primary major must also appear in Student_Major.
-    $majorIDs[] = $majorID;
+    if ($majorID) {
+        $majorIDs[] = $majorID;
+    }
     $majorIDs = array_values(array_unique($majorIDs));
     $minorIDs = array_values(array_unique($minorIDs));
 

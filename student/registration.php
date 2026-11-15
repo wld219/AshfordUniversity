@@ -44,6 +44,23 @@ if (!in_array($seatsFilter, ['', 'open', 'full'], true)) {
     $seatsFilter = '';
 }
 
+// ASHFORD_REG_DAY_TIME_FILTER_V2
+$dayFilter = trim((string) ($_GET['day'] ?? ''));
+$timeFilter = trim((string) ($_GET['time'] ?? ''));
+
+$allowedDays = [
+    'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+    'Friday', 'Saturday', 'Sunday'
+];
+
+if (!in_array($dayFilter, array_merge([''], $allowedDays), true)) {
+    $dayFilter = '';
+}
+
+if (!in_array($timeFilter, ['', 'morning', 'afternoon', 'evening'], true)) {
+    $timeFilter = '';
+}
+
 $facultyOptions = all_rows(
     $pdo,
     'SELECT f.faculty_ID,
@@ -104,6 +121,33 @@ if ($registrationNotice !== null) {
         $sql .= ' AND cs.available_Seats > 0';
     } elseif ($seatsFilter === 'full') {
         $sql .= ' AND cs.available_Seats <= 0';
+    }
+
+    if ($dayFilter !== '') {
+        $sql .= ' AND EXISTS (
+            SELECT 1
+            FROM Time_Slot_Day tsd
+            JOIN Day dy ON dy.day_ID = tsd.day_ID
+            WHERE tsd.time_Slot_ID = cs.time_Slot_ID
+              AND dy.day_Of_Week = ?
+        )';
+        $params[] = $dayFilter;
+    }
+
+    if ($timeFilter !== '') {
+        $timeConditions = [
+            'morning' => "p.start_Time < '12:00:00'",
+            'afternoon' => "p.start_Time < '17:00:00' AND p.end_Time > '12:00:00'",
+            'evening' => "p.end_Time > '17:00:00'"
+        ];
+
+        $sql .= ' AND EXISTS (
+            SELECT 1
+            FROM Time_Slot_Period tsp
+            JOIN Period p ON p.period_ID = tsp.period_ID
+            WHERE tsp.time_Slot_ID = cs.time_Slot_ID
+              AND (' . $timeConditions[$timeFilter] . ')
+        )';
     }
 
     $sql .= ' ORDER BY c.course_ID, cs.section_No';

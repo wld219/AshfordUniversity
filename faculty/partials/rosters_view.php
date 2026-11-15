@@ -153,9 +153,9 @@
                                 <td><?= $id ?></td>
                                 <td class="student-name"><?= e($student['first_Name'] . ' ' . $student['last_Name']) ?></td>
                                 <td><?= e($student['user_Email'] ?? 'N/A') ?></td>
-                                <td>Not Graded</td>
-                                <td>Not Graded</td>
-                                <td><?= e($student['Grade'] ?: 'Not Graded') ?></td>
+                                <td><?= e($student['midterm_Grade'] ?: 'Not Graded') ?></td>
+                                <td><?= e($student['overall_Grade'] ?: 'Not Graded') ?></td>
+                                <td><?= e($student['Grade'] ?: ($student['final_draft_grade'] ?: 'Not Graded')) ?></td>
                                 <td><?= e($pct) ?></td>
                                 <td><?= $absent ?></td>
                                 <td class="roster-status">Enrolled</td>
@@ -185,13 +185,19 @@
                                             <div><span>Total Absent</span><strong><?= $absent ?></strong></div>
                                             <div><span>Course</span><strong><?= e($selectedSection['course_ID'] ?? '') ?></strong></div>
                                         </div>
-                                        <section class="grade-manager-panel" data-student-id="<?= $id ?>" aria-label="Grade management for student <?= $id ?>">
+                                        <section class="grade-manager-panel" data-crn="<?= (int)$crn ?>" data-student-id="<?= $id ?>" data-published="<?= (int)($student['midterm_published'] ?? 0) ?>" data-overall-published="<?= (int)($student['overall_published'] ?? 0) ?>" data-final-published="<?= (int)(!empty($student['Grade'])) ?>" aria-label="Grade management for student <?= $id ?>">
                                              <h4>Grade Management</h4>
-                                             <p class="roster-muted">Preview only: changes here are not saved to the database.</p>
+                                             <p class="roster-muted">Midterm and Overall save normally. Final grades save as drafts; publishing posts an official grade to the transcript.</p>
+                                                <form class="midterm-ajax-token" hidden><?= csrf_field() ?></form>
+                                                <p class="roster-muted" data-midterm-status role="status" aria-live="polite"></p>
+                                                <button type="button" class="roster-expand" data-midterm-publish hidden>Publish Midterm</button>
+                                            <button type="button" class="roster-expand" data-overall-publish hidden>Publish Overall</button>
+                                            <button type="button" class="roster-expand" data-final-publish hidden>Publish Final</button>
+                                            <button type="button" class="roster-expand" data-final-request hidden>Request Unpublish Final</button>
                                              <div class="grade-manager-current">
-                                                 <div>Midterm: <strong data-grade-display="midterm">Not Graded</strong></div>
-                                                 <div>Overall: <strong data-grade-display="overall">Not Graded</strong></div>
-                                                 <div>Final: <strong data-grade-display="final"><?= e($student['Grade'] ?: 'Not Graded') ?></strong></div>
+                                                 <div>Midterm: <strong data-grade-display="midterm"><?= e($student['midterm_Grade'] ?: 'Not Graded') ?></strong></div>
+                                                 <div>Overall: <strong data-grade-display="overall"><?= e($student['overall_Grade'] ?: 'Not Graded') ?></strong></div>
+                                                 <div>Final: <strong data-grade-display="final"><?= e($student['Grade'] ?: ($student['final_draft_grade'] ?: 'Not Graded')) ?></strong></div>
                                              </div>
                                              <div class="grade-manager-controls">
                                                  <label>Grade Type
@@ -285,58 +291,192 @@
 
 })();
 
+// ASHFORD_MIDTERM_AJAX_V1
+// ASHFORD_OVERALL_AJAX_V1
+// Midterm and Overall write through AJAX. Final remains preview-only.
 document.querySelectorAll('.grade-manager-panel').forEach(panel => {
     const typeSelect = panel.querySelector('[data-grade-type]');
     const valueSelect = panel.querySelector('[data-grade-value]');
     const addButton = panel.querySelector('[data-grade-add]');
     const removeButton = panel.querySelector('[data-grade-remove]');
+    const publishButton = panel.querySelector('[data-midterm-publish]');
+    const overallPublishButton = panel.querySelector('[data-overall-publish]');
+    const finalPublishButton = panel.querySelector('[data-final-publish]');
+    const finalRequestButton = panel.querySelector('[data-final-request]');
+    const status = panel.querySelector('[data-midterm-status]');
     const confirmBox = panel.querySelector('.grade-manager-confirm');
     const confirmText = panel.querySelector('[data-grade-confirm-text]');
     const labels = {midterm:'Midterm',overall:'Overall',final:'Final'};
     const displays = Object.fromEntries(Object.keys(labels).map(k => [k,panel.querySelector('[data-grade-display="'+k+'"]')]));
     const values = Object.fromEntries(Object.keys(labels).map(k => [k,displays[k].textContent.trim() === 'Not Graded' ? '' : displays[k].textContent.trim()]));
-    let pending = null;
+    let published = panel.dataset.published === '1';
+    let overallPublished = panel.dataset.overallPublished === '1';
+    let finalPublished = panel.dataset.finalPublished === '1';
+    let pending = null, busy = false;
     function refresh() {
         const kind = typeSelect.value;
         valueSelect.value = values[kind] || '';
         addButton.textContent = values[kind] ? 'Edit Grade' : 'Add Grade';
-        removeButton.disabled = !values[kind];
+        removeButton.disabled = busy || !values[kind] || (kind === 'final' && finalPublished);
+        addButton.disabled = busy || (kind === 'final' && finalPublished);
+        publishButton.hidden = kind !== 'midterm' || !values.midterm;
+        publishButton.disabled = busy;
+        publishButton.textContent = published ? 'Unpublish Midterm' : 'Publish Midterm';
+        overallPublishButton.hidden = kind !== 'overall' || !values.overall;
+        overallPublishButton.disabled = busy;
+        overallPublishButton.textContent = overallPublished ? 'Unpublish Overall' : 'Publish Overall';
+        finalPublishButton.hidden = kind !== 'final' || !values.final;
+        finalPublishButton.disabled = busy || finalPublished;
+        finalPublishButton.textContent = finalPublished ? 'Final Published' : 'Publish Final';
+        finalRequestButton.hidden = kind !== 'final' || !finalPublished;
+        finalRequestButton.disabled = busy;
         confirmBox.hidden = true;
         pending = null;
     }
-    typeSelect.addEventListener('change', refresh);
+    async function submitMidterm(action, grade) {
+        busy = true; refresh();
+        status.textContent = 'Saving...';
+        try {
+            const token = panel.querySelector('.midterm-ajax-token input');
+            if (!token) throw new Error('Missing security token. Reload the page.');
+            const form = new FormData();
+            form.append(token.name, token.value);
+            form.append('student_id', panel.dataset.studentId);
+            form.append('crn', panel.dataset.crn);
+            form.append('midterm_grade', grade);
+            form.append('grade_action', action);
+            const response = await fetch('midterm_grade_actions.php', {
+                method:'POST', body:form, credentials:'same-origin',
+                headers:{'Accept':'application/json'}
+            });
+            const result = await response.json();
+            if (!response.ok || !result.ok) throw new Error(result.message || 'Unable to save grade.');
+            values.midterm = result.grade || '';
+            published = !!result.published;
+            displays.midterm.textContent = values.midterm || 'Not Graded';
+            const detailRow = panel.closest('.roster-detail-row');
+            const studentRow = detailRow && detailRow.previousElementSibling;
+            if (studentRow && studentRow.classList.contains('roster-student-row')) {
+                if (studentRow.cells[3]) studentRow.cells[3].textContent = values.midterm || 'Not Graded';
+            }
+            status.textContent = result.message || 'Saved successfully.';
+        } catch (error) {
+            status.textContent = 'Not saved: ' + error.message;
+        } finally { busy = false; refresh(); }
+    }
+    async function submitOverall(action, grade) {
+        busy = true; refresh();
+        status.textContent = 'Saving...';
+        try {
+            const token = panel.querySelector('.midterm-ajax-token input');
+            if (!token) throw new Error('Missing security token. Reload the page.');
+            const form = new FormData();
+            form.append(token.name, token.value);
+            form.append('student_id', panel.dataset.studentId);
+            form.append('crn', panel.dataset.crn);
+            form.append('overall_grade', grade);
+            form.append('grade_action', action);
+            const response = await fetch('overall_grade_actions.php', {
+                method:'POST', body:form, credentials:'same-origin',
+                headers:{'Accept':'application/json'}
+            });
+            const result = await response.json();
+            if (!response.ok || !result.ok) throw new Error(result.message || 'Unable to save grade.');
+            values.overall = result.grade || '';
+            overallPublished = !!result.published;
+            displays.overall.textContent = values.overall || 'Not Graded';
+            const detailRow = panel.closest('.roster-detail-row');
+            const studentRow = detailRow && detailRow.previousElementSibling;
+            if (studentRow && studentRow.classList.contains('roster-student-row') && studentRow.cells[4]) {
+                studentRow.cells[4].textContent = values.overall || 'Not Graded';
+            }
+            status.textContent = result.message || 'Saved successfully.';
+        } catch (error) {
+            status.textContent = 'Not saved: ' + error.message;
+        } finally { busy = false; refresh(); }
+    }
+
+    async function submitFinal(action, grade) {
+        busy = true; refresh(); status.textContent = 'Saving...';
+        try {
+            const token = panel.querySelector('.midterm-ajax-token input');
+            if (!token) throw new Error('Missing security token. Reload.');
+            const form = new FormData();
+            form.append(token.name, token.value);
+            form.append('student_id', panel.dataset.studentId);
+            form.append('crn', panel.dataset.crn);
+            form.append('final_grade', grade);
+            form.append('grade_action', action);
+            const response = await fetch('final_grade_actions.php', {method:'POST',body:form,credentials:'same-origin',headers:{'Accept':'application/json'}});
+            const result = await response.json();
+            if (!response.ok || !result.ok) throw new Error(result.message || 'Save failed.');
+            values.final = result.grade || '';
+            finalPublished = !!result.published;
+            displays.final.textContent = values.final || 'Not Graded';
+            const detailRow = panel.closest('.roster-detail-row');
+            const studentRow = detailRow && detailRow.previousElementSibling;
+            if (studentRow && studentRow.classList.contains('roster-student-row') && studentRow.cells[5]) studentRow.cells[5].textContent = values.final || 'Not Graded';
+            status.textContent = result.message || 'Saved.';
+        } catch (error) { status.textContent = 'Not saved: ' + error.message; }
+        finally { busy = false; refresh(); }
+    }
+    finalRequestButton.addEventListener('click', async () => {
+        if (busy || !finalPublished) return;
+        const reason=window.prompt('Reason for requesting unpublication (10-2000 characters):');
+        if (reason===null) return;
+        if (reason.trim().length<10 || reason.length>2000) {status.textContent='Enter a reason of 10-2000 characters.';return;}
+        if (!window.confirm('Submit to administrator? The official final grade remains unchanged until approved.')) return;
+        busy=true;refresh();status.textContent='Submitting request...';
+        try {
+            const token=panel.querySelector('.midterm-ajax-token input');
+            if (!token) throw new Error('Missing security token.');
+            const form=new FormData();form.append(token.name,token.value);
+            form.append('student_id',panel.dataset.studentId);form.append('crn',panel.dataset.crn);form.append('reason',reason.trim());
+            const response=await fetch('request_final_unpublish.php',{method:'POST',body:form,credentials:'same-origin',headers:{'Accept':'application/json'}});
+            const result=await response.json();if (!response.ok || !result.ok) throw new Error(result.message||'Request failed.');
+            status.textContent=result.message;
+        } catch(error) {status.textContent='Not submitted: '+error.message;}
+        finally {busy=false;refresh();}
+    });
+    finalPublishButton.addEventListener('click', () => {
+        if (busy || finalPublished || !values.final) return;
+        if (!window.confirm('Publish this FINAL grade as an official transcript grade? This cannot be undone here.')) return;
+        submitFinal('publish',values.final);
+    });
+
+    overallPublishButton.addEventListener('click', () => {
+        if (busy || !values.overall) return;
+        if (!window.confirm((overallPublished ? 'Unpublish' : 'Publish') + ' this overall grade?')) return;
+        submitOverall(overallPublished ? 'unpublish' : 'publish', values.overall);
+    });
+
+    typeSelect.addEventListener('change', () => { status.textContent = ''; refresh(); });
     addButton.addEventListener('click', () => {
         if (!valueSelect.value) { valueSelect.focus(); return; }
         pending = {kind:typeSelect.value, value:valueSelect.value};
-        confirmText.textContent = 'Confirm ' + labels[pending.kind] + ' grade: ' + pending.value + '? (Preview only — not saved)';
+        confirmText.textContent = 'Confirm ' + labels[pending.kind] + ' grade: ' + pending.value +
+            '? (Saves to database as a draft)';
         confirmBox.hidden = false;
     });
     removeButton.addEventListener('click', () => {
         pending = {kind:typeSelect.value, value:''};
-        confirmText.textContent = 'Remove ' + labels[pending.kind] + ' grade? (Preview only — not saved)';
+        confirmText.textContent = 'Remove ' + labels[pending.kind] + ' grade?' +
+            ' (Deletes the saved draft grade)';
         confirmBox.hidden = false;
     });
+    publishButton.addEventListener('click', () => {
+        if (busy || !values.midterm) return;
+        if (!window.confirm((published ? 'Unpublish' : 'Publish') + ' this midterm grade?')) return;
+        submitMidterm(published ? 'unpublish' : 'publish', values.midterm);
+    });
     panel.querySelector('[data-grade-yes]').addEventListener('click', () => {
-        if (!pending) return;
-        const changedKind = pending.kind;
-        const changedValue = pending.value;
-
-        values[changedKind] = changedValue;
-        displays[changedKind].textContent = changedValue || 'Not Graded';
-
-        // Keep the main roster's final-grade column in sync.
-        if (changedKind === 'final') {
-            const detailRow = panel.closest('.roster-detail-row');
-            const studentRow = detailRow && detailRow.previousElementSibling;
-            if (studentRow && studentRow.classList.contains('roster-student-row')) {
-                const gradeCell = studentRow.cells[3];
-                if (gradeCell) {
-                    gradeCell.textContent = changedValue || 'Not Graded';
-                }
-            }
-        }
-
-        refresh();
+        if (!pending || busy) return;
+        const {kind,value} = pending;
+        confirmBox.hidden = true;
+        pending = null;
+        if (kind === 'midterm') { submitMidterm(value ? 'save' : 'remove', value); return; }
+        if (kind === 'overall') { submitOverall(value ? 'save' : 'remove', value); return; }
+        if (kind === 'final') { submitFinal(value ? 'save' : 'remove', value); return; }
     });
     panel.querySelector('[data-grade-no]').addEventListener('click', () => { confirmBox.hidden = true; pending = null; });
     valueSelect.addEventListener('change', () => { confirmBox.hidden = true; pending = null; });
