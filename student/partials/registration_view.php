@@ -168,6 +168,58 @@ declare(strict_types=1);
     margin: 12px 0;
 }
 
+/* Prerequisite status */
+.ashford-register .prereq-status {
+    font-size: 11px;
+    margin-top: 4px;
+}
+.ashford-register .prereq-met {
+    color: #245b2b;
+}
+.ashford-register .prereq-unmet {
+    color: #a83232;
+}
+
+/* Time conflict warning */
+.ashford-register .conflict-warning {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #a83232;
+    margin-top: 4px;
+}
+
+/* Waitlist button */
+.ashford-register .waitlist-btn {
+    background: #d6a800;
+    color: #8a6d00;
+    border: none;
+    border-radius: 9px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.ashford-register .waitlist-btn:hover {
+    background: #b98f00;
+}
+.ashford-register .waitlist-btn:disabled {
+    background: #d1d5db;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Waitlist indicator */
+.ashford-register .waitlist-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: #8a6d00;
+    margin-top: 4px;
+}
+
 .ashford-register .registration-search-inner .ashford-search-fields > div {
     min-width: 0;
 }
@@ -594,24 +646,72 @@ $showRegistrationResults = array_key_exists('search', $_GET);
       <div class="card"><p>No sections match your search. Try a different course name or department.</p></div>
     <?php else: ?>
       <div class="table-wrap"><table class="dashboard-table-compact"><thead><tr><th scope="col">CRN</th><th scope="col">Course</th><th scope="col">Title</th><th scope="col">Department</th><th scope="col">Faculty</th><th scope="col">Credits</th><th scope="col">Meeting Time</th><th scope="col">Seats</th><th scope="col">Action</th></tr></thead><tbody>
-      <?php foreach ($sections as $section): ?>
+      <?php foreach ($sections as $section): $crn = (int) $section['CRN'];
+        $prereq = $sectionPrereqStatus[$crn] ?? ['hasPrereqs' => false, 'unmet' => []];
+        $hasConflict = false;
+        $conflictWith = '';
+        foreach ($registeredTimeSlots as $regSlot) {
+            if ((int) $regSlot['CRN'] === $crn) continue;
+            // Simple conflict check: same time slot
+            if ((int) $regSlot['time_Slot_ID'] === (int) ($section['time_Slot_ID'] ?? 0)) {
+                $hasConflict = true;
+                $conflictWith = (string) $regSlot['CRN'];
+                break;
+            }
+        }
+        $isWaitlisted = in_array($crn, $studentWaitlistedCRNs ?? []);
+        $waitlistInfo = $waitlistStatus[$crn] ?? ['count' => 0, 'max_position' => 0];
+        $seatsAvailable = (int) $section['available_Seats'] > 0;
+      ?>
         <tr><td><a href="course-details.php?crn=<?= urlencode((string) $section['CRN']) ?>" aria-label="View details for CRN <?= e($section['CRN']) ?>"><?= e($section['CRN']) ?></a></td>
-        <td><?= e($section['course_ID']) ?> (Section <?= e($section['section_No']) ?>)</td><td><?= e($section['course_Name']) ?></td><td><?= e($section['dept_Name']) ?></td><td><?= e($section['faculty_Name'] ?: 'Not assigned') ?></td><td><?= e($section['course_Credits']) ?></td><td><?= e(time_slot_label($pdo, (int) $section['time_Slot_ID'])) ?></td>
-        <td><?= (int) $section['available_Seats'] > 0 ? e($section['available_Seats']) . ' open' : 'Full' ?></td>
+        <td>
+            <?= e($section['course_ID']) ?> (Section <?= e($section['section_No']) ?>)
+            <?php if ($prereq['hasPrereqs']): ?>
+            <br><span class="prereq-status <?= count($prereq['unmet']) > 0 ? 'prereq-unmet' : 'prereq-met' ?>">
+                <?= count($prereq['unmet']) > 0 ? 'Prerequisites not met: ' . implode(', ', array_map(fn($p) => $p['prerequisite_course_ID'] . ' (' . $p['min_Grade_Req'] . ')', $prereq['unmet'])) : 'Prerequisites met' ?>
+            </span>
+            <?php endif; ?>
+            <?php if ($hasConflict): ?>
+            <br><span class="conflict-warning">⚠ Time conflict with CRN <?= e($conflictWith) ?></span>
+            <?php endif; ?>
+        </td>
+        <td><?= e($section['course_Name']) ?></td><td><?= e($section['dept_Name']) ?></td><td><?= e($section['faculty_Name'] ?: 'Not assigned') ?></td><td><?= e($section['course_Credits']) ?></td><td><?= e(time_slot_label($pdo, (int) $section['time_Slot_ID'])) ?></td>
+        <td>
+            <?php if ($seatsAvailable): ?>
+                <?= e($section['available_Seats']) ?> open
+            <?php elseif ($isWaitlisted): ?>
+                <span class="waitlist-indicator">Waitlisted (position <?= e($waitlistInfo['max_position']) ?>)</span>
+            <?php else: ?>
+                Full <span class="waitlist-indicator">(<?= e($waitlistInfo['count']) ?> waiting)</span>
+            <?php endif; ?>
+        </td>
           <td>
-            <form method="post" action="registration.php" class="ash-reg-action-form"
-                  onsubmit="return confirm('Confirm ' + (this.registration_action.value === 'drop' ? 'dropping' : 'adding') + ' CRN <?= e($section['CRN']) ?>?');">
-              <?= csrf_field() ?>
-              <input type="hidden" name="crn" value="<?= e($section['CRN']) ?>">
-              <select name="registration_action" aria-label="Action for CRN <?= e($section['CRN']) ?>" required>
-                <option value="">Select Action</option>
-                <option value="add">Add Course</option>
-                <option value="drop">Drop Course</option>
-              </select>
-              <button class="btn" type="submit">Confirm</button>
-            </form>
-            <?php if (isset($myRegisteredCRNs[(int) $section['CRN']])): ?>
+            <?php if (isset($myRegisteredCRNs[$crn])): ?>
               <small>Currently enrolled</small>
+            <?php elseif (!$seatsAvailable && !$isWaitlisted): ?>
+              <form method="post" action="registration.php" class="ash-reg-action-form"
+                    onsubmit="return confirm('Join waitlist for CRN <?= e($section['CRN']) ?>?');">
+                <?= csrf_field() ?>
+                <input type="hidden" name="crn" value="<?= e($section['CRN']) ?>">
+                <input type="hidden" name="registration_action" value="waitlist">
+                <button class="btn waitlist-btn" type="submit" <?= count($prereq['unmet']) > 0 || $hasConflict ? 'disabled' : '' ?>>
+                    Join Waitlist
+                </button>
+              </form>
+            <?php else: ?>
+              <form method="post" action="registration.php" class="ash-reg-action-form"
+                    onsubmit="return confirm('Confirm ' + (this.registration_action.value === 'drop' ? 'dropping' : 'adding') + ' CRN <?= e($section['CRN']) ?>?');">
+                <?= csrf_field() ?>
+                <input type="hidden" name="crn" value="<?= e($section['CRN']) ?>">
+                <select name="registration_action" aria-label="Action for CRN <?= e($section['CRN']) ?>" required>
+                  <option value="">Select Action</option>
+                  <option value="add">Add Course</option>
+                  <?php if (isset($myRegisteredCRNs[$crn])): ?><option value="drop">Drop Course</option><?php endif; ?>
+                </select>
+                <button class="btn" type="submit" <?= count($prereq['unmet']) > 0 || $hasConflict ? 'disabled' : '' ?>>
+                    Confirm
+                </button>
+              </form>
             <?php endif; ?>
           </td></tr>
       <?php endforeach; ?>

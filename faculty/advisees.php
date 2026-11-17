@@ -118,25 +118,96 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
 // Get all students assigned to this faculty member
 $advisees = all_rows(
-	$pdo,
-	'SELECT
-		Advisor.student_ID,
-		User.first_Name,
-		User.last_Name,
-		Student.student_Type,
-		Student.student_Year,
-		Advisor.date_Of_Appnt,
-		Major.major_Name,
-		Department.dept_Name
-	FROM Advisor
-	JOIN User ON User.user_ID = Advisor.student_ID
-	JOIN Student ON Student.student_ID = Advisor.student_ID
-	LEFT JOIN Major ON Major.major_ID = Student.major_ID
-	LEFT JOIN Department ON Department.dept_ID = Major.dept_ID
-	WHERE Advisor.faculty_ID = ?
-	ORDER BY User.last_Name, User.first_Name',
-	[$facultyID]
+    $pdo,
+    'SELECT
+        Advisor.student_ID,
+        User.first_Name,
+        User.last_Name,
+        Student.student_Type,
+        Student.student_Year,
+        Advisor.date_Of_Appnt,
+        Major.major_Name,
+        Department.dept_Name
+    FROM Advisor
+    JOIN User ON User.user_ID = Advisor.student_ID
+    JOIN Student ON Student.student_ID = Advisor.student_ID
+    LEFT JOIN Major ON Major.major_ID = Student.major_ID
+    LEFT JOIN Department ON Department.dept_ID = Major.dept_ID
+    WHERE Advisor.faculty_ID = ?
+    ORDER BY User.last_Name, User.first_Name',
+    [$facultyID]
 );
+
+// Enrich each advisee with academic status (GPA, credits, holds)
+$adviseeStatuses = [];
+foreach ($advisees as $advisee) {
+    $sid = (int) $advisee['student_ID'];
+
+    // Cumulative GPA from completed history (computed in PHP since grade_points() is PHP-only)
+    $historyRows = all_rows(
+        $pdo,
+        "SELECT sh.Grade, c.course_Credits
+         FROM Student_History sh
+         JOIN Course c ON c.course_ID = sh.course_ID
+         WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
+        [$sid]
+    ) ?? [];
+    $gpa = null;
+    $weightedPoints = 0.0;
+    $gradedCredits = 0.0;
+    foreach ($historyRows as $row) {
+        $points = grade_points($row['Grade']);
+        $courseCredits = (float) $row['course_Credits'];
+        if ($points !== null && $courseCredits > 0) {
+            $weightedPoints += $points * $courseCredits;
+            $gradedCredits += $courseCredits;
+        }
+    }
+    if ($gradedCredits > 0) {
+        $gpa = round($weightedPoints / $gradedCredits, 2);
+    }
+
+    // Total earned credits
+    $earnedCredits = 0;
+    $creditRow = one(
+        $pdo,
+        "SELECT COALESCE(SUM(c.course_Credits), 0) AS totalCredits
+         FROM Student_History sh
+         JOIN Course c ON c.course_ID = sh.course_ID
+         WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
+        [$sid]
+    );
+    if ($creditRow) {
+        $earnedCredits = (int) $creditRow['totalCredits'];
+    }
+
+    // Active holds
+    $holds = one(
+        $pdo,
+        'SELECT COUNT(*) AS holdCount FROM Student_Hold WHERE student_ID = ?',
+        [$sid]
+    );
+    $holdCount = (int) ($holds['holdCount'] ?? 0);
+
+    // Registration status
+    $currentSemester = current_registration_semester($pdo);
+    $registered = null;
+    if ($currentSemester !== null) {
+        $regCount = one(
+            $pdo,
+            'SELECT COUNT(*) AS regCount FROM Enrollment WHERE student_ID = ? AND semester_ID = ?',
+            [$sid, $currentSemester]
+        );
+        $registered = (int) ($regCount['regCount'] ?? 0) > 0;
+    }
+
+    $adviseeStatuses[$sid] = [
+        'gpa' => $gpa,
+        'earnedCredits' => $earnedCredits,
+        'holdCount' => $holdCount,
+        'registered' => $registered,
+    ];
+}
 
 // Current advisee load for limit display
 $adviseeLoad = count($advisees);
@@ -221,6 +292,9 @@ flash();
 .adv-student-options{max-height:215px;overflow:auto;border:1px solid #cbd3df;border-radius:8px;padding:6px 12px;background:#fff}
 .adv-student-options label{display:flex;gap:10px;align-items:center;padding:9px 4px;border-bottom:1px solid #edf0f4;font-weight:400}.adv-student-options label:last-child{border:0}.adv-student-options input{width:18px;height:18px;flex-shrink:0}
 .adv-swap-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}.adv-help{font-size:13px;color:#536177;margin:5px 0 0}.adv-section-title{margin:20px 0 12px}
+.status-good{color:#166534;font-weight:600}
+.status-warning{color:#b45309;font-weight:600}
+.status-unknown{color:#6b7280;font-weight:600}
 </style>
 <div class="adv-top">
 <section class="card" id="assign-advisee">
@@ -280,11 +354,18 @@ flash();
 			<th>Year</th>
 			<th>Major</th>
 			<th>Dept</th>
+			<th>GPA</th>
+			<th>Credits</th>
+			<th>Holds</th>
+			<th>Registered</th>
 			<th>Appointment Date</th>
 			<th>Action</th>
 		</tr>
 
-		<?php foreach ($advisees as $student): ?>
+		<?php foreach ($advisees as $student): $sid = (int) $student['student_ID'];
+            $status = $adviseeStatuses[$sid] ?? [];
+            $gpaClass = $status['gpa'] !== null ? ($status['gpa'] >= 2.0 ? 'status-good' : 'status-warning') : 'status-unknown';
+		?>
 
 			<tr>
 
@@ -299,6 +380,20 @@ flash();
 				<td><?= e($student['major_Name'] ?? 'Undeclared') ?></td>
 
 				<td><?= e($student['dept_Name'] ?? '—') ?></td>
+
+				<td class="<?= e($gpaClass) ?>">
+					<?= $status['gpa'] !== null ? e((string) $status['gpa']) : '—' ?>
+				</td>
+
+				<td><?= e((string) $status['earnedCredits']) ?></td>
+
+				<td class="<?= $status['holdCount'] > 0 ? 'status-warning' : 'status-good' ?>">
+					<?= $status['holdCount'] > 0 ? e((string) $status['holdCount']) . ' hold(s)' : 'None' ?>
+				</td>
+
+				<td class="<?= $status['registered'] === true ? 'status-good' : 'status-unknown' ?>">
+					<?= $status['registered'] === true ? 'Yes' : ($status['registered'] === false ? 'No' : '—') ?>
+				</td>
 
 				<td><?= e($student['date_Of_Appnt']) ?></td>
 

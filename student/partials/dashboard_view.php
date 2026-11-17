@@ -430,6 +430,111 @@ $deptCode = static function(string $name): string {
     margin: 0 !important;
 }
 
+/* Midterm grades badge */
+.ash-student .midterm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid #d6a800;
+    border-radius: 999px;
+    background: #fdf6e3;
+    color: #8a6d00;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* Deadline styles */
+.ash-student .deadline-card {
+    background: #fff;
+    border: 1px solid var(--ash-border);
+    border-radius: 13px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 16px rgba(16,36,74,.045);
+}
+.ash-student .deadline-card h3 {
+    margin: 0 0 14px;
+    font-size: 19px;
+    color: var(--ash-navy);
+}
+.ash-student .deadline-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #edf0f6;
+}
+.ash-student .deadline-item:last-child {
+    border-bottom: 0;
+}
+.ash-student .deadline-label {
+    color: #63718d;
+    font-size: 14px;
+}
+.ash-student .deadline-date {
+    color: var(--ash-navy);
+    font-weight: 700;
+    font-size: 14px;
+}
+.ash-student .deadline-days {
+    font-size: 12px;
+    font-weight: 700;
+}
+.ash-student .deadline-days.urgent { color: #a83232; }
+.ash-student .deadline-days.ok { color: #245b2b; }
+.ash-student .deadline-days.past { color: #8f2020; }
+
+/* Credit progress bar */
+.ash-student .credit-progress {
+    margin-top: 8px;
+    height: 8px;
+    background: #eef2f6;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.ash-student .credit-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1e3366, #d6a800);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+
+/* Quick action grid */
+.ash-student .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+.ash-student .quick-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid var(--ash-border);
+    border-radius: 13px;
+    text-decoration: none;
+    color: #142345;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.18s ease;
+}
+.ash-student .quick-action:hover {
+    background: #f8f9fd;
+    border-color: #1e3366;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16,36,74,.08);
+}
+.ash-student .quick-action-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+.ash-student .quick-action-label {
+    text-align: center;
+}
+
 @media (max-width: 600px) {
     .ash-student form[action="dashboard.php"] {
         grid-template-columns: 1fr;
@@ -559,4 +664,79 @@ $deptCode = static function(string $name): string {
     </section>
 
 </div>
+
+<!-- Midterm Grades -->
+<?php if (!empty($midtermGrades)): ?>
+<section class="deadline-card">
+    <h3>Midterm Grades</h3>
+    <?php foreach ($schedule as $course): $crn = (int) $course['CRN']; if (!isset($midtermGrades[$crn])) continue; $mg = $midtermGrades[$crn]; ?>
+    <div class="deadline-item">
+        <span class="deadline-label"><?= e($course['course_ID']) ?> — <?= e($course['course_Name']) ?></span>
+        <span class="deadline-date"><?= e($mg['midterm_Grade']) ?></span>
+        <span class="midterm-badge">Submitted <?= e(date('M j, Y', strtotime($mg['midterm_Submitted_At']))) ?></span>
+    </div>
+    <?php endforeach; ?>
+</section>
+<?php endif; ?>
+
+<!-- Upcoming Deadlines -->
+<?php if (!empty($upcomingDeadlines)): ?>
+<section class="deadline-card">
+    <h3>Upcoming Deadlines</h3>
+    <?php foreach ($upcomingDeadlines as $deadline): $class = $deadline['isPast'] ? 'past' : ($deadline['daysRemaining'] <= 7 ? 'urgent' : 'ok'); ?>
+    <div class="deadline-item">
+        <span class="deadline-label"><?= e($deadline['label']) ?></span>
+        <span class="deadline-date"><?= e($deadline['date']) ?></span>
+        <span class="deadline-days <?= $class ?>">
+            <?= $deadline['isPast'] ? 'Past due' : ($deadline['daysRemaining'] === 0 ? 'Today' : $deadline['daysRemaining'] . ' days remaining') ?>
+        </span>
+    </div>
+    <?php endforeach; ?>
+</section>
+<?php endif; ?>
+
+<!-- Credit Progress -->
+<section class="ash-card ash-panel">
+    <h3>Degree Progress</h3>
+    <div class="ash-info-row">
+        <span class="ash-info-label">Credits Earned</span>
+        <strong class="ash-info-value"><?= e($degreeCredits) ?> / <?= e($requiredCredits) ?></strong>
+    </div>
+    <div class="credit-progress">
+        <div class="credit-progress-fill" style="width: <?= e($creditProgress) ?>%"></div>
+    </div>
+    <p class="ash-note" style="margin-top:8px"><?= e($creditProgress) ?>% complete toward graduation (120 credits required)</p>
+</section>
+
+<!-- Quick Actions -->
+<section class="ash-card ash-panel">
+    <h3>Quick Actions</h3>
+    <div class="quick-actions">
+        <a href="registration.php" class="quick-action">
+            <span class="quick-action-icon">📚</span>
+            <span class="quick-action-label">Register for Courses</span>
+        </a>
+        <a href="schedule.php" class="quick-action">
+            <span class="quick-action-icon">📅</span>
+            <span class="quick-action-label">View My Schedule</span>
+        </a>
+        <a href="degree-audit.php" class="quick-action">
+            <span class="quick-action-icon">📋</span>
+            <span class="quick-action-label">Degree Audit</span>
+        </a>
+        <a href="transcript.php" class="quick-action">
+            <span class="quick-action-icon">📄</span>
+            <span class="quick-action-label">View Transcript</span>
+        </a>
+        <a href="holds.php" class="quick-action">
+            <span class="quick-action-icon">⚠️</span>
+            <span class="quick-action-label">Check Holds</span>
+        </a>
+        <a href="advisor.php" class="quick-action">
+            <span class="quick-action-icon">👨‍🏫</span>
+            <span class="quick-action-label">Contact Advisor</span>
+        </a>
+    </div>
+</section>
+
 </div>

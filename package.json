@@ -1,0 +1,43 @@
+{
+  "name": "ashforduniversity",
+  "version": "1.0.0",
+  "description": "Ashford University Fullstack Information System is a full stack university registration system built for Ashford University. It provides role-based portals for students, faculty, administrators, and Statistics Department staff. The system handles course registration, scheduling, grading, transcripts, degree audits, holds, advising, and administrative oversight.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "test:screenshots": "playwright test screenshots.spec.ts",
+    "test:explore": "playwright test portal.explore.spec.ts",
+    "test:auth": "playwright test auth.spec.ts",
+    "test:student": "playwright test student-portal.spec.ts",
+    "test:faculty": "playwright test faculty-portal.spec.ts",
+    "test:admin": "playwright test admin-portal.spec.ts",
+    "test:statstaff": "playwright test statstaff-portal.spec.ts",
+    "test:registration": "playwright test registration-schedule.spec.ts",
+    "test:all-portals": "playwright test student-portal.spec.ts faculty-portal.spec.ts admin-portal.spec.ts statstaff-portal.spec.ts",
+    "setup:browsers": "npx playwright install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wld219/AshfordUniversity.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/wld219/AshfordUniversity/issues"
+  },
+  "homepage": "https://github.com/wld219/AshfordUniversity#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "playwright": "^1.65.1"
+  }
+}

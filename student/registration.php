@@ -136,6 +136,125 @@ $myRegisteredCRNs = array_fill_keys(array_map(
     static fn($row) => (int) $row['CRN'], $myRegisteredCourses
 ), true);
 
+// Prerequisite check: which prerequisites are not met for each section.
+$sectionPrereqStatus = [];
+if ($registrationNotice !== null && count($sections) > 0) {
+    $crns = array_map(static fn($row) => (int) $row['CRN'], $sections);
+    $placeholders = implode(',', array_fill(0, count($crns), '?'));
+    $prereqRows = all_rows(
+        $pdo,
+        "SELECT
+                cp.course_ID,
+                cp.prerequisite_course_ID,
+                cp.min_Grade_Req,
+                pre.course_Name AS prereq_Name
+            FROM Course_Prerequisite cp
+            JOIN Course pre ON pre.course_ID = cp.prerequisite_course_ID
+            WHERE cp.course_ID IN (
+                SELECT c.course_ID FROM Course_Section cs
+                JOIN Course c ON c.course_ID = cs.course_ID
+                WHERE cs.CRN IN ($placeholders)
+            )",
+        $crns
+    ) ?? [];
+    // Build passed courses set for this student
+    $passedCourses = [];
+    $passedRows = all_rows(
+        $pdo,
+        "SELECT sh.course_ID, sh.Grade FROM Student_History sh WHERE sh.student_ID = ?",
+        [$studentID]
+    ) ?? [];
+    foreach ($passedRows as $row) {
+        $points = grade_points($row['Grade']);
+        if ($points !== null) {
+            $passedCourses[(string) $row['course_ID']] = $row['Grade'];
+        }
+    }
+    // Group prereqs by course_ID
+    $prereqByCourse = [];
+    foreach ($prereqRows as $row) {
+        $prereqByCourse[(string) $row['course_ID']][] = $row;
+    }
+    // Determine status per section
+    foreach ($sections as $section) {
+        $courseID = (string) $section['course_ID'];
+        $prereqs = $prereqByCourse[$courseID] ?? [];
+        $unmet = [];
+        foreach ($prereqs as $prereq) {
+            $passedGrade = $passedCourses[(string) $prereq['prerequisite_course_ID']] ?? null;
+            $points = grade_points($passedGrade);
+            $requiredPoints = grade_points($prereq['min_Grade_Req']);
+            if ($points === null || ($requiredPoints !== null && $points < $requiredPoints)) {
+                $unmet[] = $prereq;
+            }
+        }
+        $sectionPrereqStatus[(int) $section['CRN']] = [
+            'hasPrereqs' => count($prereqs) > 0,
+            'unmet' => $unmet,
+        ];
+    }
+}
+
+// Time conflict check: registered course time slots for this semester.
+$registeredTimeSlots = [];
+if ($registrationNotice !== null && count($myRegisteredCourses) > 0) {
+    $registeredCRNs = array_map(static fn($row) => (int) $row['CRN'], $myRegisteredCourses);
+    $regPlaceholders = implode(',', array_fill(0, count($registeredCRNs), '?'));
+    $registeredTimeSlots = all_rows(
+        $pdo,
+        "SELECT
+                cs.CRN,
+                cs.time_Slot_ID,
+                tsd.day_ID,
+                d.day_Of_Week,
+                p.start_Time,
+                p.end_Time
+            FROM Course_Section cs
+            JOIN Time_Slot_Day tsd ON tsd.time_Slot_ID = cs.time_Slot_ID
+            JOIN Day d ON d.day_ID = tsd.day_ID
+            JOIN Time_Slot_Period tsp ON tsp.time_Slot_ID = cs.time_Slot_ID
+            JOIN Period p ON p.period_ID = tsp.period_ID
+            WHERE cs.CRN IN ($regPlaceholders)
+            ORDER BY d.day_ID, p.start_Time",
+        $registeredCRNs
+    ) ?? [];
+}
+
+// Waitlist status for each section.
+$waitlistStatus = [];
+if ($registrationNotice !== null && count($sections) > 0) {
+    $crns = array_map(static fn($row) => (int) $row['CRN'], $sections);
+    $placeholders = implode(',', array_fill(0, count($crns), '?'));
+    $waitlistRows = all_rows(
+        $pdo,
+        "SELECT
+                CRN,
+                COUNT(*) AS waitlist_count,
+                MAX(position) AS max_position
+            FROM Waitlist
+            WHERE CRN IN ($placeholders)
+                AND semester_ID = ?
+                AND enrolled_At IS NULL
+            GROUP BY CRN",
+        array_merge($crns, [(int) $registrationNotice])
+    ) ?? [];
+    foreach ($waitlistRows as $row) {
+        $waitlistStatus[(int) $row['CRN']] = [
+            'count' => (int) $row['waitlist_count'],
+            'max_position' => (int) $row['max_position'],
+        ];
+    }
+    // Check if student is already waitlisted for any section
+    $studentWaitlist = all_rows(
+        $pdo,
+        'SELECT CRN FROM Waitlist WHERE student_ID = ? AND semester_ID = ? AND enrolled_At IS NULL',
+        [$studentID, (int) $registrationNotice]
+    ) ?? [];
+    $studentWaitlistedCRNs = array_map(static fn($row) => (int) $row['CRN'], $studentWaitlist);
+} else {
+    $studentWaitlistedCRNs = [];
+}
+
 page_start('Course Registration', 'Student', 'registration.php');
 flash();
 require __DIR__ . '/partials/registration_view.php';

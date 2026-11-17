@@ -24,7 +24,7 @@ $sections = all_rows(
      WHERE cs.faculty_ID = ?
        AND cs.is_Cancelled = 0
        AND s.semester_Name = 'Fall 2026'
-     ORDER BY c.course_ID, cs.section_No",
+     ORDER BY s.semester_ID DESC, c.course_ID, cs.section_No",
     [$facultyID]
 );
 
@@ -370,7 +370,7 @@ flash();
 <section class="wa-card">
     <h2 class="wa-heading">Today's Attendance</h2>
     <p class="wa-muted">
-        Fall 2026 · Current Week:
+        Current Week:
         <?= e($weekStart->format('M j')) ?> –
         <?= e($weekEnd->format('M j, Y')) ?>
     </p>
@@ -402,7 +402,7 @@ flash();
     </div>
 
     <?php if (!$sections): ?>
-        <p class="wa-muted">No Fall 2026 course sections assigned.</p>
+        <p class="wa-muted">No course sections assigned to you.</p>
     <?php else: ?>
         
 <?php if (count($sections) <= 5): ?>

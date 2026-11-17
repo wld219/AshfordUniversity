@@ -39,6 +39,8 @@ $validReports = [
 	'grade_summary',
 	'level_totals',
 	'section_utilization',
+	'enrollment_trends',
+	'department_summary',
 ];
 
 if (!in_array($report, $validReports, true)) {
@@ -70,6 +72,14 @@ switch ($report) {
 
 	case 'section_utilization':
 		require_once __DIR__ . '/reports_section_utilization.php';
+		break;
+
+	case 'enrollment_trends':
+		require_once __DIR__ . '/reports_enrollment_trends.php';
+		break;
+
+	case 'department_summary':
+		require_once __DIR__ . '/reports_department_summary.php';
 		break;
 }
 

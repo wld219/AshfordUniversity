@@ -129,6 +129,16 @@ body,
     font-size: 13px;
 }
 
+.success-message {
+    margin-bottom: 17px;
+    padding: 11px 12px;
+    border: 1px solid #8ab590;
+    border-radius: var(--radius-sm);
+    color: #245b2b;
+    background: #eef8ee;
+    font-size: 13px;
+}
+
 .login-help {
     margin: 24px 0 0;
     color: var(--ashford-muted);

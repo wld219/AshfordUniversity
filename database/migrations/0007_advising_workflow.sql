@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS Advising_Reschedule_Proposal (
+CREATE TABLE IF NOT EXISTS Appointment_Proposal (
  proposal_ID INT AUTO_INCREMENT PRIMARY KEY,
  appointment_ID INT NOT NULL,
  proposed_By_ID INT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Advising_Reschedule_Proposal (
  resolved_At DATETIME NULL,
  INDEX (appointment_ID,status)
 ) ENGINE=InnoDB;
-CREATE TABLE IF NOT EXISTS Advising_Activity (
+CREATE TABLE IF NOT EXISTS Appointment_Activity (
  activity_ID INT AUTO_INCREMENT PRIMARY KEY,
  appointment_ID INT NOT NULL,
  actor_ID INT NOT NULL,

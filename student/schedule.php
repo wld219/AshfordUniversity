@@ -29,25 +29,54 @@ $schedule = all_rows(
 			Course.course_ID,
 			Course.course_Name,
 			Course.course_Credits,
-			Course_Section.CRN,
+			cs.CRN,
 			Semester.semester_Name,
-			User.first_Name,
-			User.last_Name
+			User.first_Name AS faculty_First_Name,
+			User.last_Name AS faculty_Last_Name,
+			Enrollment.Grade AS final_Grade,
+			Enrollment.midterm_Grade,
+			Enrollment.midterm_Submitted_At,
+			cs.time_Slot_ID,
+			cs.section_No,
+			cs.available_Seats
 		FROM Enrollment
-		JOIN Course_Section
-			ON Course_Section.CRN = Enrollment.CRN
+		JOIN Course_Section cs
+			ON cs.CRN = Enrollment.CRN
 		JOIN Course
-			ON Course.course_ID = Course_Section.course_ID
+			ON Course.course_ID = cs.course_ID
 		JOIN Semester
-			ON Semester.semester_ID = Course_Section.semester_ID
+			ON Semester.semester_ID = cs.semester_ID
 		JOIN User
-			ON User.user_ID = Course_Section.faculty_ID
+			ON User.user_ID = cs.faculty_ID
 		WHERE Enrollment.student_ID = ?
 		ORDER BY
-			Semester.semester_ID,
+			Semester.semester_ID DESC,
 			Course.course_ID",
 	[$studentID]
 );
+
+// Time slot details for calendar view
+$timeSlotDetails = [];
+foreach ($schedule as $course) {
+    $timeSlotID = (int) ($course['time_Slot_ID'] ?? 0);
+    if ($timeSlotID > 0 && !isset($timeSlotDetails[$timeSlotID])) {
+        $slots = all_rows(
+            $pdo,
+            "SELECT
+                    d.day_Of_Week,
+                    p.start_Time,
+                    p.end_Time
+                FROM Time_Slot_Day tsd
+                JOIN Day d ON d.day_ID = tsd.day_ID
+                JOIN Time_Slot_Period tsp ON tsp.time_Slot_ID = tsd.time_Slot_ID
+                JOIN Period p ON p.period_ID = tsp.period_ID
+                WHERE tsd.time_Slot_ID = ?
+                ORDER BY d.day_ID, p.start_Time",
+            [$timeSlotID]
+        ) ?? [];
+        $timeSlotDetails[$timeSlotID] = $slots;
+    }
+}
 
 
 page_start(

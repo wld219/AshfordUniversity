@@ -44,6 +44,8 @@ function env_load(string $path): void
 		$value = trim($value, "\"'");
 
 		$GLOBALS['app_env'][$key] = $value;
+		// Also expose as a real environment variable so getenv() works
+		putenv("$key=$value");
 	}
 }
 

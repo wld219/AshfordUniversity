@@ -149,3 +149,82 @@ foreach ($historyGrades as $row) {
 if ($gradedCredits > 0) {
     $gpa = round($weightedPoints / $gradedCredits, 2);
 }
+
+// Midterm grades for current enrolled courses.
+$midtermGrades = [];
+if ($currentSemester !== null) {
+    $midtermRows = all_rows(
+        $pdo,
+        "SELECT
+                e.CRN,
+                c.course_ID,
+                c.course_Name,
+                e.midterm_Grade,
+                e.midterm_Submitted_At
+            FROM Enrollment e
+            JOIN Course_Section cs ON cs.CRN = e.CRN
+            JOIN Course c ON c.course_ID = cs.course_ID
+            WHERE e.student_ID = ?
+                AND e.semester_ID = ?
+                AND e.midterm_Grade IS NOT NULL
+            ORDER BY c.course_ID",
+        [$studentID, $currentSemester]
+    ) ?? [];
+    foreach ($midtermRows as $row) {
+        $midtermGrades[(int) $row['CRN']] = $row;
+    }
+}
+
+// Upcoming deadlines for the current semester.
+$upcomingDeadlines = [];
+if ($currentSemester !== null) {
+    $deadlineRow = one(
+        $pdo,
+        "SELECT
+                registration_End,
+                drop_Deadline,
+                grade_Deadline
+            FROM Semester
+            WHERE semester_ID = ?",
+        [$currentSemester]
+    );
+    if ($deadlineRow) {
+        $now = new DateTimeImmutable('now');
+        $fields = [
+            'registration_End' => 'Registration Deadline',
+            'drop_Deadline' => 'Drop Deadline',
+            'grade_Deadline' => 'Grade Submission Deadline',
+        ];
+        foreach ($fields as $dbField => $label) {
+            if ($deadlineRow[$dbField] !== null) {
+                $deadlineDate = new DateTimeImmutable((string) $deadlineRow[$dbField]);
+                $daysRemaining = (int) $now->diff($deadlineDate)->format('%r%a');
+                $upcomingDeadlines[] = [
+                    'label' => $label,
+                    'date' => $deadlineRow[$dbField],
+                    'daysRemaining' => $daysRemaining,
+                    'isPast' => $daysRemaining < 0,
+                ];
+            }
+        }
+        usort($upcomingDeadlines, static fn(array $a, array $b) => $a['daysRemaining'] <=> $b['daysRemaining']);
+    }
+}
+
+// Total credits earned toward degree (from Student_History).
+$degreeCredits = 0;
+$degreeCreditRow = one(
+    $pdo,
+    "SELECT COALESCE(SUM(c.course_Credits), 0) AS total
+     FROM Student_History sh
+     JOIN Course c ON c.course_ID = sh.course_ID
+     WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
+    [$studentID]
+);
+if ($degreeCreditRow) {
+    $degreeCredits = (int) $degreeCreditRow['total'];
+}
+
+// Required credits for graduation (default 120, can be adjusted per major).
+$requiredCredits = 120;
+$creditProgress = $degreeCredits > 0 ? min(100, round(($degreeCredits / $requiredCredits) * 100, 1)) : 0;

@@ -99,6 +99,37 @@ $inProgress = all_rows(
 	[$studentID, $currentSemester]
 );
 
+// Semester GPA breakdown
+$semesterGPAs = [];
+foreach ($courseHistory as $course) {
+    $semID = (int) $course['semester_ID'];
+    if (!isset($semesterGPAs[$semID])) {
+        $semesterGPAs[$semID] = [
+            'semester_Name' => $course['semester_Name'],
+            'gradePoints' => 0.0,
+            'gradedCredits' => 0,
+        ];
+    }
+    $credits = (int) $course['course_Credits'];
+    $points = grade_points($course['Grade']);
+    if ($points !== null) {
+        $semesterGPAs[$semID]['gradePoints'] += $points * $credits;
+        $semesterGPAs[$semID]['gradedCredits'] += $credits;
+    }
+}
+foreach ($semesterGPAs as &$sem) {
+    $sem['gpa'] = $sem['gradedCredits'] > 0 ? round($sem['gradePoints'] / $sem['gradedCredits'], 2) : null;
+}
+unset($sem);
+
+// Academic standing based on cumulative GPA
+$academicStanding = 'Good Standing';
+if ($gpa !== null) {
+    if ($gpa >= 3.5) $academicStanding = 'Dean\'s List';
+    elseif ($gpa >= 2.0) $academicStanding = 'Good Standing';
+    else $academicStanding = 'Academic Probation';
+}
+
 
 page_start(
 	'Unofficial Transcript',
@@ -115,6 +146,12 @@ page_start(
 		<span class="dashboard-stat-label">Cumulative GPA</span>
 		<strong><?= $gpa !== null ? e($gpa) : '—' ?></strong>
 		<span class="dashboard-stat-note">Credit-weighted</span>
+	</article>
+
+	<article class="dashboard-stat card">
+		<span class="dashboard-stat-label">Academic Standing</span>
+		<strong><?= e($academicStanding) ?></strong>
+		<span class="dashboard-stat-note">Based on cumulative GPA</span>
 	</article>
 
 	<article class="dashboard-stat card">
@@ -137,11 +174,39 @@ page_start(
 
 </section>
 
+<div style="margin-bottom:16px;text-align:right">
+	<button onclick="window.print()" class="btn">Print / Save as PDF</button>
+</div>
 
 <p class="muted">
 	View your completed courses and grades. This document is unofficial;
 	the registrar's office issues official transcripts.
 </p>
+
+
+<?php if (count($semesterGPAs) > 0): ?>
+
+	<section class="card" style="margin-top:16px;">
+		<h2>Semester GPA Breakdown</h2>
+		<div class="table-wrap">
+			<table>
+				<tr>
+					<th>Semester</th>
+					<th>GPA</th>
+					<th>Credits</th>
+				</tr>
+				<?php foreach ($semesterGPAs as $sem): ?>
+					<tr>
+						<td><?= e($sem['semester_Name']) ?></td>
+						<td><?= $sem['gpa'] !== null ? e($sem['gpa']) : '—' ?></td>
+						<td><?= e($sem['gradedCredits']) ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</table>
+		</div>
+	</section>
+
+<?php endif; ?>
 
 
 <?php if (count($courseHistory) > 0): ?>

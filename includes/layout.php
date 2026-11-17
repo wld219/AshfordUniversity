@@ -28,6 +28,7 @@ function nav_items(string $role): array
             return [
                 ['Overview', 'dashboard.php'],
                 ['My Schedule', 'schedule.php'],
+                ['Advising Appointments', 'advising_appointments.php'],
                 ['Master Schedule', 'master-schedule.php'],
                 ['Course Rosters', 'rosters.php'],
                 ['Attendance History', 'attendance-history.php'],
@@ -54,16 +55,6 @@ function nav_items(string $role): array
             return [
                 ['Overview', 'dashboard.php'],
                 ['Anonymous Reports', 'reports.php'],
-                ['Students', '../admin/users.php'],
-                ['Faculty', '../admin/users.php'],
-                ['Administrators', '../admin/users.php'],
-                ['Academic Records', '../admin/academic.php'],
-                ['Course Sections', '../admin/sections.php'],
-                ['Semesters', '../admin/semesters.php'],
-                ['Advisors', '../admin/advisors.php'],
-                ['Holds', '../admin/holds.php'],
-                ['Grade Exceptions', '../admin/exceptions.php'],
-                ['Audit Log', '../admin/audit.php'],
             ];
 
         default:
@@ -112,7 +103,7 @@ function page_start(
 			href="<?= e(app_base_path() . '/assets/css/style.css') ?>"
 		>
 
-        <?php if (in_array($role, ['Admin', 'Student'], true)): ?>
+        <?php if (in_array($role, ['Admin', 'Student', 'Faculty'], true)): ?>
         <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/admin-overhaul.css') ?>">
         <link rel="stylesheet" href="<?= e(app_base_path() . '/assets/css/admin-sidebar.css') ?>">
         <?php endif; ?>
@@ -128,7 +119,7 @@ function page_start(
 
     </head>
 
-    <body class="<?= $role === 'Student' ? 'student-portal-theme ashford-admin-collapsible' : ($role === 'Admin' ? 'ashford-admin-collapsible' : '') ?>">
+    <body class="<?= $role === 'Student' ? 'student-portal-theme ashford-admin-collapsible' : (in_array($role, ['Admin', 'Faculty'], true) ? 'ashford-admin-collapsible' : '') ?>">
 
     <header class="topbar">
 
@@ -180,13 +171,13 @@ function page_start(
 
 
     <div class="shell">
-<?php if ($role === 'Admin'): ?>
+<?php if (in_array($role, ['Admin', 'Faculty'], true)): ?>
 <button type="button" id="admin-sidebar-toggle" class="admin-sidebar-toggle" aria-controls="admin-sidebar" aria-expanded="true" aria-label="Collapse navigation" title="Toggle navigation">☰</button>
 <?php endif; ?>
 
 
         
-        <aside class="sidebar" <?= in_array($role, ['Admin', 'Student'], true) ? 'id="admin-sidebar"' : '' ?>>
+        <aside class="sidebar" <?= in_array($role, ['Admin', 'Student', 'Faculty'], true) ? 'id="admin-sidebar"' : '' ?>>
 <?php if ($role === 'Student'): ?>
 <button type="button"
         id="admin-sidebar-toggle"
@@ -263,8 +254,48 @@ $studentIcons = [
     </svg>
 </span>
 <span class="admin-nav-label"><?= e($label) ?></span>
-<?php else: ?>
-<?= e($label) ?>
+<?php elseif ($role === 'Faculty'): ?>
+<?php
+// ASHFORD_FACULTY_NAV_ICONS_V2
+$facultyIcons = [
+                        'Dashboard' => '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+                        'Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+                        'Master Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+                        'Rosters' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
+                        'Attendance Calendar' => '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9" r="3"/><path d="M16 12v2"/><path d="M20 8v6"/><path d="M4 8v6"/>',
+                        'Attendance History' => '<path d="M17 3v10h-6v-6"/><circle cx="8" cy="8" r="2"/><path d="M12 8h8M9 12h2M15 12h2"/>',
+                        'Weekly Attendance' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M3 14h18"/>',
+                        'Time Rules' => '<path d="M12 20a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4z"/><path d="M12 6h8M12 18h8"/>',
+                        'Attendance Window' => '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9" r="3"/><path d="M16 12v2"/><path d="M20 8v6"/><path d="M4 8v6"/>',
+                        'Advisees' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+                        'Catalog' => '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>',
+                        'Profile' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+                    ];
+?>
+<span class="admin-nav-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="21" height="21"
+         fill="none" stroke="currentColor" stroke-width="1.9"
+         stroke-linecap="round" stroke-linejoin="round">
+        <?= $facultyIcons[$label] ?? '' ?>
+    </svg>
+</span>
+<span class="admin-nav-label"><?= e($label) ?></span>
+<?php elseif ($role === 'StatStaff'): ?>
+<?php
+// ASHFORD_STATSTAFF_NAV_ICONS_V2
+$statstaffIcons = [
+                        'Overview' => '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+                        'Anonymous Reports' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
+];
+?>
+<span class="admin-nav-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" width="21" height="21"
+         fill="none" stroke="currentColor" stroke-width="1.9"
+         stroke-linecap="round" stroke-linejoin="round">
+        <?= $statstaffIcons[$label] ?? '' ?>
+    </svg>
+</span>
+<span class="admin-nav-label"><?= e($label) ?></span>
 <?php endif; ?>
 
                 </a>
@@ -293,7 +324,24 @@ function page_end(): void
 
     </div>
 
-    <script defer src="<?= e(app_base_path() . '/assets/js/admin-sidebar.js') ?>"></script>
+    <script>
+      (function(){
+        const body=document.body;
+        const toggle=document.getElementById('admin-sidebar-toggle');
+        const sidebar=document.getElementById('admin-sidebar');
+        if(!toggle||!sidebar)return;
+        let collapsed=false;
+        function render(){
+          body.classList.toggle('admin-sidebar-collapsed',collapsed);
+          toggle.setAttribute('aria-expanded',String(!collapsed));
+          toggle.setAttribute('aria-label',collapsed?'Expand navigation':'Collapse navigation');
+          toggle.title=collapsed?'Expand navigation':'Collapse navigation';
+          sidebar.querySelectorAll('a').forEach(a=>{a.title=collapsed?a.textContent.trim():'';});
+        }
+        toggle.addEventListener('click',function(){collapsed=!collapsed;render();});
+        render();
+      })();
+    </script>
 	<script src="<?= e(app_base_path() . '/assets/js/app.js') ?>"></script>
 
     </body>

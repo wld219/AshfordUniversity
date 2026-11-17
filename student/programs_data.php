@@ -46,6 +46,47 @@ $availableMajors = array_values(
 	)
 );
 
+// Program comparison data: requirement counts for each available major
+$majorRequirementCounts = [];
+foreach ($availableMajors as $major) {
+    $count = one(
+        $pdo,
+        'SELECT COUNT(*) AS total FROM Major_Requirement WHERE major_ID = ?',
+        [(int) $major['major_ID']]
+    );
+    $majorRequirementCounts[(int) $major['major_ID']] = (int) ($count['total'] ?? 0);
+}
+
+// Credits already earned toward each available major (based on completed courses)
+$majorCreditProgress = [];
+$studentHistory = all_rows(
+    $pdo,
+    'SELECT course_ID, Grade FROM Student_History WHERE student_ID = ? AND Grade IS NOT NULL',
+    [$studentID]
+) ?? [];
+$completedCourseIDs = array_map(
+    static fn($row) => (string) $row['course_ID'],
+    $studentHistory
+);
+
+if ($completedCourseIDs) {
+    $placeholders = implode(',', array_fill(0, count($completedCourseIDs), '?'));
+    foreach ($availableMajors as $major) {
+        $matched = one(
+            $pdo,
+            "SELECT COUNT(*) AS matched FROM Major_Requirement mr
+             WHERE mr.major_ID = ? AND mr.course_ID IN ($placeholders)",
+            array_merge([(int) $major['major_ID']], $completedCourseIDs)
+        );
+        $totalReq = $majorRequirementCounts[(int) $major['major_ID']] ?? 0;
+        $majorCreditProgress[(int) $major['major_ID']] = [
+            'matched' => (int) ($matched['matched'] ?? 0),
+            'total' => $totalReq,
+            'pct' => $totalReq > 0 ? round(($matched['matched'] ?? 0) / $totalReq * 100, 0) : 0,
+        ];
+    }
+}
+
 // Declared minor
 $declaredMinor = one(
 	$pdo,

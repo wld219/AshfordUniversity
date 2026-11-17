@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 // ASHFORD_ADD_DROP_V1: existing forms default to Add for compatibility.
 $registrationAction = (string) ($_POST['registration_action'] ?? 'add');
-if (!in_array($registrationAction, ['add', 'drop'], true)) {
+if (!in_array($registrationAction, ['add', 'drop', 'waitlist'], true)) {
     $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid registration action.'];
     header('Location: registration.php');
     exit;
@@ -63,6 +63,55 @@ if ($registrationAction === 'drop') {
         error_log('Drop request: ' . $error->getMessage());
         $_SESSION['flash'] = ['type' => 'error', 'message' => $error instanceof RuntimeException
             ? $error->getMessage() : 'Course drop could not be completed.'];
+    }
+    header('Location: registration.php');
+    exit;
+}
+
+if ($registrationAction === 'waitlist') {
+    try {
+        if ($crn <= 0) {
+            throw new RuntimeException('Please select a valid course section.');
+        }
+        $section = one($pdo,
+            'SELECT semester_ID, available_Seats FROM Course_Section WHERE CRN = ?',
+            [$crn]);
+        if (!$section) {
+            throw new RuntimeException('Course section not found.');
+        }
+        $semesterID = (int) $section['semester_ID'];
+        if ((int) $section['available_Seats'] > 0) {
+            throw new RuntimeException('This section still has open seats. Register instead of waitlisting.');
+        }
+        // Check already registered
+        $already = one($pdo,
+            'SELECT 1 FROM Enrollment WHERE student_ID = ? AND CRN = ? AND semester_ID = ?',
+            [$studentID, $crn, $semesterID]);
+        if ($already) {
+            throw new RuntimeException('You are already registered for this section.');
+        }
+        // Check already waitlisted
+        $alreadyWaitlisted = one($pdo,
+            'SELECT 1 FROM Waitlist WHERE student_ID = ? AND CRN = ? AND semester_ID = ? AND enrolled_At IS NULL',
+            [$studentID, $crn, $semesterID]);
+        if ($alreadyWaitlisted) {
+            throw new RuntimeException('You are already on the waitlist for this section.');
+        }
+        // Get next position
+        $maxPos = one($pdo,
+            'SELECT COALESCE(MAX(position), 0) AS maxPos FROM Waitlist WHERE CRN = ? AND semester_ID = ? AND enrolled_At IS NULL',
+            [$crn, $semesterID]);
+        $nextPos = (int) ($maxPos['maxPos'] ?? 0) + 1;
+        $pdo->prepare(
+            'INSERT INTO Waitlist (student_ID, CRN, semester_ID, position)
+             VALUES (?, ?, ?, ?)'
+        )->execute([$studentID, $crn, $semesterID, $nextPos]);
+        audit_log($pdo, 'Create', 'Waitlist', (string) $crn, 'Student waitlisted for section');
+        $_SESSION['flash'] = ['type' => 'success', 'message' => 'You have been added to the waitlist. You will be notified if a seat opens.'];
+    } catch (Throwable $error) {
+        error_log('Waitlist request: ' . $error->getMessage());
+        $_SESSION['flash'] = ['type' => 'error', 'message' => $error instanceof RuntimeException
+            ? $error->getMessage() : 'Could not add to waitlist.'];
     }
     header('Location: registration.php');
     exit;

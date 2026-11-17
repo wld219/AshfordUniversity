@@ -99,32 +99,6 @@ $sql = "UPDATE Login
 $stmt = $pdo->prepare($sql);
 $stmt->execute([$user['user_ID']]);
 
-// Local demonstration: require a one-time login code for Liam Walker and Admin 300008.
-// All other accounts retain their existing login behavior.
-if (
-    (
-        strcasecmp((string)$user['user_Email'], 'liamwalker@ashford.edu') === 0
-        && (string)$user['user_Type'] === 'Student'
-    )
-    ||
-    (
-        (int)$user['user_ID'] === 300008
-        && (string)$user['user_Type'] === 'Admin'
-    )
-) {
-    require_once __DIR__ . '/includes/login_2fa.php';
-    try {
-        login_2fa_begin($pdo, $user);
-        header('Location: ' . url('verify_login.php'));
-        exit;
-    } catch (Throwable $e) {
-        error_log('Login verification delivery failed: ' . $e->getMessage());
-        $_SESSION['login_error'] = 'Verification could not be sent. Please try again.';
-        header('Location: ' . url('index.php'));
-        exit;
-    }
-}
-
 // Prevent session fixation: start a fresh session id on login.
 session_regenerate_id(true);
 

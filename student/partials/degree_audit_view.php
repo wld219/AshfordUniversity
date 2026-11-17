@@ -2,9 +2,63 @@
 
 declare(strict_types=1);
 
-// Degree audit view: progress per declared major and minor.
+// Degree audit view: progress per declared major and minor, plus what-if analysis.
 
 ?>
+
+<style>
+/* ASHFORD_DEGREE_AUDIT_V2 */
+.ash-audit .progress-wrap {
+    margin: 10px 0 6px;
+}
+.ash-audit .progress-bar {
+    height: 8px;
+    background: #eef2f6;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.ash-audit .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #1e3366, #d6a800);
+    width: 0%;
+    transition: width 0.5s ease;
+}
+.ash-audit .progress-text {
+    font-size: 13px;
+    color: #63718d;
+    margin-top: 4px;
+}
+.ash-audit .what-if-card {
+    background: #f8f9fd;
+    border: 1px solid #e0e5ef;
+    border-radius: 13px;
+    padding: 18px;
+    margin-top: 24px;
+}
+.ash-audit .what-if-card h3 {
+    margin: 0 0 16px;
+    font-size: 19px;
+    color: #142345;
+}
+.ash-audit .what-if-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #edf0f6;
+}
+.ash-audit .what-if-row:last-child {
+    border-bottom: 0;
+}
+.ash-audit .what-if-name {
+    font-weight: 700;
+    color: #142345;
+}
+.ash-audit .what-if-pct {
+    font-weight: 700;
+    color: #1e3366;
+}
+</style>
 
 <p class="muted">
 	Requirements come from the published major and minor requirement lists.
@@ -13,9 +67,9 @@ declare(strict_types=1);
 </p>
 
 
-<?php foreach ($audits as $audit): ?>
+<?php foreach ($audits as $audit): $pct = $audit['total'] > 0 ? round(($audit['completed'] / $audit['total']) * 100, 0) : 0; ?>
 
-	<section class="card" style="margin-bottom: 18px;">
+	<section class="card ash-audit" style="margin-bottom: 18px;">
 
 		<div class="dashboard-section-heading">
 			<div>
@@ -32,7 +86,17 @@ declare(strict_types=1);
 				<?= e((string) $audit['completed']) ?> of
 				<?= e((string) $audit['total']) ?> requirements met
 			</strong>
+			<span style="float:right"><?= e($pct) ?>% complete</span>
 		</p>
+
+		<div class="progress-wrap">
+			<div class="progress-bar">
+				<div class="progress-fill" style="width: <?= e($pct) ?>%"></div>
+			</div>
+			<div class="progress-text">
+				<?= e($audit['completed']) ?> of <?= e($audit['total']) ?> courses completed
+			</div>
+		</div>
 
 		<?php if ($audit['total'] === 0): ?>
 

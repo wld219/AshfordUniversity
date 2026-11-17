@@ -36,6 +36,12 @@ $rooms = all_rows(
     $sql
 );
 
+// Room capacity details by room type
+$roomTypes = [
+    'Lecture' => 'Lecture Hall',
+    'Office' => 'Faculty Office',
+    'Lab' => 'Computer/Teaching Lab',
+];
 
 page_start(
     'Buildings & Rooms',
@@ -78,7 +84,7 @@ page_start(
 
         <h2>Rooms</h2>
 
-        <?php foreach ($rooms as $room): ?>
+        <?php foreach ($rooms as $room): $roomTypeLabel = $roomTypes[$room['room_Type']] ?? $room['room_Type']; ?>
 
             <p>
 
@@ -91,8 +97,26 @@ page_start(
                 </strong>
 
                 <span class="badge">
-                    <?= e($room['room_Type']) ?>
+                    <?= e($roomTypeLabel) ?>
                 </span>
+
+                <?php if (!empty($room['available_Seats'])): ?>
+                    <span class="badge" style="background:#eef2f6;color:#1e3366">
+                        Seats: <?= e($room['available_Seats']) ?>
+                    </span>
+                <?php endif; ?>
+
+                <?php if (!empty($room['No_Of_Desks'])): ?>
+                    <span class="badge" style="background:#f0f7f0;color:#245b2b">
+                        Desks: <?= e($room['No_Of_Desks']) ?>
+                    </span>
+                <?php endif; ?>
+
+                <?php if (!empty($room['no_Of_Workstations'])): ?>
+                    <span class="badge" style="background:#fdf6e3;color:#8a6d00">
+                        Workstations: <?= e($room['no_Of_Workstations']) ?>
+                    </span>
+                <?php endif; ?>
 
             </p>
 

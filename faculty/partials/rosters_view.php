@@ -105,8 +105,12 @@
                 <strong><?= $averageAttendance === null ? 'N/A' : e((string)$averageAttendance) . '%' ?></strong>
             </div>
             <div class="roster-stat">
-                <span class="roster-muted">Grades Posted</span>
+                <span class="roster-muted">Final Grades Posted</span>
                 <strong><?= $gradesPosted ?> / <?= $totalStudents ?></strong>
+            </div>
+            <div class="roster-stat">
+                <span class="roster-muted">Midterm Grades Posted</span>
+                <strong><?= $midtermPosted ?> / <?= $totalStudents ?></strong>
             </div>
         </div>
 
@@ -148,14 +152,40 @@
                             $pct = $recorded > 0
                                 ? round($present / $recorded * 100, 1) . '%'
                                 : 'Not Recorded';
+                            $midtermGrade = $student['midterm_Grade'] ?? null;
+                            $finalGrade = $student['Grade'] ?? null;
+                            $overallGrade = $midtermGrade ?: $finalGrade;
                         ?>
                             <tr class="roster-student-row">
                                 <td><?= $id ?></td>
                                 <td class="student-name"><?= e($student['first_Name'] . ' ' . $student['last_Name']) ?></td>
                                 <td><?= e($student['user_Email'] ?? 'N/A') ?></td>
-                                <td>Not Graded</td>
-                                <td>Not Graded</td>
-                                <td><?= e($student['Grade'] ?: 'Not Graded') ?></td>
+                                <td>
+                                    <form method="post" action="rosters.php?term=<?= e($semester) ?>&amp;crn=<?= e($crn) ?>" style="margin:0;display:inline">
+                                        <?= csrf_field() ?>
+                                        <input type="hidden" name="action" value="update_midterm_grade">
+                                        <input type="hidden" name="student_id" value="<?= $id ?>">
+                                        <input type="hidden" name="crn" value="<?= $crn ?>">
+                                        <select name="midterm_grade" class="roster-grade-select" onchange="this.form.submit()" style="padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;min-width:70px">
+                                            <option value=""><?= $midtermGrade ? e($midtermGrade) : 'Not Graded' ?></option>
+                                            <option value="A">A</option>
+                                            <option value="A-">A-</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="B-">B-</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="C-">C-</option>
+                                            <option value="D+">D+</option>
+                                            <option value="D">D</option>
+                                            <option value="F">F</option>
+                                            <option value="W">W</option>
+                                            <option value="I">I</option>
+                                        </select>
+                                    </form>
+                                </td>
+                                <td><?= e($overallGrade ?: 'Not Graded') ?></td>
+                                <td><?= e($finalGrade ?: 'Not Graded') ?></td>
                                 <td><?= e($pct) ?></td>
                                 <td><?= $absent ?></td>
                                 <td class="roster-status">Enrolled</td>
@@ -187,37 +217,14 @@
                                         </div>
                                         <section class="grade-manager-panel" data-student-id="<?= $id ?>" aria-label="Grade management for student <?= $id ?>">
                                              <h4>Grade Management</h4>
-                                             <p class="roster-muted">Preview only: changes here are not saved to the database.</p>
+                                             <p class="roster-muted">Current grades for this student:</p>
                                              <div class="grade-manager-current">
-                                                 <div>Midterm: <strong data-grade-display="midterm">Not Graded</strong></div>
-                                                 <div>Overall: <strong data-grade-display="overall">Not Graded</strong></div>
-                                                 <div>Final: <strong data-grade-display="final"><?= e($student['Grade'] ?: 'Not Graded') ?></strong></div>
+                                                 <div>Midterm: <strong><?= e($midtermGrade ?: 'Not Graded') ?></strong></div>
+                                                 <div>Overall: <strong><?= e($overallGrade ?: 'Not Graded') ?></strong></div>
+                                                 <div>Final: <strong><?= e($finalGrade ?: 'Not Graded') ?></strong></div>
                                              </div>
-                                             <div class="grade-manager-controls">
-                                                 <label>Grade Type
-                                                     <select data-grade-type>
-                                                         <option value="midterm">Midterm Grade</option>
-                                                         <option value="overall">Overall Grade</option>
-                                                         <option value="final">Final Grade</option>
-                                                     </select>
-                                                 </label>
-                                                 <label>Letter Grade
-                                                     <select data-grade-value>
-                                                         <option value="">Select a grade</option>
-                                                         <?php foreach (['A','A-','B+','B','B-','C+','C','C-','D+','D','F','W','I'] as $gradeOption): ?>
-                                                             <option value="<?= e($gradeOption) ?>"><?= e($gradeOption) ?></option>
-                                                         <?php endforeach; ?>
-                                                     </select>
-                                                 </label>
-                                                 <button type="button" class="roster-expand" data-grade-add>Add Grade</button>
-                                                 <button type="button" class="roster-expand" data-grade-remove disabled>Remove Grade</button>
-                                             </div>
-                                             <div class="grade-manager-confirm" hidden role="group" aria-label="Confirm grade change">
-                                                 <p data-grade-confirm-text></p>
-                                                 <button type="button" class="roster-expand" data-grade-yes>Confirm</button>
-                                                 <button type="button" class="roster-expand" data-grade-no>Cancel</button>
-                                             </div>
-                                         </section>
+                                             <p class="roster-muted">Use the Midterm column above to submit or change midterm grades.</p>
+                                        </section>
                                         <strong>Attendance History</strong>
                                         <div class="roster-history">
                                             <?php if (empty($attendanceHistory[$id])): ?>

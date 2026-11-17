@@ -29,6 +29,47 @@ $courses = all_rows(
 	$sql
 );
 
+// Course offering history: which semesters each course has been offered
+$offeringHistory = [];
+if (count($courses) > 0) {
+    $ids = array_column($courses, 'course_ID');
+    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $offerings = all_rows(
+        $pdo,
+        "SELECT
+                c.course_ID,
+                s.semester_Name,
+                COUNT(cs.CRN) AS sections_offered
+            FROM Course c
+            JOIN Course_Section cs ON cs.course_ID = c.course_ID
+            JOIN Semester s ON s.semester_ID = cs.semester_ID
+            WHERE c.course_ID IN ($placeholders)
+            GROUP BY c.course_ID, s.semester_ID, s.semester_Name
+            ORDER BY s.semester_ID DESC",
+        $ids
+    );
+    foreach ($offerings as $offering) {
+        $offeringHistory[(string) $offering['course_ID']][] = $offering;
+    }
+}
+
+// Search filter
+$search = trim((string) ($_GET['search'] ?? ''));
+$search = substr($search, 0, 100);
+if ($search !== '') {
+    $searchLower = strtolower($search);
+    $courses = array_values(
+        array_filter(
+            $courses,
+            function(array $row) use ($searchLower) {
+                return stripos((string) $row['course_ID'], $searchLower) !== false
+                    || stripos((string) $row['course_Name'], $searchLower) !== false
+                    || stripos((string) $row['dept_Name'], $searchLower) !== false;
+            }
+        )
+    );
+}
+
 
 // Prerequisites per course (course_ID => labels)
 $prerequisiteMap = [];
@@ -53,7 +94,7 @@ if (count($courses) > 0) {
 	);
 
 	foreach ($prerequisites as $prerequisite) {
-		$prerequisiteMap[(int) $prerequisite['course_ID']][] =
+		$prerequisiteMap[(string) $prerequisite['course_ID']][] =
 			$prerequisite['prereq_ID'] . ' ' . $prerequisite['prereq_Name']
 			. ' (min grade ' . $prerequisite['min_Grade_Req'] . ')';
 	}
@@ -74,6 +115,25 @@ page_start(
 	prerequisites.
 </p>
 
+<?php if ($search !== ''): ?>
+    <p class="muted" style="margin-top:8px">
+        Showing results for "<span style="font-weight:600"><?= e($search) ?></span>"
+        <a href="catalog.php" style="margin-left:8px">Clear search</a>
+    </p>
+<?php endif; ?>
+
+<form method="get" action="catalog.php" style="margin-bottom:16px;display:flex;gap:8px;align-items:center">
+    <label for="catalogSearch" style="margin:0;font-weight:600">Search courses:</label>
+    <input
+        type="text"
+        id="catalogSearch"
+        name="search"
+        value="<?= e($search) ?>"
+        placeholder="Course ID, title, or department"
+        style="padding:8px 12px;border:1px solid #cbd5e1;border-radius:8px;min-width:240px"
+    >
+    <button type="submit" class="btn">Search</button>
+</form>
 
 <div class="table-wrap">
 
@@ -85,11 +145,18 @@ page_start(
 			<th>Department</th>
 			<th>Credits</th>
 			<th>Level</th>
+			<th>Offered In</th>
 			<th>Prerequisites</th>
 		</tr>
 
 
-		<?php foreach ($courses as $course): ?>
+		<?php foreach ($courses as $course): $offerings = $offeringHistory[(string) $course['course_ID']] ?? [];
+
+			$offeringNames = array_map(
+				static fn($o) => (string) $o['semester_Name'],
+				$offerings
+			);
+		?>
 
 			<tr>
 
@@ -114,9 +181,17 @@ page_start(
 				</td>
 
 				<td>
-					<?php if (!empty($prerequisiteMap[(int) $course['course_ID']])): ?>
+					<?php if (!empty($offeringNames)): ?>
+						<?= e(implode(', ', $offeringNames)) ?>
+					<?php else: ?>
+						<span class="muted">Not offered</span>
+					<?php endif; ?>
+				</td>
+
+				<td>
+					<?php if (!empty($prerequisiteMap[(string) $course['course_ID']])): ?>
 						<ul style="margin: 0; padding-left: 18px;">
-							<?php foreach ($prerequisiteMap[(int) $course['course_ID']] as $label): ?>
+							<?php foreach ($prerequisiteMap[(string) $course['course_ID']] as $label): ?>
 								<li>
 									<?= e($label) ?>
 								</li>

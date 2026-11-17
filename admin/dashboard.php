@@ -18,9 +18,11 @@ if ($term) {
 }
 $recentSections = all_rows($pdo, '
     SELECT cs.CRN, c.course_Name, cs.section_No, cs.is_Cancelled, s.semester_Name,
-           cs.available_Seats, COALESCE(de.demo_enrolled, (SELECT COUNT(*) FROM Enrollment en WHERE en.CRN = cs.CRN)) AS display_enrolled
+           cs.available_Seats, COALESCE((
+               SELECT COUNT(*) FROM Enrollment en WHERE en.CRN = cs.CRN
+               AND en.semester_ID = cs.semester_ID
+           ), 0) AS display_enrolled
     FROM Course_Section cs
-    LEFT JOIN Course_Section_Demo_Enrollment de ON de.CRN = cs.CRN
     JOIN Course c ON c.course_ID = cs.course_ID
     JOIN Semester s ON s.semester_ID = cs.semester_ID
     ORDER BY cs.CRN DESC LIMIT 5

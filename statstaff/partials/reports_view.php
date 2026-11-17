@@ -50,6 +50,18 @@ declare(strict_types=1);
 				>
 					Section capacity and utilization
 				</option>
+				<option
+					value="enrollment_trends"
+					<?= $report === 'enrollment_trends' ? 'selected' : '' ?>
+				>
+					Enrollment trends over time
+				</option>
+				<option
+					value="department_summary"
+					<?= $report === 'department_summary' ? 'selected' : '' ?>
+				>
+					Department summary
+				</option>
 			</select>
 		</div>
 

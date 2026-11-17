@@ -19,7 +19,7 @@ $bestGrades = [];
 
 foreach ($history as $row) {
 
-	$courseID = (int) $row['course_ID'];
+	$courseID = (string) $row['course_ID'];
 	$points = grade_points($row['Grade']);
 
 	if ($points === null) {
@@ -45,7 +45,7 @@ function audit_requirements(array $requirements, array $bestGrades): array
 
 	foreach ($requirements as $requirement) {
 
-		$courseID = (int) $requirement['course_ID'];
+		$courseID = (string) $requirement['course_ID'];
 		$earned = $bestGrades[$courseID] ?? null;
 		$met = $earned !== null
 			&& grade_meets($earned['grade'], (string) $requirement['min_Grade_Req']);
@@ -137,3 +137,5 @@ if ($declaredMinor) {
 		'primary' => false,
 	] + audit_requirements($requirements, $bestGrades);
 }
+
+// What-if analysis removed — only declared majors/minors are shown.

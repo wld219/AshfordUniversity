@@ -9,6 +9,70 @@ require_once '../includes/helpers.php';
 require_role(['Faculty']);
 $facultyID = (int) $_SESSION['user_id'];
 
+// Handle midterm grade submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_midterm_grade') {
+    csrf_verify();
+    $studentID = filter_var($_POST['student_id'] ?? null, FILTER_VALIDATE_INT);
+    $crn = filter_var($_POST['crn'] ?? null, FILTER_VALIDATE_INT);
+    $midtermGrade = trim((string) ($_POST['midterm_grade'] ?? ''));
+
+    if (!$studentID || !$crn) {
+        redirect_with_flash(
+            url('faculty/rosters.php'),
+            'error',
+            'Invalid student or course section.'
+        );
+    }
+
+    // Verify the section belongs to this faculty
+    $section = one(
+        $pdo,
+        'SELECT cs.CRN FROM Course_Section cs JOIN Semester s ON s.semester_ID = cs.semester_ID WHERE cs.CRN = ? AND cs.faculty_ID = ? AND s.semester_Name = ?',
+        [$crn, $facultyID, $semester === 'fall' ? 'Fall 2026' : 'Spring 2027']
+    );
+
+    if (!$section) {
+        redirect_with_flash(
+            url('faculty/rosters.php'),
+            'error',
+            'Course section not found or not assigned to you.'
+        );
+    }
+
+    // Validate grade
+    $validGrades = ['A','A-','B+','B','B-','C+','C','C-','D+','D','F','W','I',''];
+    if (!in_array($midtermGrade, $validGrades, true)) {
+        redirect_with_flash(
+            url('faculty/rosters.php'),
+            'error',
+            'Invalid midterm grade.'
+        );
+    }
+
+    try {
+        $pdo->beginTransaction();
+        $pdo->prepare(
+            'UPDATE Enrollment SET midterm_Grade = ?, midterm_Submitted_At = CASE WHEN ? <> "" THEN NOW() ELSE NULL END WHERE student_ID = ? AND CRN = ? AND semester_ID = (SELECT semester_ID FROM Semester WHERE semester_Name = ?)'
+        )->execute([$midtermGrade, $midtermGrade, $studentID, $crn, $semester === 'fall' ? 'Fall 2026' : 'Spring 2027']);
+        audit_log($pdo, 'Update', 'Enrollment', (string) $crn, 'Midterm grade updated for student ' . (string) $studentID);
+        $pdo->commit();
+        redirect_with_flash(
+            url('faculty/rosters.php?term=' . $semester . '&crn=' . $crn),
+            'success',
+            'Midterm grade updated successfully.'
+        );
+    } catch (Throwable $e) {
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        error_log('Midterm grade update failed: ' . $e->getMessage());
+        redirect_with_flash(
+            url('faculty/rosters.php'),
+            'error',
+            'Midterm grade could not be updated.'
+        );
+    }
+    exit;
+}
+
 $semester = ($_GET['term'] ?? 'fall') === 'spring' ? 'spring' : 'fall';
 $sections = [];
 $roster = [];
@@ -49,10 +113,11 @@ if ($semester === 'fall') {
         $roster = all_rows($pdo,
             "SELECT
                 e.student_ID,
+                e.midterm_Grade,
+                e.Grade,
                 u.first_Name,
                 u.last_Name,
                 l.user_Email,
-                e.Grade,
                 st.major_ID,
                 st.student_Year,
                 st.student_Type,
@@ -106,12 +171,16 @@ if ($semester === 'fall') {
 
 $totalStudents = count($roster);
 $gradesPosted = 0;
+$midtermPosted = 0;
 $totalPresent = 0;
 $totalRecorded = 0;
 
 foreach ($roster as $student) {
     if ($student['Grade'] !== null && trim((string)$student['Grade']) !== '') {
         $gradesPosted++;
+    }
+    if ($student['midterm_Grade'] !== null && trim((string)$student['midterm_Grade']) !== '') {
+        $midtermPosted++;
     }
     $totalPresent += (int)$student['present_count'];
     $totalRecorded += (int)$student['record_count'];
