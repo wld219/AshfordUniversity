@@ -10,8 +10,14 @@
 CREATE TABLE IF NOT EXISTS Admin (
     user_ID INT PRIMARY KEY,
     security_Level ENUM('Full-Access', 'Read-Only') NOT NULL DEFAULT 'Read-Only',
+    lock_manager TINYINT(1) NOT NULL DEFAULT 0,
+    is_full_time TINYINT(1) NOT NULL DEFAULT 1,
+    employment_Status ENUM('Full-Time', 'Part-Time') NOT NULL DEFAULT 'Full-Time',
     FOREIGN KEY (user_ID) REFERENCES User(user_ID)
 );
+
+-- Add lock_manager column if missing on existing databases
+ALTER TABLE Admin ADD COLUMN IF NOT EXISTS lock_manager TINYINT(1) NOT NULL DEFAULT 0 AFTER security_Level;
 
 -- Backfill: every existing Admin-type login becomes Full-Access.
 INSERT INTO Admin (user_ID, security_Level)

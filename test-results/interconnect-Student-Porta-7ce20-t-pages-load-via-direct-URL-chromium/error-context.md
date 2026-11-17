@@ -7,27 +7,85 @@
 # Test info
 
 - Name: interconnect.spec.ts >> Student Portal — All Pages Load >> all student pages load via direct URL
-- Location: tests/interconnect.spec.ts:117:3
+- Location: tests\interconnect.spec.ts:117:3
 
 # Error details
 
 ```
-Error: expect(locator).toBeVisible() failed
+Error: expect(page).toHaveURL(expected) failed
 
-Locator: locator('.topbar')
-Expected: visible
-Timeout: 5000ms
-Error: element(s) not found
+Expected: "http://localhost:8000/student/advisor_appointment.php"
+Received: "http://localhost:8000/student/advisor.php"
+Timeout:  5000ms
 
 Call log:
-  - Expect "toBeVisible" locator('.topbar') with timeout 5000ms
-  - waiting for locator('.topbar')
+  - Expect "toHaveURL" with timeout 5000ms
+    13 × locator resolved to <html lang="en">…</html>
+       - unexpected value "http://localhost:8000/student/advisor.php"
 
+```
+
+```yaml
+- banner:
+  - text: N Ashford University Student Portal
+  - strong: David Joseph
+  - text: davidjoseph@ashford.edu
+  - link "Logout":
+    - /url: /logout.php
+- complementary:
+  - button "Collapse navigation" [expanded]: ☰
+  - link "Overview":
+    - /url: dashboard.php
+  - link "My Schedule":
+    - /url: schedule.php
+  - link "Degree Audit":
+    - /url: degree-audit.php
+  - link "Holds":
+    - /url: holds.php
+  - link "My Advisor":
+    - /url: advisor.php
+  - link "Majors & Minors":
+    - /url: programs.php
+  - link "Catalog":
+    - /url: catalog.php
+  - link "Buildings":
+    - /url: buildings.php
+  - link "My Information":
+    - /url: information.php
+- main:
+  - heading "My Advisor" [level=1]
+  - heading "Advisor Information" [level=2]
+  - paragraph:
+    - strong: "Name:"
+    - text: Associate Professor Zoe Walker
+  - paragraph:
+    - strong: "Email:"
+    - link "zoewalker@ashford.edu":
+      - /url: mailto:zoewalker@ashford.edu
+  - paragraph:
+    - strong: "Specialty:"
+    - text: Computer Networks
+  - paragraph:
+    - strong: "Department(s):"
+    - text: Computer Science
+  - paragraph:
+    - strong: "Advisor Assignment Date:"
+    - text: 2026-08-24
+  - paragraph:
+    - link "📧 Email Your Advisor":
+      - /url: mailto:zoewalker@ashford.edu
+  - heading "Request Advising Appointment" [level=2]
+  - paragraph: ⚠ Your advisor has not set any availability windows yet.
+  - paragraph: Please contact your advisor directly to schedule an appointment.
+  - heading "Advising Appointments" [level=2]
+  - paragraph: No appointments scheduled.
 ```
 
 # Test source
 
 ```ts
+  23  |   await page.fill('input[name="email"]', creds.email);
+  24  |   await page.fill('input[name="password"]', creds.password);
   25  |   await page.selectOption('select[name="user_type"]', role);
   26  |   await page.click('button[type="submit"]');
   27  |   await expect(page).toHaveURL(ROLE_HOMES[role]);
@@ -126,10 +184,10 @@ Call log:
   120 | 
   121 |     for (const p of studentPages) {
   122 |       await page.goto(p.url);
-  123 |       await expect(page).toHaveURL(p.url);
+> 123 |       await expect(page).toHaveURL(p.url);
+      |                          ^ Error: expect(page).toHaveURL(expected) failed
   124 |       await expect(page.locator('body')).toBeVisible();
-> 125 |       await expect(page.locator('.topbar')).toBeVisible();
-      |                                             ^ Error: expect(locator).toBeVisible() failed
+  125 |       await expect(page.locator('.topbar')).toBeVisible();
   126 |       await expect(page.locator('a[href*="logout.php"]')).toBeVisible();
   127 |     }
   128 |   });
@@ -228,6 +286,4 @@ Call log:
   221 |     await loginAs(page, 'Admin');
   222 |     await page.goto('/admin/dashboard.php');
   223 | 
-  224 |     await expect(page.locator('body')).toContainText(/student|faculty|course/i);
-  225 |     await expect(page.locator('.ao-stat, .dashboard-stat')).toHaveCountGreaterThan(0);
 ```

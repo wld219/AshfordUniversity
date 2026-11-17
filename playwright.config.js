@@ -8,7 +8,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   use: {
-    baseURL: 'http://localhost:8001',
+    baseURL: 'http://localhost:8000',
     trace: 'on-first-retry',
   },
   projects: [
@@ -26,8 +26,8 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: '/Applications/XAMPP/xamppfiles/bin/php -S localhost:8001 -t . router.php',
-    url: 'http://localhost:8001',
+    command: 'C:\\xampp\\php\\php.exe -S localhost:8000 -t . router.php',
+    url: 'http://localhost:8000',
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },

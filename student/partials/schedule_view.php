@@ -87,53 +87,6 @@ declare(strict_types=1);
 
 <?php if (count($schedule) > 0): ?>
 
-	<!-- Weekly Calendar View -->
-	<section class="ash-schedule">
-		<div class="calendar-grid">
-			<div class="calendar-header"></div>
-			<?php $days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']; ?>
-			<?php foreach ($days as $day): ?>
-				<div class="calendar-header"><?= e($day) ?></div>
-			<?php endforeach; ?>
-
-			<?php
-			// Build a simple time-slot based calendar
-			$periods = [];
-			foreach ($schedule as $course) {
-				$tsID = (int) ($course['time_Slot_ID'] ?? 0);
-                if ($tsID > 0 && isset($timeSlotDetails[$tsID])) {
-                    foreach ($timeSlotDetails[$tsID] as $slot) {
-                        $periods[] = [
-                            'day' => $slot['day_Of_Week'],
-                            'start' => $slot['start_Time'],
-                            'end' => $slot['end_Time'],
-                            'course' => $course,
-                        ];
-                    }
-                }
-			}
-			// Group by day
-			$dayMap = [
-				'Monday' => 0, 'Tuesday' => 1, 'Wednesday' => 2,
-				'Thursday' => 3, 'Friday' => 4,
-			];
-			?>
-			<?php foreach ($days as $dayIdx => $dayName): ?>
-				<?php foreach ($periods as $period): ?>
-					<?php if ($period['day'] !== $dayName) continue; ?>
-					<div class="calendar-cell">
-						<div class="calendar-cell-time"><?= e($period['start']) ?> – <?= e($period['end']) ?></div>
-						<h4><?= e($period['course']['course_ID']) ?> (<?= e($period['course']['section_No']) ?>)</h4>
-						<p><?= e($period['course']['course_Name']) ?></p>
-						<p><?= e($period['course']['faculty_First_Name'] . ' ' . $period['course']['faculty_Last_Name']) ?></p>
-					</div>
-				<?php endforeach; ?>
-			<?php endforeach; ?>
-		</div>
-
-		<p class="muted" style="margin-top:8px">Weekly calendar view of your registered courses.</p>
-	</section>
-
 	<div class="table-wrap">
 
 		<table>

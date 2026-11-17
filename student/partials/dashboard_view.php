@@ -712,10 +712,6 @@ $deptCode = static function(string $name): string {
 <section class="ash-card ash-panel">
     <h3>Quick Actions</h3>
     <div class="quick-actions">
-        <a href="registration.php" class="quick-action">
-            <span class="quick-action-icon">📚</span>
-            <span class="quick-action-label">Register for Courses</span>
-        </a>
         <a href="schedule.php" class="quick-action">
             <span class="quick-action-icon">📅</span>
             <span class="quick-action-label">View My Schedule</span>
@@ -723,10 +719,6 @@ $deptCode = static function(string $name): string {
         <a href="degree-audit.php" class="quick-action">
             <span class="quick-action-icon">📋</span>
             <span class="quick-action-label">Degree Audit</span>
-        </a>
-        <a href="transcript.php" class="quick-action">
-            <span class="quick-action-icon">📄</span>
-            <span class="quick-action-label">View Transcript</span>
         </a>
         <a href="holds.php" class="quick-action">
             <span class="quick-action-icon">⚠️</span>

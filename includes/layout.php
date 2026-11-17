@@ -11,11 +11,8 @@ function nav_items(string $role): array
         case 'Student':
             return [
                 ['Overview', 'dashboard.php'],
-                ['Master Schedule', 'master-schedule.php'],
-                ['Course Registration', 'registration.php'],
                 ['My Schedule', 'schedule.php'],
                 ['Degree Audit', 'degree-audit.php'],
-                ['Unofficial Transcript', 'transcript.php'],
                 ['Holds', 'holds.php'],
                 ['My Advisor', 'advisor.php'],
                 ['Majors & Minors', 'programs.php'],
