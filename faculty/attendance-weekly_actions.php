@@ -33,13 +33,11 @@ function attendance_finish(string $redirect, string $type, string $message): voi
 
 $section = one(
     $pdo,
-    "SELECT cs.course_ID
+    "SELECT cs.course_ID, cs.semester_ID
      FROM Course_Section cs
-     JOIN Semester s ON s.semester_ID = cs.semester_ID
      WHERE cs.CRN = ?
        AND cs.faculty_ID = ?
-       AND cs.is_Cancelled = 0
-       AND s.semester_Name = 'Fall 2026'",
+       AND cs.is_Cancelled = 0",
     [$crn, $facultyID]
 );
 
@@ -76,8 +74,8 @@ $sunday = $monday->modify('+6 days');
 
 $roster = all_rows(
     $pdo,
-    "SELECT student_ID FROM Enrollment WHERE CRN = ?",
-    [$crn]
+    "SELECT student_ID FROM Enrollment WHERE CRN = ? AND semester_ID = ?",
+    [$crn, (int)$section['semester_ID']]
 );
 
 $validStudents = [];

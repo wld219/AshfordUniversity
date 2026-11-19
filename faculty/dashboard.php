@@ -41,9 +41,9 @@ $sql = "SELECT
         JOIN Semester
             ON Semester.semester_ID = Course_Section.semester_ID
         WHERE Course_Section.faculty_ID = ?
-          AND Semester.semester_Name = 'Fall 2026'
+          AND Semester.semester_Name IN ('Fall 2026', 'Spring 2027')
         ORDER BY
-            Semester.semester_ID,
+            CASE Semester.semester_Name WHEN 'Fall 2026' THEN 1 ELSE 2 END,
             Course.course_ID";
 
 $sections = all_rows(

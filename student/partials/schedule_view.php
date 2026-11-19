@@ -122,7 +122,7 @@ declare(strict_types=1);
 				<?php foreach ($periods as $period): ?>
 					<?php if ($period['day'] !== $dayName) continue; ?>
 					<div class="calendar-cell">
-						<div class="calendar-cell-time"><?= e($period['start']) ?> – <?= e($period['end']) ?></div>
+						<div class="calendar-cell-time"><?= e(format_time_range((string) $period['start'], (string) $period['end'])) ?></div>
 						<h4><?= e($period['course']['course_ID']) ?> (<?= e($period['course']['section_No']) ?>)</h4>
 						<p><?= e($period['course']['course_Name']) ?></p>
 						<p><?= e($period['course']['faculty_First_Name'] . ' ' . $period['course']['faculty_Last_Name']) ?></p>
@@ -210,15 +210,15 @@ declare(strict_types=1);
 
 					<td>
 
-						<form method="post">
+						<form method="post" action="registration.php">
 
 							<?= csrf_field() ?>
+							<input type="hidden" name="registration_action" value="drop">
+							<input type="hidden" name="crn" value="<?= e($course['CRN']) ?>">
 
 							<button
 								type="submit"
 								class="btn danger small"
-								name="drop"
-								value="<?= e($course['CRN']) ?>"
 								data-confirm="Drop this course?"
 							>
 								Drop

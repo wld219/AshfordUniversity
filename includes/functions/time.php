@@ -58,7 +58,34 @@ function days_overlap(array $newDays, array $existingDays): bool
 	return count(array_intersect($newDays, $existingDays)) > 0;
 }
 
-// Human-readable label for a time slot, e.g. "Mon, Wed 09:00-09:50"
+/** Format a database TIME value as a U.S. 12-hour time, e.g. "3:00 PM". */
+function format_time_12_hour(?string $time): string
+{
+	if ($time === null) {
+		return '';
+	}
+
+	$minutes = time_to_minutes($time);
+	if ($minutes === null) {
+		return '';
+	}
+
+	$normalized = sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
+	$parsed = DateTimeImmutable::createFromFormat('!H:i', $normalized);
+
+	return $parsed instanceof DateTimeImmutable ? $parsed->format('g:i A') : '';
+}
+
+/** Format a meeting interval consistently, e.g. "3:00 PM – 6:20 PM". */
+function format_time_range(?string $startTime, ?string $endTime): string
+{
+	$start = format_time_12_hour($startTime);
+	$end = format_time_12_hour($endTime);
+
+	return $start !== '' && $end !== '' ? $start . ' – ' . $end : 'TBA';
+}
+
+// Human-readable label for a time slot, e.g. "Mon, Wed 9:00 AM – 9:50 AM".
 function time_slot_label(
 	PDO $pdo,
 	int $timeSlotID
@@ -102,14 +129,16 @@ function time_slot_label(
 	$first = $periods[0];
 	$last = $periods[count($periods) - 1];
 
-	$start = substr((string) $first['start_Time'], 0, 5);
-	$end = substr((string) $last['end_Time'], 0, 5);
+	$timeRange = format_time_range(
+		(string) $first['start_Time'],
+		(string) $last['end_Time']
+	);
 
 	$label = count($dayNames) > 0
 		? implode(', ', $dayNames) . ' '
 		: '';
 
-	return $label . $start . '-' . $end;
+	return $label . $timeRange;
 }
 
 // Location label for a section, e.g. "Recital Hall 1101 (Lecture)"

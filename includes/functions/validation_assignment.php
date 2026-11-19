@@ -145,11 +145,108 @@ function validate_time_slot(PDO $pdo, int $timeSlotID, array &$errors): void
 }
 
 /**
+ * Enforce the Fall 2026-and-later Friday/Saturday scheduling policy.
+ * Unchanged legacy assignments are grandfathered so unrelated edits do not
+ * require an unapproved migration.
+ *
+ * @return array<int, string>
+ */
+function validate_friday_saturday_schedule_rule(
+	PDO $pdo,
+	string $courseID,
+	int $timeSlotID,
+	int $semesterID,
+	?int $ignoreCRN = null
+): array {
+	$semester = one(
+		$pdo,
+		'SELECT semester_Name FROM Semester WHERE semester_ID = ?',
+		[$semesterID]
+	);
+	if (!$semester || preg_match('/^(Spring|Summer|Fall|Winter)\s+(\d{4})$/i', (string) $semester['semester_Name'], $matches) !== 1) {
+		return [];
+	}
+
+	$seasonOrder = ['spring' => 1, 'summer' => 2, 'fall' => 3, 'winter' => 4];
+	$termKey = ((int) $matches[2] * 10) + $seasonOrder[strtolower($matches[1])];
+	if ($termKey < (2026 * 10 + 3)) {
+		return [];
+	}
+
+	$days = all_rows(
+		$pdo,
+		'SELECT d.day_Of_Week
+		 FROM Time_Slot_Day tsd
+		 JOIN Day d ON d.day_ID = tsd.day_ID
+		 WHERE tsd.time_Slot_ID = ?',
+		[$timeSlotID]
+	);
+	$dayNames = array_column($days, 'day_Of_Week');
+	if (!$dayNames) {
+		return [];
+	}
+
+	// Do not block unrelated edits to an existing legacy assignment.
+	if ($ignoreCRN !== null) {
+		$current = one(
+			$pdo,
+			'SELECT course_ID, time_Slot_ID, semester_ID FROM Course_Section WHERE CRN = ?',
+			[$ignoreCRN]
+		);
+		if (
+			$current
+			&& (int) $current['semester_ID'] === $semesterID
+			&& (string) $current['course_ID'] === $courseID
+			&& (int) $current['time_Slot_ID'] === $timeSlotID
+		) {
+			return [];
+		}
+	}
+
+	$errors = [];
+	if (in_array('Saturday', $dayNames, true)) {
+		$errors[] = 'Saturday sections are not allowed from Fall 2026 onward.';
+	}
+	if (!in_array('Friday', $dayNames, true)) {
+		return $errors;
+	}
+
+	$course = one(
+		$pdo,
+		'SELECT course_Credits FROM Course WHERE course_ID = ?',
+		[$courseID]
+	);
+	if (!$course || (int) $course['course_Credits'] !== 4) {
+		return $errors;
+	}
+
+	$period = one(
+		$pdo,
+		'SELECT MIN(p.start_Time) AS start_Time, MAX(p.end_Time) AS end_Time
+		 FROM Time_Slot_Period tsp
+		 JOIN Period p ON p.period_ID = tsp.period_ID
+		 WHERE tsp.time_Slot_ID = ?',
+		[$timeSlotID]
+	);
+	$start = $period && $period['start_Time'] !== null
+		? time_to_minutes((string) $period['start_Time'])
+		: null;
+	$end = $period && $period['end_Time'] !== null
+		? time_to_minutes((string) $period['end_Time'])
+		: null;
+	if ($start === null || $end === null || $end - $start !== 200) {
+		$errors[] = 'Four-credit Friday sections require exactly 200 meeting minutes from Fall 2026 onward.';
+	}
+
+	return $errors;
+}
+
+/**
  * Validate a proposed section assignment before create or update.
  * Reuses the same rules as the schedule validator plus DB lookups.
  *
  * @param array{faculty_ID: int, time_Slot_ID: int, lecture_ID: ?int,
- *              lab_ID: ?int, seats: int, course_ID: int, semester_ID: int} $proposed
+ *              lab_ID: ?int, seats: int, course_ID: string, semester_ID: int} $proposed
  * @return array{ok: bool, errors: array<int, string>}
  */
 function validate_section_assignment(
@@ -212,6 +309,16 @@ function validate_section_assignment(
 
 	// Time slot interval
 	validate_time_slot($pdo, (int) $proposed['time_Slot_ID'], $errors);
+	$errors = array_merge(
+		$errors,
+		validate_friday_saturday_schedule_rule(
+			$pdo,
+			(string) $proposed['course_ID'],
+			(int) $proposed['time_Slot_ID'],
+			(int) $proposed['semester_ID'],
+			$ignoreCRN
+		)
+	);
 
 	// Room conflicts against other sections in the same semester
 	$lectureID = $proposed['lecture_ID'] !== null ? (int) $proposed['lecture_ID'] : null;
@@ -254,7 +361,7 @@ function validate_section_assignment(
     $credits = one(
         $pdo,
         'SELECT course_Credits FROM Course WHERE course_ID = ?',
-        [(int) $proposed['course_ID']]
+		[(string) $proposed['course_ID']]
     );
 
     if ($credits && (int) $credits['course_Credits'] === 4) {

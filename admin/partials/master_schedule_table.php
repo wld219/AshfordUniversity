@@ -79,10 +79,10 @@ declare(strict_types=1);
 
 <div class="table-wrap" style="overflow-x:auto">
 <table class="as-schedule-table">
-<thead><tr><th>CRN</th><th>Course ID</th><th>Credits</th><th>Course Name</th><th>Section ID</th><th>Instructor</th><th>Room</th><th>Days</th><th>Meeting Times</th><th>Minimum Seats</th><th>Seat Capacity</th><th>Actual Enrollment</th><th>Department</th><th>Mode</th><th>Status</th><?php if ($isFullAccess && $schedule !== null): ?><th>Action</th><?php endif; ?></tr></thead>
+<thead><tr><th>CRN</th><th>Course ID</th><th>Credits</th><th>Course Name</th><th>Section ID</th><th>Instructor</th><th>Room</th><th>Days</th><th>Meeting Times</th><th>Minimum Seats</th><th>Seat Capacity</th><th>Actual Enrollment</th><th>Department</th><th>Mode</th><th>Status</th><?php if ($isFullAccess && $schedule !== null && !$scheduleLocked): ?><th>Action</th><?php endif; ?></tr></thead>
 <tbody>
 <?php if (count($pageRows) === 0): ?>
-<tr><td colspan="<?= ($isFullAccess && $schedule !== null) ? 16 : 15 ?>">No sections match the selected filters.</td></tr>
+<tr><td colspan="<?= ($isFullAccess && $schedule !== null && !$scheduleLocked) ? 16 : 15 ?>">No sections match the selected filters.</td></tr>
 <?php else: foreach ($pageRows as $row):
     $rowErrors = validate_schedule_row($row);
     $status = count($rowErrors) === 0 ? '<span class="badge">Scheduled</span>' : '<span class="badge">Attention</span>';
@@ -106,11 +106,10 @@ declare(strict_types=1);
     $startTime = $row['start_Time'] ?? null;
     $endTime = $row['end_Time'] ?? null;
 
-    $meeting = ($startTime && $endTime)
-        ? date('g:i A', strtotime((string)$startTime)) .
-          ' - ' .
-          date('g:i A', strtotime((string)$endTime))
-        : 'TBA';
+    $meeting = format_time_range(
+        $startTime !== null ? (string) $startTime : null,
+        $endTime !== null ? (string) $endTime : null
+    );
 ?>
 <tr>
 <td><?= e((string)$row['CRN']) ?></td>
@@ -128,7 +127,7 @@ declare(strict_types=1);
 <td><?= e($deptName !== '' ? $deptName : (string)($row['dept_ID'] ?? '—')) ?></td>
 <td><?= e((string)($row['instruction_Mode'] ?? 'In-Person')) ?></td>
 <td><?= $status ?></td>
-<?php if ($isFullAccess && $schedule !== null): ?><td><a class="btn small" href="master-schedule.php?<?= e(http_build_query(['semester'=>$semesterID,'edit'=>$row['CRN']])) ?>">Edit</a></td><?php endif; ?>
+<?php if ($isFullAccess && $schedule !== null && !$scheduleLocked): ?><td><a class="btn small" href="master-schedule.php?<?= e(http_build_query(['semester'=>$semesterID,'edit'=>$row['CRN']])) ?>">Edit</a></td><?php endif; ?>
 </tr>
 <?php endforeach; endif; ?>
 </tbody></table></div>

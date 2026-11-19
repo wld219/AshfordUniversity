@@ -99,7 +99,7 @@ declare(strict_types=1);
 		<option value="">Select room</option>
 		<?php foreach ($lectureRooms as $room): ?>
 			<option
-				value="<?= e($room['lecture_ID']) ?>"
+				value="<?= e($room['lecture_ID']) ?>" data-capacity="<?= (int) $room['avail_Seats'] ?>"
 				data-room-type="lecture"
 				<?= $editSection !== null && $editSection['lecture_ID'] !== null && (int) $editSection['lecture_ID'] === (int) $room['lecture_ID'] ? 'selected' : '' ?>
 			>
@@ -109,7 +109,7 @@ declare(strict_types=1);
 		<?php endforeach; ?>
 		<?php foreach ($labRooms as $room): ?>
 			<option
-				value="<?= e($room['lab_ID']) ?>"
+				value="<?= e($room['lab_ID']) ?>" data-capacity="<?= (int) $room['no_Of_Workstations'] ?>"
 				data-room-type="lab"
 				<?= $editSection !== null && $editSection['lab_ID'] !== null && (int) $editSection['lab_ID'] === (int) $room['lab_ID'] ? 'selected' : '' ?>
 			>
@@ -121,14 +121,9 @@ declare(strict_types=1);
 </div>
 
 <div style="grid-column:1/-1;border:1px solid #e0e7f0;border-radius:14px;padding:16px;background:#f8faff">
-  <h3 style="margin:0 0 12px">Enrollment</h3>
-  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
-    <div><label for="create_enrolled">Currently Enrolled</label>
-      <input type="number" id="create_enrolled" name="demo_enrolled" min="0" max="10" step="1" value="0" required></div>
-    <div><label for="seats">Seats Remaining</label>
-      <input type="number" id="seats" name="seats" min="0" max="10" step="1" value="10" required></div>
-  </div>
-  <small id="create-enrollment-validation" role="status" aria-live="polite">Both values must be 0–10, and their sum cannot exceed 10.</small>
+  <h3 style="margin:0 0 8px">Seat availability</h3>
+  <p style="margin:0 0 6px">New sections start with the selected room's full capacity. Actual enrollment records determine occupied seats.</p>
+  <small id="create-enrollment-validation" role="status" aria-live="polite">Select a room to see its capacity.</small>
 </div>
 
 <?php if ($locked): ?>

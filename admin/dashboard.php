@@ -11,7 +11,28 @@ $ashfordAdminLevel = ashford_admin_level($pdo, (int) $_SESSION['user_id']);
 $students = one($pdo, 'SELECT COUNT(*) AS total FROM Student');
 $faculty = one($pdo, 'SELECT COUNT(*) AS total FROM Faculty');
 $sections = one($pdo, 'SELECT COUNT(*) AS total FROM Course_Section');
-$term = one($pdo, "SELECT semester_ID, semester_Name FROM Semester WHERE semester_Name = 'Fall 2026' LIMIT 1");
+$dashboardTerms = all_rows($pdo,
+	"SELECT semester_ID, semester_Name
+	 FROM Semester
+	 WHERE semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
+	 ORDER BY CASE semester_Name
+		WHEN 'Spring 2026' THEN 1 WHEN 'Fall 2026' THEN 2 WHEN 'Spring 2027' THEN 3 END"
+);
+$dashboardSemesterID = filter_input(INPUT_GET, 'semester', FILTER_VALIDATE_INT);
+$validDashboardSemesterIDs = array_map(static fn(array $row): int => (int)$row['semester_ID'], $dashboardTerms);
+if ($dashboardSemesterID === null || $dashboardSemesterID === false || !in_array($dashboardSemesterID, $validDashboardSemesterIDs, true)) {
+	$dashboardSemesterID = 0;
+	foreach ($dashboardTerms as $dashboardTerm) {
+		if ($dashboardTerm['semester_Name'] === 'Fall 2026') {
+			$dashboardSemesterID = (int)$dashboardTerm['semester_ID'];
+			break;
+		}
+	}
+	if ($dashboardSemesterID === 0) $dashboardSemesterID = $validDashboardSemesterIDs[0] ?? 0;
+}
+$term = $dashboardSemesterID > 0
+	? one($pdo, 'SELECT semester_ID, semester_Name FROM Semester WHERE semester_ID = ?', [$dashboardSemesterID])
+	: null;
 $termCounts = null;
 if ($term) {
     $termCounts = one($pdo, 'SELECT COUNT(*) AS total, COALESCE(SUM(CASE WHEN is_Cancelled = 0 THEN 1 ELSE 0 END), 0) AS active FROM Course_Section WHERE semester_ID = ?', [(int)$term['semester_ID']]);
@@ -58,17 +79,29 @@ page_start('Admin Overview', 'Admin', 'dashboard.php');
     <div class="ao-stat"><span>Course Sections</span><strong><?= number_format((int)($sections['total'] ?? 0)) ?></strong></div>
   </section>
   <section class="ao-card">
-    <div class="ao-term"><div><h3>Fall 2026 Semester</h3>
+    <div class="ao-term">
+      <div><h3><?= e(($term['semester_Name'] ?? 'Selected Semester') . ' Semester') ?></h3>
       <?php if ($term): ?>
         <p class="ao-muted"><?= number_format((int)($termCounts['total'] ?? 0)) ?> sections · <?= number_format((int)($termCounts['active'] ?? 0)) ?> active</p>
       <?php else: ?><p class="ao-muted">Semester not found in the database.</p><?php endif; ?>
-    </div><a class="ao-link" href="<?= e(app_base_path() . '/admin/master-schedule.php') ?>">View Master Schedule</a></div>
+      </div>
+      <form method="get" action="dashboard.php" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <label for="dashboard-semester">Semester</label>
+        <select id="dashboard-semester" name="semester" style="padding:8px;border:1px solid #d0d5dd;border-radius:8px">
+          <?php foreach ($dashboardTerms as $dashboardTerm): ?>
+            <option value="<?= (int)$dashboardTerm['semester_ID'] ?>" <?= $dashboardSemesterID === (int)$dashboardTerm['semester_ID'] ? 'selected' : '' ?>><?= e($dashboardTerm['semester_Name']) ?></option>
+          <?php endforeach; ?>
+        </select>
+        <button type="submit" class="btn small">View</button>
+      </form>
+      <a class="ao-link" href="<?= e(app_base_path() . '/admin/master-schedule.php?semester=' . $dashboardSemesterID) ?>">View Master Schedule</a>
+    </div>
   </section>
   <section class="ao-card">
     <div class="ao-term"><h3>Recent Course Sections</h3>
       <a class="ao-link" href="<?= e(app_base_path() . '/admin/sections.php') ?>">View All Sections</a></div>
     <div class="table-wrap" style="overflow-x:auto"><table>
-      <thead><tr><th>CRN</th><th>Course</th><th>Section</th><th>Semester</th><th>Enrolled (Demo)</th><th>Seats Remaining</th><th>Status</th></tr></thead>
+      <thead><tr><th>CRN</th><th>Course</th><th>Section</th><th>Semester</th><th>Actual Enrollment</th><th>Seats Remaining</th><th>Status</th></tr></thead>
       <tbody>
       <?php if (!$recentSections): ?><tr><td colspan="7">No sections available.</td></tr>
       <?php else: foreach ($recentSections as $section): ?>

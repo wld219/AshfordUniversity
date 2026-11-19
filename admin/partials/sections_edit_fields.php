@@ -131,16 +131,15 @@ declare(strict_types=1);
   <div class="enrollment-title"><h3>Enrollment</h3><span>Maximum 10 students</span></div>
   <div class="enrollment-row">
     <div>
-      <label for="<?= e($fieldIdPrefix) ?>demo_enrolled">Currently Enrolled</label>
-      <input type="number" id="<?= e($fieldIdPrefix) ?>demo_enrolled" name="demo_enrolled" min="0" max="10" step="1" value="<?= e((string) ($ashfordDemoOverrides[$editCRN] ?? (int) ($editSection['enrolled'] ?? 0))) ?>" required>
+      <span>Actual Enrollment</span>
+      <strong><?= (int)($editSection['enrolled'] ?? 0) ?></strong>
     </div>
     <div>
-      <label for="<?= e($fieldIdPrefix) ?>seats">Seats Remaining</label>
-      <input type="number" id="<?= e($fieldIdPrefix) ?>seats" name="seats" min="0" max="10" step="1" value="<?= e((string) ($editSection['available_Seats'] ?? '10')) ?>" required>
+      <label for="<?= e($fieldIdPrefix) ?>seats">Seats Remaining (calculated)</label>
+      <input type="number" id="<?= e($fieldIdPrefix) ?>seats" name="seats" min="0" max="10" step="1" value="<?= e((string) ($editSection['available_Seats'] ?? '0')) ?>" readonly>
     </div>
   </div>
-  <small>Both values are manually entered (0–10 each). Their combined total cannot exceed 10. Actual registrations are unchanged.</small>
-  <small class="actual-enrollment-note">Actual registrations: <?= (int) ($editSection['enrolled'] ?? 0) ?></small>
+  <small>Available seats are derived from the selected room's capacity and actual Enrollment rows. Over-capacity sections cannot accept new registrations.</small>
 </div>
 
 <?php if (false): ?>

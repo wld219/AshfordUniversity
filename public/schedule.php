@@ -15,9 +15,9 @@ require_once __DIR__ . '/../includes/functions.php';
 	FROM Semester s
 	JOIN Course_Section cs
 		ON cs.semester_ID = s.semester_ID AND cs.is_Cancelled = 0
-	WHERE s.semester_Name IN ('Fall 2026', 'Spring 2027')
+	WHERE s.semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
 	GROUP BY s.semester_ID, s.semester_Name
-	ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 ELSE 3 END"
+	ORDER BY CASE s.semester_Name WHEN 'Spring 2027' THEN 1 WHEN 'Fall 2026' THEN 2 WHEN 'Spring 2026' THEN 3 ELSE 4 END"
 ));
 
 $semesterIDs = array_map(

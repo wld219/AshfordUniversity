@@ -52,19 +52,48 @@ if (!$section) {
 
 		$locked = semester_schedule_locked($pdo, (int) $section['semester_ID']);
 
-		$seats = post_int('seats') ?? (int) $section['available_Seats'];
-
 		if ($locked) {
 
+			$semesterDates = one(
+				$pdo,
+				'SELECT semester_Start FROM Semester WHERE semester_ID = ?',
+				[(int) $section['semester_ID']]
+			);
+			if (!$semesterDates || $semesterDates['semester_Start'] === null) {
+				redirect_with_flash(
+					url('admin/master-schedule.php') . '?semester=' . $section['semester_ID'],
+					'error',
+					'No changes were saved because this semester has no verified start date.'
+				);
+			}
+
+			$roomType = $section['lecture_ID'] !== null ? 'lecture' : 'lab';
+			$roomID = (int) ($section['lecture_ID'] ?? $section['lab_ID'] ?? 0);
+			$capacity = null;
+			if ($roomID > 0) {
+				$table = $roomType === 'lecture' ? 'Lecture' : 'Lab';
+				$keyColumn = $roomType === 'lecture' ? 'lecture_ID' : 'lab_ID';
+				$capacityColumn = $roomType === 'lecture' ? 'avail_Seats' : 'no_Of_Workstations';
+				$capacityRow = one($pdo, "SELECT {$capacityColumn} AS capacity FROM {$table} WHERE {$keyColumn} = ?", [$roomID]);
+				$capacity = $capacityRow ? (int)$capacityRow['capacity'] : null;
+			}
+			$enrolledRow = one(
+				$pdo,
+				'SELECT COUNT(*) AS total FROM Enrollment WHERE CRN = ? AND semester_ID = ?',
+				[$crn, (int)$section['semester_ID']]
+			);
+			$enrolled = (int)($enrolledRow['total'] ?? 0);
+			$calculatedSeats = $capacity === null ? 0 : max(0, $capacity - $enrolled);
+
 			// After the semester starts, schedule fields are locked;
-			// only the seat count may change. The seat write, version
-			// bump, and audit entry commit as one transaction.
+			// ignore posted seat values and derive availability from the
+			// room capacity and actual enrollment.
 			try {
 
 				$pdo->beginTransaction();
 
 				$pdo->prepare('UPDATE Course_Section SET available_Seats = ? WHERE CRN = ?')
-					->execute([max(0, $seats), $crn]);
+					->execute([$calculatedSeats, $crn]);
 
 				$pdo->prepare(
 					'UPDATE Master_Schedule
@@ -77,7 +106,7 @@ if (!$section) {
 					'Update',
 					'Master_Schedule',
 					(string) $section['semester_ID'],
-					"Seats updated for CRN {$crn} (schedule locked)"
+					"Seat availability recalculated for CRN {$crn} (schedule locked)"
 				);
 
 				$pdo->commit();
@@ -100,13 +129,15 @@ if (!$section) {
 			redirect_with_flash(
 				url('admin/master-schedule.php') . '?semester=' . $section['semester_ID'],
 				'success',
-				'Seat count updated. Schedule fields are locked after the semester starts.'
+				'Schedule fields are locked. Seat availability is calculated from room capacity and actual enrollment.'
 			);
 		}
 
+		$seats = post_int('seats') ?? (int) $section['available_Seats'];
+
 		$facultyID = post_int('faculty_id') ?? (int) $section['faculty_ID'];
 		$timeSlotID = post_int('time_slot_id') ?? (int) $section['time_Slot_ID'];
-		$courseID = post_int('course_id') ?? (int) $section['course_ID'];
+		$courseID = post_str('course_id', 10) ?: (string) $section['course_ID'];
 		$roomType = post_str('room_type', 10);
 		$roomID = post_int('room_id');
 

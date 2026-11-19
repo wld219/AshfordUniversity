@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 // Student dashboard visual redesign. Uses existing controller and data variables.
-$displayName = trim(($student['first_Name'] ?? '') . ' ' . ($student['last_Name'] ?? ''));
+$displayName = trim(implode(' ', array_filter([
+    (string) ($student['first_Name'] ?? ''),
+    (string) ($student['middle_Name'] ?? ''),
+    (string) ($student['last_Name'] ?? ''),
+], static fn(string $part): bool => $part !== '')));
 $displayName = $displayName !== '' ? $displayName : 'Student';
-$courseDetails = [];
-try {
-    if (!empty($currentSemester)) {
-        $rows = all_rows($pdo, "SELECT cs.CRN, cs.course_ID, cs.section_No, cs.time_Slot_ID,
-                    CONCAT(u.first_Name, ' ', u.last_Name) AS faculty_Name,
-                    d.dept_Name
-                FROM Course_Section cs
-                JOIN Course c ON c.course_ID = cs.course_ID
-                JOIN Department d ON d.dept_ID = c.dept_ID
-                LEFT JOIN Faculty f ON f.faculty_ID = cs.faculty_ID
-                LEFT JOIN User u ON u.user_ID = f.faculty_ID
-                WHERE cs.semester_ID = ?", [(int)$currentSemester]);
-        foreach ($rows as $r) { $courseDetails[(int)$r['CRN']] = $r; }
-    }
-} catch (Throwable $ex) { error_log('Dashboard section details: ' . $ex->getMessage()); }
+$dashboardCourseLists = [];
+foreach ($availableSemesters as $term) {
+    $termID = (int)$term['semester_ID'];
+    $termName = (string)$term['semester_Name'];
+    $dashboardCourseLists[] = [
+        'title' => $termName . ' — Registered Courses',
+        'semester' => $termName,
+        'courses' => $semesterCourseLists[$termID] ?? [],
+        'is_selected' => $currentSemester !== null && $termID === (int)$currentSemester,
+    ];
+}
 $deptCode = static function(string $name): string {
     $map = ['Computer Science'=>'CS','Mathematics'=>'MATH','Business'=>'BUS','Natural Sciences'=>'SCI',
             'Engineering'=>'ENGR','English'=>'ENG','Social Sciences'=>'SOC','Education'=>'EDU',
@@ -579,15 +579,33 @@ $deptCode = static function(string $name): string {
   </button>
 </form>
 
-<!-- Full-width current courses -->
-<section class="ash-card ash-panel"><h3>My Current Courses</h3>
-    <?php if (!empty($schedule)): ?><div class="ash-table-wrap"><table><thead><tr><th>Course</th><th>Course Title</th><th>Faculty</th><th>Schedule</th><th>Credits</th></tr></thead><tbody>
-    <?php foreach ($schedule as $course): $detail=$courseDetails[(int)$course['CRN']] ?? []; $code=(string)$course['course_ID']; ?>
-     <tr><td class="ash-course-code"><?= e($code) ?></td><td><?= e($course['course_Name']) ?></td><td><?= e($detail['faculty_Name'] ?? 'Not assigned') ?></td><td><?= isset($detail['time_Slot_ID']) ? e(time_slot_label($pdo,(int)$detail['time_Slot_ID'])) : 'Not scheduled' ?></td><td><?= e($course['course_Credits']) ?></td></tr>
-    <?php endforeach; ?></tbody></table></div>
-    <?php else: ?><p class="ash-note">No courses are registered for <?= e($semesterLabel ?? 'this semester') ?>.</p><?php endif; ?>
-    <p style="text-align:right;margin:15px 0 0"><a href="schedule.php">View My Schedule →</a></p>
-   </section>
+<!-- Registration rows stay separate by semester and use the authenticated student ID. -->
+<?php foreach ($dashboardCourseLists as $courseListIndex => $courseList): ?>
+<section class="ash-card ash-panel">
+    <h3><?= e($courseList['title']) ?></h3>
+    <?php if ($courseList['courses']): ?>
+        <div class="ash-table-wrap"><table>
+            <thead><tr><th>Course</th><th>Course Title</th><th>CRN</th><th>Faculty</th><th>Credits</th><th>Days</th><th>Meeting Time</th></tr></thead>
+            <tbody><?php foreach ($courseList['courses'] as $course): ?>
+                <tr>
+                    <td class="ash-course-code"><?= e($course['course_ID']) ?></td>
+                    <td><?= e($course['course_Name']) ?></td>
+                    <td><?= e($course['CRN']) ?></td>
+                    <td><?= e($course['faculty_Name'] ?: 'Not assigned') ?></td>
+                    <td><?= e($course['course_Credits']) ?></td>
+                    <td><?= e($course['meeting_days']) ?></td>
+                    <td><?= e($course['meeting_time']) ?></td>
+                </tr>
+            <?php endforeach; ?></tbody>
+        </table></div>
+    <?php else: ?>
+        <p class="ash-note">No courses registered for <?= e($courseList['semester']) ?>.</p>
+    <?php endif; ?>
+    <?php if ($courseListIndex === 0): ?>
+        <p style="text-align:right;margin:15px 0 0"><a href="schedule.php">View My Schedule →</a></p>
+    <?php endif; ?>
+</section>
+<?php endforeach; ?>
 
 <!-- Academic and student details -->
 <div class="ash-info-grid">
@@ -612,16 +630,25 @@ $deptCode = static function(string $name): string {
         </div>
 
         <div class="ash-info-row">
-            <span class="ash-info-label">Enrolled Credits</span>
+            <span class="ash-info-label">Registered Credits</span>
             <strong class="ash-info-value">
-                <?= e((int)($credits['total'] ?? 0)) ?>
+                <?= e((int)($semesterEnrollmentStatus['registered_credits'] ?? 0)) ?>
             </strong>
         </div>
 
         <div class="ash-info-row">
-            <span class="ash-info-label">Major</span>
+            <span class="ash-info-label">Semester Enrollment Status</span>
             <strong class="ash-info-value">
-                <?= e($student['major_Name'] ?? 'Undeclared') ?>
+                <?= e($semesterEnrollmentStatus['status'] ?? 'Unavailable') ?>
+            </strong>
+        </div>
+
+        <div class="ash-info-row">
+            <span class="ash-info-label"><?= ($student['student_Type'] ?? '') === 'Graduate' ? 'Graduate Program' : 'Major' ?></span>
+            <strong class="ash-info-value">
+                <?= e(($student['student_Type'] ?? '') === 'Graduate'
+                    ? ($student['graduate_Program'] ?? 'Not recorded')
+                    : ($student['major_Name'] ?? 'Undeclared')) ?>
             </strong>
         </div>
 

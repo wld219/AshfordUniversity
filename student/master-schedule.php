@@ -19,10 +19,11 @@ $semesters = all_rows(
     $pdo,
     "SELECT semester_ID, semester_Name
      FROM Semester
-     WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+     WHERE semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
      ORDER BY CASE semester_Name
-         WHEN 'Fall 2026' THEN 1
-         WHEN 'Spring 2027' THEN 2
+		 WHEN 'Spring 2026' THEN 1
+		 WHEN 'Fall 2026' THEN 2
+		 WHEN 'Spring 2027' THEN 3
          ELSE 3 END"
 );
 
@@ -39,9 +40,16 @@ $semesterIDs = array_map(
 $semesterID = get_int('semester');
 
 if ($semesterID === null || !in_array($semesterID, $semesterIDs, true)) {
-    $semesterID = $semesterIDs === []
-        ? 0
-        : (int)reset($semesterIDs);
+    $semesterID = 0;
+    foreach ($semesters as $term) {
+        if ($term['semester_Name'] === 'Fall 2026') {
+            $semesterID = (int)$term['semester_ID'];
+            break;
+        }
+    }
+    if ($semesterID === 0) {
+        $semesterID = $semesterIDs === [] ? 0 : (int)reset($semesterIDs);
+    }
 }
 
 $filterDepartment = get_int('dept');

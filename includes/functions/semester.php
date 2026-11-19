@@ -5,8 +5,8 @@ declare(strict_types=1);
 // Semester schedule locks.
 
 // Are schedule fields (course, faculty, room, time slot) still editable?
-// Locked when the semester has already started (or has no start date
-// configured, in which case the lock cannot be evaluated).
+// Locked when the semester has started or its start date is unknown. A
+// missing date must not make an unverified historical schedule editable.
 function semester_schedule_locked(PDO $pdo, int $semesterID): bool
 {
 	$semester = one(
@@ -16,8 +16,7 @@ function semester_schedule_locked(PDO $pdo, int $semesterID): bool
 	);
 
 	if (!$semester || $semester['semester_Start'] === null) {
-		// No start date configured: the lock cannot be evaluated.
-		return false;
+		return true;
 	}
 
 	return new DateTimeImmutable('now') >= new DateTimeImmutable((string) $semester['semester_Start']);

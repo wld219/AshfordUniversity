@@ -25,7 +25,8 @@ $sql = "SELECT
 			s.semester_Name,
 			s.semester_Start,
 			CONCAT(u.first_Name, ' ', u.last_Name) AS instructor,
-			(SELECT COUNT(*) FROM Enrollment e WHERE e.CRN = cs.CRN) AS enrolled
+			(SELECT COUNT(*) FROM Enrollment e
+			 WHERE e.CRN = cs.CRN AND e.semester_ID = cs.semester_ID) AS enrolled
 		FROM Course_Section cs
 		JOIN Course c ON c.course_ID = cs.course_ID
 		JOIN Department d ON d.dept_ID = c.dept_ID

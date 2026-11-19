@@ -17,14 +17,14 @@ $weekEnd = $weekStart->modify('+6 days');
 $sections = all_rows(
     $pdo,
     "SELECT cs.CRN, cs.course_ID, c.course_Name, s.semester_Name,
-            cs.time_Slot_ID
+            cs.semester_ID, cs.time_Slot_ID
      FROM Course_Section cs
      JOIN Course c ON c.course_ID = cs.course_ID
      JOIN Semester s ON s.semester_ID = cs.semester_ID
      WHERE cs.faculty_ID = ?
        AND cs.is_Cancelled = 0
-       AND s.semester_Name = 'Fall 2026'
-     ORDER BY s.semester_ID DESC, c.course_ID, cs.section_No",
+       AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
+     ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 ELSE 2 END, c.course_ID, cs.section_No",
     [$facultyID]
 );
 
@@ -72,10 +72,10 @@ if ($section) {
         if ($timeRows) {
             $first = reset($timeRows);
             $last = end($timeRows);
-            $classTime =
-                date('g:i A', strtotime($first['start_Time'])) .
-                ' – ' .
-                date('g:i A', strtotime($last['end_Time']));
+			$classTime = format_time_range(
+				(string) $first['start_Time'],
+				(string) $last['end_Time']
+			);
         }
     } catch (Throwable $e) {
         error_log('Attendance class time: ' . $e->getMessage());
@@ -92,9 +92,10 @@ if ($section) {
         "SELECT e.student_ID, u.first_Name, u.last_Name
          FROM Enrollment e
          JOIN User u ON u.user_ID = e.student_ID
-         WHERE e.CRN = ?
+         JOIN Course_Section cs ON cs.CRN = e.CRN AND cs.semester_ID = e.semester_ID
+         WHERE e.CRN = ? AND e.semester_ID = ?
          ORDER BY u.last_Name, u.first_Name, e.student_ID",
-        [$crn]
+        [$crn, (int)$section['semester_ID']]
     );
 
     $scheduledDays = all_rows(
@@ -134,12 +135,13 @@ if ($section) {
            AND student_ID IN (
                SELECT student_ID
                FROM Enrollment
-               WHERE CRN = ?
+               WHERE CRN = ? AND semester_ID = ?
            )
            AND attendance_Date BETWEEN ? AND ?",
         [
             $crn,
             $crn,
+            (int)$section['semester_ID'],
             $weekStart->format('Y-m-d'),
             $weekEnd->format('Y-m-d')
         ]
@@ -426,7 +428,7 @@ flash();
                     <?php foreach ($sections as $item): ?>
                         <option value="<?= e($item['CRN']) ?>"
                             <?= (int)$item['CRN'] === $crn ? 'selected' : '' ?>>
-                            <?= e($item['course_ID'] . ' — ' .
+                            <?= e($item['semester_Name'] . ' · ' . $item['course_ID'] . ' — ' .
                                   $item['course_Name'] .
                                   ' (CRN ' . $item['CRN'] . ')') ?>
                         </option>

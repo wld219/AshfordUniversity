@@ -35,6 +35,7 @@ const DEFAULT_PART_TIME_UNDERGRADUATE_CREDIT_LIMIT = 8;
 foreach ([
 	'grades.php',
 	'students.php',
+	'student_enrollment_status.php',
 	'time.php',
 	'windows.php',
 	'registration.php',

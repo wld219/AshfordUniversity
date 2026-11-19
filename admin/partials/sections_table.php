@@ -2,14 +2,6 @@
 
 declare(strict_types=1);
 
-// Sections table. Demo counts are display-only overrides; real Enrollment rows are unchanged.
-$ashfordDisplayDemo = [];
-try {
-    $ashfordDisplayDemo = $pdo->query('SELECT CRN, demo_enrolled FROM Course_Section_Demo_Enrollment')->fetchAll(PDO::FETCH_KEY_PAIR);
-} catch (PDOException $e) {
-    // If the demo migration has not been applied, show actual counts.
-}
-
 ?>
 
 <div class="table-wrap">
@@ -51,7 +43,7 @@ try {
 					)) ?>
 				</td>
 				<td><?= e($section['semester_Name']) ?></td>
-				<td><?= e((int) ($ashfordDisplayDemo[(int) $section['CRN']] ?? $section['enrolled'])) ?></td>
+				<td><?= e((int) $section['enrolled']) ?></td>
 				<td><?= e((int) $section['available_Seats']) ?></td>
 
 				<?php if ($isFullAccess): ?>
@@ -167,12 +159,6 @@ try {
 @media(max-width:620px){.ashford-edit-dialog .form-grid{display:block}.ashford-edit-dialog .form-grid>div{margin-bottom:12px}}
 </style>
 <?php // ASHFORD_COMPLETE_SECTION_V1
-$ashfordDemoOverrides = [];
-try {
-    $ashfordDemoOverrides = $pdo->query('SELECT CRN, demo_enrolled FROM Course_Section_Demo_Enrollment')->fetchAll(PDO::FETCH_KEY_PAIR);
-} catch (PDOException $e) {
-    // The migration is required for saving demo overrides. Keep the page usable before migration.
-}
 $ashfordAllSections = $pdo->query('SELECT CRN, course_ID, section_No, faculty_ID, semester_ID, time_Slot_ID, lecture_ID, lab_ID FROM Course_Section WHERE is_Cancelled = 0')->fetchAll(PDO::FETCH_ASSOC);
 $ashfordFacultyDepartments = $pdo->query('SELECT fd.faculty_ID, c.course_ID FROM Faculty_Department fd JOIN Course c ON c.dept_ID = fd.dept_ID')->fetchAll(PDO::FETCH_ASSOC);
 $ashfordSlotDays = $pdo->query('SELECT time_Slot_ID, day_ID FROM Time_Slot_Day')->fetchAll(PDO::FETCH_ASSOC);
@@ -227,8 +213,11 @@ const ashfordData = <?= json_encode([
     const form=dialog.querySelector('form'),el=n=>form.querySelector('[name="'+n+'"]');
     const course=el('course_id'),sectionNo=el('section_no'),faculty=el('faculty_id');
     const semester=el('semester_id'),slot=el('time_slot_id'),type=el('room_type');
-    const room=el('room_id'),seats=el('seats'),demo=el('demo_enrolled');
+    const room=el('room_id'),seats=el('seats');
     const crn=Number(el('crn').value),locked=dialog.dataset.locked==='1';
+    const originalRoom=room.value;
+    const actual=Number(dialog.dataset.enrolled),summary=dialog.querySelector('.section-validation-summary');
+    const save=form.querySelector('button[type="submit"]');
     // Display-only day/time preview. The existing time slot remains authoritative.
     function updateMeetingPreview(){
       const label=slot.selectedOptions[0]?.textContent.trim().replace(/\s+/g,' ')||'';
@@ -240,12 +229,15 @@ const ashfordData = <?= json_encode([
       if(dayEl)dayEl.textContent=day||'See selected slot';
       if(timeEl)timeEl.textContent=time||'Select time slot';
     }
+    function updateSeatPreview(){
+      const capacity=Number(room.selectedOptions[0]?.dataset.capacity||0);
+      seats.value=String(Math.max(0,capacity-actual));
+    }
     slot.addEventListener('change',updateMeetingPreview);
     updateMeetingPreview();
+    updateSeatPreview();
 
-    const actual=Number(dialog.dataset.enrolled),summary=dialog.querySelector('.section-validation-summary');
-    const save=form.querySelector('button[type="submit"]');
-    const names=['course_id','section_no','faculty_id','semester_id','time_slot_id','room_type','room_id','seats','demo_enrolled'];
+    const names=['course_id','section_no','faculty_id','semester_id','time_slot_id','room_type','room_id'];
     const original={};names.forEach(n=>original[n]=el(n).value);
     const notes={};
     function note(input,message,kind){
@@ -296,22 +288,20 @@ const ashfordData = <?= json_encode([
         if(!room.value||room.selectedOptions[0]?.disabled){note(room,'Select an available room or laboratory.','bad');ok=false;}
         if(semester.value!==original.semester_id){note(semester,'Changing an existing section semester is not allowed.','bad');ok=false;}
       }
-      const a=Number(demo.value),b=Number(seats.value);
-      const validA=demo.value.trim()!==''&&/^(?:[0-9]|10)$/.test(demo.value.trim())&&a>=0&&a<=10;
-      const validB=seats.value.trim()!==''&&/^(?:[0-9]|10)$/.test(seats.value.trim())&&b>=0&&b<=10;
-      note(demo,validA?'Demo enrollment within 0–10.':'Enter a whole number from 0 to 10.',validA?'ok':'bad');
-      note(seats,validB?'Remaining seats within 0–10.':'Enter a whole number from 0 to 10.',validB?'ok':'bad');
-      if(!validA||!validB||a+b>10){ok=false;if(validA&&validB)note(seats,'Demo enrolled + remaining seats cannot exceed 10.','bad');}
-      // Demo seat validation uses the demo count only. Real registrations remain unchanged.
-      if(locked&&seats.value===original.seats&&demo.value===original.demo_enrolled){ok=false;summary.textContent='No seat settings changed.';}
+      const newRoomCapacity=Number(room.selectedOptions[0]?.dataset.capacity||0);
+      const roomChanged=room.value!==originalRoom;
+      if(roomChanged&&newRoomCapacity<actual){
+        ok=false;
+        summary.textContent='The selected room cannot hold all actual enrollments.';
+      }
       else summary.textContent=ok?'Valid inputs. Server will verify scheduling and enrollment rules on Save.':'Please correct the highlighted fields before saving.';
       summary.className='section-validation-summary '+(ok?'ok':'bad');save.disabled=!ok;return ok;
     }
     if(locked){
       const warning=document.createElement('div');warning.className='locked-note';
-      warning.textContent='Semester started: schedule fields are locked. Seat settings can still be edited.';
+      warning.textContent='Semester started: schedule fields are locked. Seat availability is calculated from actual enrollment and room capacity.';
       form.insertBefore(warning,form.firstElementChild);
-      names.filter(n=>!['seats','demo_enrolled'].includes(n)).forEach(n=>{
+      names.forEach(n=>{
         const input=el(n),hidden=document.createElement('input');hidden.type='hidden';hidden.name=n;hidden.value=input.value;
         form.appendChild(hidden);input.disabled=true;
       });
@@ -319,7 +309,7 @@ const ashfordData = <?= json_encode([
       course.addEventListener('change',()=>{refreshFaculty();validate();});
       slot.addEventListener('change',()=>{refreshFaculty();refreshRooms();validate();});
       type.addEventListener('change',()=>{room.value='';refreshRooms();validate();});
-      room.addEventListener('change',validate);
+      room.addEventListener('change',()=>{updateSeatPreview();validate();});
       refreshFaculty();refreshRooms();
     }
     form.addEventListener('input',validate);

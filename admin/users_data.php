@@ -104,8 +104,22 @@ $viewStudentEnrollments = [];
 $viewStudentHistory = [];
 $viewStudentAudit = [];
 $viewStudentSummary = ['attempted'=>0,'earned'=>0,'gpa'=>null];
+$viewStudentSemesterStatuses = [];
 if ($viewStudent) {
     $sid = (int)$viewStudent['user_ID'];
+	$statusTerms = all_rows(
+		$pdo,
+		"SELECT semester_ID, semester_Name
+		 FROM Semester
+		 WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+		 ORDER BY semester_Start, semester_ID"
+	);
+	foreach ($statusTerms as $term) {
+		$status = student_semester_enrollment_status($pdo, $sid, (int)$term['semester_ID']);
+		if ($status !== null) {
+			$viewStudentSemesterStatuses[] = $status + ['semester_Name' => (string)$term['semester_Name']];
+		}
+	}
     $viewStudentMinor = one($pdo, 'SELECT mn.minor_Name FROM Student_Minor sm JOIN Minor mn ON mn.minor_ID=sm.minor_ID WHERE sm.student_ID=? LIMIT 1', [$sid]);
     $viewStudentAdvisor = one($pdo, 'SELECT a.faculty_ID, a.date_Of_Appnt, u.first_Name, u.last_Name FROM Advisor a JOIN User u ON u.user_ID=a.faculty_ID WHERE a.student_ID=? LIMIT 1', [$sid]);
     $viewStudentEnrollments = all_rows($pdo, 'SELECT en.CRN, en.Grade, s.semester_Name, c.course_ID, c.course_Name, c.course_Credits FROM Enrollment en JOIN Course_Section cs ON cs.CRN=en.CRN JOIN Course c ON c.course_ID=cs.course_ID JOIN Semester s ON s.semester_ID=cs.semester_ID WHERE en.student_ID=? ORDER BY s.semester_ID DESC, c.course_ID', [$sid]);

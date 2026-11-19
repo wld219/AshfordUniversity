@@ -61,33 +61,34 @@
         <p class="roster-muted">Faculty Portal · Academic Year 2026–2027</p>
     </div>
 
-    <nav class="roster-tabs" aria-label="Semester">
-        <a class="roster-tab <?= $semester === 'fall' ? 'active' : '' ?>"
-           href="rosters.php?term=fall">Fall 2026</a>
-        <a class="roster-tab <?= $semester === 'spring' ? 'active' : '' ?>"
-           href="rosters.php?term=spring">Spring 2027 (TBD)</a>
-    </nav>
+    <?php if ($semesterOptions): ?>
+        <nav class="roster-tabs" aria-label="Semester">
+            <?php foreach ($semesterOptions as $option):
+                $optionId = (int)$option['semester_ID'];
+            ?>
+                <a class="roster-tab <?= $semesterId === $optionId ? 'active' : '' ?>"
+                   href="rosters.php?term=<?= $optionId ?>">
+                    <?= e($option['semester_Name']) ?>
+                </a>
+            <?php endforeach; ?>
+        </nav>
+    <?php endif; ?>
 
-    <?php if ($semester === 'spring'): ?>
-        <div class="roster-card roster-tbd">
-            <h3>Spring 2027</h3>
-            <p><strong>To Be Determined</strong></p>
-            <p class="roster-muted">
-                Faculty assignments and course rosters will appear when available.
-            </p>
-        </div>
-    <?php elseif (!$sections): ?>
+    <?php if (!$sections): ?>
         <div class="roster-card">
-            <h3>Fall 2026</h3>
-            <p>No assigned course sections are available.</p>
+            <h3><?= e($semesterName ?: 'Assigned Sections') ?></h3>
+            <p>No assigned course sections are available for this semester.</p>
         </div>
     <?php else: ?>
         <div class="roster-card">
-            <h3>Fall 2026 · Assigned Courses</h3>
+            <h3><?= e($semesterName) ?> · <?= $isHistoricalSemester ? 'Historical Courses' : 'Assigned Courses' ?></h3>
+            <?php if ($isHistoricalSemester): ?>
+                <p class="roster-muted">Historical grades are shown from Student_History. This semester is read-only.</p>
+            <?php endif; ?>
             <nav class="roster-courses" aria-label="Courses">
                 <?php foreach ($sections as $section): ?>
                     <a class="roster-course <?= $crn === (int)$section['CRN'] ? 'active' : '' ?>"
-                       href="rosters.php?term=fall&amp;crn=<?= (int)$section['CRN'] ?>">
+                       href="rosters.php?term=<?= e($semester) ?>&amp;crn=<?= (int)$section['CRN'] ?>">
                         <?= e($section['course_ID']) ?>
                         · CRN <?= (int)$section['CRN'] ?>
                     </a>
@@ -161,6 +162,9 @@
                                 <td class="student-name"><?= e($student['first_Name'] . ' ' . $student['last_Name']) ?></td>
                                 <td><?= e($student['user_Email'] ?? 'N/A') ?></td>
                                 <td>
+                                    <?php if ($isHistoricalSemester): ?>
+                                        <span><?= e($midtermGrade ?: 'N/A') ?></span>
+                                    <?php else: ?>
                                     <form method="post" action="rosters.php?term=<?= e($semester) ?>&amp;crn=<?= e($crn) ?>" style="margin:0;display:inline">
                                         <?= csrf_field() ?>
                                         <input type="hidden" name="action" value="update_midterm_grade">
@@ -183,12 +187,13 @@
                                             <option value="I">I</option>
                                         </select>
                                     </form>
+                                    <?php endif; ?>
                                 </td>
                                 <td><?= e($overallGrade ?: 'Not Graded') ?></td>
                                 <td><?= e($finalGrade ?: 'Not Graded') ?></td>
                                 <td><?= e($pct) ?></td>
                                 <td><?= $absent ?></td>
-                                <td class="roster-status">Enrolled</td>
+                                <td class="roster-status"><?= $isHistoricalSemester ? 'Historical record' : 'Enrolled' ?></td>
                                 <td>
                                     <button type="button" class="roster-expand"
                                             aria-expanded="false"
@@ -215,15 +220,19 @@
                                             <div><span>Total Absent</span><strong><?= $absent ?></strong></div>
                                             <div><span>Course</span><strong><?= e($selectedSection['course_ID'] ?? '') ?></strong></div>
                                         </div>
-                                        <section class="grade-manager-panel" data-student-id="<?= $id ?>" aria-label="Grade management for student <?= $id ?>">
-                                             <h4>Grade Management</h4>
+                                        <section class="grade-manager-panel" data-student-id="<?= $id ?>" aria-label="Grade details for student <?= $id ?>">
+                                             <h4><?= $isHistoricalSemester ? 'Grade History' : 'Grade Management' ?></h4>
                                              <p class="roster-muted">Current grades for this student:</p>
                                              <div class="grade-manager-current">
                                                  <div>Midterm: <strong><?= e($midtermGrade ?: 'Not Graded') ?></strong></div>
                                                  <div>Overall: <strong><?= e($overallGrade ?: 'Not Graded') ?></strong></div>
                                                  <div>Final: <strong><?= e($finalGrade ?: 'Not Graded') ?></strong></div>
                                              </div>
-                                             <p class="roster-muted">Use the Midterm column above to submit or change midterm grades.</p>
+                                             <?php if ($isHistoricalSemester): ?>
+                                                 <p class="roster-muted">Historical grades are read-only.</p>
+                                             <?php else: ?>
+                                                 <p class="roster-muted">Use the Midterm column above to submit or change midterm grades.</p>
+                                             <?php endif; ?>
                                         </section>
                                         <strong>Attendance History</strong>
                                         <div class="roster-history">
@@ -299,6 +308,7 @@ document.querySelectorAll('.grade-manager-panel').forEach(panel => {
     const removeButton = panel.querySelector('[data-grade-remove]');
     const confirmBox = panel.querySelector('.grade-manager-confirm');
     const confirmText = panel.querySelector('[data-grade-confirm-text]');
+    if (!typeSelect || !valueSelect || !addButton || !removeButton || !confirmBox || !confirmText) return;
     const labels = {midterm:'Midterm',overall:'Overall',final:'Final'};
     const displays = Object.fromEntries(Object.keys(labels).map(k => [k,panel.querySelector('[data-grade-display="'+k+'"]')]));
     const values = Object.fromEntries(Object.keys(labels).map(k => [k,displays[k].textContent.trim() === 'Not Graded' ? '' : displays[k].textContent.trim()]));

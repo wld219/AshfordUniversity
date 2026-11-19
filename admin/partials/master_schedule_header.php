@@ -97,8 +97,7 @@ declare(strict_types=1);
 
 		<?php if ($scheduleLocked): ?>
 			<div class="alert error">
-				This semester has started. Room, faculty, and meeting-time
-				changes are locked; only seat counts may be updated.
+				Schedule assignments are read-only. Seat availability is calculated from room capacity and actual enrollments.
 			</div>
 		<?php endif; ?>
 
@@ -108,7 +107,7 @@ declare(strict_types=1);
 		<?php endif; ?>
 
 
-		<?php if ($isFullAccess): ?>
+		<?php if ($isFullAccess && $semesterStartKnown): ?>
 
 			<div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px;">
 

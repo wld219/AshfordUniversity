@@ -20,6 +20,21 @@ if (!$isFullAccess) {
 $semesterID = post_int('semester_id') ?? 0;
 $expectedVersion = post_int('version');
 
+if ($semesterID > 0) {
+	$semesterDates = one(
+		$pdo,
+		'SELECT semester_Start FROM Semester WHERE semester_ID = ?',
+		[$semesterID]
+	);
+	if (!$semesterDates || $semesterDates['semester_Start'] === null) {
+		redirect_with_flash(
+			url('admin/master-schedule.php') . '?semester=' . $semesterID,
+			'error',
+			'No schedule changes were saved because this semester has no verified start date.'
+		);
+	}
+}
+
 // Create the schedule record for a semester
 if ($action === 'create') {
 

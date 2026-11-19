@@ -10,15 +10,19 @@ $student = one(
 	"SELECT
 			User.user_ID,
 			User.first_Name,
+			User.middle_Name,
 			User.last_Name,
 			Student.student_Type,
 			Major.major_Name,
+			Graduate_Student.Program AS graduate_Program,
 			CONCAT(advisor_User.first_Name, ' ', advisor_User.last_Name) AS advisor_Name
 		FROM User
 		JOIN Student
 			ON Student.student_ID = User.user_ID
 		LEFT JOIN Major
 			ON Major.major_ID = Student.major_ID
+		LEFT JOIN Graduate_Student
+			ON Graduate_Student.student_ID = Student.student_ID
 		LEFT JOIN Advisor
 			ON Advisor.student_ID = Student.student_ID
 		LEFT JOIN User AS advisor_User
@@ -48,15 +52,16 @@ foreach ($minorRows as $minorRow) {
 
 $studentMinorDisplay = implode(', ', $studentMinorNames);
 
-// Current semester courses
+// Semester selector and selected-semester course list.
 $availableSemesters = all_rows(
     $pdo,
     "SELECT semester_ID, semester_Name
      FROM Semester
-     WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+     WHERE semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
      ORDER BY CASE semester_Name
-         WHEN 'Fall 2026' THEN 1
-         WHEN 'Spring 2027' THEN 2
+         WHEN 'Spring 2026' THEN 1
+         WHEN 'Fall 2026' THEN 2
+         WHEN 'Spring 2027' THEN 3
      END"
 );
 
@@ -67,32 +72,33 @@ $semesterIDs = array_map(
 
 $requestedSemester = filter_input(INPUT_GET, 'semester', FILTER_VALIDATE_INT);
 
+$defaultSemester = null;
+foreach ($availableSemesters as $term) {
+    if ($term['semester_Name'] === 'Fall 2026') {
+        $defaultSemester = (int)$term['semester_ID'];
+        break;
+    }
+}
+
 $currentSemester = (
     $requestedSemester !== null
     && $requestedSemester !== false
     && in_array($requestedSemester, $semesterIDs, true)
 )
     ? $requestedSemester
-    : ($semesterIDs[0] ?? null);
+    : ($defaultSemester ?? ($semesterIDs[0] ?? null));
 
-$schedule = all_rows(
-	$pdo,
-	"SELECT
-			Course_Section.CRN,
-			Course.course_ID,
-			Course.course_Name,
-			Course.course_Credits,
-			Enrollment.Grade
-		FROM Enrollment
-		JOIN Course_Section
-			ON Course_Section.CRN = Enrollment.CRN
-		JOIN Course
-			ON Course.course_ID = Course_Section.course_ID
-		WHERE Enrollment.student_ID = ?
-			AND Enrollment.semester_ID = ?
-		ORDER BY Course.course_ID",
-	[$studentID, $currentSemester]
-);
+$schedule = $currentSemester !== null
+	? student_semester_registered_courses($pdo, $studentID, (int) $currentSemester)
+	: [];
+
+$semesterCourseLists = [];
+foreach ($availableSemesters as $term) {
+    $termID = (int)$term['semester_ID'];
+    $semesterCourseLists[$termID] = $termID === (int)$currentSemester
+        ? $schedule
+        : student_semester_registered_courses($pdo, $studentID, $termID);
+}
 
 
 // Registration holds
@@ -108,20 +114,10 @@ $holds = all_rows(
 );
 
 
-// Credit totals
-$credits = one(
-	$pdo,
-	"SELECT
-			COALESCE(SUM(Course.course_Credits), 0) AS total
-		FROM Enrollment
-		JOIN Course_Section
-			ON Course_Section.CRN = Enrollment.CRN
-		JOIN Course
-			ON Course.course_ID = Course_Section.course_ID
-		WHERE Enrollment.student_ID = ?
-			AND Enrollment.semester_ID = ?",
-	[$studentID, $currentSemester]
-);
+// Semester credits and status use only active sections in the selected term.
+$semesterEnrollmentStatus = $currentSemester !== null
+	? student_semester_enrollment_status($pdo, $studentID, (int) $currentSemester)
+	: null;
 
 
 // Credit-weighted GPA from completed course history.

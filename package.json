@@ -38,6 +38,7 @@
   "homepage": "https://github.com/wld219/AshfordUniversity#readme",
   "devDependencies": {
     "@playwright/test": "^1.65.1",
+    "mysql2": "^3.24.6",
     "playwright": "^1.65.1"
   }
 }

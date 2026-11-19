@@ -22,15 +22,6 @@ $semesterID = post_int('semester_id') ?? 0;
 $sectionNo = post_int('section_no') ?? 0;
 $roomType = post_str('room_type', 10);
 $roomID = post_int('room_id');
-$seatsRaw = $_POST['seats'] ?? null;
-$enrolledRaw = $_POST['demo_enrolled'] ?? null;
-if (!is_scalar($seatsRaw) || !preg_match('/^(?:[0-9]|10)$/', (string) $seatsRaw)
-    || !is_scalar($enrolledRaw) || !preg_match('/^(?:[0-9]|10)$/', (string) $enrolledRaw)) {
-    $error = 'Currently Enrolled and Seats Remaining must be whole numbers from 0 to 10.';
-    return;
-}
-$seats = (int) $seatsRaw;
-$demoEnrolled = (int) $enrolledRaw;
 
 if (
 	$courseID === '' || $facultyID <= 0 || $timeSlotID <= 0 ||
@@ -38,11 +29,6 @@ if (
 ) {
 	$error = 'Please complete every section field.';
 	return;
-}
-
-if ($seats + $demoEnrolled > 10) {
-    $error = 'Currently Enrolled plus Seats Remaining cannot exceed 10.';
-    return;
 }
 
 if (!one($pdo, 'SELECT course_ID FROM Course WHERE course_ID = ?', [$courseID])) {
@@ -67,10 +53,6 @@ $roomCapacityColumn = $roomType === 'lecture' ? 'avail_Seats' : 'no_Of_Workstati
 $room = one($pdo, "SELECT {$roomCapacityColumn} AS capacity FROM {$roomTable} WHERE {$roomColumn} = ?", [$roomID]);
 if (!$room) {
     $error = 'The selected room was not found.';
-    return;
-}
-if ($seats + $demoEnrolled > (int) $room['capacity']) {
-    $error = 'The selected room does not have enough capacity for this section.';
     return;
 }
 if (one($pdo, "SELECT cs.CRN FROM Course_Section cs
@@ -106,6 +88,17 @@ if ($roomType === 'lecture' && $roomID !== null) {
 // Check that the selected time slot actually exists.
 if (!one($pdo, 'SELECT time_Slot_ID FROM Time_Slot WHERE time_Slot_ID = ?', [$timeSlotID])) {
     $error = 'Please select a valid meeting day and time.';
+    return;
+}
+
+$scheduleRuleErrors = validate_friday_saturday_schedule_rule(
+    $pdo,
+    $courseID,
+    $timeSlotID,
+    $semesterID
+);
+if ($scheduleRuleErrors) {
+    $error = implode(' ', $scheduleRuleErrors);
     return;
 }
 
@@ -159,12 +152,8 @@ try {
 		$lectureID,
 		$labID,
 		$semesterID,
-		max(0, $seats)
+		(int) $room['capacity']
 	]);
-
-    // The display enrollment is independent of actual Enrollment records.
-    $pdo->prepare('INSERT INTO Course_Section_Demo_Enrollment (CRN, demo_enrolled) VALUES (?, ?)')
-        ->execute([$nextCRN, $demoEnrolled]);
 
 	audit_log($pdo, 'Create', 'Course_Section', (string) $nextCRN, 'Section created');
 

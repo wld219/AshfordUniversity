@@ -94,6 +94,8 @@ function check_credit_limit(PDO $pdo, int $studentID, array $section): ?string
 		FROM Enrollment
 		JOIN Course_Section
 			ON Course_Section.CRN = Enrollment.CRN
+			AND Course_Section.semester_ID = Enrollment.semester_ID
+			AND Course_Section.is_Cancelled = 0
 		JOIN Course
 			ON Course.course_ID = Course_Section.course_ID
 		WHERE Enrollment.student_ID = ?
@@ -101,7 +103,10 @@ function check_credit_limit(PDO $pdo, int $studentID, array $section): ?string
 		[$studentID, $section['semester_ID']]
 	);
 
-	$creditLimit = student_credit_limit($pdo, $studentID);
+	$student = one($pdo, 'SELECT student_Type FROM Student WHERE student_ID = ?', [$studentID]);
+	$creditLimit = ($student['student_Type'] ?? '') === 'Undergraduate'
+		? 16
+		: student_credit_limit($pdo, $studentID);
 
 	$currentCredits = (int) ($credits['total'] ?? 0);
 	$courseCredits = (int) $section['course_Credits'];

@@ -5,7 +5,7 @@ require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
 require_role(['Faculty']);
-$semesters=all_rows($pdo,"SELECT s.semester_ID,s.semester_Name FROM Semester s JOIN Course_Section cs ON cs.semester_ID=s.semester_ID AND cs.is_Cancelled=0 WHERE s.semester_Name IN ('Fall 2026','Spring 2027') GROUP BY s.semester_ID,s.semester_Name ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 ELSE 3 END");
+$semesters=all_rows($pdo,"SELECT s.semester_ID,s.semester_Name FROM Semester s JOIN Course_Section cs ON cs.semester_ID=s.semester_ID AND cs.is_Cancelled=0 WHERE s.semester_Name IN ('Spring 2026','Fall 2026','Spring 2027') GROUP BY s.semester_ID,s.semester_Name ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 WHEN 'Spring 2026' THEN 3 ELSE 4 END");
 $ids=array_map(static fn($r)=>(int)$r['semester_ID'],$semesters);
 $semesterID=get_int('semester');
 if($semesterID===null || !in_array($semesterID,$ids,true)) $semesterID=$ids ? $ids[0] : 0;

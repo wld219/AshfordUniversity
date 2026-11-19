@@ -58,16 +58,92 @@ declare(strict_types=1);
     font-weight: 700;
     color: #1e3366;
 }
+@media (prefers-reduced-motion: reduce) {
+	.ash-audit .progress-fill { transition: none; }
+}
 </style>
 
+<section class="card" aria-label="Student academic information">
+	<div class="dashboard-section-heading">
+		<div>
+			<p class="dashboard-eyebrow">Student academic record</p>
+			<h2><?= e($studentAuditFullName !== '' ? $studentAuditFullName : 'Student record unavailable') ?></h2>
+		</div>
+		<span class="badge"><?= e($studentAuditProfile['student_Type'] ?? 'Academic level unavailable') ?></span>
+	</div>
+	<p><strong>Student ID:</strong> <?= e($studentAuditProfile['user_ID'] ?? $studentID) ?></p>
+	<?php if (($studentAuditProfile['student_Type'] ?? null) === 'Undergraduate'): ?>
+		<p><strong>Primary major:</strong> <?= e($studentAuditProfile['major_Name'] ?? 'Not recorded') ?></p>
+	<?php elseif (($studentAuditProfile['student_Type'] ?? null) === 'Graduate'): ?>
+		<p><strong>Graduate program:</strong> <?= e($studentAuditProfile['graduate_Program'] ?? 'Not recorded') ?></p>
+	<?php endif; ?>
+	<?php if ($studentAuditDeclaredMinors): ?>
+		<p><strong>Declared minor<?= count($studentAuditDeclaredMinors) === 1 ? '' : 's' ?>:</strong> <?= e(implode(', ', $studentAuditDeclaredMinors)) ?></p>
+	<?php endif; ?>
+</section>
+
+<?php if ($studentAuditGraduateMessage !== null): ?>
+	<section class="card" aria-label="Graduate degree requirements">
+		<h2><?= e($studentAuditProfile['graduate_Program'] ?? 'Graduate program') ?></h2>
+		<p class="muted"><?= e($studentAuditGraduateMessage) ?> Requirements Not Published.</p>
+	</section>
+
+<?php endif; ?>
+
+<?php if (!$studentAuditHistory): ?>
+	<p class="muted">No completed course history is recorded. Requirement rows will show no qualifying grade until completed coursework is available.</p>
+<?php endif; ?>
+
+<section class="card" aria-label="<?= e($studentAuditSemesterName) ?> enrollment classification">
+	<h2><?= e($studentAuditSemesterName) ?> Enrollment Status</h2>
+	<p><?= e($studentAuditSemesterStatus['registered_credits'] ?? 0) ?> registered credits · <?= e($studentAuditSemesterStatus['status'] ?? 'Unavailable') ?></p>
+</section>
+
+<section class="card ash-audit" aria-label="<?= e($studentAuditSemesterName) ?> courses currently registered">
+	<form method="get" action="degree-audit.php" style="display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin-bottom:16px">
+		<div>
+			<label for="audit-semester"><strong>Academic Semester</strong></label><br>
+			<select id="audit-semester" name="semester" style="padding:9px;border:1px solid #cbd5e1;border-radius:8px">
+				<?php foreach ($studentAuditSemesters as $term): ?>
+					<option value="<?= (int)$term['semester_ID'] ?>" <?= (int)$studentAuditSemesterID === (int)$term['semester_ID'] ? 'selected' : '' ?>><?= e($term['semester_Name']) ?></option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+		<button type="submit" class="btn">View Semester</button>
+	</form>
+	<h2><?= e($studentAuditSemesterName) ?> — Courses Currently Registered</h2>
+	<?php if (!$studentAuditRegisteredCourses): ?>
+		<p class="muted">No courses registered for <?= e($studentAuditSemesterName ?: 'this semester') ?>.</p>
+	<?php else: ?>
+		<div class="table-wrap">
+			<table>
+				<thead><tr><th>Course</th><th>Title</th><th>Credits</th><th>CRN</th><th>Days</th><th>Meeting Time</th><th>Status</th></tr></thead>
+				<tbody><?php foreach ($studentAuditRegisteredCourses as $course): ?>
+					<tr>
+						<td><?= e($course['course_ID']) ?></td>
+						<td><?= e($course['course_Name']) ?></td>
+						<td><?= e($course['course_Credits']) ?></td>
+						<td><?= e($course['CRN']) ?></td>
+						<td><?= e($course['meeting_days']) ?></td>
+						<td><?= e($course['meeting_time']) ?></td>
+						<td><?= e($course['registration_status']) ?></td>
+					</tr>
+				<?php endforeach; ?></tbody>
+			</table>
+		</div>
+	<?php endif; ?>
+</section>
+
+<?php if (($studentAuditProfile['student_Type'] ?? null) === 'Undergraduate'): ?>
 <p class="muted">
-	Requirements come from the published major and minor requirement lists.
-	A requirement is met when your best recorded grade is at least the
-	required minimum grade.
+	Published major and minor course requirements are evaluated using your best
+	recorded grade. This audit reports published course requirements only; it
+	does not represent total degree or graduation progress.
 </p>
 
 
-<?php foreach ($audits as $audit): $pct = $audit['total'] > 0 ? round(($audit['completed'] / $audit['total']) * 100, 0) : 0; ?>
+<?php foreach ($studentAuditPrograms as $audit): ?>
+	<?php $pct = $audit['total'] > 0 ? round(($audit['completed'] / $audit['total']) * 100, 0) : 0; ?>
 
 	<section class="card ash-audit" style="margin-bottom: 18px;">
 
@@ -81,28 +157,27 @@ declare(strict_types=1);
 			<?php endif; ?>
 		</div>
 
-		<p>
-			<strong>
-				<?= e((string) $audit['completed']) ?> of
-				<?= e((string) $audit['total']) ?> requirements met
-			</strong>
-			<span style="float:right"><?= e($pct) ?>% complete</span>
-		</p>
-
-		<div class="progress-wrap">
-			<div class="progress-bar">
-				<div class="progress-fill" style="width: <?= e($pct) ?>%"></div>
-			</div>
-			<div class="progress-text">
-				<?= e($audit['completed']) ?> of <?= e($audit['total']) ?> courses completed
-			</div>
-		</div>
-
 		<?php if ($audit['total'] === 0): ?>
-
-			<p class="muted">No requirements are published for this program yet.</p>
-
+			<p class="muted">
+				Requirements Not Published.
+			</p>
 		<?php else: ?>
+			<p>
+				<strong>Published Course Requirements Completed</strong>
+				<span style="float:right"><?= e($pct) ?>%</span>
+			</p>
+			<p><?= e((string) $audit['completed']) ?> of <?= e((string) $audit['total']) ?> published course requirements met</p>
+
+			<div class="progress-wrap">
+				<div class="progress-bar" role="progressbar"
+					aria-label="Published Course Requirements Completed"
+					aria-valuemin="0" aria-valuemax="100" aria-valuenow="<?= (int) $pct ?>">
+					<div class="progress-fill" style="width: <?= e($pct) ?>%"></div>
+				</div>
+				<div class="progress-text">
+					<?= e($audit['completed']) ?> of <?= e($audit['total']) ?> published courses completed
+				</div>
+			</div>
 
 			<div class="table-wrap">
 				<table>
@@ -127,10 +202,12 @@ declare(strict_types=1);
 								<td>
 									<?php if ($row['met']): ?>
 										<span class="badge">Complete</span>
+									<?php elseif ($row['in_progress']): ?>
+										<span class="badge">In progress</span>
 									<?php elseif ($row['grade'] !== null): ?>
 										<span class="badge">Below required grade</span>
 									<?php else: ?>
-										<span class="muted">Not taken</span>
+										<span class="muted">Missing requirement</span>
 									<?php endif; ?>
 								</td>
 							</tr>
@@ -148,14 +225,13 @@ declare(strict_types=1);
 <?php endforeach; ?>
 
 
-<?php if (count($audits) === 0): ?>
+<?php if (count($studentAuditPrograms) === 0): ?>
 
 	<div class="card">
 		<p>
-			No majors or minors are declared yet. Declare them on the
-			<a href="programs.php">Majors &amp; Minors</a> page to see your
-			degree audit.
+			No primary or additional major or minor is recorded for this student.
 		</p>
 	</div>
 
+<?php endif; ?>
 <?php endif; ?>

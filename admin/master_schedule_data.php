@@ -15,9 +15,9 @@ $semesters = all_rows(
 	FROM Semester s
 	JOIN Course_Section cs
 		ON cs.semester_ID = s.semester_ID AND cs.is_Cancelled = 0
-	WHERE s.semester_Name IN ('Fall 2026', 'Spring 2027')
+	WHERE s.semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
 	GROUP BY s.semester_ID, s.semester_Name
-	ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 ELSE 3 END"
+	ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 WHEN 'Spring 2026' THEN 3 ELSE 4 END"
 );
 
 $semesterIDs = array_map(
@@ -27,7 +27,7 @@ $semesterIDs = array_map(
 
 $semesterID = get_int('semester');
 
-// Only Fall 2026 and Spring 2027 are selectable; invalid values default to Fall 2026.
+// Fall 2026 remains the default. Spring 2026 is available as a protected historical view.
 if ($semesterID === null || !in_array($semesterID, $semesterIDs, true)) {
 
 	$semesterID = $semesterIDs === []
@@ -40,6 +40,7 @@ $semester = one(
 	'SELECT * FROM Semester WHERE semester_ID = ?',
 	[$semesterID]
 );
+$semesterStartKnown = $semester !== null && $semester['semester_Start'] !== null;
 
 $schedule = $semester !== null ? master_schedule_get($pdo, $semesterID) : null;
 

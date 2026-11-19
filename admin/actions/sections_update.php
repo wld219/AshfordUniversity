@@ -27,8 +27,8 @@ if (!$section) {
 
 $locked = semester_schedule_locked($pdo, (int) $section['semester_ID']);
 // Query enrollment count separately: PDO::execute returns a boolean, not the count.
-$countStmt = $pdo->prepare('SELECT COUNT(*) FROM Enrollment WHERE CRN = ?');
-$countStmt->execute([$crn]);
+$countStmt = $pdo->prepare('SELECT COUNT(*) FROM Enrollment WHERE CRN = ? AND semester_ID = ?');
+$countStmt->execute([$crn, (int)$section['semester_ID']]);
 $enrolled = (int) $countStmt->fetchColumn();
 
 
@@ -38,41 +38,9 @@ $timeSlotID = post_int('time_slot_id') ?? (int) $section['time_Slot_ID'];
 $sectionNo = post_int('section_no') ?? (int) $section['section_No'];
 $roomType = post_str('room_type', 10) ?: ($section['lecture_ID'] !== null ? 'lecture' : 'lab');
 $roomID = post_int('room_id') ?? ($section['lecture_ID'] ?? $section['lab_ID']);
-$seatsRaw = $_POST['seats'] ?? null;
-if (!is_scalar($seatsRaw) || !preg_match('/^(?:[0-9]|10)$/', (string) $seatsRaw)) {
-    $error = 'Seats remaining must be a whole number from 0 to 10.';
-    return;
-}
-$seats = (int) $seatsRaw;
-$seatsChanged = $seats !== (int) $section['available_Seats'];
-$demoEnrolledRaw = $_POST['demo_enrolled'] ?? null;
-if (!is_scalar($demoEnrolledRaw) || !preg_match('/^(?:[0-9]|10)$/', (string) $demoEnrolledRaw)) {
-    $error = 'Demo enrollment must be a whole number from 0 to 10.';
-    return;
-}
-$demoEnrolled = (int) $demoEnrolledRaw;
-$oldDemoStmt = $pdo->prepare('SELECT demo_enrolled FROM Course_Section_Demo_Enrollment WHERE CRN = ?');
-$oldDemoStmt->execute([$crn]);
-$oldDemoValue = $oldDemoStmt->fetchColumn();
-$oldDemo = $oldDemoValue === false ? $enrolled : (int) $oldDemoValue;
-$demoChanged = $demoEnrolled !== $oldDemo;
-
-
 $semesterID = post_int('semester_id') ?? (int) $section['semester_ID'];
 if ($semesterID !== (int) $section['semester_ID']) {
     $error = 'Changing a section semester is not supported; create a new section instead.';
-    return;
-}
-
-if ($seats + $demoEnrolled > 10) {
-    $error = 'Currently enrolled plus seats remaining cannot exceed the maximum capacity of 10.';
-    return;
-}
-
-// The editable demo numbers must not be combined with actual registrations.
-// Actual student registration is enforced separately by the enrollment workflow.
-if ($seats < 0 || $seats > 10) {
-    $error = 'Available seats must be between 0 and 10.';
     return;
 }
 
@@ -92,33 +60,60 @@ if ($locked && $scheduleChanged) {
 }
 
 if ($locked) {
-
-    if (!$seatsChanged && !$demoChanged) {
-        $error = 'This semester schedule is locked; only available seats can be changed.';
-        return;
-    }
-
-	$pdo->prepare('UPDATE Course_Section SET available_Seats = ? WHERE CRN = ?')
-		->execute([max(0, $seats), $crn]);
-
-	$pdo->prepare('INSERT INTO Course_Section_Demo_Enrollment (CRN, demo_enrolled) VALUES (?, ?) ON DUPLICATE KEY UPDATE demo_enrolled = VALUES(demo_enrolled)')->execute([$crn, $demoEnrolled]);
-		audit_log($pdo, 'Update', 'Course_Section', (string) $crn, 'Seats updated only (schedule locked)');
-
-	if (master_schedule_get($pdo, (int) $section['semester_ID']) !== null) {
-		master_schedule_touch($pdo, (int) $section['semester_ID'], $adminID);
+	$semesterDates = one(
+		$pdo,
+		'SELECT semester_Start FROM Semester WHERE semester_ID = ?',
+		[(int)$section['semester_ID']]
+	);
+	if (!$semesterDates || $semesterDates['semester_Start'] === null) {
+		$error = 'No changes can be saved because this semester has no verified start date.';
+		return;
 	}
-
+	$currentRoomType = $section['lecture_ID'] !== null ? 'lecture' : 'lab';
+	$currentRoomID = (int) ($section['lecture_ID'] ?? $section['lab_ID'] ?? 0);
+	$currentCapacity = null;
+	if ($currentRoomID > 0) {
+		$table = $currentRoomType === 'lecture' ? 'Lecture' : 'Lab';
+		$column = $currentRoomType === 'lecture' ? 'avail_Seats' : 'no_Of_Workstations';
+		$keyColumn = $currentRoomType === 'lecture' ? 'lecture_ID' : 'lab_ID';
+		$capacityRow = one($pdo, "SELECT {$column} AS capacity FROM {$table} WHERE {$keyColumn} = ?", [$currentRoomID]);
+		$currentCapacity = $capacityRow ? (int)$capacityRow['capacity'] : null;
+	}
+	$calculatedSeats = $currentCapacity === null ? 0 : max(0, $currentCapacity - $enrolled);
+	if ((int)$section['available_Seats'] !== $calculatedSeats) {
+		$pdo->prepare('UPDATE Course_Section SET available_Seats = ? WHERE CRN = ?')
+			->execute([$calculatedSeats, $crn]);
+		audit_log($pdo, 'Update', 'Course_Section', (string)$crn, 'Seat availability recalculated');
+	}
 	redirect_with_flash(
 		url('admin/sections.php'),
 		'success',
-		'Seat count updated. Schedule fields are locked because the semester has started.'
+		'Schedule fields are locked. Seat availability is calculated from room capacity and actual enrollments.'
 	);
+}
+
+if ($enrolled > 0 && $courseID !== (string)$section['course_ID']) {
+	$error = 'The course cannot be changed while actual enrollment records are linked to this CRN.';
+	return;
 }
 
 if ($courseID === '' || !one($pdo, 'SELECT course_ID FROM Course WHERE course_ID = ?', [$courseID])) {
     $error = 'Please select a valid course.';
     return;
 }
+
+$scheduleRuleErrors = validate_friday_saturday_schedule_rule(
+    $pdo,
+    $courseID,
+    $timeSlotID,
+    (int) $section['semester_ID'],
+    $crn
+);
+if ($scheduleRuleErrors) {
+    $error = implode(' ', $scheduleRuleErrors);
+    return;
+}
+
 if ($sectionNo <= 0 || one($pdo, 'SELECT CRN FROM Course_Section WHERE course_ID = ? AND semester_ID = ? AND section_No = ? AND CRN <> ? LIMIT 1', [$courseID, (int) $section['semester_ID'], $sectionNo, $crn])) {
     $error = 'This section number is already used for the selected course and semester.';
     return;
@@ -136,8 +131,12 @@ if (!$room) {
     return;
 }
 
-// Demo override: room capacity does not restrict section assignment.
-// Section seat limits are validated separately.
+if ((int)$room['capacity'] < $enrolled
+    && ((int)($section['lecture_ID'] ?? 0) !== ($roomType === 'lecture' ? $roomID : 0)
+        || (int)($section['lab_ID'] ?? 0) !== ($roomType === 'lab' ? $roomID : 0))) {
+	$error = 'The selected room cannot hold all actual enrollments.';
+	return;
+}
 
 if (one($pdo, "SELECT cs.CRN FROM Course_Section cs
     JOIN Time_Slot_Day ed ON ed.time_Slot_ID = cs.time_Slot_ID
@@ -187,11 +186,9 @@ $pdo->prepare(
 	$lectureID,
 	$labID,
 	(int) $section['semester_ID'],
-	max(0, $seats),
+		max(0, (int)$room['capacity'] - $enrolled),
 	$crn
 ]);
-
-$pdo->prepare('INSERT INTO Course_Section_Demo_Enrollment (CRN, demo_enrolled) VALUES (?, ?) ON DUPLICATE KEY UPDATE demo_enrolled = VALUES(demo_enrolled)')->execute([$crn, $demoEnrolled]);
 
 audit_log($pdo, 'Update', 'Course_Section', (string) $crn, 'Section updated');
 

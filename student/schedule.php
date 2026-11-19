@@ -11,17 +11,6 @@ require_role(['Student']);
 
 // Get the logged-in student's ID
 $studentID = (int) $_SESSION['user_id'];
-
-
-// Drop a course
-if (isset($_POST['drop'])) {
-
-	csrf_verify();
-
-	require_once __DIR__ . '/schedule_actions.php';
-}
-
-
 // Get all courses the student is registered for
 $schedule = all_rows(
 	$pdo,
@@ -42,6 +31,8 @@ $schedule = all_rows(
 		FROM Enrollment
 		JOIN Course_Section cs
 			ON cs.CRN = Enrollment.CRN
+			AND cs.semester_ID = Enrollment.semester_ID
+			AND cs.is_Cancelled = 0
 		JOIN Course
 			ON Course.course_ID = cs.course_ID
 		JOIN Semester

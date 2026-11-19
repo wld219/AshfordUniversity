@@ -12,8 +12,8 @@ require_role(['Student']);
 // Get the logged-in student's ID
 $studentID = (int) $_SESSION['user_id'];
 
-// Page data (declared programs and their audits)
-require_once __DIR__ . '/degree_audit_data.php';
+// Student-only audit data; the Admin audit keeps its separate data path.
+require_once __DIR__ . '/degree_audit_student_data.php';
 
 page_start(
 	'Degree Audit',

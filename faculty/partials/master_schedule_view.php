@@ -8,7 +8,7 @@
 <?php foreach($pageRows as $r):
 $errors=validate_schedule_row($r);
 $start=$r['start_Time']??null;$end=$r['end_Time']??null;
-$meeting=$start&&$end?date('g:i A',strtotime((string)$start)).' - '.date('g:i A',strtotime((string)$end)):'TBA';
+$meeting=format_time_range($start!==null?(string)$start:null,$end!==null?(string)$end:null);
 $capacity=$r['capacity']??$r['SeatsCapacity']??$r['seats_Capacity']??null;
 $dept=(string)($r['dept_Name']??$r['department_Name']??$r['dept_ID']??'—');
 ?><tr><td><?= e((string)$r['CRN']) ?></td><td><?= e((string)$r['course_ID']) ?></td><td><?= e((string)($r['course_Credits']??'—')) ?></td><td><?= e((string)$r['course_Name']) ?></td><td><?= e(str_pad((string)$r['section_No'],2,'0',STR_PAD_LEFT)) ?></td><td><?= e((string)$r['faculty_Name']) ?></td><td><?= e((string)($r['room_Label']??'Unassigned')) ?></td><td><?= e(implode(', ',array_map(static fn($d)=>substr((string)$d,0,3),$r['days']??[]))) ?></td><td><?= e($meeting) ?></td><td>10</td><td><?= $capacity===null?'—':e((string)$capacity) ?></td><td><?= e((string)$r['enrolled']) ?></td><td><?= e($dept) ?></td><td><?= e((string)($r['instruction_Mode']??'In-Person')) ?></td><td class="status"><?= $errors?'Attention':'Scheduled' ?></td></tr><?php endforeach; ?>

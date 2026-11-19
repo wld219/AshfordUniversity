@@ -41,6 +41,12 @@ if ($registrationAction === 'drop') {
         if ($enrollment['Grade'] !== null && trim((string) $enrollment['Grade']) !== '') {
             throw new RuntimeException('A course with a recorded grade cannot be dropped here.');
         }
+        $history = one($pdo,
+            'SELECT 1 FROM Student_History WHERE student_ID = ? AND CRN = ? LIMIT 1',
+            [$studentID, $crn]);
+        if ($history) {
+            throw new RuntimeException('This section is linked to completed academic history and cannot be dropped here.');
+        }
         $delete = $pdo->prepare(
             'DELETE FROM Enrollment WHERE student_ID = ? AND CRN = ? AND semester_ID = ?'
         );
@@ -48,9 +54,22 @@ if ($registrationAction === 'drop') {
         if ($delete->rowCount() !== 1) {
             throw new RuntimeException('The enrollment could not be removed.');
         }
+        $capacityRow = one($pdo,
+            'SELECT COALESCE(l.avail_Seats, b.no_Of_Workstations) AS capacity
+             FROM Course_Section cs
+             LEFT JOIN Lecture l ON l.lecture_ID = cs.lecture_ID
+             LEFT JOIN Lab b ON b.lab_ID = cs.lab_ID
+             WHERE cs.CRN = ? AND cs.semester_ID = ?',
+            [$crn, $semesterID]);
+        $remainingRow = one($pdo,
+            'SELECT COUNT(*) AS enrolled FROM Enrollment WHERE CRN = ? AND semester_ID = ?',
+            [$crn, $semesterID]);
+        $availableSeats = $capacityRow && $capacityRow['capacity'] !== null
+            ? max(0, (int)$capacityRow['capacity'] - (int)($remainingRow['enrolled'] ?? 0))
+            : 0;
         $pdo->prepare(
-            'UPDATE Course_Section SET available_Seats = available_Seats + 1 WHERE CRN = ?'
-        )->execute([$crn]);
+            'UPDATE Course_Section SET available_Seats = ? WHERE CRN = ? AND semester_ID = ?'
+        )->execute([$availableSeats, $crn, $semesterID]);
         $pdo->commit();
         try {
             audit_log($pdo, 'Delete', 'Enrollment', (string) $crn, 'Student course drop');

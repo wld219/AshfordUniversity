@@ -20,18 +20,20 @@ $sections = all_rows(
         cs.section_No,
         cs.available_Seats,
         cs.time_Slot_ID,
+        s.semester_Name,
         (
             SELECT COUNT(*)
             FROM Enrollment en
             WHERE en.CRN = cs.CRN
+              AND en.semester_ID = cs.semester_ID
         ) AS enrolled_count
      FROM Course_Section cs
      JOIN Course c ON c.course_ID = cs.course_ID
      JOIN Semester s ON s.semester_ID = cs.semester_ID
      WHERE cs.faculty_ID = ?
-       AND s.semester_Name = 'Fall 2026'
+       AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
        AND cs.is_Cancelled = 0
-     ORDER BY c.course_ID, cs.section_No",
+     ORDER BY FIELD(s.semester_Name, 'Fall 2026', 'Spring 2027'), c.course_ID, cs.section_No",
     [$facultyID]
 );
 
@@ -97,12 +99,15 @@ foreach ($sections as $section) {
          JOIN Semester s ON s.semester_ID = cs.semester_ID
          WHERE en.CRN = ?
            AND cs.faculty_ID = ?
-           AND s.semester_Name = 'Fall 2026'
+           AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
+           AND en.semester_ID = cs.semester_ID
            AND cs.is_Cancelled = 0
          ORDER BY u.last_Name, u.first_Name, en.student_ID",
         [$crn, $facultyID]
     );
 }
+
+$scheduleTermLabel = implode(' · ', array_values(array_unique(array_column($sections, 'semester_Name'))));
 
 page_start('My Schedule', 'Faculty', 'schedule.php');
 
@@ -348,7 +353,7 @@ page_start('My Schedule', 'Faculty', 'schedule.php');
 
             <span class="schedule-title-group">
                 <span class="schedule-main-title">Current Course Sections</span>
-                <span class="schedule-semester-subtitle">Fall 2026 · <?= count($sections) ?> sections</span>
+                <span class="schedule-semester-subtitle"><?= e($scheduleTermLabel ?: 'No assigned semesters') ?> · <?= count($sections) ?> sections</span>
             </span>
         </summary>
 
@@ -384,6 +389,7 @@ page_start('My Schedule', 'Faculty', 'schedule.php');
 
                         <div class="course-meta">
                             Section <?= e($section['section_No']) ?>
+                            · <?= e($section['semester_Name']) ?>
                             · CRN <?= e($crn) ?>
                             · <?= e($meeting['days']) ?>
                             · <?= e($meeting['times']) ?>
@@ -453,23 +459,6 @@ page_start('My Schedule', 'Faculty', 'schedule.php');
             <?php endforeach; ?>
 
         <?php endif; ?>
-
-    </details>
-
-    <details class="schedule-section schedule-main-collapse">
-        <summary class="schedule-main-toggle">
-
-            <span class="schedule-main-title">Upcoming Semester</span>
-            <span class="schedule-pill">Spring 2027 · TBD</span>
-        </summary>
-
-        <div class="upcoming-empty">
-            <h4>Course Assignments To Be Determined</h4>
-            <p class="schedule-muted">
-                Your upcoming teaching schedule has not been announced.
-                Course assignments will appear here when available.
-            </p>
-        </div>
 
     </details>
 

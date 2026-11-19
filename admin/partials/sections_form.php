@@ -11,8 +11,8 @@ $locked = $editSection !== null
 if ($locked) {
 	?>
 	<div class="alert error">
-		This semester has started, so course, faculty, room, and time
-		slot fields are locked. Only the seat count can be changed.
+		This semester has started, so schedule fields are locked. Seat availability
+		is calculated from the assigned room and actual Enrollment records.
 	</div>
 	<?php
 }
@@ -75,7 +75,6 @@ if ($locked) {
   const get = name => form.elements.namedItem(name);
   const semester=get('semester_id'), course=get('course_id'), section=get('section_no');
   const faculty=get('faculty_id'), slot=get('time_slot_id'), roomType=get('room_type'), room=get('room_id');
-  const enrolled=get('demo_enrolled'), seats=get('seats');
   const sectionMsg=document.getElementById('create-section-availability');
   const capacityMsg=document.getElementById('create-enrollment-validation');
   const submit=form.querySelector('button[type="submit"]');
@@ -126,12 +125,10 @@ if ($locked) {
         (roomType.value==='lecture'?eq(x.lecture_ID,o.value):eq(x.lab_ID,o.value))&&overlapping(x.time_Slot_ID,slot.value));
       mark(o,!slot.value?'Select time slot first':!correct?'Different room type':busy?'Occupied at this time':'',!correct);
     }); resetDisabled(room);
-    const okA=/^(?:[0-9]|10)$/.test(enrolled.value.trim());
-    const okB=/^(?:[0-9]|10)$/.test(seats.value.trim());
-    const capacityOK=okA&&okB&&Number(enrolled.value)+Number(seats.value)<=10;
-    capacityMsg.textContent=capacityOK?'Enrollment valid ('+(Number(enrolled.value)+Number(seats.value))+' of 10).':'Enter whole numbers 0–10; total cannot exceed 10.';
-    capacityMsg.style.color=capacityOK?'#147d48':'#b42318';
-    submit.disabled=!(capacityOK&&semester.value&&course.value&&section.value&&faculty.value&&slot.value&&room.value);
+    const capacity=Number(room.selectedOptions[0]?.dataset.capacity||0);
+    capacityMsg.textContent=room.value?'Selected room capacity: '+capacity+' seats.':'Select a room to see its capacity.';
+    capacityMsg.style.color=room.value?'#147d48':'#64748b';
+    submit.disabled=!(semester.value&&course.value&&section.value&&faculty.value&&slot.value&&room.value);
     return !submit.disabled;
   }
   const downstream={semester_id:[course,section,faculty,slot,room],course_id:[section,faculty,slot,room],section_no:[],faculty_id:[slot,room],time_slot_id:[room],room_type:[room],room_id:[]};
@@ -139,7 +136,6 @@ if ($locked) {
     (downstream[el.name]||[]).forEach(s=>s.value='');
     refresh();
   }));
-  [enrolled,seats].forEach(el=>el.addEventListener('input',refresh));
   form.addEventListener('submit',event=>{if(!refresh())event.preventDefault();});
   refresh();
 })();
