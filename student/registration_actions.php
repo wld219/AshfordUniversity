@@ -10,7 +10,7 @@ declare(strict_types=1);
 $registrationAction = (string) ($_POST['registration_action'] ?? 'add');
 if (!in_array($registrationAction, ['add', 'drop', 'waitlist'], true)) {
     $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid registration action.'];
-    header('Location: registration.php');
+    header('Location: registration.php?semester=' . rawurlencode((string) ($_POST['return_semester'] ?? '')));
     exit;
 }
 if ($registrationAction === 'drop') {
@@ -83,7 +83,7 @@ if ($registrationAction === 'drop') {
         $_SESSION['flash'] = ['type' => 'error', 'message' => $error instanceof RuntimeException
             ? $error->getMessage() : 'Course drop could not be completed.'];
     }
-    header('Location: registration.php');
+    header('Location: registration.php?semester=' . rawurlencode((string) ($_POST['return_semester'] ?? '')));
     exit;
 }
 
@@ -132,7 +132,7 @@ if ($registrationAction === 'waitlist') {
         $_SESSION['flash'] = ['type' => 'error', 'message' => $error instanceof RuntimeException
             ? $error->getMessage() : 'Could not add to waitlist.'];
     }
-    header('Location: registration.php');
+    header('Location: registration.php?semester=' . rawurlencode((string) ($_POST['return_semester'] ?? '')));
     exit;
 }
 
@@ -183,39 +183,63 @@ if ($crn > 0) {
 
 			} else {
 
-				// Add the student to the course
-				$pdo->prepare(
-					"INSERT INTO Enrollment
-						(student_ID, CRN, semester_ID)
-					VALUES (?, ?, ?)"
-				)->execute([
-					$studentID,
-					$crn,
-					$section['semester_ID']
-				]);
-
-				// Reduce the number of available seats
-				$pdo->prepare(
-					"UPDATE Course_Section
-					SET available_Seats = available_Seats - 1
-					WHERE CRN = ?
-					AND available_Seats > 0"
-				)->execute([$crn]);
-
-				$pdo->commit();
-
-				audit_log(
+				// Serialize registrations for this student and recheck time conflicts
+				// inside the transaction to prevent concurrent requests from bypassing
+				// the schedule validator.
+				one(
 					$pdo,
-					'Create',
-					'Enrollment',
-					(string) $crn,
-					'Student registration'
+					"SELECT student_ID FROM Student WHERE student_ID = ? FOR UPDATE",
+					[$studentID]
 				);
 
-				$_SESSION['flash'] = [
-					'type' => 'success',
-					'message' => 'Course registration successful.'
-				];
+				$lockedSection = registration_section($pdo, $crn);
+				$timeConflict = $lockedSection
+					? check_time_conflict($pdo, $studentID, $lockedSection)
+					: 'Course section not found.';
+
+				if ($timeConflict !== null) {
+					$pdo->rollBack();
+					$_SESSION['flash'] = [
+						'type' => 'error',
+						'message' => $timeConflict
+					];
+
+				} else {
+
+					// Add the student to the course
+					$pdo->prepare(
+						"INSERT INTO Enrollment
+							(student_ID, CRN, semester_ID)
+						VALUES (?, ?, ?)"
+					)->execute([
+						$studentID,
+						$crn,
+						$section['semester_ID']
+					]);
+
+					// Reduce the number of available seats
+					$pdo->prepare(
+						"UPDATE Course_Section
+						SET available_Seats = available_Seats - 1
+						WHERE CRN = ?
+						AND available_Seats > 0"
+					)->execute([$crn]);
+
+					$pdo->commit();
+
+					audit_log(
+						$pdo,
+						'Create',
+						'Enrollment',
+						(string) $crn,
+						'Student registration'
+					);
+
+					$_SESSION['flash'] = [
+						'type' => 'success',
+						'message' => 'Course registration successful.'
+					];
+				}
 			}
 
 		} catch (Throwable $error) {
@@ -241,5 +265,5 @@ if ($crn > 0) {
 	}
 }
 
-header('Location: registration.php');
+header('Location: registration.php?semester=' . rawurlencode((string) ($_POST['return_semester'] ?? '')));
 exit;

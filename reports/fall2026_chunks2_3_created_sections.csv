@@ -1,0 +1,72 @@
+CRN,course_ID,course_Name,department,faculty_ID,time_Slot_ID,days,start_time_24h,end_time_24h,room_type,room_ID,capacity,enrolled,available_Seats
+140037,EN1001,"College Composition",English,200016,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1101,10,20,0
+140038,EN1001,"College Composition",English,200017,8,Monday/Wednesday,20:50:00,22:30:00,Lecture,1101,10,16,2
+140039,EN1002,"Introduction to Literature",English,200018,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1101,10,20,0
+140040,EN1002,"Introduction to Literature",English,200019,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1102,10,12,4
+140041,EN3013,"Technical Writing",English,200020,8,Monday/Wednesday,20:50:00,22:30:00,Lecture,1102,10,18,1
+140042,EN4017,"Language and Culture",English,200021,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1101,10,10,5
+140043,ED1001,"Foundations of Education",Education,200074,2,Monday/Wednesday,09:50:00,11:30:00,Lecture,1101,10,20,0
+140044,ED1004,"Classroom Assessment",Education,200075,3,Monday/Wednesday,11:40:00,13:20:00,Lecture,1101,10,4,8
+140045,ED2009,"Learning and Motivation",Education,200094,8,Monday/Wednesday,20:50:00,22:30:00,Lecture,1104,10,8,6
+140046,ED4017,"Teaching Methods Seminar",Education,200095,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1101,10,20,0
+140047,ED4017,"Teaching Methods Seminar",Education,200098,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1102,10,18,1
+140048,CS2007,"Introduction to Computing","Computer Science",200073,9,Tuesday/Thursday,08:00:00,09:40:00,Lecture,1101,10,4,8
+140049,HS1001,"Introduction to Health Sciences","Health Sciences",200011,11,Tuesday/Thursday,11:40:00,13:20:00,Lecture,1101,10,2,9
+140050,CS1001,"Introduction to Programming","Computer Science",200087,7,Monday/Wednesday,19:00:00,20:40:00,Lab,2151,10,20,0
+140051,CS1002,"Object-Oriented Programming with Java","Computer Science",200088,8,Monday/Wednesday,20:50:00,22:30:00,Lab,2151,10,20,0
+140052,CS1002,"Object-Oriented Programming with Java","Computer Science",200089,8,Monday/Wednesday,20:50:00,22:30:00,Lab,2152,10,12,4
+140053,CS1005,"Computer Networks","Computer Science",200090,3,Monday/Wednesday,11:40:00,13:20:00,Lecture,1102,10,10,5
+140054,CS2006,"Software Engineering","Computer Science",200091,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1103,10,20,0
+140055,CS2006,"Software Engineering","Computer Science",200092,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1104,10,20,0
+140056,CS2006,"Software Engineering","Computer Science",200093,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1105,10,20,0
+140057,CS2006,"Software Engineering","Computer Science",200096,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1106,10,20,0
+140058,CS2006,"Software Engineering","Computer Science",200097,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1107,10,20,0
+140059,CS2006,"Software Engineering","Computer Science",200103,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1108,10,6,7
+140060,CS2007,"Introduction to Computing","Computer Science",200117,3,Monday/Wednesday,11:40:00,13:20:00,Lecture,1103,10,20,0
+140061,CS3011,"Algorithm Design","Computer Science",200150,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1102,10,20,0
+140062,CS3011,"Algorithm Design","Computer Science",200151,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1103,10,6,7
+140063,CS4018,"Computer Science Capstone","Computer Science",200152,8,Monday/Wednesday,20:50:00,22:30:00,Lecture,1106,10,20,0
+140064,CS4018,"Computer Science Capstone","Computer Science",200153,8,Monday/Wednesday,20:50:00,22:30:00,Lecture,1107,10,12,4
+140065,HS1001,"Introduction to Health Sciences","Health Sciences",200012,2,Monday/Wednesday,09:50:00,11:30:00,Lecture,1102,10,20,0
+140066,HS1001,"Introduction to Health Sciences","Health Sciences",200026,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1104,10,6,7
+140067,HS3011,"Healthcare Ethics","Health Sciences",200027,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1103,10,4,8
+140068,EG1001,"Introduction to Engineering",Engineering,200013,5,Monday/Wednesday,15:20:00,17:00:00,Lecture,1101,10,20,0
+140069,EG1001,"Introduction to Engineering",Engineering,200014,5,Monday/Wednesday,15:20:00,17:00:00,Lecture,1102,10,12,4
+140070,EG1002,"Engineering Mechanics",Engineering,200015,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1109,10,4,8
+140071,EG2009,"Engineering Mathematics",Engineering,200076,3,Monday/Wednesday,11:40:00,13:20:00,Lecture,1104,10,2,9
+140072,EG3010,Statics,Engineering,200077,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1110,10,4,8
+140073,EG3011,Dynamics,Engineering,200101,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1102,10,8,6
+140074,SS1004,"Principles of Economics","Social Sciences",200045,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1104,10,2,9
+140075,SS2006,"Social Science Research Methods","Social Sciences",200046,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1105,10,20,0
+140076,SS2006,"Social Science Research Methods","Social Sciences",200047,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1106,10,2,9
+140077,SS2009,"American Government","Social Sciences",200048,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1103,10,2,9
+140078,SS3011,"Developmental Psychology","Social Sciences",200049,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1104,10,12,4
+140079,VD1001,"Introduction to Digital Media","Arts and Media",200059,2,Monday/Wednesday,09:50:00,11:30:00,Lecture,1103,10,20,0
+140080,VD1001,"Introduction to Digital Media","Arts and Media",200060,2,Monday/Wednesday,09:50:00,11:30:00,Lecture,1104,10,6,7
+140081,VD1005,"Media Production","Arts and Media",200061,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1111,10,4,8
+140082,VD2006,"Visual Communication","Arts and Media",200062,3,Monday/Wednesday,11:40:00,13:20:00,Lecture,1105,10,10,5
+140083,VD3010,Photography,"Arts and Media",200063,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1105,10,12,4
+140084,VD4018,"Arts and Media Capstone","Arts and Media",200064,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1106,10,14,3
+140085,BU1002,"Financial Accounting",Business,200070,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1105,10,20,0
+140086,BU1002,"Financial Accounting",Business,200071,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1106,10,12,4
+140087,BU2006,"Organizational Behavior",Business,200078,2,Monday/Wednesday,09:50:00,11:30:00,Lecture,1105,10,20,0
+140088,BU2006,"Organizational Behavior",Business,200079,2,Monday/Wednesday,09:50:00,11:30:00,Lecture,1106,10,14,3
+140089,BU2009,"Microeconomics for Business",Business,200080,5,Monday/Wednesday,15:20:00,17:00:00,Lecture,1103,10,6,7
+140090,BU3011,"Business Statistics",Business,200081,5,Monday/Wednesday,15:20:00,17:00:00,Lab,2151,10,20,0
+140091,BU3011,"Business Statistics",Business,200082,5,Monday/Wednesday,15:20:00,17:00:00,Lab,2152,10,20,0
+140092,BU3011,"Business Statistics",Business,200083,5,Monday/Wednesday,15:20:00,17:00:00,Lab,2153,10,18,1
+140093,BU3012,Entrepreneurship,Business,200084,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1112,10,2,9
+140094,MA1001,"Calculus I",Mathematics,200022,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1108,10,18,1
+140095,MA1002,"Calculus II",Mathematics,200023,3,Monday/Wednesday,11:40:00,13:20:00,Lecture,1106,10,18,1
+140096,MA1004,"Discrete Mathematics",Mathematics,200024,1,Monday/Wednesday,08:00:00,09:40:00,Lecture,1107,10,2,9
+140097,MA3012,"Numerical Methods",Mathematics,200025,6,Monday/Wednesday,17:10:00,18:50:00,Lecture,1113,10,20,0
+140098,MA3012,"Numerical Methods",Mathematics,200028,5,Monday/Wednesday,15:20:00,17:00:00,Lecture,1104,10,4,8
+140099,NS1001,"General Biology","Natural Sciences",200029,8,Monday/Wednesday,20:50:00,22:30:00,Lab,2153,10,18,1
+140100,NS2006,Biochemistry,"Natural Sciences",200030,6,Monday/Wednesday,17:10:00,18:50:00,Lab,2151,10,20,0
+140101,NS2006,Biochemistry,"Natural Sciences",200031,5,Monday/Wednesday,15:20:00,17:00:00,Lab,2154,10,20,0
+140102,NS2006,Biochemistry,"Natural Sciences",200032,5,Monday/Wednesday,15:20:00,17:00:00,Lab,2155,10,20,0
+140103,NS2006,Biochemistry,"Natural Sciences",200033,5,Monday/Wednesday,15:20:00,17:00:00,Lab,2156,10,8,6
+140104,NS2007,"Introduction to Scientific Inquiry","Natural Sciences",200034,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1109,10,20,0
+140105,NS2007,"Introduction to Scientific Inquiry","Natural Sciences",200035,4,Monday/Wednesday,13:30:00,15:10:00,Lecture,1110,10,10,5
+140106,NS3010,Ecology,"Natural Sciences",200036,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1107,10,6,7
+140107,NS4018,"Natural Sciences Capstone","Natural Sciences",200037,7,Monday/Wednesday,19:00:00,20:40:00,Lecture,1109,10,8,6

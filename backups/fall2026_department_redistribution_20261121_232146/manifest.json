@@ -1,0 +1,11 @@
+{
+    "database": "ashford_waleed",
+    "test_database": "ashford_waleed_fall_test_20261121_232146",
+    "backup_file": "backups/fall2026_department_redistribution_20261121_232146/ashford_waleed_full.sql",
+    "backup_bytes": 5734528,
+    "sha256": "b75107dfee65fb4f74ee8be8c04b8fc59c430c87dc5445ad4796c827797c84f3",
+    "tables_verified": 76,
+    "create_table_statements": 76,
+    "restore_comparison": "all base-table row hashes match",
+    "created_at": "2026-11-21T23:21:48+00:00"
+}

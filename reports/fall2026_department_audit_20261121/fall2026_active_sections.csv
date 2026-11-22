@@ -1,0 +1,198 @@
+CRN,course_ID,course_title,department_ID,department,credits,course_level,section_number,faculty_ID,meeting_days,meeting_times_24h,room,enrolled_students,available_Seats,time_slot_ID
+140025,CS1001,"Introduction to Programming",1,"Computer Science",4,Undergraduate,1,200072,"Monday, Wednesday",08:00-09:40,"Lab room SCI-151 (workstations 10)",10,0,1
+140050,CS1001,"Introduction to Programming",1,"Computer Science",4,Undergraduate,2,200087,"Monday, Wednesday",19:00-20:40,"Lab room SCI-151 (workstations 10)",10,0,7
+140026,CS1002,"Object-Oriented Programming with Java",1,"Computer Science",4,Undergraduate,1,200072,"Tuesday, Thursday",09:50-11:30,"Lab room SCI-151 (workstations 10)",10,0,10
+140051,CS1002,"Object-Oriented Programming with Java",1,"Computer Science",4,Undergraduate,2,200088,"Monday, Wednesday",20:50-22:30,"Lab room SCI-151 (workstations 10)",10,0,8
+140052,CS1002,"Object-Oriented Programming with Java",1,"Computer Science",4,Undergraduate,3,200089,"Monday, Wednesday",20:50-22:30,"Lab room SCI-152 (workstations 10)",6,4,8
+140027,CS1004,"Database Systems",1,"Computer Science",4,Undergraduate,1,200072,"Monday, Wednesday",11:40-13:20,"Lab room SCI-151 (workstations 10)",7,3,3
+140053,CS1005,"Computer Networks",1,"Computer Science",4,Undergraduate,1,200090,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-102 (capacity 10)",5,5,3
+140054,CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,1,200091,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-103 (capacity 10)",10,0,6
+140055,CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,2,200092,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-104 (capacity 10)",10,0,6
+140056,CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,3,200093,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-105 (capacity 10)",10,0,6
+140057,CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,4,200096,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-106 (capacity 10)",10,0,6
+140058,CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,5,200097,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-107 (capacity 10)",10,0,6
+140059,CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,6,200103,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-108 (capacity 10)",3,7,6
+140048,CS2007,"Introduction to Computing",1,"Computer Science",4,Undergraduate,1,200073,"Tuesday, Thursday",08:00-09:40,"Lecture room NAB-101 (capacity 10)",2,8,9
+140060,CS2007,"Introduction to Computing",1,"Computer Science",4,Undergraduate,2,200117,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-103 (capacity 10)",10,0,3
+140061,CS3011,"Algorithm Design",1,"Computer Science",4,Undergraduate,1,200150,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-102 (capacity 10)",10,0,1
+140062,CS3011,"Algorithm Design",1,"Computer Science",4,Undergraduate,2,200151,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-103 (capacity 10)",3,7,1
+140063,CS4018,"Computer Science Capstone",1,"Computer Science",4,Undergraduate,1,200152,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-106 (capacity 10)",10,0,8
+140064,CS4018,"Computer Science Capstone",1,"Computer Science",4,Undergraduate,2,200153,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-107 (capacity 10)",6,4,8
+140085,BU1002,"Financial Accounting",2,Business,4,Undergraduate,1,200070,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-105 (capacity 10)",10,0,4
+140086,BU1002,"Financial Accounting",2,Business,4,Undergraduate,2,200071,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-106 (capacity 10)",7,3,4
+140087,BU2006,"Organizational Behavior",2,Business,4,Undergraduate,1,200078,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-105 (capacity 10)",10,0,2
+140088,BU2006,"Organizational Behavior",2,Business,4,Undergraduate,2,200079,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-106 (capacity 10)",7,3,2
+140089,BU2009,"Microeconomics for Business",2,Business,4,Undergraduate,1,200080,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-103 (capacity 10)",4,6,5
+140090,BU3011,"Business Statistics",2,Business,4,Undergraduate,1,200081,"Monday, Wednesday",15:20-17:00,"Lab room SCI-151 (workstations 10)",10,0,5
+140091,BU3011,"Business Statistics",2,Business,4,Undergraduate,2,200082,"Monday, Wednesday",15:20-17:00,"Lab room SCI-152 (workstations 10)",10,0,5
+140092,BU3011,"Business Statistics",2,Business,4,Undergraduate,3,200083,"Monday, Wednesday",15:20-17:00,"Lab room SCI-153 (workstations 10)",9,1,5
+140093,BU3012,Entrepreneurship,2,Business,4,Undergraduate,1,200084,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-112 (capacity 10)",1,9,6
+140094,MA1001,"Calculus I",3,Mathematics,4,Undergraduate,1,200022,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-108 (capacity 10)",9,1,4
+140095,MA1002,"Calculus II",3,Mathematics,4,Undergraduate,1,200023,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-106 (capacity 10)",9,1,3
+140096,MA1004,"Discrete Mathematics",3,Mathematics,4,Undergraduate,1,200024,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-107 (capacity 10)",1,9,1
+140097,MA3012,"Numerical Methods",3,Mathematics,4,Undergraduate,1,200025,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-113 (capacity 10)",10,0,6
+140098,MA3012,"Numerical Methods",3,Mathematics,4,Undergraduate,2,200028,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-104 (capacity 10)",2,8,5
+140099,NS1001,"General Biology",4,"Natural Sciences",4,Undergraduate,1,200029,"Monday, Wednesday",20:50-22:30,"Lab room SCI-153 (workstations 10)",9,1,8
+140100,NS2006,Biochemistry,4,"Natural Sciences",4,Undergraduate,1,200030,"Monday, Wednesday",17:10-18:50,"Lab room SCI-151 (workstations 10)",10,0,6
+140101,NS2006,Biochemistry,4,"Natural Sciences",4,Undergraduate,2,200031,"Monday, Wednesday",15:20-17:00,"Lab room SCI-154 (workstations 10)",10,0,5
+140102,NS2006,Biochemistry,4,"Natural Sciences",4,Undergraduate,3,200032,"Monday, Wednesday",15:20-17:00,"Lab room SCI-155 (workstations 10)",10,0,5
+140103,NS2006,Biochemistry,4,"Natural Sciences",4,Undergraduate,4,200033,"Monday, Wednesday",15:20-17:00,"Lab room SCI-156 (workstations 10)",4,6,5
+140104,NS2007,"Introduction to Scientific Inquiry",4,"Natural Sciences",4,Undergraduate,1,200034,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-109 (capacity 10)",10,0,4
+140105,NS2007,"Introduction to Scientific Inquiry",4,"Natural Sciences",4,Undergraduate,2,200035,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-110 (capacity 10)",5,5,4
+10201,NS3010,Ecology,4,"Natural Sciences",4,Undergraduate,1,200124,"Tuesday, Thursday",08:00-09:40,"Lecture room SCI-103 (capacity 10)",10,0,9
+10202,NS3010,Ecology,4,"Natural Sciences",4,Undergraduate,2,200125,"Tuesday, Thursday",09:50-11:30,"Lecture room SCI-104 (capacity 10)",9,1,10
+140106,NS3010,Ecology,4,"Natural Sciences",4,Undergraduate,3,200036,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-107 (capacity 10)",3,7,7
+10203,NS3011,"Organic Chemistry I",4,"Natural Sciences",4,Undergraduate,1,200126,"Tuesday, Thursday",11:40-13:20,"Lecture room SCI-101 (capacity 10)",9,1,11
+10204,NS3011,"Organic Chemistry I",4,"Natural Sciences",4,Undergraduate,2,200127,"Tuesday, Thursday",13:30-15:10,"Lecture room SCI-102 (capacity 10)",10,0,12
+10205,NS3013,"Cell Biology",4,"Natural Sciences",4,Undergraduate,1,200128,"Tuesday, Thursday",15:20-17:00,"Lecture room SCI-103 (capacity 10)",9,1,13
+10206,NS3013,"Cell Biology",4,"Natural Sciences",4,Undergraduate,2,200129,"Tuesday, Thursday",17:10-18:50,"Lecture room SCI-104 (capacity 10)",10,0,14
+10207,NS4018,"Natural Sciences Capstone",4,"Natural Sciences",4,Undergraduate,1,200130,"Tuesday, Thursday",19:00-20:40,"Lecture room SCI-103 (capacity 10)",9,1,15
+10208,NS4018,"Natural Sciences Capstone",4,"Natural Sciences",4,Undergraduate,2,200118,"Tuesday, Thursday",20:50-22:30,"Lecture room SCI-102 (capacity 10)",10,0,16
+140107,NS4018,"Natural Sciences Capstone",4,"Natural Sciences",4,Undergraduate,3,200037,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-109 (capacity 10)",4,6,7
+10209,NS5001,"Molecular Biology",4,"Natural Sciences",4,Graduate,1,200119,Friday,15:00-18:20,"Lecture room SCI-105 (capacity 10)",10,0,35
+10210,NS5001,"Molecular Biology",4,"Natural Sciences",4,Graduate,2,200120,Friday,11:30-14:50,"Lecture room SCI-103 (capacity 10)",10,0,34
+10211,NS5002,"Advanced Analytical Chemistry",4,"Natural Sciences",4,Graduate,1,200121,Friday,15:00-18:20,"Lecture room SCI-103 (capacity 10)",10,0,35
+10212,NS5002,"Advanced Analytical Chemistry",4,"Natural Sciences",4,Graduate,2,200122,Friday,15:00-18:20,"Lecture room SCI-104 (capacity 10)",10,0,35
+10213,NS5003,"Environmental Research Methods",4,"Natural Sciences",4,Graduate,1,200123,Friday,11:30-14:50,"Lecture room SCI-105 (capacity 10)",10,0,34
+10225,EG1001,"Introduction to Engineering",5,Engineering,4,Undergraduate,1,200132,"Monday, Wednesday",08:00-09:40,"Lecture room TECH-123 (capacity 10)",10,0,1
+10226,EG1001,"Introduction to Engineering",5,Engineering,4,Undergraduate,2,200133,"Monday, Wednesday",09:50-11:30,"Lecture room TECH-101 (capacity 10)",9,1,2
+10227,EG1001,"Introduction to Engineering",5,Engineering,4,Undergraduate,3,200134,"Monday, Wednesday",11:40-13:20,"Lecture room TECH-101 (capacity 10)",10,0,3
+140068,EG1001,"Introduction to Engineering",5,Engineering,4,Undergraduate,4,200013,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-101 (capacity 10)",10,0,5
+140069,EG1001,"Introduction to Engineering",5,Engineering,4,Undergraduate,5,200014,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-102 (capacity 10)",6,4,5
+140070,EG1002,"Engineering Mechanics",5,Engineering,4,Undergraduate,1,200015,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-109 (capacity 10)",2,8,6
+10228,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,1,200135,"Monday, Wednesday",13:30-15:10,"Lecture room TECH-124 (capacity 10)",10,0,4
+10229,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,2,200136,"Monday, Wednesday",15:20-17:00,"Lecture room TECH-125 (capacity 10)",9,0,5
+10230,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,3,200137,"Monday, Wednesday",17:10-18:50,"Lecture room TECH-101 (capacity 10)",10,0,6
+10231,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,4,200138,"Monday, Wednesday",19:00-20:40,"Lecture room TECH-102 (capacity 10)",9,0,7
+10232,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,5,200139,"Monday, Wednesday",20:50-22:30,"Lecture room TECH-102 (capacity 10)",9,0,8
+10233,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,6,200140,"Tuesday, Thursday",08:00-09:40,"Lecture room TECH-103 (capacity 10)",10,0,9
+10234,EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,7,200141,"Tuesday, Thursday",09:50-11:30,"Lecture room TECH-126 (capacity 10)",10,0,10
+10235,EG2009,"Engineering Mathematics",5,Engineering,4,Undergraduate,1,200142,"Tuesday, Thursday",11:40-13:20,"Lecture room TECH-124 (capacity 10)",9,1,11
+10236,EG2009,"Engineering Mathematics",5,Engineering,4,Undergraduate,2,200143,"Tuesday, Thursday",13:30-15:10,"Lecture room TECH-125 (capacity 10)",10,0,12
+10237,EG2009,"Engineering Mathematics",5,Engineering,4,Undergraduate,3,200144,"Tuesday, Thursday",15:20-17:00,"Lecture room TECH-105 (capacity 10)",9,1,13
+140071,EG2009,"Engineering Mathematics",5,Engineering,4,Undergraduate,4,200076,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-104 (capacity 10)",1,9,3
+10238,EG3010,Statics,5,Engineering,4,Undergraduate,1,200145,"Tuesday, Thursday",17:10-18:50,"Lecture room TECH-127 (capacity 10)",10,0,14
+10239,EG3010,Statics,5,Engineering,4,Undergraduate,2,200146,"Tuesday, Thursday",19:00-20:40,"Lecture room TECH-128 (capacity 10)",9,1,15
+140072,EG3010,Statics,5,Engineering,4,Undergraduate,3,200077,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-110 (capacity 10)",2,8,6
+140073,EG3011,Dynamics,5,Engineering,4,Undergraduate,1,200101,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-102 (capacity 10)",4,6,4
+10240,EG4015,"Engineering Ethics",5,Engineering,4,Undergraduate,1,200147,"Tuesday, Thursday",20:50-22:30,"Lecture room TECH-106 (capacity 10)",9,1,16
+10241,EG4015,"Engineering Ethics",5,Engineering,4,Undergraduate,2,200148,Friday,15:00-18:20,"Lecture room TECH-103 (capacity 10)",10,0,35
+10242,EG4015,"Engineering Ethics",5,Engineering,4,Undergraduate,3,200149,Friday,08:00-11:20,"Lecture room TECH-102 (capacity 10)",10,0,33
+10260,EN1001,"College Composition",6,English,4,Undergraduate,1,200240,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-123 (capacity 10)",7,2,4
+10261,EN1001,"College Composition",6,English,4,Undergraduate,2,200241,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-124 (capacity 10)",8,2,5
+10262,EN1001,"College Composition",6,English,4,Undergraduate,3,200242,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-115 (capacity 10)",8,1,6
+140037,EN1001,"College Composition",6,English,4,Undergraduate,4,200016,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-101 (capacity 10)",10,0,1
+140038,EN1001,"College Composition",6,English,4,Undergraduate,5,200017,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-101 (capacity 10)",8,2,8
+10263,EN1002,"Introduction to Literature",6,English,4,Undergraduate,1,200243,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-115 (capacity 10)",7,3,7
+10264,EN1002,"Introduction to Literature",6,English,4,Undergraduate,2,200244,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-103 (capacity 10)",7,2,8
+140039,EN1002,"Introduction to Literature",6,English,4,Undergraduate,3,200018,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-101 (capacity 10)",10,0,7
+140040,EN1002,"Introduction to Literature",6,English,4,Undergraduate,4,200019,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-102 (capacity 10)",7,3,7
+10265,EN2006,"Introduction to Linguistics",6,English,4,Undergraduate,1,200245,"Tuesday, Thursday",08:00-09:40,"Lecture room NAB-116 (capacity 10)",7,2,9
+10266,EN2006,"Introduction to Linguistics",6,English,4,Undergraduate,2,200246,"Tuesday, Thursday",09:50-11:30,"Lecture room NAB-101 (capacity 10)",8,2,10
+10267,EN2009,"World Literature",6,English,4,Undergraduate,1,200247,"Tuesday, Thursday",11:40-13:20,"Lecture room NAB-125 (capacity 10)",9,0,11
+10268,EN2009,"World Literature",6,English,4,Undergraduate,2,200248,"Tuesday, Thursday",13:30-15:10,"Lecture room NAB-126 (capacity 10)",8,2,12
+140041,EN3013,"Technical Writing",6,English,4,Undergraduate,1,200020,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-102 (capacity 10)",9,1,8
+10269,EN4017,"Language and Culture",6,English,4,Undergraduate,1,200249,"Tuesday, Thursday",15:20-17:00,"Lecture room NAB-106 (capacity 10)",9,0,13
+10270,EN4017,"Language and Culture",6,English,4,Undergraduate,2,200250,"Tuesday, Thursday",17:10-18:50,"Lecture room NAB-116 (capacity 10)",9,0,14
+140042,EN4017,"Language and Culture",6,English,4,Undergraduate,3,200021,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-101 (capacity 10)",5,5,4
+10271,EN5001,"Literary Theory",6,English,4,Graduate,1,200344,"Tuesday, Thursday",19:00-20:40,"Lecture room NAB-127 (capacity 10)",10,0,15
+10272,EN5001,"Literary Theory",6,English,4,Graduate,2,200345,"Tuesday, Thursday",20:50-22:30,"Lecture room NAB-107 (capacity 10)",10,0,16
+10273,EN5002,"Advanced Writing Workshop",6,English,4,Graduate,1,200346,Friday,18:30-21:50,"Lecture room NAB-117 (capacity 10)",10,0,36
+140074,SS1004,"Principles of Economics",7,"Social Sciences",4,Undergraduate,1,200045,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-104 (capacity 10)",2,8,7
+10301,SS2006,"Social Science Research Methods",7,"Social Sciences",4,Undergraduate,1,200319,"Tuesday, Thursday",15:20-17:00,"Lecture room NAB-109 (capacity 10)",10,0,13
+10303,SS2006,"Social Science Research Methods",7,"Social Sciences",4,Undergraduate,2,200321,"Tuesday, Thursday",19:00-20:40,"Lecture room NAB-111 (capacity 10)",9,1,15
+10304,SS2006,"Social Science Research Methods",7,"Social Sciences",4,Undergraduate,3,200322,"Tuesday, Thursday",20:50-22:30,"Lecture room NAB-134 (capacity 10)",10,0,16
+140075,SS2006,"Social Science Research Methods",7,"Social Sciences",4,Undergraduate,4,200046,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-105 (capacity 10)",10,0,7
+140076,SS2006,"Social Science Research Methods",7,"Social Sciences",4,Undergraduate,5,200047,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-106 (capacity 10)",1,9,7
+10289,SS2009,"American Government",7,"Social Sciences",4,Undergraduate,1,200307,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-130 (capacity 10)",9,1,1
+10290,SS2009,"American Government",7,"Social Sciences",4,Undergraduate,2,200308,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-131 (capacity 10)",10,0,2
+140077,SS2009,"American Government",7,"Social Sciences",4,Undergraduate,3,200048,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-103 (capacity 10)",1,9,4
+10291,SS3010,"Social Problems",7,"Social Sciences",4,Undergraduate,1,200309,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-123 (capacity 10)",9,1,3
+10292,SS3010,"Social Problems",7,"Social Sciences",4,Undergraduate,2,200310,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-124 (capacity 10)",10,0,4
+10293,SS3011,"Developmental Psychology",7,"Social Sciences",4,Undergraduate,1,200311,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-122 (capacity 10)",10,0,5
+10302,SS3011,"Developmental Psychology",7,"Social Sciences",4,Undergraduate,2,200320,"Tuesday, Thursday",17:10-18:50,"Lecture room NAB-110 (capacity 10)",8,2,14
+140078,SS3011,"Developmental Psychology",7,"Social Sciences",4,Undergraduate,3,200049,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-104 (capacity 10)",6,4,4
+10294,SS5001,"Advanced Social Research",7,"Social Sciences",4,Graduate,1,200312,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-132 (capacity 10)",8,2,1
+10295,SS5001,"Advanced Social Research",7,"Social Sciences",4,Graduate,2,200313,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-125 (capacity 10)",10,0,7
+10296,SS5002,"Political Theory",7,"Social Sciences",4,Graduate,1,200314,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-126 (capacity 10)",10,0,8
+10297,SS5002,"Political Theory",7,"Social Sciences",4,Graduate,2,200315,"Tuesday, Thursday",08:00-09:40,"Lecture room NAB-133 (capacity 10)",10,0,9
+10298,SS5006,"Historical Research Methods",7,"Social Sciences",4,Graduate,1,200316,"Tuesday, Thursday",09:50-11:30,"Lecture room NAB-123 (capacity 10)",9,1,10
+10299,SS5006,"Historical Research Methods",7,"Social Sciences",4,Graduate,2,200317,"Tuesday, Thursday",11:40-13:20,"Lecture room NAB-124 (capacity 10)",9,1,11
+10300,SS5006,"Historical Research Methods",7,"Social Sciences",4,Graduate,3,200318,"Tuesday, Thursday",13:30-15:10,"Lecture room NAB-106 (capacity 10)",10,0,12
+10305,ED1001,"Foundations of Education",8,Education,4,Undergraduate,1,200254,Friday,08:00-11:20,"Lecture room NAB-135 (capacity 10)",10,0,33
+10306,ED1001,"Foundations of Education",8,Education,4,Undergraduate,2,200255,Friday,11:30-14:50,"Lecture room NAB-136 (capacity 10)",10,0,34
+140043,ED1001,"Foundations of Education",8,Education,4,Undergraduate,3,200074,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-101 (capacity 10)",10,0,2
+10321,ED1004,"Classroom Assessment",8,Education,4,Undergraduate,1,200270,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-128 (capacity 10)",9,1,1
+140044,ED1004,"Classroom Assessment",8,Education,4,Undergraduate,2,200075,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-101 (capacity 10)",2,8,3
+10307,ED2006,"Introduction to Special Education",8,Education,4,Undergraduate,1,200256,Friday,18:30-21:50,"Lecture room NAB-137 (capacity 10)",10,0,36
+10308,ED2006,"Introduction to Special Education",8,Education,4,Undergraduate,2,200257,Friday,08:00-11:20,"Lecture room NAB-138 (capacity 10)",10,0,33
+10309,ED2007,"Child Development",8,Education,4,Undergraduate,1,200258,Friday,08:00-11:20,"Lecture room NAB-127 (capacity 10)",10,0,33
+10310,ED2007,"Child Development",8,Education,4,Undergraduate,2,200259,Friday,11:30-14:50,"Lecture room NAB-128 (capacity 10)",10,0,34
+10311,ED2008,"Schools and Society",8,Education,4,Undergraduate,1,200260,Friday,15:00-18:20,"Lecture room NAB-125 (capacity 10)",10,0,35
+10312,ED2008,"Schools and Society",8,Education,4,Undergraduate,2,200261,Friday,11:30-14:50,"Lecture room NAB-126 (capacity 10)",10,0,34
+10322,ED2009,"Learning and Motivation",8,Education,4,Undergraduate,1,200271,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-129 (capacity 10)",10,0,2
+10323,ED2009,"Learning and Motivation",8,Education,4,Undergraduate,2,200272,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-113 (capacity 10)",10,0,3
+10328,ED2009,"Learning and Motivation",8,Education,4,Undergraduate,3,200277,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-105 (capacity 10)",10,0,8
+140045,ED2009,"Learning and Motivation",8,Education,4,Undergraduate,4,200094,"Monday, Wednesday",20:50-22:30,"Lecture room NAB-104 (capacity 10)",4,6,8
+10324,ED4016,"Educational Policy",8,Education,4,Undergraduate,1,200273,"Monday, Wednesday",13:30-15:10,"Lecture room NAB-107 (capacity 10)",9,1,4
+10325,ED4017,"Teaching Methods Seminar",8,Education,4,Undergraduate,1,200274,"Monday, Wednesday",15:20-17:00,"Lecture room NAB-114 (capacity 10)",10,0,5
+10326,ED4017,"Teaching Methods Seminar",8,Education,4,Undergraduate,2,200275,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-132 (capacity 10)",10,0,6
+140046,ED4017,"Teaching Methods Seminar",8,Education,4,Undergraduate,3,200095,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-101 (capacity 10)",10,0,6
+140047,ED4017,"Teaching Methods Seminar",8,Education,4,Undergraduate,4,200098,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-102 (capacity 10)",9,1,6
+10327,ED5006,"Learning Sciences",8,Education,4,Graduate,1,200276,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-108 (capacity 10)",10,0,7
+10329,HS1001,"Introduction to Health Sciences",9,"Health Sciences",4,Undergraduate,1,200278,"Tuesday, Thursday",08:00-09:40,"Lecture room HSC-101 (capacity 10)",9,1,9
+10330,HS1001,"Introduction to Health Sciences",9,"Health Sciences",4,Undergraduate,2,200279,"Tuesday, Thursday",09:50-11:30,"Lecture room HSC-102 (capacity 10)",8,2,10
+140049,HS1001,"Introduction to Health Sciences",9,"Health Sciences",4,Undergraduate,3,200011,"Tuesday, Thursday",11:40-13:20,"Lecture room NAB-101 (capacity 10)",3,7,11
+140065,HS1001,"Introduction to Health Sciences",9,"Health Sciences",4,Undergraduate,4,200012,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-102 (capacity 10)",10,0,2
+140066,HS1001,"Introduction to Health Sciences",9,"Health Sciences",4,Undergraduate,5,200026,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-104 (capacity 10)",4,6,1
+10331,HS1003,"Human Physiology",9,"Health Sciences",4,Undergraduate,1,200280,"Tuesday, Thursday",11:40-13:20,"Lab room HSC-151 (workstations 10)",10,0,11
+10344,HS1003,"Human Physiology",9,"Health Sciences",4,Undergraduate,2,200293,Friday,18:30-21:50,"Lab room HSC-151 (workstations 10)",10,0,36
+10332,HS2007,"Medical Terminology",9,"Health Sciences",4,Undergraduate,1,200281,"Tuesday, Thursday",13:30-15:10,"Lecture room HSC-101 (capacity 10)",10,0,12
+10333,HS2007,"Medical Terminology",9,"Health Sciences",4,Undergraduate,2,200282,"Tuesday, Thursday",15:20-17:00,"Lecture room HSC-102 (capacity 10)",9,1,13
+10334,HS2008,"Health and Wellness",9,"Health Sciences",4,Undergraduate,1,200283,"Tuesday, Thursday",17:10-18:50,"Lecture room HSC-101 (capacity 10)",8,2,14
+10335,HS2008,"Health and Wellness",9,"Health Sciences",4,Undergraduate,2,200284,"Tuesday, Thursday",19:00-20:40,"Lecture room HSC-101 (capacity 10)",9,1,15
+10336,HS3010,"Human Development Across the Lifespan",9,"Health Sciences",4,Undergraduate,1,200285,"Tuesday, Thursday",20:50-22:30,"Lecture room HSC-103 (capacity 10)",8,2,16
+10337,HS3010,"Human Development Across the Lifespan",9,"Health Sciences",4,Undergraduate,2,200286,Friday,08:00-11:20,"Lecture room HSC-103 (capacity 10)",10,0,33
+10338,HS3011,"Healthcare Ethics",9,"Health Sciences",4,Undergraduate,1,200287,Friday,18:30-21:50,"Lecture room HSC-102 (capacity 10)",10,0,36
+10339,HS3011,"Healthcare Ethics",9,"Health Sciences",4,Undergraduate,2,200288,Friday,11:30-14:50,"Lecture room HSC-104 (capacity 10)",10,0,34
+140067,HS3011,"Healthcare Ethics",9,"Health Sciences",4,Undergraduate,3,200027,"Monday, Wednesday",19:00-20:40,"Lecture room NAB-103 (capacity 10)",2,8,7
+10340,HS5001,Epidemiology,9,"Health Sciences",4,Graduate,1,200289,Friday,08:00-11:20,"Lecture room HSC-105 (capacity 10)",8,2,33
+10341,HS5001,Epidemiology,9,"Health Sciences",4,Graduate,2,200290,Friday,18:30-21:50,"Lecture room HSC-101 (capacity 10)",10,0,36
+10342,HS5002,"Health Policy Analysis",9,"Health Sciences",4,Graduate,1,200291,Friday,18:30-21:50,"Lecture room HSC-103 (capacity 10)",10,0,36
+10343,HS5002,"Health Policy Analysis",9,"Health Sciences",4,Graduate,2,200292,Friday,15:00-18:20,"Lecture room HSC-104 (capacity 10)",10,0,35
+10353,VD1001,"Introduction to Digital Media",10,"Arts and Media",4,Undergraduate,1,200324,"Monday, Wednesday",08:00-09:40,"Lecture room ART-102 (capacity 10)",9,1,1
+140079,VD1001,"Introduction to Digital Media",10,"Arts and Media",4,Undergraduate,2,200059,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-103 (capacity 10)",10,0,2
+140080,VD1001,"Introduction to Digital Media",10,"Arts and Media",4,Undergraduate,3,200060,"Monday, Wednesday",09:50-11:30,"Lecture room NAB-104 (capacity 10)",4,6,2
+10354,VD1003,"Introduction to Studio Art",10,"Arts and Media",4,Undergraduate,1,200325,"Monday, Wednesday",09:50-11:30,"Lecture room ART-101 (capacity 10)",10,0,2
+10355,VD1003,"Introduction to Studio Art",10,"Arts and Media",4,Undergraduate,2,200326,"Monday, Wednesday",11:40-13:20,"Lecture room ART-101 (capacity 10)",10,0,3
+10356,VD1004,"Film Studies",10,"Arts and Media",4,Undergraduate,1,200327,"Monday, Wednesday",13:30-15:10,"Lecture room ART-101 (capacity 10)",10,0,4
+10357,VD1004,"Film Studies",10,"Arts and Media",4,Undergraduate,2,200328,"Monday, Wednesday",15:20-17:00,"Lecture room ART-102 (capacity 10)",10,0,5
+10358,VD1005,"Media Production",10,"Arts and Media",4,Undergraduate,1,200329,"Monday, Wednesday",17:10-18:50,"Lecture room ART-103 (capacity 10)",10,0,6
+10359,VD1005,"Media Production",10,"Arts and Media",4,Undergraduate,2,200330,"Monday, Wednesday",19:00-20:40,"Lecture room ART-104 (capacity 10)",10,0,7
+140081,VD1005,"Media Production",10,"Arts and Media",4,Undergraduate,3,200061,"Monday, Wednesday",17:10-18:50,"Lecture room NAB-111 (capacity 10)",2,8,6
+10365,VD2006,"Visual Communication",10,"Arts and Media",4,Undergraduate,1,200336,"Tuesday, Thursday",15:20-17:00,"Lecture room ART-103 (capacity 10)",10,0,13
+10366,VD2006,"Visual Communication",10,"Arts and Media",4,Undergraduate,2,200337,"Tuesday, Thursday",17:10-18:50,"Lecture room ART-104 (capacity 10)",10,0,14
+140082,VD2006,"Visual Communication",10,"Arts and Media",4,Undergraduate,3,200062,"Monday, Wednesday",11:40-13:20,"Lecture room NAB-105 (capacity 10)",5,5,3
+10367,VD3010,Photography,10,"Arts and Media",4,Undergraduate,1,200338,"Tuesday, Thursday",19:00-20:40,"Lecture room ART-105 (capacity 10)",8,2,15
+10370,VD3010,Photography,10,"Arts and Media",4,Undergraduate,2,200341,Friday,18:30-21:50,"Lecture room ART-104 (capacity 10)",9,1,36
+140083,VD3010,Photography,10,"Arts and Media",4,Undergraduate,3,200063,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-105 (capacity 10)",6,4,1
+10360,VD4017,"Interactive Media Design",10,"Arts and Media",4,Undergraduate,1,200331,"Monday, Wednesday",20:50-22:30,"Lecture room ART-101 (capacity 10)",10,0,8
+10361,VD4017,"Interactive Media Design",10,"Arts and Media",4,Undergraduate,2,200332,"Tuesday, Thursday",08:00-09:40,"Lecture room ART-102 (capacity 10)",9,1,9
+10368,VD4018,"Arts and Media Capstone",10,"Arts and Media",4,Undergraduate,1,200339,"Tuesday, Thursday",20:50-22:30,"Lecture room ART-101 (capacity 10)",9,1,16
+10371,VD4018,"Arts and Media Capstone",10,"Arts and Media",4,Undergraduate,2,200342,Friday,08:00-11:20,"Lecture room ART-103 (capacity 10)",9,1,33
+140084,VD4018,"Arts and Media Capstone",10,"Arts and Media",4,Undergraduate,3,200064,"Monday, Wednesday",08:00-09:40,"Lecture room NAB-106 (capacity 10)",7,3,1
+10362,VD5001,"Advanced Media Production",10,"Arts and Media",4,Graduate,1,200333,"Tuesday, Thursday",09:50-11:30,"Lecture room ART-102 (capacity 10)",8,2,10
+10363,VD5001,"Advanced Media Production",10,"Arts and Media",4,Graduate,2,200334,"Tuesday, Thursday",11:40-13:20,"Lecture room ART-103 (capacity 10)",10,0,11
+10364,VD5003,"Media Theory",10,"Arts and Media",4,Graduate,1,200335,"Tuesday, Thursday",13:30-15:10,"Lecture room ART-103 (capacity 10)",10,0,12
+10369,VD5006,"Interactive Media Technologies",10,"Arts and Media",4,Graduate,1,200340,Friday,15:00-18:20,"Lecture room ART-102 (capacity 10)",10,0,35
+10372,VD5006,"Interactive Media Technologies",10,"Arts and Media",4,Graduate,2,200343,Friday,11:30-14:50,"Lecture room ART-105 (capacity 10)",9,1,34
+10001,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,1,200001,"Monday, Wednesday",08:00-09:40,"Lab room TECH-151 (workstations 10)",3,7,1
+10002,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,2,200002,"Monday, Wednesday",09:50-11:30,"Lab room TECH-152 (workstations 10)",3,7,2
+10003,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,3,200003,"Monday, Wednesday",11:40-13:20,"Lab room TECH-153 (workstations 10)",4,6,3
+10004,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,4,200004,"Monday, Wednesday",13:30-15:10,"Lab room TECH-154 (workstations 10)",5,5,4
+10005,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,5,200005,"Monday, Wednesday",15:20-17:00,"Lab room TECH-155 (workstations 10)",4,6,5
+10006,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,6,200006,"Monday, Wednesday",17:10-18:50,"Lab room TECH-156 (workstations 10)",2,8,6
+10007,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,7,200007,"Monday, Wednesday",19:00-20:40,"Lab room TECH-157 (workstations 10)",7,3,7
+10008,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,8,200008,"Monday, Wednesday",20:50-22:30,"Lab room TECH-158 (workstations 10)",10,0,8
+10009,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,9,200009,"Tuesday, Thursday",08:00-09:40,"Lab room TECH-159 (workstations 10)",10,0,9
+10010,BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,10,200010,"Tuesday, Thursday",09:50-11:30,"Lab room TECH-160 (workstations 10)",10,0,10

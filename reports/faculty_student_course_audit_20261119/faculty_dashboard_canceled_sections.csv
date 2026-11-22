@@ -1,0 +1,4 @@
+﻿semester_ID,semester,faculty_ID,faculty_login_ID,CRN,course_ID,course_Name,section_No,faculty_dashboard_My_Courses_includes_section,faculty_schedule_and_roster_includes_section,enrollment_rows_same_CRN_semester,parity
+2,Spring 2027,200196,200196,20077,BU2009,Microeconomics for Business,2,Yes,No,0,Faculty dashboard includes canceled section; current Faculty Schedule/Roster and Student pages exclude it
+2,Spring 2027,200004,200004,140028,BU3610,Advanced Business Law,1,Yes,No,0,Faculty dashboard includes canceled section; current Faculty Schedule/Roster and Student pages exclude it
+2,Spring 2027,200007,200007,140035,BU3071,Information Technology & Application,3,Yes,No,0,Faculty dashboard includes canceled section; current Faculty Schedule/Roster and Student pages exclude it

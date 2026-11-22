@@ -1,0 +1,81 @@
+{
+  "student_count": 1620,
+  "undergraduate_count": 1220,
+  "graduate_count": 400,
+  "identity_relationship_issues": 0,
+  "program_page_agree_undergraduates": 720,
+  "program_page_review_undergraduates": 500,
+  "student_information_vs_overview_major_mismatches": 500,
+  "degree_audit_vs_overview_major_mismatches": 2,
+  "transcript_vs_overview_major_mismatches": 0,
+  "undergraduates_stored_primary_without_published_major_requirements": 520,
+  "minor_page_mismatches": 0,
+  "graduate_program_not_shown_in_information": 400,
+  "all_target_semester_course_sets_agree": 1620,
+  "fall2026": {
+    "active_enrollments": 1619,
+    "students_with_schedule_page_course_omissions": 0,
+    "duplicate_course_groups": 34,
+    "duplicate_extra_rows": 53,
+    "prerequisite_unmet_enrollments": 522,
+    "passed_course_retakes": 69,
+    "course_level_mismatches": 237,
+    "students_over_credit_limit": 0,
+    "credit_limit_excess_credits": 0,
+    "student_conflict_pairs": 0,
+    "unscheduled_enrollments": 0,
+    "unmapped_requirement_courses": 1059
+  },
+  "spring2027": {
+    "active_enrollments": 1861,
+    "students_with_schedule_page_course_omissions": 0,
+    "duplicate_course_groups": 136,
+    "duplicate_extra_rows": 245,
+    "prerequisite_unmet_enrollments": 729,
+    "passed_course_retakes": 322,
+    "course_level_mismatches": 460,
+    "students_over_credit_limit": 28,
+    "credit_limit_excess_credits": 1288,
+    "student_conflict_pairs": 116,
+    "unscheduled_enrollments": 0,
+    "unmapped_requirement_courses": 1455
+  },
+  "students_with_any_integrity_review": 1199,
+  "semester_ids": {
+    "Fall 2026": 1,
+    "Spring 2027": 2
+  },
+  "saved_full_backup": "backups/ashford_waleed_full_20261119_161235.sql.gz",
+  "read_only_transaction": true,
+  "page_logic_reviewed": {
+    "Student Overview": "dashboard_data.php + student_semester_registered_courses",
+    "Student Information": "information.php + partial (currently raw Student.major_ID; no minor/Graduate_Student.Program resolver)",
+    "Degree Audit": "degree_audit_student_data.php (uses Student_Major; does not filter catalog names containing Minor when resolving primary)",
+    "Course Registration": "registration.php + registration_actions.php (session-scoped; active enrollment set matches common query; eligibility checks in registration_check.php)",
+    "My Schedule": "schedule.php (session-scoped; inner joins Time_Slot and faculty User can omit otherwise active enrollment rows)",
+    "Unofficial Transcript": "transcript.php (same major resolver as Overview; Student_History for completed rows; Enrollment separately for target terms)"
+  },
+  "limitations": [
+    "No General Education/elective requirement mapping tables were found; unmatched major/minor course cannot be called irrelevant.",
+    "Lecture and Lab rows reference Room records and each Course_Section has a single time_Slot_ID; there is no separate lab meeting-time relationship to independently validate.",
+    "An 11-credit UG registration is classified Review; 1-3 Below PT Minimum; >16 Overloaded per current status helper.",
+    "The Degree Audit and registration prerequisite checks use Student_History; 436 course-ID and 48 semester-ID link anomalies can distort results.",
+    "The script simulates page queries and resolver logic from current source; it does not log in as or impersonate students."
+  ],
+  "page_comparison_counts": {
+    "undergraduate_student_information_vs_overview_major_mismatch": 500,
+    "undergraduate_degree_audit_vs_overview_major_mismatch": 2,
+    "undergraduate_transcript_vs_overview_major_mismatch": 0,
+    "minor_display_mismatch_among_overview_degree_audit_transcript": 0,
+    "graduate_students_without_program_field_on_information_page": 400,
+    "students_with_same_active_registration_course_set_on_all_five_pages": 1620,
+    "students_consistent_on_displayed_major_or_program_fields": 720,
+    "students_requiring_program_display_source_review": 900
+  },
+  "review_interpretation": {
+    "students_with_any_integrity_or_program_display_review": 1199,
+    "students_with_no_flag_in_checks": 421,
+    "possible_unmapped_major_minor_courses_are_not_drops": true,
+    "general_education_and_elective_requirement_mappings_absent": true
+  }
+}

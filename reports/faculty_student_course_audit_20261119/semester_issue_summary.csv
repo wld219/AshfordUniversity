@@ -1,0 +1,3 @@
+﻿semester_ID,semester,sections_all,sections_active,sections_canceled,active_enrollment_rows,faculty_conflict_pairs,student_conflict_pairs,room_conflict_pairs,duplicate_course_groups,duplicate_extra_rows,enrollment_section_semester_mismatch_rows,canceled_enrollment_rows,faculty_history_comparison_rows,faculty_history_mismatch_rows,sections_without_faculty_login,active_sections_without_meeting_time,student_schedule_omitted_enrollment_rows
+1,Fall 2026,197,197,0,1619,0,0,0,34,53,0,0,110,110,0,0,0
+2,Spring 2027,201,198,3,1861,0,116,0,136,245,0,10,0,0,56,0,0

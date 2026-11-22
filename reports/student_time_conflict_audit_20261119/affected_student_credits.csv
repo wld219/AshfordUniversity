@@ -1,0 +1,20 @@
+student_ID,academic_level,semester_ID,semester_Name,current_course_count,proposed_course_count,current_credits,proposed_credits,current_status,proposed_status
+100505,Undergraduate,2,"Spring 2027",30,18,120,72,Overloaded,Overloaded
+100506,Undergraduate,2,"Spring 2027",32,20,128,80,Overloaded,Overloaded
+100507,Undergraduate,2,"Spring 2027",35,23,140,92,Overloaded,Overloaded
+100508,Undergraduate,2,"Spring 2027",36,23,144,92,Overloaded,Overloaded
+100509,Undergraduate,2,"Spring 2027",31,22,124,88,Overloaded,Overloaded
+100510,Undergraduate,2,"Spring 2027",22,20,88,80,Overloaded,Overloaded
+100517,Undergraduate,2,"Spring 2027",20,16,80,64,Overloaded,Overloaded
+100518,Undergraduate,2,"Spring 2027",13,9,52,36,Overloaded,Overloaded
+100519,Undergraduate,2,"Spring 2027",28,19,112,76,Overloaded,Overloaded
+100520,Undergraduate,2,"Spring 2027",13,11,52,44,Overloaded,Overloaded
+100521,Undergraduate,2,"Spring 2027",28,21,112,84,Overloaded,Overloaded
+100522,Undergraduate,2,"Spring 2027",20,18,80,72,Overloaded,Overloaded
+100529,Undergraduate,2,"Spring 2027",7,6,28,24,Overloaded,Overloaded
+100531,Undergraduate,2,"Spring 2027",10,8,40,32,Overloaded,Overloaded
+100532,Undergraduate,2,"Spring 2027",6,5,24,20,Overloaded,Overloaded
+100533,Undergraduate,2,"Spring 2027",16,14,64,56,Overloaded,Overloaded
+100534,Undergraduate,2,"Spring 2027",18,16,72,64,Overloaded,Overloaded
+100546,Undergraduate,2,"Spring 2027",12,11,48,44,Overloaded,Overloaded
+100570,Undergraduate,2,"Spring 2027",6,5,24,20,Overloaded,Overloaded

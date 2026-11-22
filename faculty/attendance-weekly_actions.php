@@ -1,187 +1,120 @@
 <?php
+
 declare(strict_types=1);
 
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once __DIR__ . '/attendance-window.php';
+require_once __DIR__ . '/attendance-support.php';
 
 require_role(['Faculty']);
-require_once __DIR__ . '/attendance-window.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit('Method not allowed.');
+	http_response_code(405);
+	exit('Method not allowed.');
 }
 
 csrf_verify();
 
-$facultyID = (int) $_SESSION['user_id'];
+$facultyId = (int) $_SESSION['user_id'];
+$semesterOptions = faculty_attendance_semesters($pdo);
+$semesterId = faculty_attendance_selected_semester(
+	$semesterOptions,
+	$_POST['semester_ID'] ?? null
+);
 $crn = filter_var($_POST['crn'] ?? null, FILTER_VALIDATE_INT);
-$crn = $crn ?: 0;
+$crn = $crn === false ? 0 : (int) $crn;
+$redirect = url('faculty/attendance-weekly.php?semester_ID=' . $semesterId . '&crn=' . $crn);
 
-$redirect = url('faculty/attendance-weekly.php?crn=' . $crn);
+$finish = static function (string $type, string $message) use ($redirect): void {
+	$_SESSION['flash'] = ['type' => $type, 'message' => $message];
+	header('Location: ' . $redirect);
+	exit;
+};
 
-function attendance_finish(string $redirect, string $type, string $message): void
-{
-    $_SESSION['flash'] = [
-        'type' => $type,
-        'message' => $message
-    ];
-    header('Location: ' . $redirect);
-    exit;
-}
-
-$section = one(
-    $pdo,
-    "SELECT cs.course_ID, cs.semester_ID
-     FROM Course_Section cs
-     WHERE cs.CRN = ?
-       AND cs.faculty_ID = ?
-       AND cs.is_Cancelled = 0",
-    [$crn, $facultyID]
-);
-
+$section = faculty_attendance_section($pdo, $facultyId, $semesterId, $crn);
 if (!$section) {
-    attendance_finish(
-        $redirect, 'error',
-        'This course section is not assigned to you.'
-    );
+	$finish('error', 'This active course section is not assigned to you for the selected semester.');
 }
 
-
-[$attendanceOpen, $attendanceMessage] =
-    attendance_date_allowed(
-        $pdo, $crn,
-        (new DateTimeImmutable(
-            'now',
-            new DateTimeZone('America/New_York')
-        ))->format('Y-m-d')
-    );
-
+$today = (new DateTimeImmutable('today'))->format('Y-m-d');
+[$dateAllowed, $dateMessage] = attendance_date_allowed($pdo, $crn, $today);
+if (!$dateAllowed) {
+	$finish('error', $dateMessage);
+}
+[$attendanceOpen, $windowMessage] = attendance_window_status($pdo, $crn);
 if (!$attendanceOpen) {
-    attendance_finish($redirect, 'error', $attendanceMessage);
+	$finish('error', $windowMessage);
 }
 
-$data = $_POST['attendance'] ?? [];
-
-if (!is_array($data)) {
-    attendance_finish($redirect, 'error', 'Invalid attendance submission.');
+$attendanceData = $_POST['attendance'] ?? [];
+if (!is_array($attendanceData)) {
+	$finish('error', 'Invalid attendance submission.');
 }
 
-$today = new DateTimeImmutable('today', new DateTimeZone('America/New_York'));
-$monday = $today->modify('Monday this week');
-$sunday = $monday->modify('+6 days');
-
-$roster = all_rows(
-    $pdo,
-    "SELECT student_ID FROM Enrollment WHERE CRN = ? AND semester_ID = ?",
-    [$crn, (int)$section['semester_ID']]
+$rosterRows = all_rows(
+	$pdo,
+	"SELECT e.student_ID
+	 FROM Enrollment e
+	 JOIN Course_Section cs
+	   ON cs.CRN = e.CRN AND cs.semester_ID = e.semester_ID
+	 WHERE e.CRN = ? AND e.semester_ID = ?
+	   AND cs.faculty_ID = ? AND cs.is_Cancelled = 0",
+	[$crn, $semesterId, $facultyId]
 );
-
-$validStudents = [];
-foreach ($roster as $row) {
-    $validStudents[(int)$row['student_ID']] = true;
+$roster = [];
+foreach ($rosterRows as $row) {
+	$roster[(int) $row['student_ID']] = true;
 }
 
 $updates = [];
-
-foreach ($data as $studentIDRaw => $dates) {
-    if (!ctype_digit((string)$studentIDRaw)) {
-        attendance_finish($redirect, 'error', 'Invalid student ID.');
-    }
-
-    $studentID = (int)$studentIDRaw;
-
-    if (!isset($validStudents[$studentID]) || !is_array($dates)) {
-        attendance_finish($redirect, 'error', 'Invalid student enrollment.');
-    }
-
-    foreach ($dates as $dateString => $status) {
-        if (!is_string($dateString) ||
-            !preg_match('/^\d{4}-\d{2}-\d{2}$/', $dateString)) {
-            attendance_finish($redirect, 'error', 'Invalid attendance date.');
-        }
-
-        $date = DateTimeImmutable::createFromFormat('!Y-m-d', $dateString);
-
-        if (!$date || $date->format('Y-m-d') !== $dateString ||
-            $dateString !== $today->format('Y-m-d')) {
-            attendance_finish(
-                $redirect, 'error',
-                'Attendance is permitted only for today.'
-            );
-        }
-
-        // An unmarked cell does not change an existing record.
-        if ($status === '') {
-            continue;
-        }
-
-        if ($status !== 'Present' && $status !== 'Absent') {
-            attendance_finish($redirect, 'error', 'Invalid attendance status.');
-        }
-
-        [$allowed, $message] = attendance_date_allowed(
-            $pdo, $crn, $dateString
-        );
-
-        if (!$allowed) {
-            attendance_finish($redirect, 'error', $message);
-        }
-
-        $updates[] = [$studentID, $dateString, $status];
-    }
+foreach ($attendanceData as $studentIdRaw => $dates) {
+	if (!ctype_digit((string) $studentIdRaw)) {
+		$finish('error', 'Invalid student ID.');
+	}
+	$studentId = (int) $studentIdRaw;
+	if (!isset($roster[$studentId]) || !is_array($dates)) {
+		$finish('error', 'A submitted student is not enrolled in this section for the selected semester.');
+	}
+	foreach ($dates as $date => $status) {
+		if (!is_string($date) || !faculty_attendance_date_is_valid($date) || $date !== $today) {
+			$finish('error', 'Attendance can only be completed for today.');
+		}
+		if ($status === '') {
+			continue; // Unmarked cells leave existing attendance unchanged.
+		}
+		if (!in_array($status, ['Present', 'Absent'], true)) {
+			$finish('error', 'Invalid attendance status. This database supports Present and Absent.');
+		}
+		$updates[] = [$studentId, $date, $status];
+	}
 }
 
 try {
-    $pdo->beginTransaction();
-
-    $save = $pdo->prepare(
-        "INSERT INTO Attendance
-         (student_ID, CRN, course_ID, attendance_Date, Present_Absent)
-         VALUES (?, ?, ?, ?, ?)
-         ON DUPLICATE KEY UPDATE
-         Present_Absent = VALUES(Present_Absent)"
-    );
-
-    foreach ($updates as [$studentID, $dateString, $status]) {
-        $save->execute([
-            $studentID,
-            $crn,
-            $section['course_ID'],
-            $dateString,
-            $status
-        ]);
-
-        audit_log(
-            $pdo,
-            'Update',
-            'Attendance',
-            (string)$studentID,
-            'Weekly attendance: ' . $status .
-            ' for CRN ' . $crn . ' on ' . $dateString
-        );
-    }
-
-    $pdo->commit();
-
-    attendance_finish(
-        $redirect,
-        'success',
-        'Attendance saved successfully for ' .
-        count($updates) . ' student/date entries.'
-    );
-
-} catch (Throwable $e) {
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
-
-    error_log('Weekly attendance error: ' . $e->getMessage());
-
-    attendance_finish(
-        $redirect,
-        'error',
-        'Unable to save attendance. Please try again.'
-    );
+	$pdo->beginTransaction();
+	$save = $pdo->prepare(
+		"INSERT INTO Attendance
+		 (student_ID, CRN, course_ID, attendance_Date, Present_Absent)
+		 VALUES (?, ?, ?, ?, ?)
+		 ON DUPLICATE KEY UPDATE Present_Absent = VALUES(Present_Absent)"
+	);
+	foreach ($updates as [$studentId, $date, $status]) {
+		$save->execute([$studentId, $crn, $section['course_ID'], $date, $status]);
+		audit_log(
+			$pdo,
+			'Update',
+			'Attendance',
+			(string) $studentId,
+			'Weekly attendance: ' . $status . ' for CRN ' . $crn . ' on ' . $date
+		);
+	}
+	$pdo->commit();
+	$finish('success', 'Attendance saved for ' . count($updates) . ' student/date entries.');
+} catch (Throwable $exception) {
+	if ($pdo->inTransaction()) {
+		$pdo->rollBack();
+	}
+	error_log('Weekly attendance error: ' . $exception->getMessage());
+	$finish('error', 'Unable to save attendance. Please try again.');
 }

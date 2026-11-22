@@ -1,0 +1,923 @@
+course_ID,course_Name,dept_ID,dept_Name,course_Credits,course_Type,active_fall_sections,enrolled_students_across_sections
+CS1001,"Introduction to Programming",1,"Computer Science",4,Undergraduate,2,20
+CS1002,"Object-Oriented Programming with Java",1,"Computer Science",4,Undergraduate,3,26
+CS1003,"Data Structures",1,"Computer Science",4,Undergraduate,0,0
+CS1004,"Database Systems",1,"Computer Science",4,Undergraduate,1,7
+CS1005,"Computer Networks",1,"Computer Science",4,Undergraduate,1,5
+CS2006,"Software Engineering",1,"Computer Science",4,Undergraduate,6,53
+CS2007,"Introduction to Computing",1,"Computer Science",4,Undergraduate,2,12
+CS2008,"Web Development",1,"Computer Science",4,Undergraduate,0,0
+CS2009,"Computer Organization",1,"Computer Science",4,Undergraduate,0,0
+CS3010,"Operating Systems",1,"Computer Science",4,Undergraduate,0,0
+CS3011,"Algorithm Design",1,"Computer Science",4,Undergraduate,2,13
+CS3012,"Introduction to Cybersecurity",1,"Computer Science",4,Undergraduate,0,0
+CS3013,"Human-Computer Interaction",1,"Computer Science",4,Undergraduate,0,0
+CS3308,"computer science",1,"Computer Science",4,Undergraduate,0,0
+CS4014,"Mobile Application Development",1,"Computer Science",4,Undergraduate,0,0
+CS4015,"Data Science Fundamentals",1,"Computer Science",4,Undergraduate,0,0
+CS4016,"Programming Languages",1,"Computer Science",4,Undergraduate,0,0
+CS4017,"Software Testing",1,"Computer Science",4,Undergraduate,0,0
+CS4018,"Computer Science Capstone",1,"Computer Science",4,Undergraduate,2,16
+CS5001,"Advanced Algorithms",1,"Computer Science",4,Graduate,0,0
+CS5002,"Distributed Systems",1,"Computer Science",4,Graduate,0,0
+CS5003,"Machine Learning",1,"Computer Science",4,Graduate,0,0
+CS5004,"Advanced Cybersecurity",1,"Computer Science",4,Graduate,0,0
+CS5005,"Advanced Database Research",1,"Computer Science",4,Graduate,0,0
+CS5006,"Software Architecture",1,"Computer Science",4,Graduate,0,0
+BU1001,"Introduction to Business",2,Business,4,Undergraduate,0,0
+BU1002,"Financial Accounting",2,Business,4,Undergraduate,2,17
+BU1003,"Managerial Accounting",2,Business,4,Undergraduate,0,0
+BU1004,"Principles of Marketing",2,Business,4,Undergraduate,0,0
+BU1005,"Corporate Finance",2,Business,4,Undergraduate,0,0
+BU2006,"Organizational Behavior",2,Business,4,Undergraduate,2,17
+BU2007,"Business Communication",2,Business,4,Undergraduate,0,0
+BU2008,"Business Law",2,Business,4,Undergraduate,0,0
+BU2009,"Microeconomics for Business",2,Business,4,Undergraduate,1,4
+BU3010,"Macroeconomics for Business",2,Business,4,Undergraduate,0,0
+BU3011,"Business Statistics",2,Business,4,Undergraduate,3,29
+BU3012,Entrepreneurship,2,Business,4,Undergraduate,1,1
+BU3013,"Operations Management",2,Business,4,Undergraduate,0,0
+BU4014,"Human Resource Management",2,Business,4,Undergraduate,0,0
+BU4015,"Consumer Behavior",2,Business,4,Undergraduate,0,0
+BU4016,"Tax Accounting",2,Business,4,Undergraduate,0,0
+BU4017,Auditing,2,Business,4,Undergraduate,0,0
+BU4018,"Business Capstone",2,Business,4,Undergraduate,0,0
+BU5001,"Strategic Management",2,Business,4,Graduate,0,0
+BU5002,"Advanced Financial Analysis",2,Business,4,Graduate,0,0
+BU5003,"Business Analytics",2,Business,4,Graduate,0,0
+BU5004,"Global Marketing Strategy",2,Business,4,Graduate,0,0
+BU5005,"Organizational Leadership",2,Business,4,Graduate,0,0
+BU5006,"Quantitative Business Research",2,Business,4,Graduate,0,0
+MA1001,"Calculus I",3,Mathematics,4,Undergraduate,1,9
+MA1002,"Calculus II",3,Mathematics,4,Undergraduate,1,9
+MA1003,"Linear Algebra",3,Mathematics,4,Undergraduate,0,0
+MA1004,"Discrete Mathematics",3,Mathematics,4,Undergraduate,1,1
+MA1005,"Probability and Statistics",3,Mathematics,4,Undergraduate,0,0
+MA2006,"Differential Equations",3,Mathematics,4,Undergraduate,0,0
+MA2007,"College Algebra",3,Mathematics,4,Undergraduate,0,0
+MA2008,Precalculus,3,Mathematics,4,Undergraduate,0,0
+MA2009,"Mathematical Reasoning",3,Mathematics,4,Undergraduate,0,0
+MA3010,"Calculus III",3,Mathematics,4,Undergraduate,0,0
+MA3011,"Introduction to Proofs",3,Mathematics,4,Undergraduate,0,0
+MA3012,"Numerical Methods",3,Mathematics,4,Undergraduate,2,12
+MA3013,"Abstract Algebra Fundamentals",3,Mathematics,4,Undergraduate,0,0
+MA4014,Geometry,3,Mathematics,4,Undergraduate,0,0
+MA4015,"Mathematical Modeling",3,Mathematics,4,Undergraduate,0,0
+MA4016,"Statistical Computing",3,Mathematics,4,Undergraduate,0,0
+MA4017,"History of Mathematics",3,Mathematics,4,Undergraduate,0,0
+MA4018,"Mathematics Capstone",3,Mathematics,4,Undergraduate,0,0
+MA5001,"Real Analysis",3,Mathematics,4,Graduate,0,0
+MA5002,"Abstract Algebra",3,Mathematics,4,Graduate,0,0
+MA5003,"Advanced Statistical Methods",3,Mathematics,4,Graduate,0,0
+MA5004,"Mathematical Optimization",3,Mathematics,4,Graduate,0,0
+MA5005,Topology,3,Mathematics,4,Graduate,0,0
+MA5006,"Numerical Analysis",3,Mathematics,4,Graduate,0,0
+NS1001,"General Biology",4,"Natural Sciences",4,Undergraduate,1,9
+NS1002,"General Chemistry",4,"Natural Sciences",4,Undergraduate,0,0
+NS1003,"General Physics",4,"Natural Sciences",4,Undergraduate,0,0
+NS1004,"Environmental Science",4,"Natural Sciences",4,Undergraduate,0,0
+NS1005,Genetics,4,"Natural Sciences",4,Undergraduate,0,0
+NS2006,Biochemistry,4,"Natural Sciences",4,Undergraduate,4,34
+NS2007,"Introduction to Scientific Inquiry",4,"Natural Sciences",4,Undergraduate,2,15
+NS2008,"Earth Science",4,"Natural Sciences",4,Undergraduate,0,0
+NS2009,Astronomy,4,"Natural Sciences",4,Undergraduate,0,0
+NS3010,Ecology,4,"Natural Sciences",4,Undergraduate,3,22
+NS3011,"Organic Chemistry I",4,"Natural Sciences",4,Undergraduate,2,19
+NS3012,"Organic Chemistry II",4,"Natural Sciences",4,Undergraduate,0,0
+NS3013,"Cell Biology",4,"Natural Sciences",4,Undergraduate,2,19
+NS4014,Microbiology,4,"Natural Sciences",4,Undergraduate,0,0
+NS4015,"Conservation Biology",4,"Natural Sciences",4,Undergraduate,0,0
+NS4016,"Scientific Data Analysis",4,"Natural Sciences",4,Undergraduate,0,0
+NS4017,"Science Communication",4,"Natural Sciences",4,Undergraduate,0,0
+NS4018,"Natural Sciences Capstone",4,"Natural Sciences",4,Undergraduate,3,23
+NS5001,"Molecular Biology",4,"Natural Sciences",4,Graduate,2,20
+NS5002,"Advanced Analytical Chemistry",4,"Natural Sciences",4,Graduate,2,20
+NS5003,"Environmental Research Methods",4,"Natural Sciences",4,Graduate,1,10
+NS5004,"Computational Physics",4,"Natural Sciences",4,Graduate,0,0
+NS5005,"Advanced Ecology",4,"Natural Sciences",4,Graduate,0,0
+NS5006,"Interdisciplinary Science Seminar",4,"Natural Sciences",4,Graduate,0,0
+EG1001,"Introduction to Engineering",5,Engineering,4,Undergraduate,5,45
+EG1002,"Engineering Mechanics",5,Engineering,4,Undergraduate,1,2
+EG1003,"Circuit Analysis",5,Engineering,4,Undergraduate,0,0
+EG1004,Thermodynamics,5,Engineering,4,Undergraduate,0,0
+EG1005,"Materials Science",5,Engineering,4,Undergraduate,0,0
+EG2006,"Engineering Design",5,Engineering,4,Undergraduate,0,0
+EG2007,"Engineering Graphics",5,Engineering,4,Undergraduate,7,67
+EG2008,"Engineering Computing",5,Engineering,4,Undergraduate,0,0
+EG2009,"Engineering Mathematics",5,Engineering,4,Undergraduate,4,29
+EG3010,Statics,5,Engineering,4,Undergraduate,3,21
+EG3011,Dynamics,5,Engineering,4,Undergraduate,1,4
+EG3012,"Digital Logic Design",5,Engineering,4,Undergraduate,0,0
+EG3013,"Fluid Mechanics",5,Engineering,4,Undergraduate,0,0
+EG4014,"Manufacturing Processes",5,Engineering,4,Undergraduate,0,0
+EG4015,"Engineering Ethics",5,Engineering,4,Undergraduate,3,29
+EG4016,"Project Management for Engineers",5,Engineering,4,Undergraduate,0,0
+EG4017,"Renewable Energy Systems",5,Engineering,4,Undergraduate,0,0
+EG4018,"Engineering Capstone",5,Engineering,4,Undergraduate,0,0
+EG5001,"Advanced Control Systems",5,Engineering,4,Graduate,0,0
+EG5002,"Robotics and Automation",5,Engineering,4,Graduate,0,0
+EG5003,"Computational Mechanics",5,Engineering,4,Graduate,0,0
+EG5004,"Sustainable Engineering Systems",5,Engineering,4,Graduate,0,0
+EG5005,"Advanced Materials Engineering",5,Engineering,4,Graduate,0,0
+EG5006,"Engineering Research Methods",5,Engineering,4,Graduate,0,0
+EL3010,"Structure and Grammar of English",6,English,4,Undergraduate,0,0
+EL3500,"Literature Across Cultures I: Analysis and Interpretation",6,English,4,Undergraduate,0,0
+EL3510,"Literature Across Cultures II: Theory",6,English,4,Undergraduate,0,0
+EL3600,"U.S. Literature I: Colonial Period to Civil War",6,English,4,Undergraduate,0,0
+EL3610,"U.S. Literature II: Civil War to Present",6,English,4,Undergraduate,0,0
+EL3700,"Survey of World Literature",6,English,4,Undergraduate,0,0
+EL3800,"English Literature I: Beowulf to 18th Century, inclusive of Shakespeare",6,English,4,Undergraduate,0,0
+EL3810,"English Literature II: Romantics to Present",6,English,4,Undergraduate,0,0
+EL3811,"Survey of African American Literature",6,English,4,Undergraduate,0,0
+EL3865,"Literatures of Asia and the Middle East",6,English,4,Undergraduate,0,0
+EL3870,"Literatures of Africa",6,English,4,Undergraduate,0,0
+EL3880,"Masterpieces of Hispanic Literature",6,English,4,Undergraduate,0,0
+EL3901,", Introduction to Creative Writing",6,English,4,Undergraduate,0,0
+EL3920,", The Art of Writing Poetry",6,English,4,Undergraduate,0,0
+EL3950,", Creative Nonfiction",6,English,4,Undergraduate,0,0
+EL4000,"Native American Literature",6,English,4,Undergraduate,0,0
+EL4010,"Harlem Renaissance",6,English,4,Undergraduate,0,0
+EL4015,"Multi-Ethnic Literatures of the United States",6,English,4,Undergraduate,0,0
+EL4020,"Asian American Literature",6,English,4,Undergraduate,0,0
+EL4030,"Women and Narrative",6,English,4,Undergraduate,0,0
+EL4040,"Black Woman Writers",6,English,4,Undergraduate,0,0
+EL4050,"Lesbian and Gay Literature",6,English,4,Undergraduate,0,0
+EL4060,"Literature of Class and Class Consciousness",6,English,4,Undergraduate,0,0
+EL4070,"Topics in African American Literature",6,English,4,Undergraduate,0,0
+EL4080,"Extraordinary Bodies: Disabilities in Literature",6,English,4,Undergraduate,0,0
+EL4090,"African American Novel",6,English,4,Undergraduate,0,0
+EL4091,"African American Poetry and Plays",6,English,4,Undergraduate,0,0
+EL4100,", English Internship (Harmonia Editorial Board)",6,English,4,Undergraduate,0,0
+EL4200,"Biblical-Classical Foundations of Multicultural Literature",6,English,4,Undergraduate,0,0
+EL4300,"20th-Century Literature: Colonialism and Post Colonialism",6,English,4,Undergraduate,0,0
+EL4325,"Shakespeare: Selected Plays",6,English,4,Undergraduate,0,0
+EL4400,"Critical Theory",6,English,4,Undergraduate,0,0
+EL4405,"Caribbean Literature",6,English,4,Undergraduate,0,0
+EL4500,"Topics in British/U.S. Literature",6,English,4,Undergraduate,0,0
+EL4510,"Modern Drama and Theater",6,English,4,Undergraduate,0,0
+EL4520,", Reading and Writing the Short Story",6,English,4,Undergraduate,0,0
+EL4550,"Modern English Literature 1890-1960",6,English,4,Undergraduate,0,0
+EL4560,"Multicultural British Literature Since 1960",6,English,4,Undergraduate,0,0
+EL4600,"Literature of India",6,English,4,Undergraduate,0,0
+EL4630,"Latin American Literature",6,English,4,Undergraduate,0,0
+EL4640,"French Literature",6,English,4,Undergraduate,0,0
+EL4650,"Literature of Russia and Eastern Europe",6,English,4,Undergraduate,0,0
+EL4800,"Major Authors",6,English,4,Undergraduate,0,0
+EN1001,"College Composition",6,English,4,Undergraduate,5,41
+EN1002,"Introduction to Literature",6,English,4,Undergraduate,4,31
+EN1003,"American Literature",6,English,4,Undergraduate,0,0
+EN1004,"British Literature",6,English,4,Undergraduate,0,0
+EN1005,"Creative Writing",6,English,4,Undergraduate,0,0
+EN2006,"Introduction to Linguistics",6,English,4,Undergraduate,2,15
+EN2007,"Academic Reading and Writing",6,English,4,Undergraduate,0,0
+EN2008,"Literature and Society",6,English,4,Undergraduate,0,0
+EN2009,"World Literature",6,English,4,Undergraduate,2,17
+EN3010,Poetry,6,English,4,Undergraduate,0,0
+EN3011,Drama,6,English,4,Undergraduate,0,0
+EN3012,"The Short Story",6,English,4,Undergraduate,0,0
+EN3013,"Technical Writing",6,English,4,Undergraduate,1,9
+EN4014,"Rhetoric and Argument",6,English,4,Undergraduate,0,0
+EN4015,"Editing and Publishing",6,English,4,Undergraduate,0,0
+EN4016,"Children's Literature",6,English,4,Undergraduate,0,0
+EN4017,"Language and Culture",6,English,4,Undergraduate,3,23
+EN4018,"English Capstone",6,English,4,Undergraduate,0,0
+EN5001,"Literary Theory",6,English,4,Graduate,2,20
+EN5002,"Advanced Writing Workshop",6,English,4,Graduate,1,10
+EN5003,"Contemporary Literature",6,English,4,Graduate,0,0
+EN5004,"Applied Linguistics",6,English,4,Graduate,0,0
+EN5005,"Research Methods in Literary Studies",6,English,4,Graduate,0,0
+EN5006,"Comparative Literature",6,English,4,Graduate,0,0
+HI3040,"Analysis of Culture",6,English,4,Undergraduate,0,0
+HI3692,"Modern Asian History",6,English,4,Undergraduate,0,0
+PE3240,"Inter-American Relations and Immigration",6,English,4,Undergraduate,0,0
+PE3450,"Women from a Global Perspective",6,English,4,Undergraduate,0,0
+PE4150,"Terrorism and Politics",6,English,4,Undergraduate,0,0
+PE4665,"Human Rights",6,English,4,Undergraduate,0,0
+SS1001,"Introduction to Psychology",7,"Social Sciences",4,Undergraduate,0,0
+SS1002,"Introduction to Sociology",7,"Social Sciences",4,Undergraduate,0,0
+SS1003,"Introduction to Political Science",7,"Social Sciences",4,Undergraduate,0,0
+SS1004,"Principles of Economics",7,"Social Sciences",4,Undergraduate,1,2
+SS1005,"World History",7,"Social Sciences",4,Undergraduate,0,0
+SS2006,"Social Science Research Methods",7,"Social Sciences",4,Undergraduate,5,40
+SS2007,"Cultural Anthropology",7,"Social Sciences",4,Undergraduate,0,0
+SS2008,"Human Geography",7,"Social Sciences",4,Undergraduate,0,0
+SS2009,"American Government",7,"Social Sciences",4,Undergraduate,3,20
+SS3010,"Social Problems",7,"Social Sciences",4,Undergraduate,2,19
+SS3011,"Developmental Psychology",7,"Social Sciences",4,Undergraduate,3,24
+SS3012,"Social Psychology",7,"Social Sciences",4,Undergraduate,0,0
+SS3013,"Comparative Politics",7,"Social Sciences",4,Undergraduate,0,0
+SS4014,"Introduction to Criminology",7,"Social Sciences",4,Undergraduate,0,0
+SS4015,"Economic Inequality",7,"Social Sciences",4,Undergraduate,0,0
+SS4016,"Modern American History",7,"Social Sciences",4,Undergraduate,0,0
+SS4017,"Ethics and Society",7,"Social Sciences",4,Undergraduate,0,0
+SS4018,"Social Sciences Capstone",7,"Social Sciences",4,Undergraduate,0,0
+SS5001,"Advanced Social Research",7,"Social Sciences",4,Graduate,2,18
+SS5002,"Political Theory",7,"Social Sciences",4,Graduate,2,20
+SS5003,"Behavioral Science Seminar",7,"Social Sciences",4,Graduate,0,0
+SS5004,"Social Policy Analysis",7,"Social Sciences",4,Graduate,0,0
+SS5005,"Advanced Comparative Politics",7,"Social Sciences",4,Graduate,0,0
+SS5006,"Historical Research Methods",7,"Social Sciences",4,Graduate,3,28
+ED1001,"Foundations of Education",8,Education,4,Undergraduate,3,30
+ED1002,"Educational Psychology",8,Education,4,Undergraduate,0,0
+ED1003,"Curriculum Design",8,Education,4,Undergraduate,0,0
+ED1004,"Classroom Assessment",8,Education,4,Undergraduate,2,11
+ED1005,"Educational Technology",8,Education,4,Undergraduate,0,0
+ED2006,"Introduction to Special Education",8,Education,4,Undergraduate,2,20
+ED2007,"Child Development",8,Education,4,Undergraduate,2,20
+ED2008,"Schools and Society",8,Education,4,Undergraduate,2,20
+ED2009,"Learning and Motivation",8,Education,4,Undergraduate,4,34
+ED3010,"Literacy Foundations",8,Education,4,Undergraduate,0,0
+ED3011,"Teaching Mathematics",8,Education,4,Undergraduate,0,0
+ED3012,"Teaching Science",8,Education,4,Undergraduate,0,0
+ED3013,"Multicultural Education",8,Education,4,Undergraduate,0,0
+ED4014,"Classroom Management",8,Education,4,Undergraduate,0,0
+ED4015,"Family and Community Partnerships",8,Education,4,Undergraduate,0,0
+ED4016,"Educational Policy",8,Education,4,Undergraduate,1,9
+ED4017,"Teaching Methods Seminar",8,Education,4,Undergraduate,4,39
+ED4018,"Education Capstone",8,Education,4,Undergraduate,0,0
+ED5001,"Educational Leadership",8,Education,4,Graduate,0,0
+ED5002,"Advanced Curriculum Studies",8,Education,4,Graduate,0,0
+ED5003,"Research Methods in Education",8,Education,4,Graduate,0,0
+ED5004,"Inclusive Education Seminar",8,Education,4,Graduate,0,0
+ED5005,"Education Policy Analysis",8,Education,4,Graduate,0,0
+ED5006,"Learning Sciences",8,Education,4,Graduate,1,10
+HS1001,"Introduction to Health Sciences",9,"Health Sciences",4,Undergraduate,5,34
+HS1002,"Human Anatomy",9,"Health Sciences",4,Undergraduate,0,0
+HS1003,"Human Physiology",9,"Health Sciences",4,Undergraduate,2,20
+HS1004,"Principles of Nutrition",9,"Health Sciences",4,Undergraduate,0,0
+HS1005,"Introduction to Public Health",9,"Health Sciences",4,Undergraduate,0,0
+HS2006,"Health Administration",9,"Health Sciences",4,Undergraduate,0,0
+HS2007,"Medical Terminology",9,"Health Sciences",4,Undergraduate,2,19
+HS2008,"Health and Wellness",9,"Health Sciences",4,Undergraduate,2,17
+HS2009,"Health Communication",9,"Health Sciences",4,Undergraduate,0,0
+HS3010,"Human Development Across the Lifespan",9,"Health Sciences",4,Undergraduate,2,18
+HS3011,"Healthcare Ethics",9,"Health Sciences",4,Undergraduate,3,22
+HS3012,"Health Statistics",9,"Health Sciences",4,Undergraduate,0,0
+HS3013,"Community Health",9,"Health Sciences",4,Undergraduate,0,0
+HS4014,"Environmental Health",9,"Health Sciences",4,Undergraduate,0,0
+HS4015,"Health Informatics",9,"Health Sciences",4,Undergraduate,0,0
+HS4016,"Healthcare Finance",9,"Health Sciences",4,Undergraduate,0,0
+HS4017,"Evidence-Based Health Practice",9,"Health Sciences",4,Undergraduate,0,0
+HS4018,"Health Sciences Capstone",9,"Health Sciences",4,Undergraduate,0,0
+HS5001,Epidemiology,9,"Health Sciences",4,Graduate,2,18
+HS5002,"Health Policy Analysis",9,"Health Sciences",4,Graduate,2,20
+HS5003,"Advanced Community Health",9,"Health Sciences",4,Graduate,0,0
+HS5004,"Healthcare Quality Management",9,"Health Sciences",4,Graduate,0,0
+HS5005,Biostatistics,9,"Health Sciences",4,Graduate,0,0
+HS5006,"Health Services Research",9,"Health Sciences",4,Graduate,0,0
+VD1001,"Introduction to Digital Media",10,"Arts and Media",4,Undergraduate,3,23
+VD1002,"Graphic Design Fundamentals",10,"Arts and Media",4,Undergraduate,0,0
+VD1003,"Introduction to Studio Art",10,"Arts and Media",4,Undergraduate,2,20
+VD1004,"Film Studies",10,"Arts and Media",4,Undergraduate,2,20
+VD1005,"Media Production",10,"Arts and Media",4,Undergraduate,3,22
+VD2006,"Visual Communication",10,"Arts and Media",4,Undergraduate,3,25
+VD2007,"Art Appreciation",10,"Arts and Media",4,Undergraduate,0,0
+VD2008,"Media Literacy",10,"Arts and Media",4,Undergraduate,0,0
+VD2009,"Drawing Fundamentals",10,"Arts and Media",4,Undergraduate,0,0
+VD3010,Photography,10,"Arts and Media",4,Undergraduate,3,23
+VD3011,"Design Principles",10,"Arts and Media",4,Undergraduate,0,0
+VD3012,"Audio Production",10,"Arts and Media",4,Undergraduate,0,0
+VD3013,"Animation Fundamentals",10,"Arts and Media",4,Undergraduate,0,0
+VD4014,"Digital Storytelling",10,"Arts and Media",4,Undergraduate,0,0
+VD4015,"Art History",10,"Arts and Media",4,Undergraduate,0,0
+VD4016,"Media Ethics",10,"Arts and Media",4,Undergraduate,0,0
+VD4017,"Interactive Media Design",10,"Arts and Media",4,Undergraduate,2,19
+VD4018,"Arts and Media Capstone",10,"Arts and Media",4,Undergraduate,3,25
+VD5001,"Advanced Media Production",10,"Arts and Media",4,Graduate,2,18
+VD5002,"Digital Design Research",10,"Arts and Media",4,Graduate,0,0
+VD5003,"Media Theory",10,"Arts and Media",4,Graduate,1,10
+VD5004,"Arts Administration",10,"Arts and Media",4,Graduate,0,0
+VD5005,"Creative Practice Research",10,"Arts and Media",4,Graduate,0,0
+VD5006,"Interactive Media Technologies",10,"Arts and Media",4,Graduate,2,19
+acl601,accounting,11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU3071,"Information Technology & Application",11,"Accounting, Taxation & Business Law",4,Undergraduate,10,58
+BU3502,"Principles of Accounting I",11,"Accounting, Taxation & Business Law",3,Undergraduate,0,0
+BU3511,"Principles of Accounting II",11,"Accounting, Taxation & Business Law",3,Undergraduate,0,0
+BU3600,"Principles of Business Law",11,"Accounting, Taxation & Business Law",2,Undergraduate,0,0
+BU3605,"Intermediate Business Law",11,"Accounting, Taxation & Business Law",2,Undergraduate,0,0
+BU3610,"Advanced Business Law",11,"Accounting, Taxation & Business Law",2,Undergraduate,0,0
+BU3800,"Marketing Principles",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU3905,"Business Communication",11,"Accounting, Taxation & Business Law",2,Undergraduate,0,0
+BU4500,"Intermediate Accounting I",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU4510,"Intermediate Accounting II",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU4570,"Federal Income Tax I",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU4590,"Cost Accounting",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU4762,"Financial Management",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+BU5115,"Operations Management",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU5190,"Business Strategy & Policy",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU5505,"Essentials Government Non/Profit",11,"Accounting, Taxation & Business Law",2,Graduate,0,0
+BU5520,"Financial Accounting Research",11,"Accounting, Taxation & Business Law",2,Graduate,0,0
+BU5525,"International Accounting",11,"Accounting, Taxation & Business Law",2,Graduate,0,0
+BU5540,"Advanced Accounting",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU5550,Auditing,11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU5555,"Accounting Information Systems",11,"Accounting, Taxation & Business Law",2,Graduate,0,0
+BU5560,"Financial Statement Analysis",11,"Accounting, Taxation & Business Law",2,Graduate,0,0
+BU7547,"International Accounting",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7555,"Accounting Information Systems",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7556,"Advanced Accounting & Assurances",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7560,"Forensic Accounting",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7561,"Case Studies in Forensic Accounting",11,"Accounting, Taxation & Business Law",3,Graduate,0,0
+BU7570,"Tax for Corporate Taxation",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7571,"Tax Ethics, Practices & Procedures",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7572,"Tax of S Corps, Partnerships & LLC",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7573,"Multi-State Taxation 3",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7574,"Estate & Gift Taxation",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7575,"Taxation of Reorganizations & Liquidations",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7576,"Specialized Topics: Tax Fraud 3",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7579,"Tax & Accounting Research",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7581,"Taxation of Estates & Trusts 3",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7582,"International Taxation 3",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7590,"Accounting Research",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+BU7750,"Money, Credit and Capital Markets",11,"Accounting, Taxation & Business Law",4,Graduate,0,0
+MA2300,"Calculus for Business & Economics (GE)",11,"Accounting, Taxation & Business Law",4,Undergraduate,0,0
+test,test,11,"Accounting, Taxation & Business Law",1,Undergraduate,0,0
+ED3742,"Middle Childhood & Adolescence",12,"Adolescence Education",4,Undergraduate,0,0
+ED3820,"Foundations of Special Education",12,"Adolescence Education",4,Undergraduate,0,0
+ED3900,"Foundations of Education",12,"Adolescence Education",4,Undergraduate,0,0
+ED4085,"Methods and Materials of Teaching Science in Secondary School",12,"Adolescence Education",4,Undergraduate,0,0
+ED4230,"Reading Across the Curriculum",12,"Adolescence Education",4,Undergraduate,0,0
+ED4231,"Reading Practicum",12,"Adolescence Education",4,Undergraduate,0,0
+ED5890,"Pre-teaching Practicum & Seminar",12,"Adolescence Education",4,Graduate,0,0
+ED5900,"* Student Teaching & Seminar in",12,"Adolescence Education",4,Graduate,0,0
+ACLS601,"Advanced Cardiac Life Support (1.0)",13,"Biological Sciences",4,Undergraduate,0,0
+BLS501,"Basic Life Support (0.5)",13,"Biological Sciences",4,Undergraduate,0,0
+BS2490,"Environmental Science",13,"Biological Sciences",4,Undergraduate,0,0
+BS3400,"Vertebrate Physiology",13,"Biological Sciences",4,Undergraduate,0,0
+BS3450,"Plant Biology",13,"Biological Sciences",4,Undergraduate,0,0
+BS3510,Parasitology,13,"Biological Sciences",4,Undergraduate,0,0
+BS3520,"Comparative Anatomy",13,"Biological Sciences",4,Undergraduate,0,0
+BS3530,"Comparative Genomics",13,"Biological Sciences",4,Undergraduate,0,0
+BS3531,"Comparative Genomics Lab",13,"Biological Sciences",4,Undergraduate,0,0
+BS3710,"Environmental Physiology",13,"Biological Sciences",4,Undergraduate,0,0
+BS3810,"Biological Aspects of Aging",13,"Biological Sciences",4,Undergraduate,0,0
+BS3910,"Introduction to Bioinformatics",13,"Biological Sciences",4,Undergraduate,0,0
+BS4400,"Cell Biology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4410,Histology,13,"Biological Sciences",4,Undergraduate,0,0
+BS4420,Microbiology,13,"Biological Sciences",4,Undergraduate,0,0
+BS4430,"Developmental Biology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4440,Evolution,13,"Biological Sciences",4,Undergraduate,0,0
+BS4460,Genetics,13,"Biological Sciences",4,Undergraduate,0,0
+BS4461,Immunology,13,"Biological Sciences",4,Undergraduate,0,0
+BS4470,Ecology,13,"Biological Sciences",4,Undergraduate,0,0
+BS4471,"Freshwater Ecology (Limnology)",13,"Biological Sciences",4,Undergraduate,0,0
+BS4474,"Microbial Ecology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4480,"Animal Behavior",13,"Biological Sciences",4,Undergraduate,0,0
+BS4491,"Human Ecology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4500,"Cell and Molecular Neurobiology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4550,"Cancer Cell Biology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4560,"Molecular Biology",13,"Biological Sciences",4,Undergraduate,0,0
+BS4680,"Environmental Health",13,"Biological Sciences",4,Undergraduate,0,0
+BS5410,"/5420 Senior Seminar I and II",13,"Biological Sciences",4,Graduate,0,0
+BS5420,"Seminar II in Biology (2)",13,"Biological Sciences",4,Graduate,0,0
+BS5590,"Advanced Research",13,"Biological Sciences",4,Graduate,0,0
+BS5591,"Environmental Research",13,"Biological Sciences",4,Graduate,0,0
+BS9990,"Independent Study",13,"Biological Sciences",2,Graduate,0,0
+CE2000,"Community Engagement (2)",13,"Biological Sciences",4,Undergraduate,0,0
+CP4510,Biochemistry,13,"Biological Sciences",4,Undergraduate,0,0
+CS2510,"/CS2511 Computer Programming I&II",13,"Biological Sciences",8,Undergraduate,0,0
+CS3810,"Data Structures",13,"Biological Sciences",4,Undergraduate,0,0
+CS4400,"Artificial Intelligence",13,"Biological Sciences",4,Undergraduate,0,0
+CS4550,"Database Systems",13,"Biological Sciences",4,Undergraduate,0,0
+EL1000,"English Composition I (4)",13,"Biological Sciences",4,Undergraduate,0,0
+FY1000,"First Year Seminar (4)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB501,"Fundamentals of Osteopathic Medicine (7.5)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB502,"Hematological/Immunological System (7.0)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB503,"Integumentary System (4.5)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB504,"Neurological System (15.0)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB505,"Musculoskeletal System (4.5)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB601,"Cardiovascular System (8.0)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB602,"Respiratory System (5.0)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB603,"Gastrointestinal System (7.5)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB604,"Genitourinary System (6.0)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB605,"Reproductive System (5.0)",13,"Biological Sciences",4,Undergraduate,0,0
+LDB606,"Endocrine System (5.0)",13,"Biological Sciences",4,Undergraduate,0,0
+MA2090,"Precalculus (4)",13,"Biological Sciences",4,Undergraduate,0,0
+MA3030,"Discrete Mathematics",13,"Biological Sciences",4,Undergraduate,0,0
+MA3210,"Intro to Probability and Statistics",13,"Biological Sciences",4,Undergraduate,0,0
+PY2010,"Introduction to Psychology (4)",13,"Biological Sciences",4,Undergraduate,0,0
+SEM601,"Child Abuse Seminar (0.5)",13,"Biological Sciences",4,Undergraduate,0,0
+SEM603,"Infection Control Seminar (0.5)",13,"Biological Sciences",4,Undergraduate,0,0
+BS2400,"Basic Bio Sciences I w/ Lab",14,"Chemistry & Physics",4,Undergraduate,0,0
+BS2401,"Basic Biosciences I Lab Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+BS2410,"Basic Bio Sciences II w/ Lab",14,"Chemistry & Physics",4,Undergraduate,0,0
+BS2411,"Basic Biosciences II Lab Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+BS6750,"Biological Pharmacology",14,"Chemistry & Physics",3,Graduate,0,0
+CP2120,"Principles of Chemistry I",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP2121,"Principles of Chemistry I Lab",14,"Chemistry & Physics",1,Undergraduate,0,0
+CP2130,"Principles of Chemistry II",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP2131,"Principles of Chemistry II Lab",14,"Chemistry & Physics",1,Undergraduate,0,0
+CP2220,"Structure of Physics I",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP2221,"Structure of Physics I Lab",14,"Chemistry & Physics",1,Undergraduate,0,0
+CP2230,"Structure of Physics II",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP2231,"Structure of Physics II Lab",14,"Chemistry & Physics",1,Undergraduate,0,0
+CP2240,"General Physics I",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP2241,"General Physics I Lab",14,"Chemistry & Physics",4,Undergraduate,0,0
+CP2250,"General Physics II",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP2251,"General Physics II Lab",14,"Chemistry & Physics",1,Undergraduate,0,0
+CP3230,"Mathematical Methods in the Physical Sciences",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP3300,"Organic Chemistry I",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP3302,"Organic Chemistry I Lab",14,"Chemistry & Physics",2,Undergraduate,0,0
+CP3310,"Organic Chemistry II",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP3312,"Organic Chemistry II Lab",14,"Chemistry & Physics",2,Undergraduate,0,0
+CP3400,"Analytical Chemistry",14,"Chemistry & Physics",5,Undergraduate,0,0
+CP3450,"Inorganic Chemistry",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4320,"Advanced Organic Chemistry",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4490,"Biochemistry for Life Sciences",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4515,"Biochemistry II",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4520,"Biochemistry Lab",14,"Chemistry & Physics",2,Undergraduate,0,0
+CP4600,"Forensic Chemistry Techniques",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4700,"Physical Chemistry I",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4710,"Physical Chemistry II",14,"Chemistry & Physics",3,Undergraduate,0,0
+CP4720,"Physical Chemistry Lab",14,"Chemistry & Physics",2,Undergraduate,0,0
+CP4800,"Advanced Chemical Methods",14,"Chemistry & Physics",5,Undergraduate,0,0
+CP5500,"Advanced Topics in Chemistry",14,"Chemistry & Physics",3,Graduate,0,0
+CP5900,"Research 2",14,"Chemistry & Physics",4,Graduate,0,0
+CP5920,"Seminar I",14,"Chemistry & Physics",1,Graduate,0,0
+CP5921,"Seminar II",14,"Chemistry & Physics",1,Graduate,0,0
+CP9900,"Independent Study in Chem./Phys 2",14,"Chemistry & Physics",4,Graduate,0,0
+CP9990,"Independent Study in Chemistry/Physics 2‑",14,"Chemistry & Physics",4,Graduate,0,0
+MA2310,"Calculus I",14,"Chemistry & Physics",4,Undergraduate,0,0
+MA2320,"Calculus II",14,"Chemistry & Physics",4,Undergraduate,0,0
+MA3160,"Linear Algebra",14,"Chemistry & Physics",4,Undergraduate,0,0
+MA3330,"Calculus III",14,"Chemistry & Physics",4,Undergraduate,0,0
+MA4360,"Differential Equations",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2000,"Physics 1, Algebra-based Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2001,"Physics 1, Algebra Based Lab Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2100,"Physics 2, Algebra-based Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2101,"Physics 2, Algebra-based Lab Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2200,"Physics 1, Calculus-based Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2201,"Physics 1, Calculus-based lab Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2300,"Physics 2, Calculus-based Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2301,"Physics 2, Calculus-based Lab Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX2900,"Astronomy Credits: 3 AND PX 2901 - Astronomy Laboratory Credits: 1",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3000,"Waves and Modern Physics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3100,"Mathematical Methods in Physics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3200,"Computational Physics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3600,"Mechanics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3700,"Electromagnetism Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3800,"Relativity Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX3900,"Experimental Physics and Electronics Lab Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX4100,"Thermodynamics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX4200,"Quantum Mechanics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX4600,"Applied Mechanics Credits: 3",14,"Chemistry & Physics",4,Undergraduate,0,0
+PX5000,"Advanced Topics in Physics Credits: 3",14,"Chemistry & Physics",4,Graduate,0,0
+PX5100,"Econophysics Credits: 3",14,"Chemistry & Physics",4,Graduate,0,0
+PX5500,"Senior Seminar 1 Credits: 1",14,"Chemistry & Physics",4,Graduate,0,0
+PX5600,"Senior Seminar 2 Credits: 1",14,"Chemistry & Physics",4,Graduate,0,0
+CE1001,"Introduction to Childhood Education",15,"Childhood Education & Literacy",4,Undergraduate,0,0
+CE2001,"Child Development and Learning",15,"Childhood Education & Literacy",4,Undergraduate,0,0
+CE3001,"Curriculum Design for Elementary Education",15,"Childhood Education & Literacy",4,Undergraduate,0,0
+CE4001,"Student Teaching Seminar",15,"Childhood Education & Literacy",4,Undergraduate,0,0
+EE1001,"Introduction to Special Education",16,"Exceptional Education & Learning",4,Undergraduate,0,0
+EE2001,"Assessment and Evaluation in Special Education",16,"Exceptional Education & Learning",4,Undergraduate,0,0
+EE3001,"Individualized Education Programs",16,"Exceptional Education & Learning",4,Undergraduate,0,0
+EE4001,"Special Education Practicum",16,"Exceptional Education & Learning",4,Undergraduate,0,0
+AS2112,"American People I",17,"History & Philosophy",4,Undergraduate,0,0
+AS2122,"American People II",17,"History & Philosophy",4,Undergraduate,0,0
+AS2252,"U.S. Social Movements",17,"History & Philosophy",4,Undergraduate,0,0
+AS2262,"African American History I",17,"History & Philosophy",4,Undergraduate,0,0
+AS2263,"African American History II",17,"History & Philosophy",4,Undergraduate,0,0
+AS2300,"Problems in US Environmental History",17,"History & Philosophy",4,Undergraduate,0,0
+AS2640,"U.S. Latina/o History",17,"History & Philosophy",4,Undergraduate,0,0
+AS2750,Food,17,"History & Philosophy",4,Undergraduate,0,0
+AS3222,"Urban History",17,"History & Philosophy",4,Undergraduate,0,0
+AS3402,"Women, Work, and Careers",17,"History & Philosophy",4,Undergraduate,0,0
+AS3412,"African-American Women’s History",17,"History & Philosophy",4,Undergraduate,0,0
+AS3462,"History of Women in the U.S.",17,"History & Philosophy",4,Undergraduate,0,0
+AS3482,"History of Love and Sexuality",17,"History & Philosophy",4,Undergraduate,0,0
+AS3640,"History & Culture of Latinos in the US",17,"History & Philosophy",4,Undergraduate,0,0
+AS4200,"Environmental Journalism",17,"History & Philosophy",4,Undergraduate,0,0
+AS4212,"Early America",17,"History & Philosophy",4,Undergraduate,0,0
+AS4215,"Critical Ideas in American History",17,"History & Philosophy",4,Undergraduate,0,0
+AS4218,"Civil War and Reconstruction",17,"History & Philosophy",4,Undergraduate,0,0
+AS4222,"The Emergence of Modern America",17,"History & Philosophy",4,Undergraduate,0,0
+AS4252,"Immigration History",17,"History & Philosophy",4,Undergraduate,0,0
+AS4253,"Latino New York",17,"History & Philosophy",4,Undergraduate,0,0
+AS4282,"America in War and Peace, 1898 to 1975",17,"History & Philosophy",4,Undergraduate,0,0
+AS4283,"America between the World Wars",17,"History & Philosophy",4,Undergraduate,0,0
+AS4285,"Vietnam and After",17,"History & Philosophy",4,Undergraduate,0,0
+AS4290,"Youth in America: A History",17,"History & Philosophy",4,Undergraduate,0,0
+AS4292,"America Since World War II: 1945-1989",17,"History & Philosophy",4,Undergraduate,0,0
+AS4402,"History of the Family in the U.S.",17,"History & Philosophy",4,Undergraduate,0,0
+AS4420,"History of New York City and State",17,"History & Philosophy",4,Undergraduate,0,0
+AS4432,"History of the Women’s Movement",17,"History & Philosophy",4,Undergraduate,0,0
+AS4832,"Internship in Journalism",17,"History & Philosophy",4,Undergraduate,0,0
+AS5000,"U.S. History in Global Perspectives",17,"History & Philosophy",4,Graduate,0,0
+AS5212,"Narrative and History",17,"History & Philosophy",4,Graduate,0,0
+AS5312,"History of U.S. Culture",17,"History & Philosophy",4,Graduate,0,0
+AS5350,"History of the Slave Narrative",17,"History & Philosophy",4,Graduate,0,0
+AS5412,"Protest and Change",17,"History & Philosophy",4,Graduate,0,0
+AS5800,"Research in American History and Culture",17,"History & Philosophy",4,Graduate,0,0
+BS4472,"Microbial Ecology",17,"History & Philosophy",4,Undergraduate,0,0
+BS4651,Toxicology,17,"History & Philosophy",4,Undergraduate,0,0
+CP2050,"Nature & Development of Science",17,"History & Philosophy",4,Undergraduate,0,0
+CP2300,"/2301 Weather Studies with Lab",17,"History & Philosophy",4,Undergraduate,0,0
+CP2400,"/2401 Ocean Studies with Lab",17,"History & Philosophy",4,Undergraduate,0,0
+CP2500,"/2501 Climate Studies with Lab",17,"History & Philosophy",4,Undergraduate,0,0
+CP2600,"Environmental Analysis of Long Island",17,"History & Philosophy",4,Undergraduate,0,0
+EL2233,"Environmental Literature",17,"History & Philosophy",4,Undergraduate,0,0
+HI1010,"World Religions – West",17,"History & Philosophy",4,Undergraduate,0,0
+HI1020,"World Religions – East",17,"History & Philosophy",4,Undergraduate,0,0
+HI2155,"Introduction to Comparative Religion",17,"History & Philosophy",4,Undergraduate,0,0
+HI2200,"Science in Western Civilization",17,"History & Philosophy",4,Undergraduate,0,0
+HI2511,"World History I--Non-Western World",17,"History & Philosophy",4,Undergraduate,0,0
+HI2681,"Introduction to European History",17,"History & Philosophy",4,Undergraduate,0,0
+HI2700,"Introduction to Logic *",17,"History & Philosophy",4,Undergraduate,0,0
+HI2720,"Introduction to Philosophy",17,"History & Philosophy",4,Undergraduate,0,0
+HI2810,"Geography, Earth, and People",17,"History & Philosophy",4,Undergraduate,0,0
+HI3001,"Intro to Environmental Studies",17,"History & Philosophy",4,Undergraduate,0,0
+HI3002,"Rise of Reason",17,"History & Philosophy",4,Undergraduate,0,0
+HI3003,"Environments in World History I Antiquity-1500",17,"History & Philosophy",4,Undergraduate,0,0
+HI3005,"ENVIR WRLD HIST II 1500-PRES",17,"History & Philosophy",4,Undergraduate,0,0
+HI3011,"Foundations of the Judeo-Christian Tradition",17,"History & Philosophy",4,Undergraduate,0,0
+HI3021,"Europe in the Middle Ages",17,"History & Philosophy",4,Undergraduate,0,0
+HI3030,"From God to Machine",17,"History & Philosophy",4,Undergraduate,0,0
+HI3080,"Asian Cultures",17,"History & Philosophy",4,Undergraduate,0,0
+HI3091,"African Cultures",17,"History & Philosophy",4,Undergraduate,0,0
+HI3102,"Hispanic Heritage",17,"History & Philosophy",4,Undergraduate,0,0
+HI3110,"Latin American Culture",17,"History & Philosophy",4,Undergraduate,0,0
+HI3120,"Latin America: Environment and Society",17,"History & Philosophy",4,Undergraduate,0,0
+HI3130,"The Black Church In America",17,"History & Philosophy",4,Undergraduate,0,0
+HI3200,"Contemporary Religious Experience",17,"History & Philosophy",4,Undergraduate,0,0
+HI3302,"Hispanic Heritage",17,"History & Philosophy",4,Undergraduate,0,0
+HI3323,Buddhism,17,"History & Philosophy",4,Undergraduate,0,0
+HI3455,"Modern European Revolutions",17,"History & Philosophy",4,Undergraduate,0,0
+HI3458,"Frontiers of Science and Technology in the 20th Century",17,"History & Philosophy",4,Undergraduate,0,0
+HI3525,"Ancient Greek Philosophy",17,"History & Philosophy",4,Undergraduate,0,0
+HI3558,"Classical Greco-Roman History",17,"History & Philosophy",4,Undergraduate,0,0
+HI3600,"Global Geography",17,"History & Philosophy",4,Undergraduate,0,0
+HI3610,"America’s African Heritage",17,"History & Philosophy",4,Undergraduate,0,0
+HI3640,"African History",17,"History & Philosophy",4,Undergraduate,0,0
+HI3700,"Historical Geography of Latin America",17,"History & Philosophy",4,Undergraduate,0,0
+HI3703,"Modern Philosophy",17,"History & Philosophy",4,Undergraduate,0,0
+HI3704,"African Religions and Philosophy",17,"History & Philosophy",4,Undergraduate,0,0
+HI3710,"Contemporary Philosophical Issues",17,"History & Philosophy",4,Undergraduate,0,0
+HI3752,Ethics,17,"History & Philosophy",4,Undergraduate,0,0
+HI3835,"Islamic Cultures",17,"History & Philosophy",4,Undergraduate,0,0
+HI3840,"Crescent and Cross",17,"History & Philosophy",4,Undergraduate,0,0
+HI3900,"Modern China [study abroad]",17,"History & Philosophy",4,Undergraduate,0,0
+HI3950,"Philosophy of Religion",17,"History & Philosophy",4,Undergraduate,0,0
+HI4001,"Nineteenth Century",17,"History & Philosophy",4,Undergraduate,0,0
+HI4011,"Twentieth Century",17,"History & Philosophy",4,Undergraduate,0,0
+HI4051,"Logic and Scientific Reasoning",17,"History & Philosophy",4,Undergraduate,0,0
+HI4062,"Making History",17,"History & Philosophy",4,Undergraduate,0,0
+HI4305,"Islam and the Quran",17,"History & Philosophy",4,Undergraduate,0,0
+HI4306,"Golden Age of Islam",17,"History & Philosophy",4,Undergraduate,0,0
+HI4308,"History of the Modern Middle East",17,"History & Philosophy",4,Undergraduate,0,0
+HI4318,"Islamic Philosophy and Mysticism",17,"History & Philosophy",4,Undergraduate,0,0
+HI4395,"Philosophy from the 20th to the 21st Century",17,"History & Philosophy",4,Undergraduate,0,0
+HI4415,"Europe of the Dictators",17,"History & Philosophy",4,Undergraduate,0,0
+HI4420,"Women and Witchcraft",17,"History & Philosophy",4,Undergraduate,0,0
+HI4557,"Renaissance and Reformation Europe",17,"History & Philosophy",4,Undergraduate,0,0
+HI4600,"World Regional Geography",17,"History & Philosophy",4,Undergraduate,0,0
+HI4632,"Japanese History",17,"History & Philosophy",4,Undergraduate,0,0
+HI4650,"History of African Enslavement;",17,"History & Philosophy",4,Undergraduate,0,0
+HI4700,"Modern Global Environments",17,"History & Philosophy",4,Undergraduate,0,0
+HI4800,"History of India",17,"History & Philosophy",4,Undergraduate,0,0
+HI4850,"Domesticity 19th/20th centuries",17,"History & Philosophy",4,Undergraduate,0,0
+HI4900,"Modern China [study abroad]",17,"History & Philosophy",4,Undergraduate,0,0
+HI4905,"Chinese Civilization",17,"History & Philosophy",4,Undergraduate,0,0
+HI4910,"Chinese Diaspora Across the Pacific",17,"History & Philosophy",4,Undergraduate,0,0
+HI5000,"Social Studies Senior Seminar",17,"History & Philosophy",4,Graduate,0,0
+HI5900,"Senior Seminar",17,"History & Philosophy",4,Graduate,0,0
+ML1300,"Basic Arabic Language I",17,"History & Philosophy",4,Undergraduate,0,0
+ML3430,"Intro to the Pre-Columbian Culture",17,"History & Philosophy",4,Undergraduate,0,0
+ML3650,"Cinema of Latin America and the Iberian Peninsula",17,"History & Philosophy",4,Undergraduate,0,0
+ML4630,"/EL4630 Latin American Literature",17,"History & Philosophy",4,Undergraduate,0,0
+PE2240,"Introduction to Latin American Studies",17,"History & Philosophy",4,Undergraduate,0,0
+PE2400,"Intro to Political Economy",17,"History & Philosophy",4,Undergraduate,0,0
+PE2420,Microeconomics,17,"History & Philosophy",4,Undergraduate,0,0
+PE2430,Macroeconomics,17,"History & Philosophy",4,Undergraduate,0,0
+PE2650,"Intro to U.S. Politics",17,"History & Philosophy",4,Undergraduate,0,0
+PE3850,"State and Local Politics",17,"History & Philosophy",4,Undergraduate,0,0
+PE4200,"Middle Eastern Politics",17,"History & Philosophy",4,Undergraduate,0,0
+PE4280,"Environmental Politics",17,"History & Philosophy",4,Undergraduate,0,0
+PE4580,"Origins of the Capitalist Economy",17,"History & Philosophy",4,Undergraduate,0,0
+PE4590,"Global Economy in the 20th Century",17,"History & Philosophy",4,Undergraduate,0,0
+PE4655,"Constitutional Law and Politics",17,"History & Philosophy",4,Undergraduate,0,0
+PE4658,"Law and Civil Liberties",17,"History & Philosophy",4,Undergraduate,0,0
+PE4660,"Politics of India & South Asia",17,"History & Philosophy",4,Undergraduate,0,0
+PE4690,"Politics of Latin America & Caribbean",17,"History & Philosophy",4,Undergraduate,0,0
+PE5999,Internship,17,"History & Philosophy",4,Graduate,0,0
+PY5404,"Senior Seminar in Environmental Neuroplasticity",17,"History & Philosophy",4,Graduate,0,0
+XX9990,"Independent Study in Student’s Home Department",17,"History & Philosophy",4,Graduate,0,0
+BU4035,"Web Systems & Electronic Commerce",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4120,"Global Business",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4130,Entrepreneurship,18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4720,"Global Financial Markets",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4774,"Financial Markets & Institutions",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4800,"Marketing Research",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4820,"International Marketing",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU4851,"Consumer Behavior",18,"Management, Marketing & Finance",4,Undergraduate,0,0
+BU5195,"Management Seminar",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5196,Leadership,18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5710,"Financial Modeling and Forecasting",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5740,"Investment Management & Security Analysis",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5760,"Corporate Finance",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5789,"Futures & Options",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5841,"Strategic Marketing",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5880,"Brand Theory & Strategy",18,"Management, Marketing & Finance",4,Graduate,0,0
+BU5891,"Marketing Seminar",18,"Management, Marketing & Finance",4,Graduate,0,0
+ANY4000,"or 5000 level Mathematics Course",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+CS2511,"Computer Programming II",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+CS3611,"Advanced C#",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+CS4100,"Technical Communications",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+CS4501,"Software Engineering",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+CS4720,"Internet and Web Technologies",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+CS5551,"MIS Topics",19,"Mathematics, Computer & Information Science",4,Graduate,0,0
+CS5710,"Computer Networks",19,"Mathematics, Computer & Information Science",4,Graduate,0,0
+CS5810,"Data Mining I",19,"Mathematics, Computer & Information Science",4,Graduate,0,0
+CS5910,"System Design & Implementation",19,"Mathematics, Computer & Information Science",4,Graduate,0,0
+MA2701,"Business Analytics",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA2702,"Marketing Analytics",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA3520,"Transition to Advanced Mathematics",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA4100,"Number Theory4crMA4510Geometry",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA4300,"Numerical Analysis",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA4310,"Scientific Computing",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA4910,"Operations Research I",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA4920,"Operations Research II",19,"Mathematics, Computer & Information Science",4,Undergraduate,0,0
+MA5230,"Mathematical Statistics",19,"Mathematics, Computer & Information Science",4,Graduate,0,0
+AS3432,"Women: Cultural Issues",20,"Media & American Studies",4,Undergraduate,0,0
+AS3745,"Film and Gender",20,"Media & American Studies",4,Undergraduate,0,0
+AS3852,"Women and the Media",20,"Media & American Studies",4,Undergraduate,0,0
+AS4220,"Media and the Law",20,"Media & American Studies",4,Undergraduate,0,0
+AS4435,"Women of Color Feminisms",20,"Media & American Studies",4,Undergraduate,0,0
+AS5202,"American Social and Political Visions",20,"Media & American Studies",4,Graduate,0,0
+BU5851,"Consumer Behavior",20,"Media & American Studies",4,Graduate,0,0
+CR4099,"Sociology of Violence",20,"Media & American Studies",4,Undergraduate,0,0
+EL2222,"Women’s Voices",20,"Media & American Studies",4,Undergraduate,0,0
+LA5000,", by permission only",20,"Media & American Studies",4,Graduate,0,0
+PE4325,"Jurisprudence: Legal Thought",20,"Media & American Studies",4,Undergraduate,0,0
+PE4659,"Law and Civil Rights",20,"Media & American Studies",4,Undergraduate,0,0
+PS3730,"Foundations of Diversity, Equity, Inclusion, and Justice",20,"Media & American Studies",4,Undergraduate,0,0
+PS4725,"Diversity, Equity, Inclusion, and Justice in the Workplace",20,"Media & American Studies",4,Undergraduate,0,0
+PS5700,"Workplace Diversity, Equity, and Inclusion Capstone Project",20,"Media & American Studies",2,Graduate,0,0
+WS1000,"/AS1512 Introduction to Women’s Studies",20,"Media & American Studies",4,Undergraduate,0,0
+EL3560,"Literatures of Europe, Pt. 1 Old Testament and Home to the Renaissance (GE H)",21,"Modern Languages",4,Undergraduate,0,0
+HI3480,"Masterpieces of Hispanic Literature",21,"Modern Languages",4,Undergraduate,0,0
+ML1000,"Basic French I and ML 1010 Basic French II",21,"Modern Languages",8,Undergraduate,0,0
+ML1110,"or CE2010 Basic Spanish II",21,"Modern Languages",4,Undergraduate,0,0
+ML1400,"Basic Italian I",21,"Modern Languages",4,Undergraduate,0,0
+ML1410,"Basic Italian 2",21,"Modern Languages",4,Undergraduate,0,0
+ML2005,"French to English Translation",21,"Modern Languages",4,Undergraduate,0,0
+ML2100,"Intermediate Spanish Conversation I",21,"Modern Languages",4,Undergraduate,0,0
+ML2110,"Intermediate Spanish Conversation II",21,"Modern Languages",4,Undergraduate,0,0
+ML2120,"Intermediate Spanish II",21,"Modern Languages",4,Undergraduate,0,0
+ML2400,"Intermediate Italian 1 (With course approval) (GE6)",21,"Modern Languages",4,Undergraduate,0,0
+ML2500,"Spanish Language and Culture",21,"Modern Languages",4,Undergraduate,0,0
+ML3100,"Advanced Spanish Conversation and Composition",21,"Modern Languages",4,Undergraduate,0,0
+ML3150,"Modern Italian Civilization (GE 3)",21,"Modern Languages",4,Undergraduate,0,0
+ML3200,"Translation Workshop",21,"Modern Languages",4,Undergraduate,0,0
+ML3250,"Spanish Linguistics",21,"Modern Languages",4,Undergraduate,0,0
+ML3260,"Spanish Sociolinguistics",21,"Modern Languages",4,Undergraduate,0,0
+ML3300,"Artistic Expressions of Spain",21,"Modern Languages",4,Undergraduate,0,0
+ML3310,"Chicano/a Cultural Studies",21,"Modern Languages",4,Undergraduate,0,0
+ML3362,"Advanced Spanish Grammar and Composition",21,"Modern Languages",4,Undergraduate,0,0
+ML3410,"Latino/a Writers in the US",21,"Modern Languages",4,Undergraduate,0,0
+ML3450,"Italian Cinema from Neo-Realism to Present",21,"Modern Languages",4,Undergraduate,0,0
+ML3500,"Critical Writing and Textual Analysis",21,"Modern Languages",4,Undergraduate,0,0
+ML3510,"Creative Writing",21,"Modern Languages",4,Undergraduate,0,0
+ML3600,"Introduction to the Study of Hispanic Literature",21,"Modern Languages",4,Undergraduate,0,0
+ML3800,"Modern French Culture",21,"Modern Languages",4,Undergraduate,0,0
+ML4100,"The Spanish Golden Age",21,"Modern Languages",4,Undergraduate,0,0
+ML4201,"Seminar in Translation Techniques",21,"Modern Languages",4,Undergraduate,0,0
+ML4325,"Contemporary Theatre of the Hispanic World",21,"Modern Languages",4,Undergraduate,0,0
+ML4350,"Recurrent Themes in Latin American Painting and Literature",21,"Modern Languages",4,Undergraduate,0,0
+ML4450,"Hispanic Women Writers",21,"Modern Languages",4,Undergraduate,0,0
+ML4500,"Culture and Literature of Spain from the Middle Ages to the 18th century",21,"Modern Languages",4,Undergraduate,0,0
+ML4510,"Civilization and Culture of Spain",21,"Modern Languages",4,Undergraduate,0,0
+ML4515,"Recent Narrative from Spain",21,"Modern Languages",4,Undergraduate,0,0
+ML4520,"Culture and Literature of the Spanish Caribbean",21,"Modern Languages",4,Undergraduate,0,0
+ML4540,"Latin American Culture & Literature: From the European Conquest to Independence",21,"Modern Languages",4,Undergraduate,0,0
+ML4545,"Civilization & Culture of Latin America",21,"Modern Languages",4,Undergraduate,0,0
+ML4645,"French Literature",21,"Modern Languages",4,Undergraduate,0,0
+ML4700,"Studies in Spanish Literature of the Nineteenth and Twentieth Centuries",21,"Modern Languages",4,Undergraduate,0,0
+ML4725,"The Novel and the City",21,"Modern Languages",4,Undergraduate,0,0
+ML4750,"Fiction into Film: the Spanish and Latin American Cinema",21,"Modern Languages",4,Undergraduate,0,0
+ML4800,"Modernisms and Modernity: The Latin American Experience",21,"Modern Languages",4,Undergraduate,0,0
+ML5400,"Contemporary Literary Theory and its Applications",21,"Modern Languages",4,Graduate,0,0
+ML5450,"Major Trends in Latin American Thought",21,"Modern Languages",4,Graduate,0,0
+ML5650,"Contemporary Latin American Narrative",21,"Modern Languages",4,Graduate,0,0
+AS4202,"Internship in Government and Community",22,"Politics, Economics & Law",4,Undergraduate,0,0
+AS4232,"History of Social Work & Public Policy",22,"Politics, Economics & Law",4,Undergraduate,0,0
+BU4110,"Organizational Behavior and Management",22,"Politics, Economics & Law",4,Undergraduate,0,0
+BU4780,"Government Finance",22,"Politics, Economics & Law",4,Undergraduate,0,0
+BU5125,"Management and Society",22,"Politics, Economics & Law",4,Graduate,0,0
+BU5171,"Human Resource Management",22,"Politics, Economics & Law",4,Graduate,0,0
+BU5472,"Industrial Organization & Public Policy",22,"Politics, Economics & Law",4,Graduate,0,0
+CR4093,"Criminal Justice Administration",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR2210,"Unions and Management: An Introduction",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3120,"History of American Labor Relations",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3140,"Unions and Public Policy",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3260,"Comparative Labor Relations",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3300,"Collective Bargaining and Grievance Procedures",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3330,"Women, Minorities and the Workplace",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3415,"Labor Economics",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3500,"Arbitration and Mediation",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR3860,"Development of the Modern Corporation",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR4320,"Labor and Employment Law",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR4600,"Topics in Labor Studies",22,"Politics, Economics & Law",4,Undergraduate,0,0
+IR5900,"Senior Project/Internship in Industrial and Labor Relations",22,"Politics, Economics & Law",4,Graduate,0,0
+MA2080,"Precalc/Bus. & Econ. or MA 2090 Precalculus",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE2220,"Introduction to Urban Issues",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE2300,"Introduction to Law",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE2325,"Economic Analysis-Micro",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3100,"International Relations",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3201,"Statistics or MA3210 Intro to Probability & Statistics*",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3400,"Global South 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3410,"Contemporary Political Economy",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3425,"Economic Analysis Micro",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3435,"Economic Analysis Macro",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3440,"International Economics 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE3690,"City & Suburb: Political Action and Change",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4100,"International Organizations in the Global Economy 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4275,"Applied Econometrics",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4290,"Environmental Economics 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4320,"Jurisprudence: Legal Thought",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4409,"Urban Economics 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4430,"Health Economics",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4440,"Food & Wine Economics 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4455,"Economic Development 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4460,"International Finance 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4470,"History of Economic Thought",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4600,"Depression Economics 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4609,"Public Administration",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4615,"Public Finance & Public Policy",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4620,"Political and Social Thought",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE4650,"Topics in U.S. Politics (Advanced Political Economy) 4",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PE9970,"New York State Legislative Internship",22,"Politics, Economics & Law",4,Graduate,0,0
+PH2000,"Introduction to Public Health",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PH2450,"Human Sexuality",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PH3750,"Mass Incarceration: A Public Health Crisis",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PH3850,"Global Health",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PH4770,"Occupational Health",22,"Politics, Economics & Law",4,Undergraduate,0,0
+PY5520,"Families & Public Policy",22,"Politics, Economics & Law",4,Graduate,0,0
+SY2570,"Statistics for Social Science or MA 2000 Applied Statistics",22,"Politics, Economics & Law",4,Undergraduate,0,0
+ONE4000,"‑level psych elective (residency requirement)",23,Psychology,4,Undergraduate,0,0
+PE3750,"Politics of Race and Class",23,Psychology,4,Undergraduate,0,0
+PE4450,"The Politics of Gender and Sexuality",23,Psychology,4,Undergraduate,0,0
+PE4610,"Political Power and Social Class",23,Psychology,4,Undergraduate,0,0
+PY2530,"Psychology of Prejudice & Discrimination",23,Psychology,4,Undergraduate,0,0
+PY2720,"Psychology of Gender",23,Psychology,4,Undergraduate,0,0
+PY3010,"Research Design & Analysis I",23,Psychology,4,Undergraduate,0,0
+PY3215,"Foundations of Child Development",23,Psychology,4,Undergraduate,0,0
+PY3230,"Adulthood & Aging",23,Psychology,4,Undergraduate,0,0
+PY3240,"Lifespan Development",23,Psychology,4,Undergraduate,0,0
+PY3310,"Foundations in Clinical Psychology",23,Psychology,4,Undergraduate,0,0
+PY3311,"Theories of Personality",23,Psychology,4,Undergraduate,0,0
+PY3330,"Psychology of Addictions",23,Psychology,4,Undergraduate,0,0
+PY3410,"Cognitive Psychology",23,Psychology,4,Undergraduate,0,0
+PY3420,"Learning & Motivation",23,Psychology,4,Undergraduate,0,0
+PY3510,"Social Psychology",23,Psychology,4,Undergraduate,0,0
+PY3570,"Community Psychology",23,Psychology,4,Undergraduate,0,0
+PY3610,"Brain & Behavior",23,Psychology,4,Undergraduate,0,0
+PY3620,"Drugs and Behavior",23,Psychology,4,Undergraduate,0,0
+PY3710,"Psychology & Social Justice",23,Psychology,4,Undergraduate,0,0
+PY3760,"Psychology of Socioeconomic Inequality",23,Psychology,4,Undergraduate,0,0
+PY4230,"Psychopathology of Aging",23,Psychology,4,Undergraduate,0,0
+PY4320,"Counseling Psychology",23,Psychology,4,Undergraduate,0,0
+PY4330,"Behavior Modification",23,Psychology,4,Undergraduate,0,0
+PY4350,"Peace, Violence, & Conflict Resolution",23,Psychology,4,Undergraduate,0,0
+PY4401,"Developmental Neuropathology",23,Psychology,4,Undergraduate,0,0
+PY4402,Neuropsychopharmacology,23,Psychology,4,Undergraduate,0,0
+PY4403,"Cognitive Neuroscience",23,Psychology,4,Undergraduate,0,0
+PY4510,"Ecological Context: Theories & Applications",23,Psychology,4,Undergraduate,0,0
+PY4530,"Prevention, Promotion, & Program Evaluation",23,Psychology,4,Undergraduate,0,0
+PY4570,"Peer Support & Community Mental Health",23,Psychology,4,Undergraduate,0,0
+PY4610,"Clinical Neuropsychology",23,Psychology,4,Undergraduate,0,0
+PY4730,"Psychology of Peoples of African Descent",23,Psychology,4,Undergraduate,0,0
+PY4740,"Psychology of Ethnicity",23,Psychology,4,Undergraduate,0,0
+PY4760,"Sexual Identities & LGBTQ+ Psychology",23,Psychology,4,Undergraduate,0,0
+PY5510,"Senior Seminar in Social Psychology",23,Psychology,4,Graduate,0,0
+PY5610,"Senior Seminar in Neuroscience",23,Psychology,4,Graduate,0,0
+PY5710,"Senior Seminar in Diversity & Social Justice",23,Psychology,4,Graduate,0,0
+BS2100,"Biology for Non-Majors",24,"Public Health",4,Undergraduate,0,0
+BS2300,"Anatomy and Physiology I",24,"Public Health",4,Undergraduate,0,0
+BS2310,"Anatomy and Physiology II",24,"Public Health",4,Undergraduate,0,0
+PH2900,"Black Lives Matter: Health Inequities in the U.S.",24,"Public Health",4,Undergraduate,0,0
+PH3200,"Nutrition, Health, and The Food System",24,"Public Health",4,Undergraduate,0,0
+PH3600,"Introduction to the Social Determinants of Health",24,"Public Health",4,Undergraduate,0,0
+PH3610,"Introduction to the U.S. Health Care System",24,"Public Health",4,Undergraduate,0,0
+PH3700,"Medical Anthropology",24,"Public Health",4,Undergraduate,0,0
+PH4450,"Human Sexuality",24,"Public Health",4,Undergraduate,0,0
+PH4600,"Health Program Planning and Evaluation",24,"Public Health",4,Undergraduate,0,0
+PH4610,"Women's Health",24,"Public Health",4,Undergraduate,0,0
+PH4631,"Mental Health",24,"Public Health",4,Undergraduate,0,0
+PH4650,"Substance Use: Social and Structural Determinants",24,"Public Health",4,Undergraduate,0,0
+PH4661,"Health Education",24,"Public Health",4,Undergraduate,0,0
+PH4670,"* Biostatistics",24,"Public Health",4,Undergraduate,0,0
+PH4680,"Environmental Health",24,"Public Health",4,Undergraduate,0,0
+PH4750,"Aging and Social Policy",24,"Public Health",4,Undergraduate,0,0
+PH4760,"Health Administration",24,"Public Health",4,Undergraduate,0,0
+PH4790,"Health Policy",24,"Public Health",4,Undergraduate,0,0
+PH4800,Epidemiology,24,"Public Health",4,Undergraduate,0,0
+PH4810,"Ethics in Public Health",24,"Public Health",4,Undergraduate,0,0
+PH4820,"Health Law",24,"Public Health",4,Undergraduate,0,0
+PH4850,"Global Health",24,"Public Health",4,Undergraduate,0,0
+PH4890,"Environmental Justice",24,"Public Health",4,Undergraduate,0,0
+PH4900,"Applied Practice Experience",24,"Public Health",4,Undergraduate,0,0
+PH4920,"Special Topics in Public Health",24,"Public Health",4,Undergraduate,0,0
+PH4930,"Immigrant and Refugee Health",24,"Public Health",4,Undergraduate,0,0
+PH5900,"** Senior Research Seminar !",24,"Public Health",4,Graduate,0,0
+PH5920,"*** Senior Research Seminar II",24,"Public Health",4,Graduate,0,0
+PY3020,"* Health Psychology",24,"Public Health",4,Undergraduate,0,0
+MA2000,"Applied Statistics",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS2330,"Fundamentals of Economics",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3130,"Accounting for Professionals",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3230,"Professional Communications",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3260,"Information Technology for Professionals",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3330,"Professional Supervision",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3430,"Marketing for Professionals",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3625,"Nonprofit Stewardship and Development",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3675,"Introduction to Social Entrepreneurship",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3810,"Sales Essentials",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS3830,"Sales Tools",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4225,"The Law for Professionals",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4325,"The Financial System",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4420,"Entertainment and Sports Management",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4430,"Entertainment and Sports Marketing",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4440,"Entertainment and Sports Media",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4630,"Financial Administration of Nonprofits",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS4660,"Business Leadership and Ethics",25,"School of Business Graduate Programs",4,Undergraduate,0,0
+PS5425,"Entertainment and Sports Law",25,"School of Business Graduate Programs",4,Graduate,0,0
+PS5435,"Entertainment and Sports Finance",25,"School of Business Graduate Programs",4,Graduate,0,0
+CR1500,"Introduction to Criminology",26,Sociology,4,Undergraduate,0,0
+CR2090,"Juvenile Delinquency",26,Sociology,4,Undergraduate,0,0
+CR3092,Victimology,26,Sociology,4,Undergraduate,0,0
+CR3093,"Criminal Justice Administration",26,Sociology,4,Undergraduate,0,0
+CR3094,"Drugs and Society",26,Sociology,4,Undergraduate,0,0
+CR3099,"Sociology of Violence",26,Sociology,4,Undergraduate,0,0
+CR3117,"Policing Bodies",26,Sociology,4,Undergraduate,0,0
+CR3200,"Crime, Media and Culture",26,Sociology,4,Undergraduate,0,0
+CR4000,"Gender, Crime and Justice",26,Sociology,4,Undergraduate,0,0
+CR4091,"Punishment and Corrections",26,Sociology,4,Undergraduate,0,0
+CR4550,"Theories of Crime",26,Sociology,4,Undergraduate,0,0
+CR4999,"Issues in Criminology",26,Sociology,4,Undergraduate,0,0
+PY3565,"Organizational Behavior",26,Sociology,4,Undergraduate,0,0
+PY3720,"Feminist Psychology",26,Sociology,4,Undergraduate,0,0
+PY3730,"Community Psychology",26,Sociology,4,Undergraduate,0,0
+PY4130,"Field Experience and Research",26,Sociology,4,Undergraduate,0,0
+PY4420,"Adolescent Development",26,Sociology,4,Undergraduate,0,0
+PY4520,"Family Systems & Counseling",26,Sociology,4,Undergraduate,0,0
+PY4560,"Psychological Traumatization",26,Sociology,4,Undergraduate,0,0
+SY1500,"Introductory Sociology",26,Sociology,4,Undergraduate,0,0
+SY2222,"Sociology of Caring",26,Sociology,4,Undergraduate,0,0
+SY2400,"Sociology Through the Arts",26,Sociology,4,Undergraduate,0,0
+SY2550,"Social Problems",26,Sociology,4,Undergraduate,0,0
+SY2600,"Social Deviance",26,Sociology,4,Undergraduate,0,0
+SY2800,"Race, Class, Gender and Sexuality",26,Sociology,4,Undergraduate,0,0
+SY2999,"Religion, Science and Knowledge",26,Sociology,4,Undergraduate,0,0
+SY3160,"Sociology of Culture",26,Sociology,4,Undergraduate,0,0
+SY3280,"Social Inequality",26,Sociology,4,Undergraduate,0,0
+SY3630,"Political Sociology",26,Sociology,4,Undergraduate,0,0
+SY3700,"Family and Society",26,Sociology,4,Undergraduate,0,0
+SY3750,"Medical Sociology",26,Sociology,4,Undergraduate,0,0
+SY3800,"Race and Ethnicity",26,Sociology,4,Undergraduate,0,0
+SY3900,"Social Movements",26,Sociology,4,Undergraduate,0,0
+SY3910,"Sociology of Work",26,Sociology,4,Undergraduate,0,0
+SY4260,"Social Work: Theory and Practice",26,Sociology,4,Undergraduate,0,0
+SY4270,"Internship in Social Work, Sociology and Criminology",26,Sociology,4,Undergraduate,0,0
+SY4400,"Social Psychology",26,Sociology,4,Undergraduate,0,0
+SY4500,"Global Sociology",26,Sociology,4,Undergraduate,0,0
+SY4520,"Research Methods I",26,Sociology,4,Undergraduate,0,0
+SY4530,"Sociological Theory I",26,Sociology,4,Undergraduate,0,0
+SY4540,"Sociological Theory II",26,Sociology,4,Undergraduate,0,0
+SY4570,"Research Methods II",26,Sociology,4,Undergraduate,0,0
+SY4600,"Social Programs, Planning and Policy",26,Sociology,4,Undergraduate,0,0
+SY4651,"Sociology of Communications and Media",26,Sociology,4,Undergraduate,0,0
+SY4810,"Law and Justice",26,Sociology,4,Undergraduate,0,0
+SY4830,"Gender and Society",26,Sociology,4,Undergraduate,0,0
+SY4850,"Urban and Suburban Sociology",26,Sociology,4,Undergraduate,0,0
+SY4950,"Sociology of Music",26,Sociology,4,Undergraduate,0,0
+SY4999,"Issues in Sociology",26,Sociology,4,Undergraduate,0,0
+SY5990,"Senior Seminar",26,Sociology,4,Graduate,0,0
+VA2010,"Introduction to Creative Thinking",27,"Visual Arts",4,Undergraduate,0,0
+VA2020,"Basic Design",27,"Visual Arts",4,Undergraduate,0,0
+VA2030,Drawing,27,"Visual Arts",4,Undergraduate,0,0
+VA2045,"Introduction to Color",27,"Visual Arts",4,Undergraduate,0,0
+VA2320,"Graphic Design I",27,"Visual Arts",4,Undergraduate,0,0
+VA2400,"Intro to Photo",27,"Visual Arts",4,Undergraduate,0,0
+VA2460,"Painting I",27,"Visual Arts",4,Undergraduate,0,0
+VA2500,"or VA2510 Art History I: 19th Century Art or Art History II: Modern Art:1900-1945",27,"Visual Arts",4,Undergraduate,0,0
+VA2510,"Art History Survey I or II",27,"Visual Arts",4,Undergraduate,0,0
+VA2750,"Sculpture I",27,"Visual Arts",4,Undergraduate,0,0
+VA3100,"Visual Culture – Warhol to Present",27,"Visual Arts",4,Undergraduate,0,0
+VA3200,"Art Tutorials I",27,"Visual Arts",4,Undergraduate,0,0
+VA3380,"Digital Video",27,"Visual Arts",4,Undergraduate,0,0
+VA3400,"Digital Imaging",27,"Visual Arts",4,Undergraduate,0,0
+VA3456,"Creative Coding: Art & Games",27,"Visual Arts",4,Undergraduate,0,0
+VA3460,"Painting II",27,"Visual Arts",4,Undergraduate,0,0
+VA4200,"Art Tutorials II",27,"Visual Arts",4,Undergraduate,0,0
+VA4260,"Interactive Web Design",27,"Visual Arts",4,Undergraduate,0,0
+VA4265,"3D Digital Design",27,"Visual Arts",4,Undergraduate,0,0
+VA4320,"Graphic Design II",27,"Visual Arts",4,Undergraduate,0,0
+VA4360,"Advanced 3D Design and Animation",27,"Visual Arts",4,Undergraduate,0,0
+VA4460,"Digital Animation",27,"Visual Arts",4,Undergraduate,0,0
+VA4750,"Sculpture II",27,"Visual Arts",4,Undergraduate,0,0
+VA4900,Internship,27,"Visual Arts",4,Undergraduate,0,0
+VA5200,"Art Tutorials III",27,"Visual Arts",4,Graduate,0,0
+VA5900,"Senior Project (solo exhibition)",27,"Visual Arts",4,Graduate,0,0
+WGS1001,"Introduction to WGS",28,"Women's, Gender, and Sexuality Studies",4,Undergraduate,0,0
+WGS2001,"Feminist Theories",28,"Women's, Gender, and Sexuality Studies",4,Undergraduate,0,0
+WGS3001,"Gender and Sexuality in Society",28,"Women's, Gender, and Sexuality Studies",4,Undergraduate,0,0
+WGS4001,"WGS Capstone Seminar",28,"Women's, Gender, and Sexuality Studies",4,Undergraduate,0,0

@@ -23,7 +23,7 @@ if (!empty($currentSemester)) {
 }
 
 page_start(
-	'',
+	'Student Overview',
 	'Student',
 	'dashboard.php'
 );

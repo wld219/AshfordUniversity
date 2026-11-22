@@ -1,0 +1,423 @@
+faculty_ID,faculty_name,faculty_Type,specialty,faculty_rank,department_ids,departments,department_affiliation_count,has_login,fall_active_sections,fall_teaching_credits,fall_crns,fall_course_ids,outside_affiliation_fall
+200001,"Kevin Michael Baptiste",Full-Time,"Software Engineering","Assistant Professor","8; 9; 11","Education (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10001,BU3071,No
+200002,"Zoe Walker",Full-Time,"Computer Networks","Associate Professor","8; 9; 11","Education (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10002,BU3071,No
+200003,"Maya Joseph Green",Full-Time,"Database Systems",Professor,"8; 9; 11","Education (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10003,BU3071,No
+200004,"Joshua Thomas Scott",Full-Time,"Artificial Intelligence","Assistant Professor","8; 9; 11","Education (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10004,BU3071,No
+200005,"Ryan Sanchez",Full-Time,Cybersecurity,"Associate Professor","8; 9; 11","Education (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10005,BU3071,No
+200006,"Malcolm Allen",Full-Time,Finance,Professor,"8; 9; 11","Education (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10006,BU3071,No
+200007,"Nathan Claire Wilson",Full-Time,Accounting,"Assistant Professor","5; 9; 11","Engineering (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10007,BU3071,No
+200008,"Malcolm Lee Thomas",Full-Time,Marketing,"Associate Professor","5; 9; 11","Engineering (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10008,BU3071,No
+200009,"Grace King",Full-Time,Management,Professor,"5; 9; 11","Engineering (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10009,BU3071,No
+200010,"Samuel Allen",Full-Time,"Information Systems","Assistant Professor","5; 9; 11","Engineering (100.00%); Health Sciences (100.00%); Accounting, Taxation & Business Law (100.00%)",3,Yes,1,4,10010,BU3071,No
+200011,"Casey Joseph Hall",Full-Time,"Applied Mathematics","Associate Professor","5; 9","Engineering (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140049,HS1001,No
+200012,"Joseph Perez",Full-Time,Statistics,Professor,"5; 9","Engineering (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140065,HS1001,No
+200013,"Nicole Michael Gonzalez",Full-Time,Calculus,"Assistant Professor","3; 5; 12","Mathematics (100.00%); Engineering (100.00%); Adolescence Education (100.00%)",3,Yes,1,4,140068,EG1001,No
+200014,"Nathan Louise Carter",Full-Time,"Discrete Mathematics","Associate Professor","3; 5; 14","Mathematics (100.00%); Engineering (100.00%); Chemistry & Physics (100.00%)",3,Yes,1,4,140069,EG1001,No
+200015,"Elena Alexander Mitchell",Full-Time,"Operations Research",Professor,"3; 5","Mathematics (100.00%); Engineering (100.00%)",2,Yes,1,4,140070,EG1002,No
+200016,"Mason Michelle Carter",Full-Time,Biology,"Assistant Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140037,EN1001,No
+200017,"Destiny Daniel Ramirez",Full-Time,Chemistry,"Associate Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140038,EN1001,No
+200018,"Grace Rose Martin",Full-Time,Physics,Professor,"3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140039,EN1002,No
+200019,"Jordan Rose Clark",Full-Time,"Environmental Science","Assistant Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140040,EN1002,No
+200020,"Malcolm Wright",Full-Time,Biochemistry,"Associate Professor","3; 6; 22","Mathematics (100.00%); English (100.00%); Politics, Economics & Law (100.00%)",3,Yes,1,4,140041,EN3013,No
+200021,"Isabella Louise Perez",Full-Time,"Electrical Engineering",Professor,"3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140042,EN4017,No
+200022,"Isabella Anthony Green",Full-Time,"Computer Engineering","Assistant Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140094,MA1001,No
+200023,"Nia Rodriguez",Full-Time,"Mechanical Engineering","Associate Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140095,MA1002,No
+200024,"Chloe Taylor",Full-Time,"Systems Engineering",Professor,"3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140096,MA1004,No
+200025,"Elijah Ann Augustin",Full-Time,Robotics,"Assistant Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,1,4,140097,MA3012,No
+200026,"Zoe Hernandez",Full-Time,"American Literature","Associate Professor","3; 9","Mathematics (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140066,HS1001,No
+200027,"Elijah Louise Walker",Full-Time,"Creative Writing",Professor,"3; 9","Mathematics (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140067,HS3011,No
+200028,"Jonathan Hall",Full-Time,Composition,"Assistant Professor","3; 9","Mathematics (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140098,MA3012,No
+200029,"Jonathan Michelle Adams",Full-Time,Linguistics,"Associate Professor","4; 9","Natural Sciences (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140099,NS1001,No
+200030,"David Rodriguez",Full-Time,"Professional Writing",Professor,"4; 9","Natural Sciences (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140100,NS2006,No
+200031,"Adrian Michael Baker",Full-Time,Psychology,"Assistant Professor","4; 9","Natural Sciences (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140101,NS2006,No
+200032,"Gabriella Jean Williams",Full-Time,Sociology,"Associate Professor","4; 9","Natural Sciences (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140102,NS2006,No
+200033,"James Alexander Garcia",Full-Time,"Political Science",Professor,"4; 9","Natural Sciences (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140103,NS2006,No
+200034,"Ethan Rose Lee",Full-Time,Economics,"Assistant Professor","4; 9","Natural Sciences (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140104,NS2007,No
+200035,"Ashley Claire Lopez",Full-Time,History,"Associate Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,1,4,140105,NS2007,No
+200036,"Victoria Nicole Wright",Full-Time,"Curriculum and Instruction",Professor,"3; 4; 27","Mathematics (100.00%); Natural Sciences (100.00%); Visual Arts (100.00%)",3,Yes,1,4,140106,NS3010,No
+200037,"Jada Nguyen",Full-Time,"Educational Technology","Assistant Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,1,4,140107,NS4018,No
+200038,"Brianna Thomas Clark",Full-Time,"Special Education","Associate Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200039,"Kevin Jean Gonzalez",Full-Time,"Educational Leadership",Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200040,"Elijah David Martinez",Full-Time,Assessment,"Assistant Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200041,"Gabriella Lee Hall",Full-Time,"Public Health","Associate Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200042,"Nicholas Smith",Full-Time,"Health Administration",Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200043,"Grace Claire Roberts",Full-Time,Nutrition,"Assistant Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200044,"Naomi Johnson",Full-Time,"Exercise Science","Associate Professor","4; 12","Natural Sciences (100.00%); Adolescence Education (100.00%)",2,Yes,0,0,,,No
+200045,"Brandon Baker",Full-Time,"Community Health",Professor,"4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,1,4,140074,SS1004,No
+200046,"David David Nguyen",Full-Time,"Digital Media","Assistant Professor","4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,1,4,140075,SS2006,No
+200047,"Matthew Joseph Allen",Full-Time,"Graphic Design","Associate Professor","4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,1,4,140076,SS2006,No
+200048,"David Renee Brown",Full-Time,"Studio Art",Professor,"4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,1,4,140077,SS2009,No
+200049,"Ava Hernandez",Full-Time,"Film Studies","Assistant Professor","4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,1,4,140078,SS3011,No
+200050,"Ava Baker",Full-Time,"Media Production","Associate Professor","4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200051,"Brianna Rose Lewis",Full-Time,"Software Engineering",Professor,"4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200052,"Adrian Michael Nguyen",Full-Time,"Computer Networks","Assistant Professor","4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200053,"Lauren Walker",Full-Time,"Database Systems","Associate Professor","4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200054,"Ashley Rose Smith",Full-Time,"Artificial Intelligence",Professor,"7; 12","Social Sciences (100.00%); Adolescence Education (100.00%)",2,Yes,0,0,,,No
+200055,"Jasmine Daniel Adams",Full-Time,Cybersecurity,"Assistant Professor","7; 12","Social Sciences (100.00%); Adolescence Education (100.00%)",2,Yes,0,0,,,No
+200056,"Jonathan Grace Baker",Full-Time,Finance,"Associate Professor","7; 12","Social Sciences (100.00%); Adolescence Education (100.00%)",2,Yes,0,0,,,No
+200057,"Taylor James Wright",Full-Time,Accounting,Professor,"7; 13","Social Sciences (100.00%); Biological Sciences (100.00%)",2,Yes,0,0,,,No
+200058,"Maya Baptiste",Full-Time,Marketing,"Assistant Professor","7; 13","Social Sciences (100.00%); Biological Sciences (100.00%)",2,Yes,0,0,,,No
+200059,"Andrew Rose Hill",Full-Time,Management,"Associate Professor","7; 10","Social Sciences (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140079,VD1001,No
+200060,"Nia Alexander Torres",Full-Time,"Information Systems",Professor,"7; 10","Social Sciences (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140080,VD1001,No
+200061,"Matthew Michael Smith",Full-Time,"Applied Mathematics","Assistant Professor","7; 10","Social Sciences (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140081,VD1005,No
+200062,"Madison Joseph Martin",Full-Time,Statistics,"Associate Professor","7; 10","Social Sciences (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140082,VD2006,No
+200063,"Andre Robinson",Full-Time,Calculus,Professor,"10; 21","Arts and Media (100.00%); Modern Languages (100.00%)",2,Yes,1,4,140083,VD3010,No
+200064,"Julian Anthony Louis",Full-Time,"Discrete Mathematics","Assistant Professor","10; 13","Arts and Media (100.00%); Biological Sciences (100.00%)",2,Yes,1,4,140084,VD4018,No
+200065,"Darius Elise King",Full-Time,"Operations Research","Associate Professor","10; 14","Arts and Media (100.00%); Chemistry & Physics (100.00%)",2,Yes,0,0,,,No
+200066,"Jasmine King",Full-Time,Biology,Professor,"10; 14","Arts and Media (100.00%); Chemistry & Physics (100.00%)",2,Yes,0,0,,,No
+200067,"Victoria Daniel Scott",Full-Time,Chemistry,"Assistant Professor","10; 20","Arts and Media (100.00%); Media & American Studies (100.00%)",2,Yes,0,0,,,No
+200068,"Caleb Green",Full-Time,Physics,"Associate Professor","10; 15","Arts and Media (100.00%); Childhood Education & Literacy (100.00%)",2,Yes,0,0,,,No
+200069,"Brittany Nicole Young",Full-Time,"Environmental Science",Professor,"10; 20","Arts and Media (100.00%); Media & American Studies (100.00%)",2,Yes,0,0,,,No
+200070,"Natalie Jean Moore",Full-Time,Biochemistry,"Assistant Professor","2; 10","Business (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140085,BU1002,No
+200071,"Gabriel Hall",Full-Time,"Electrical Engineering","Associate Professor","2; 10","Business (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140086,BU1002,No
+200072,"Gabriel Thomas Thomas",Full-Time,"Computer Engineering",Professor,"1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,3,12,"140025; 140026; 140027","CS1001; CS1002; CS1004",No
+200073,"Michael Johnson",Full-Time,"Mechanical Engineering","Assistant Professor","1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,1,4,140048,CS2007,No
+200074,"Gabriel Lee Jean",Full-Time,"Systems Engineering","Associate Professor","2; 8","Business (100.00%); Education (100.00%)",2,Yes,1,4,140043,ED1001,No
+200075,"Emily Joseph",Full-Time,Robotics,Professor,"2; 8","Business (100.00%); Education (100.00%)",2,Yes,1,4,140044,ED1004,No
+200076,"Camila Marie Walker",Full-Time,"American Literature","Assistant Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,1,4,140071,EG2009,No
+200077,"Elijah Michelle Miller",Full-Time,"Creative Writing","Associate Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,1,4,140072,EG3010,No
+200078,"Nathan Louise Green",Full-Time,Composition,Professor,"2; 6","Business (100.00%); English (100.00%)",2,Yes,1,4,140087,BU2006,No
+200079,"Ava Marie Lopez",Full-Time,Linguistics,"Assistant Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,1,4,140088,BU2006,No
+200080,"Gabriel Joseph King",Full-Time,"Professional Writing","Associate Professor","2; 9","Business (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140089,BU2009,No
+200081,"Gabriel Anthony Torres",Full-Time,Psychology,Professor,"2; 9","Business (100.00%); Health Sciences (100.00%)",2,Yes,1,4,140090,BU3011,No
+200082,"Taylor Sanchez",Full-Time,Sociology,"Assistant Professor","2; 3","Business (100.00%); Mathematics (100.00%)",2,Yes,1,4,140091,BU3011,No
+200083,"Riley Desir",Full-Time,"Political Science","Associate Professor","2; 3","Business (100.00%); Mathematics (100.00%)",2,Yes,1,4,140092,BU3011,No
+200084,"Eric Baker",Full-Time,Economics,Professor,"2; 4","Business (100.00%); Natural Sciences (100.00%)",2,Yes,1,4,140093,BU3012,No
+200085,"Caleb Elise Sanchez",Full-Time,History,"Assistant Professor","2; 4","Business (100.00%); Natural Sciences (100.00%)",2,Yes,0,0,,,No
+200086,"Jason Ann Pierre",Full-Time,"Curriculum and Instruction","Associate Professor","2; 7","Business (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200087,"Jordan Renee Nguyen",Full-Time,"Educational Technology",Professor,"1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,Yes,1,4,140050,CS1001,No
+200088,"Elena Brown",Full-Time,"Special Education","Assistant Professor","1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140051,CS1002,No
+200089,"Lauren Elise Jean",Full-Time,"Educational Leadership","Associate Professor","1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140052,CS1002,No
+200090,"Victoria Hernandez",Full-Time,Assessment,Professor,"1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,1,4,140053,CS1005,No
+200091,"Brian James Lewis",Full-Time,"Public Health","Assistant Professor","1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,1,4,140054,CS2006,No
+200092,"Isabella Nicole Rivera",Full-Time,"Health Administration","Associate Professor","1; 20","Computer Science (100.00%); Media & American Studies (100.00%)",2,Yes,1,4,140055,CS2006,No
+200093,"Brianna Thomas Nguyen",Full-Time,Nutrition,Professor,"1; 16","Computer Science (100.00%); Exceptional Education & Learning (100.00%)",2,Yes,1,4,140056,CS2006,No
+200094,"Eric Louise Brown",Full-Time,"Exercise Science","Assistant Professor","1; 8","Computer Science (100.00%); Education (100.00%)",2,Yes,1,4,140045,ED2009,No
+200095,"Samuel James Jones",Full-Time,"Community Health","Associate Professor","1; 8","Computer Science (100.00%); Education (100.00%)",2,Yes,1,4,140046,ED4017,No
+200096,"Ethan Thomas Gonzalez",Full-Time,"Digital Media",Professor,"1; 5","Computer Science (100.00%); Engineering (100.00%)",2,Yes,1,4,140057,CS2006,No
+200097,"Victoria Renee Allen",Full-Time,"Graphic Design","Assistant Professor","1; 5","Computer Science (100.00%); Engineering (100.00%)",2,Yes,1,4,140058,CS2006,No
+200098,"Jada Flores",Full-Time,"Studio Art","Associate Professor","6; 8","English (100.00%); Education (100.00%)",2,Yes,1,4,140047,ED4017,No
+200099,"Taylor Daniel Lewis",Full-Time,"Film Studies",Professor,"6; 8","English (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200100,"Destiny Joseph Nelson",Full-Time,"Media Production","Assistant Professor","8; 9","Education (100.00%); Health Sciences (100.00%)",2,Yes,0,0,,,No
+200101,"Joshua Rose Carter",Full-Time,"Software Engineering","Associate Professor","5; 10","Engineering (100.00%); Arts and Media (100.00%)",2,Yes,1,4,140073,EG3011,No
+200102,"Eric Marie Wilson",Full-Time,"Computer Networks",Professor,"8; 9","Education (100.00%); Health Sciences (100.00%)",2,Yes,0,0,,,No
+200103,"Samantha Anthony Lewis",Full-Time,"Database Systems","Assistant Professor","1; 5","Computer Science (100.00%); Engineering (100.00%)",2,Yes,1,4,140059,CS2006,No
+200104,"Gabriel Anthony Nelson",Full-Time,"Artificial Intelligence","Associate Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200105,"Eric Nicole Charles",Full-Time,Cybersecurity,Professor,"7; 8","Social Sciences (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200106,"Eric Nicole Gonzalez",Full-Time,Finance,"Assistant Professor","3; 8","Mathematics (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200107,"Rachel Marie Allen",Full-Time,Accounting,"Associate Professor","8; 10","Education (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200108,"Ashley Anthony Green",Full-Time,Marketing,Professor,"7; 8","Social Sciences (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200109,"Sarah James Thompson",Full-Time,Management,"Assistant Professor","3; 8","Mathematics (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200110,"Jordan Thomas Johnson",Full-Time,"Information Systems","Associate Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200111,"Maya Marie Allen",Full-Time,"Applied Mathematics",Professor,"5; 28","Engineering (100.00%); Women's, Gender, and Sexuality Studies (100.00%)",2,Yes,0,0,,,No
+200112,"Lucas Anthony Wright",Full-Time,Statistics,"Assistant Professor","5; 8","Engineering (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200113,"Brittany Renee Jean",Full-Time,Calculus,"Associate Professor","4; 8","Natural Sciences (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200114,"Christopher Lee Smith",Full-Time,"Discrete Mathematics",Professor,"4; 8","Natural Sciences (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200115,"Brandon Thomas Desir",Full-Time,"Operations Research","Assistant Professor","5; 8","Engineering (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200116,"Matthew Roberts",Full-Time,Biology,"Associate Professor","7; 23","Social Sciences (100.00%); Psychology (100.00%)",2,Yes,0,0,,,No
+200117,"Brianna Michael King",Full-Time,Chemistry,Professor,"1; 5","Computer Science (100.00%); Engineering (100.00%)",2,Yes,1,4,140060,CS2007,No
+200118,"Darius Daniel Miller",Full-Time,Physics,"Assistant Professor","3; 4; 6","Mathematics (100.00%); Natural Sciences (100.00%); English (100.00%)",3,Yes,1,4,10208,NS4018,No
+200119,"Aaliyah Miller",Full-Time,"Environmental Science","Associate Professor","3; 4; 6","Mathematics (100.00%); Natural Sciences (100.00%); English (100.00%)",3,Yes,1,4,10209,NS5001,No
+200120,"Gabriel Alexander Green",Full-Time,Biochemistry,Professor,"3; 4; 6","Mathematics (100.00%); Natural Sciences (100.00%); English (100.00%)",3,Yes,1,4,10210,NS5001,No
+200121,"Adrian Michelle Robinson",Full-Time,"Electrical Engineering","Assistant Professor","3; 4; 6","Mathematics (100.00%); Natural Sciences (100.00%); English (100.00%)",3,Yes,1,4,10211,NS5002,No
+200122,"Chloe Michelle Etienne",Full-Time,"Computer Engineering","Associate Professor","3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10212,NS5002,No
+200123,"Samuel Jean Joseph",Full-Time,"Mechanical Engineering",Professor,"3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10213,NS5003,No
+200124,"Darius Renee Scott",Full-Time,"Systems Engineering","Assistant Professor","3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10201,NS3010,No
+200125,"Maya Lee Ramirez",Full-Time,Robotics,"Associate Professor","3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10202,NS3010,No
+200126,"Brianna Louise Thomas",Full-Time,"American Literature",Professor,"3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10203,NS3011,No
+200127,"Alexis James Martin",Full-Time,"Creative Writing","Assistant Professor","3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10204,NS3011,No
+200128,"Brianna Williams",Full-Time,Composition,"Associate Professor","3; 4; 9","Mathematics (100.00%); Natural Sciences (100.00%); Health Sciences (100.00%)",3,Yes,1,4,10205,NS3013,No
+200129,"Jordan Johnson",Full-Time,Linguistics,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,1,4,10206,NS3013,No
+200130,"Ava Alexander Allen",Full-Time,"Professional Writing","Assistant Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,Yes,1,4,10207,NS4018,No
+200131,"Jasmine Nicole Martinez",Full-Time,Psychology,"Associate Professor","5; 7","Engineering (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200132,"Camila Thomas",Full-Time,Sociology,Professor,"5; 7","Engineering (100.00%); Social Sciences (100.00%)",2,Yes,1,4,10225,EG1001,No
+200133,"Quinn Baptiste",Full-Time,"Political Science","Assistant Professor","5; 7","Engineering (100.00%); Social Sciences (100.00%)",2,Yes,1,4,10226,EG1001,No
+200134,"Mia Michelle Augustin",Full-Time,Economics,"Associate Professor","5; 7","Engineering (100.00%); Social Sciences (100.00%)",2,Yes,1,4,10227,EG1001,No
+200135,"Kayla Louis",Full-Time,History,Professor,"5; 7","Engineering (100.00%); Social Sciences (100.00%)",2,Yes,1,4,10228,EG2007,No
+200136,"Jessica Grace Thompson",Full-Time,"Curriculum and Instruction","Assistant Professor","5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10229,EG2007,No
+200137,"Samantha Rose Wright",Full-Time,"Educational Technology","Associate Professor","5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10230,EG2007,No
+200138,"Liam Nicole Jackson",Full-Time,"Special Education",Professor,"5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10231,EG2007,No
+200139,"Isabella Michelle Green",Full-Time,"Educational Leadership","Assistant Professor","5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10232,EG2007,No
+200140,"Ashley Robinson",Full-Time,Assessment,"Associate Professor","5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10233,EG2007,No
+200141,"Adrian Elise Wilson",Full-Time,"Public Health",Professor,"5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10234,EG2007,No
+200142,"Isaiah Elise Baker",Full-Time,"Health Administration","Assistant Professor","5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10235,EG2009,No
+200143,"Naomi Michael Ramirez",Full-Time,Nutrition,"Associate Professor","5; 7; 10","Engineering (100.00%); Social Sciences (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10236,EG2009,No
+200144,"Rachel Grace Flores",Full-Time,"Exercise Science",Professor,"2; 5; 7","Business (100.00%); Engineering (100.00%); Social Sciences (100.00%)",3,Yes,1,4,10237,EG2009,No
+200145,"Jessica Renee Harris",Full-Time,"Community Health","Assistant Professor","2; 5; 7","Business (100.00%); Engineering (100.00%); Social Sciences (100.00%)",3,Yes,1,4,10238,EG3010,No
+200146,"Grace James White",Full-Time,"Digital Media","Associate Professor","2; 5; 10","Business (100.00%); Engineering (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10239,EG3010,No
+200147,"Cameron Alexander Harris",Full-Time,"Graphic Design",Professor,"2; 5; 10","Business (100.00%); Engineering (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10240,EG4015,No
+200148,"Mia Michelle Thompson",Full-Time,"Studio Art","Assistant Professor","2; 5; 10","Business (100.00%); Engineering (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10241,EG4015,No
+200149,"Eric Davis",Full-Time,"Film Studies","Associate Professor","2; 5; 10","Business (100.00%); Engineering (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10242,EG4015,No
+200150,"Maria Claire Lopez",Full-Time,"Media Production",Professor,"1; 2; 9","Computer Science (100.00%); Business (100.00%); Health Sciences (100.00%)",3,Yes,1,4,140061,CS3011,No
+200151,"Isabella Ramirez",Full-Time,"Software Engineering","Assistant Professor","1; 2; 9","Computer Science (100.00%); Business (100.00%); Health Sciences (100.00%)",3,Yes,1,4,140062,CS3011,No
+200152,"Gabriella Renee Hernandez",Full-Time,"Computer Networks","Associate Professor","1; 2; 3","Computer Science (100.00%); Business (100.00%); Mathematics (100.00%)",3,Yes,1,4,140063,CS4018,No
+200153,"Nicole Ann Garcia",Full-Time,"Database Systems",Professor,"1; 2; 3","Computer Science (100.00%); Business (100.00%); Mathematics (100.00%)",3,Yes,1,4,140064,CS4018,No
+200154,"James Michael Martin",Full-Time,"Artificial Intelligence","Assistant Professor","1; 2; 3","Computer Science (100.00%); Business (100.00%); Mathematics (100.00%)",3,Yes,0,0,,,No
+200155,"Nia Ann Carter",Full-Time,Cybersecurity,"Associate Professor","1; 2; 3","Computer Science (100.00%); Business (100.00%); Mathematics (100.00%)",3,Yes,0,0,,,No
+200156,"Matthew Hernandez",Full-Time,Finance,Professor,"1; 2; 4","Computer Science (100.00%); Business (100.00%); Natural Sciences (100.00%)",3,Yes,0,0,,,No
+200157,"Samantha Renee Pierre",Full-Time,Accounting,"Assistant Professor","1; 2; 4","Computer Science (100.00%); Business (100.00%); Natural Sciences (100.00%)",3,Yes,0,0,,,No
+200158,"Mia Ann Pierre",Full-Time,Marketing,"Associate Professor","1; 2; 4","Computer Science (100.00%); Business (100.00%); Natural Sciences (100.00%)",3,Yes,0,0,,,No
+200159,"Camila David Rivera",Full-Time,Management,Professor,"1; 2; 4","Computer Science (100.00%); Business (100.00%); Natural Sciences (100.00%)",3,Yes,0,0,,,No
+200160,"Daniel Thomas Wright",Full-Time,"Information Systems","Assistant Professor","1; 2; 7","Computer Science (100.00%); Business (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200161,"Aaliyah Elise Anderson",Full-Time,"Applied Mathematics","Associate Professor","1; 2; 7","Computer Science (100.00%); Business (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200162,"Nicholas Lee Thompson",Full-Time,Statistics,Professor,"1; 2; 7","Computer Science (100.00%); Business (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200163,"David Grace Baptiste",Full-Time,Calculus,"Assistant Professor","1; 2; 7","Computer Science (100.00%); Business (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200164,"Nathan Clark",Full-Time,"Discrete Mathematics","Associate Professor","1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200165,"Malcolm Michelle Scott",Full-Time,"Operations Research",Professor,"1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200166,"Gabriel Lee Scott",Full-Time,Biology,"Assistant Professor","1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200167,"Madison Marie Miller",Full-Time,Chemistry,"Associate Professor","1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200168,"Julian Davis",Full-Time,Physics,Professor,"1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,0,0,,,No
+200169,"Michael Rodriguez",Full-Time,"Environmental Science","Assistant Professor","1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,0,0,,,No
+200170,"Maria Alexander Nguyen",Full-Time,Biochemistry,"Associate Professor","1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,0,0,,,No
+200171,"Ava James Ramirez",Full-Time,"Electrical Engineering",Professor,"1; 2","Computer Science (100.00%); Business (100.00%)",2,Yes,0,0,,,No
+200172,"Isaiah James Martinez",Full-Time,"Computer Engineering","Assistant Professor","1; 27","Computer Science (100.00%); Visual Arts (100.00%)",2,Yes,0,0,,,No
+200173,"Kevin Michael Nelson",Full-Time,"Mechanical Engineering","Associate Professor","1; 22","Computer Science (100.00%); Politics, Economics & Law (100.00%)",2,Yes,0,0,,,No
+200174,"Brandon Elise Hall",Full-Time,"Systems Engineering",Professor,"1; 26","Computer Science (100.00%); Sociology (100.00%)",2,Yes,0,0,,,No
+200175,"Isaiah James Perez",Full-Time,Robotics,"Assistant Professor","1; 8","Computer Science (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200176,"Lucas Anthony Robinson",Full-Time,"American Literature","Associate Professor","8; 24","Education (100.00%); Public Health (100.00%)",2,Yes,0,0,,,No
+200177,"Nicholas Hall",Full-Time,"Creative Writing",Professor,"8; 27","Education (100.00%); Visual Arts (100.00%)",2,Yes,0,0,,,No
+200178,"Mason David Wilson",Full-Time,Composition,"Assistant Professor","8; 28","Education (100.00%); Women's, Gender, and Sexuality Studies (100.00%)",2,Yes,0,0,,,No
+200179,"Brianna Nguyen",Full-Time,Linguistics,"Associate Professor","8; 23","Education (100.00%); Psychology (100.00%)",2,Yes,0,0,,,No
+200180,"Ava Rose Williams",Full-Time,"Professional Writing",Professor,"5; 8","Engineering (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200181,"Kiara Altidor",Full-Time,Psychology,"Assistant Professor","5; 8","Engineering (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200182,"Alexis Michelle Young",Full-Time,Sociology,"Associate Professor","5; 8","Engineering (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200183,"Elena Adams",Full-Time,"Political Science",Professor,"5; 8","Engineering (100.00%); Education (100.00%)",2,Yes,0,0,,,No
+200184,"Marcus Marie Sanchez",Full-Time,Economics,"Assistant Professor","2; 6; 8","Business (100.00%); English (100.00%); Education (100.00%)",3,Yes,0,0,,,No
+200185,"Ashley Miller",Full-Time,History,"Associate Professor","2; 6; 8","Business (100.00%); English (100.00%); Education (100.00%)",3,Yes,0,0,,,No
+200186,"Cameron Sanchez",Full-Time,"Curriculum and Instruction",Professor,"2; 6; 8","Business (100.00%); English (100.00%); Education (100.00%)",3,Yes,0,0,,,No
+200187,"Julian Louise Wilson",Full-Time,"Educational Technology","Assistant Professor","2; 6; 8","Business (100.00%); English (100.00%); Education (100.00%)",3,Yes,0,0,,,No
+200188,"Sophia James Rodriguez",Full-Time,"Special Education","Associate Professor","2; 8; 9","Business (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200189,"Michael Marie Williams",Full-Time,"Educational Leadership",Professor,"2; 8; 9","Business (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200190,"Sophia Baker",Full-Time,Assessment,"Assistant Professor","2; 5; 9","Business (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200191,"Zoe Lee Ramirez",Full-Time,"Public Health","Associate Professor","2; 5; 9","Business (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200192,"Casey Torres",Full-Time,"Health Administration",Professor,"2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200193,"Michael Claire Baker",Full-Time,Nutrition,"Assistant Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200194,"Gabriella Grace Joseph",Full-Time,"Exercise Science","Associate Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200195,"Mason Jean",Full-Time,"Community Health",Professor,"2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200196,"Andrew Louis",Full-Time,"Digital Media","Assistant Professor","2; 4; 5","Business (100.00%); Natural Sciences (100.00%); Engineering (100.00%)",3,Yes,0,0,,,No
+200197,"Ryan Nelson",Full-Time,"Graphic Design","Associate Professor","2; 4; 5","Business (100.00%); Natural Sciences (100.00%); Engineering (100.00%)",3,Yes,0,0,,,No
+200198,"Nicholas Daniel Perez",Full-Time,"Studio Art",Professor,"2; 4; 5","Business (100.00%); Natural Sciences (100.00%); Engineering (100.00%)",3,Yes,0,0,,,No
+200199,"Joseph Walker",Full-Time,"Film Studies","Assistant Professor","2; 4; 5","Business (100.00%); Natural Sciences (100.00%); Engineering (100.00%)",3,Yes,0,0,,,No
+200200,"Aaliyah Daniel Lopez",Full-Time,"Media Production","Associate Professor","2; 5","Business (100.00%); Engineering (100.00%)",2,Yes,0,0,,,No
+200201,"Nia Rose Wilson",Full-Time,"Software Engineering",Professor,"2; 5; 7","Business (100.00%); Engineering (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200202,"Cameron Grace Anderson",Full-Time,"Computer Networks","Assistant Professor","2; 5; 7","Business (100.00%); Engineering (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200203,"Gabriel Claire Lee",Full-Time,"Database Systems","Associate Professor","2; 5; 7","Business (100.00%); Engineering (100.00%); Social Sciences (100.00%)",3,Yes,0,0,,,No
+200204,"Ryan Scott",Full-Time,"Artificial Intelligence",Professor,"2; 5; 10","Business (100.00%); Engineering (100.00%); Arts and Media (100.00%)",3,Yes,0,0,,,No
+200205,"Michael Elise Scott",Full-Time,Cybersecurity,"Assistant Professor","2; 6; 10","Business (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,0,0,,,No
+200206,"James James Young",Full-Time,Finance,"Associate Professor","2; 6; 10","Business (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,0,0,,,No
+200207,"Olivia Marie Anderson",Full-Time,Accounting,Professor,"2; 6; 10","Business (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,0,0,,,No
+200208,"Taylor Rivera",Full-Time,Marketing,"Assistant Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200209,"Christian Jean Williams",Full-Time,Management,"Associate Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200210,"Ethan Ramirez",Full-Time,"Information Systems",Professor,"2; 3; 6","Business (100.00%); Mathematics (100.00%); English (100.00%)",3,Yes,0,0,,,No
+200211,"Caleb Baker",Full-Time,"Applied Mathematics","Assistant Professor","2; 3; 6","Business (100.00%); Mathematics (100.00%); English (100.00%)",3,Yes,0,0,,,No
+200212,"James Allen",Full-Time,Statistics,"Associate Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200213,"Ava Marie Nguyen",Full-Time,Calculus,Professor,"2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200214,"Victoria Alexander Garcia",Full-Time,"Discrete Mathematics","Assistant Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200215,"Riley Michelle Williams",Full-Time,"Operations Research","Associate Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200216,"Marcus Hall",Full-Time,Biology,Professor,"1; 6","Computer Science (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200217,"Gabriella Rose Perez",Full-Time,Chemistry,"Assistant Professor","1; 6","Computer Science (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200218,"Destiny Jean",Full-Time,Physics,"Associate Professor","1; 3; 6","Computer Science (100.00%); Mathematics (100.00%); English (100.00%)",3,Yes,0,0,,,No
+200219,"Isabella Grace Jean",Full-Time,"Environmental Science",Professor,"1; 3; 6","Computer Science (100.00%); Mathematics (100.00%); English (100.00%)",3,Yes,0,0,,,No
+200220,"Sophia Claire Pierre",Full-Time,Biochemistry,"Assistant Professor","1; 3; 6","Computer Science (100.00%); Mathematics (100.00%); English (100.00%)",3,Yes,0,0,,,No
+200221,"Brittany Daniel Green",Full-Time,"Electrical Engineering","Associate Professor","1; 3; 6","Computer Science (100.00%); Mathematics (100.00%); English (100.00%)",3,Yes,0,0,,,No
+200222,"Andrew Rose Harris",Full-Time,"Computer Engineering",Professor,"3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200223,"Jordan Hill",Full-Time,"Mechanical Engineering","Assistant Professor","3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200224,"Jada Nicole Jones",Full-Time,"Systems Engineering","Associate Professor","3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200225,"Isabella Alexander Green",Full-Time,Robotics,Professor,"3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200226,"Ethan Brown",Full-Time,"American Literature","Assistant Professor","3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200227,"Christopher Joseph Johnson",Full-Time,"Creative Writing","Associate Professor","3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200228,"Joshua Michelle Garcia",Full-Time,Composition,Professor,"3; 8; 9","Mathematics (100.00%); Education (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200229,"Samantha Augustin",Full-Time,Linguistics,"Assistant Professor","3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200230,"Ryan Joseph Adams",Full-Time,"Professional Writing","Associate Professor","3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200231,"Julian Gonzalez",Full-Time,Psychology,Professor,"3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200232,"Noah Jackson",Full-Time,Sociology,"Assistant Professor","3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200233,"Ryan Claire Rodriguez",Full-Time,"Political Science","Associate Professor","3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200234,"Sophia Desir",Full-Time,Economics,Professor,"3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200235,"Victoria Nelson",Full-Time,History,"Assistant Professor","3; 5; 9","Mathematics (100.00%); Engineering (100.00%); Health Sciences (100.00%)",3,Yes,0,0,,,No
+200236,"Quinn Renee Robinson",Full-Time,"Curriculum and Instruction","Associate Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200237,"Victoria Michelle Baptiste",Full-Time,"Educational Technology",Professor,"3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200238,"Lauren Renee Jones",Full-Time,"Special Education","Assistant Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200239,"Malcolm Flores",Full-Time,"Educational Leadership","Associate Professor","3; 6","Mathematics (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200240,"Maya David Taylor",Full-Time,Assessment,Professor,"2; 6; 10","Business (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10260,EN1001,No
+200241,"Michael Grace Garcia",Full-Time,"Public Health","Assistant Professor","1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10261,EN1001,No
+200242,"Joshua Louise Williams",Full-Time,"Health Administration","Associate Professor","1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10262,EN1001,No
+200243,"Jada Scott",Full-Time,Nutrition,Professor,"1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10263,EN1002,No
+200244,"Julian Anthony Jones",Full-Time,"Exercise Science","Assistant Professor","1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10264,EN1002,No
+200245,"Zoe Lee Hernandez",Full-Time,"Community Health","Associate Professor","1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10265,EN2006,No
+200246,"Destiny Flores",Full-Time,"Digital Media",Professor,"1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10266,EN2006,No
+200247,"Natalie Grace Etienne",Full-Time,"Graphic Design","Assistant Professor","1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10267,EN2009,No
+200248,"Lauren Michelle Desir",Full-Time,"Studio Art","Associate Professor","1; 6; 10","Computer Science (100.00%); English (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10268,EN2009,No
+200249,"James Miller",Full-Time,"Film Studies",Professor,"6; 8; 10","English (100.00%); Education (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10269,EN4017,No
+200250,"Brandon James Davis",Full-Time,"Media Production","Assistant Professor","6; 8; 10","English (100.00%); Education (100.00%); Arts and Media (100.00%)",3,Yes,1,4,10270,EN4017,No
+200251,"Darius Grace Harris",Part-Time,"Software Engineering","Adjunct Professor",6,"English (100.00%)",1,Yes,0,0,,,No
+200252,"Isabella Claire Moore",Part-Time,"Computer Networks",Lecturer,6,"English (100.00%)",1,Yes,0,0,,,No
+200253,"Brittany Grace Nguyen",Part-Time,"Database Systems","Adjunct Professor",6,"English (100.00%)",1,Yes,0,0,,,No
+200254,"David Desir",Part-Time,"Artificial Intelligence",Lecturer,8,"Education (100.00%)",1,Yes,1,4,10305,ED1001,No
+200255,"Ava Ann Harris",Part-Time,Cybersecurity,"Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10306,ED1001,No
+200256,"Isabella Alexander Mitchell",Part-Time,Finance,Lecturer,8,"Education (100.00%)",1,Yes,1,4,10307,ED2006,No
+200257,"Aaliyah Joseph Lee",Part-Time,Accounting,"Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10308,ED2006,No
+200258,"Samuel Louise Johnson",Part-Time,Marketing,Lecturer,8,"Education (100.00%)",1,Yes,1,4,10309,ED2007,No
+200259,"Adrianx James Adams",Part-Time,Management,"Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10310,ED2007,No
+200260,"Noah Michael Flores",Part-Time,"Information Systems",Lecturer,8,"Education (100.00%)",1,Yes,1,4,10311,ED2008,No
+200261,"Taylor Mitchell",Part-Time,"Applied Mathematics","Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10312,ED2008,No
+200262,"Noah Miller",Full-Time,"General Studies","Assistant Professor","2; 7","Business (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200263,"Andrew Pierre",Full-Time,"General Studies","Assistant Professor","2; 7","Business (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200264,"Emily Pierre",Full-Time,"General Studies","Assistant Professor","2; 7","Business (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200265,"Amanda Hill",Full-Time,"General Studies","Assistant Professor","2; 7","Business (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200266,"Nia Jackson",Full-Time,"General Studies","Assistant Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200267,"Mia King",Full-Time,"General Studies","Assistant Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200268,"Aaron Thomas Desir",Full-Time,"General Studies","Assistant Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,Yes,0,0,,,No
+200269,"Jonathan Michelle Hernandez",Full-Time,"General Studies","Assistant Professor","1; 10","Computer Science (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200270,"Anthony Alexander Rivera",Part-Time,Biochemistry,Lecturer,8,"Education (100.00%)",1,Yes,1,4,10321,ED1004,No
+200271,"Lauren Scott",Part-Time,"Electrical Engineering","Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10322,ED2009,No
+200272,"Ashley Marie Lewis",Part-Time,"Computer Engineering",Lecturer,8,"Education (100.00%)",1,Yes,1,4,10323,ED2009,No
+200273,"Leah Elise Nguyen",Part-Time,"Mechanical Engineering","Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10324,ED4016,No
+200274,"Leah Renee Charles",Part-Time,"Systems Engineering",Lecturer,8,"Education (100.00%)",1,Yes,1,4,10325,ED4017,No
+200275,"Grace Louise Thomas",Part-Time,Robotics,"Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10326,ED4017,No
+200276,"Eric Anthony Joseph",Part-Time,"American Literature",Lecturer,8,"Education (100.00%)",1,Yes,1,4,10327,ED5006,No
+200277,"Brianna Gonzalez",Part-Time,"Creative Writing","Adjunct Professor",8,"Education (100.00%)",1,Yes,1,4,10328,ED2009,No
+200278,"Maya Lopez",Part-Time,Composition,Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10329,HS1001,No
+200279,"Marcus Anthony Rivera",Part-Time,Linguistics,"Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10330,HS1001,No
+200280,"Aaron Elise Wright",Part-Time,"Professional Writing",Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10331,HS1003,No
+200281,"David Joseph Anderson",Part-Time,Psychology,"Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10332,HS2007,No
+200282,"Elena James Rodriguez",Part-Time,Sociology,Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10333,HS2007,No
+200283,"Christopher Pierre",Part-Time,"Political Science","Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10334,HS2008,No
+200284,"Destiny Anthony Perez",Part-Time,Economics,Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10335,HS2008,No
+200285,"Naomi Jean Martinez",Part-Time,History,"Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10336,HS3010,No
+200286,"Sophia Wright",Part-Time,"Curriculum and Instruction",Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10337,HS3010,No
+200287,"Ethan Anderson",Part-Time,"Educational Technology","Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10338,HS3011,No
+200288,"Caleb Alexander Lewis",Part-Time,"Special Education",Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10339,HS3011,No
+200289,"Ariana Elise Young",Part-Time,"Educational Leadership","Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10340,HS5001,No
+200290,"Adrian David Augustin",Part-Time,Assessment,Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10341,HS5001,No
+200291,"Jonathan Marie Taylor",Part-Time,"Public Health","Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10342,HS5002,No
+200292,"Leah Augustin",Part-Time,"Health Administration",Lecturer,9,"Health Sciences (100.00%)",1,Yes,1,4,10343,HS5002,No
+200293,"Destiny Thomas Lewis",Part-Time,Nutrition,"Adjunct Professor",9,"Health Sciences (100.00%)",1,Yes,1,4,10344,HS1003,No
+200294,"Samantha Altidor",Full-Time,"General Studies","Assistant Professor","8; 10","Education (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200295,"Skyler Rose Lopez",Full-Time,"General Studies","Assistant Professor","8; 10","Education (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200296,"Malcolm Charles",Full-Time,"General Studies","Assistant Professor","8; 10","Education (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200297,"Julian Martinez",Full-Time,"General Studies","Assistant Professor","8; 10","Education (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200298,"Ava Rivera",Full-Time,"General Studies","Assistant Professor","5; 10","Engineering (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200299,"Noah Rose Wilson",Full-Time,"General Studies","Assistant Professor","5; 10","Engineering (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200300,"Jessica Michelle Pierre",Full-Time,"General Studies","Assistant Professor","5; 10","Engineering (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200301,"Daniel Anthony Altidor",Part-Time,"Software Engineering","Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,0,0,,,No
+200302,"Mia King",Part-Time,"Computer Networks",Lecturer,7,"Social Sciences (100.00%)",1,Yes,0,0,,,No
+200303,"Andre Joseph Allen",Part-Time,"Database Systems","Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,0,0,,,No
+200304,"Daniel White",Part-Time,"Artificial Intelligence",Lecturer,7,"Social Sciences (100.00%)",1,Yes,0,0,,,No
+200305,"Nathan Alexander Nelson",Full-Time,"General Studies","Assistant Professor","5; 10","Engineering (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200306,"Jessica Carter",Full-Time,"General Studies","Assistant Professor","6; 10","English (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200307,"David James Torres",Part-Time,Accounting,"Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10289,SS2009,No
+200308,"Sophia Louise Lewis",Part-Time,Marketing,Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10290,SS2009,No
+200309,"Sophia Grace Williams",Part-Time,Management,"Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10291,SS3010,No
+200310,"Jessica Charles",Part-Time,"Information Systems",Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10292,SS3010,No
+200311,"Ariana Joseph Hall",Part-Time,"Applied Mathematics","Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10293,SS3011,No
+200312,"Brandon Mitchell",Part-Time,Statistics,Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10294,SS5001,No
+200313,"Maria Johnson",Part-Time,Calculus,"Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10295,SS5001,No
+200314,"Ava Joseph White",Part-Time,"Discrete Mathematics",Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10296,SS5002,No
+200315,"Natalie Michael Nelson",Part-Time,"Operations Research","Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10297,SS5002,No
+200316,"Marcus Renee Jean",Part-Time,Biology,Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10298,SS5006,No
+200317,"Kiara Walker",Part-Time,Chemistry,"Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10299,SS5006,No
+200318,"Jordan Moore",Part-Time,Physics,Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10300,SS5006,No
+200319,"Sophia Mitchell",Part-Time,"Environmental Science","Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10301,SS2006,No
+200320,"Ariana Marie Clark",Part-Time,Biochemistry,Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10302,SS3011,No
+200321,"Andrew Miller",Part-Time,"Electrical Engineering","Adjunct Professor",7,"Social Sciences (100.00%)",1,Yes,1,4,10303,SS2006,No
+200322,"Isabella Renee Clark",Part-Time,"Computer Engineering",Lecturer,7,"Social Sciences (100.00%)",1,Yes,1,4,10304,SS2006,No
+200323,"Marcus Jean Miller",Full-Time,"General Studies","Assistant Professor","6; 10","English (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200324,"Nicole Michael Thomas",Part-Time,"Systems Engineering",Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10353,VD1001,No
+200325,"Ariana Jean Thomas",Part-Time,Robotics,"Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10354,VD1003,No
+200326,"Joshua Martin",Part-Time,"American Literature",Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10355,VD1003,No
+200327,"Mia Joseph Jones",Part-Time,"Creative Writing","Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10356,VD1004,No
+200328,"Mia Alexander King",Part-Time,Composition,Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10357,VD1004,No
+200329,"Malcolm Jean White",Part-Time,Linguistics,"Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10358,VD1005,No
+200330,"Rachel Baptiste",Part-Time,"Professional Writing",Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10359,VD1005,No
+200331,"Natalie Baker",Part-Time,Psychology,"Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10360,VD4017,No
+200332,"Ethan Michelle Altidor",Part-Time,Sociology,Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10361,VD4017,No
+200333,"Kevin Michael Baker",Part-Time,"Political Science","Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10362,VD5001,No
+200334,"Isabella Rose Campbell",Part-Time,Economics,Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10363,VD5001,No
+200335,"Victoria Daniel Martin",Part-Time,History,"Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10364,VD5003,No
+200336,"Brian Louis",Part-Time,"Curriculum and Instruction",Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10365,VD2006,No
+200337,"Elena Flores",Part-Time,"Educational Technology","Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10366,VD2006,No
+200338,"Caleb Ann Adams",Part-Time,"Special Education",Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10367,VD3010,No
+200339,"Ariana Jean",Part-Time,"Educational Leadership","Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10368,VD4018,No
+200340,"Nathan Perez",Part-Time,Assessment,Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10369,VD5006,No
+200341,"Lauren Joseph Campbell",Part-Time,"Public Health","Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10370,VD3010,No
+200342,"Matthew Rose Jean",Part-Time,"Health Administration",Lecturer,10,"Arts and Media (100.00%)",1,Yes,1,4,10371,VD4018,No
+200343,"Nicholas Thomas Scott",Part-Time,Nutrition,"Adjunct Professor",10,"Arts and Media (100.00%)",1,Yes,1,4,10372,VD5006,No
+200344,"Kayla Ann Perez",Part-Time,"Exercise Science",Lecturer,6,"English (100.00%)",1,Yes,1,4,10271,EN5001,No
+200345,"Gabriel White",Part-Time,"Community Health","Adjunct Professor",6,"English (100.00%)",1,Yes,1,4,10272,EN5001,No
+200346,"Kevin David Davis",Part-Time,"Digital Media",Lecturer,6,"English (100.00%)",1,Yes,1,4,10273,EN5002,No
+200347,"David Grace Miller",Full-Time,"General Studies","Assistant Professor","6; 10","English (100.00%); Arts and Media (100.00%)",2,Yes,0,0,,,No
+200348,"Malcolm Jackson",Full-Time,"General Studies","Assistant Professor","2; 6","Business (100.00%); English (100.00%)",2,Yes,0,0,,,No
+200349,"Isaiah Wilson",Full-Time,"General Studies","Assistant Professor","2; 9","Business (100.00%); Health Sciences (100.00%)",2,Yes,0,0,,,No
+200350,"Jada Nicole Anderson",Full-Time,"General Studies","Assistant Professor","2; 9","Business (100.00%); Health Sciences (100.00%)",2,Yes,0,0,,,No
+400011,"Patricia Martinez",Full-Time,Professor,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400012,"Robert Hernandez",Full-Time,Professor,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400013,"Jennifer Lopez",Full-Time,Professor,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400014,"Michael Gonzalez",Full-Time,Professor,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400015,"Linda Wilson",Full-Time,Professor,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400016,"William Anderson",Full-Time,Professor,Professor,"3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400017,"Elizabeth Thomas",Full-Time,Professor,Professor,"4; 25","Natural Sciences (100.00%); School of Business Graduate Programs (100.00%)",2,No,0,0,,,No
+400018,"David Taylor",Full-Time,Professor,Professor,"4; 23","Natural Sciences (100.00%); Psychology (100.00%)",2,No,0,0,,,No
+400019,"Barbara Moore",Full-Time,Professor,Professor,"4; 21","Natural Sciences (100.00%); Modern Languages (100.00%)",2,No,0,0,,,No
+400020,"Richard Jackson",Full-Time,Professor,Professor,"4; 26","Natural Sciences (100.00%); Sociology (100.00%)",2,No,0,0,,,No
+400021,"Susan Martin",Full-Time,Professor,Professor,"4; 17","Natural Sciences (100.00%); History & Philosophy (100.00%)",2,No,0,0,,,No
+400022,"Joseph Lee",Full-Time,Professor,Professor,"4; 22","Natural Sciences (100.00%); Politics, Economics & Law (100.00%)",2,No,0,0,,,No
+400023,"Jessica Perez",Full-Time,Professor,Professor,"4; 22","Natural Sciences (100.00%); Politics, Economics & Law (100.00%)",2,No,0,0,,,No
+400024,"Thomas Thompson",Full-Time,Professor,Professor,"4; 23","Natural Sciences (100.00%); Psychology (100.00%)",2,No,0,0,,,No
+400025,"Sarah White",Full-Time,Professor,Professor,"4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400026,"Charles Harris",Full-Time,Professor,Professor,"4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400027,"Karen Sanchez",Full-Time,Professor,Professor,"4; 7","Natural Sciences (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400028,"Olivia Rivera",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400029,"Emma Morales",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400030,"Charlotte Flores",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400031,"Amelia Gomez",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400032,"Sophia Diaz",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400033,"Isabella Reyes",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400034,"Ava Cruz",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400035,"Mia Romero",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400036,"Luna Torres",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400037,"Hazel Vargas",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400038,"Willow Santiago",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400039,"Aurora Ramos",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400040,"Skylar Castro",Part-Time,"Visual Arts","Adjunct Professor",4,"Natural Sciences (100.00%)",1,No,0,0,,,No
+400041,"Ivy Mendoza",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400042,"Nova Ortega",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400043,"Stella Guerrero",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400044,"Emilia Medina",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400045,"Violet Aguilar",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400046,"Sadie Rios",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400047,"Penelope Castillo",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400048,"Autumn Figueroa",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400049,"Ruby Herrera",Part-Time,"Visual Arts","Adjunct Professor",5,"Engineering (100.00%)",1,No,0,0,,,No
+400050,"Marcus Abbas",Full-Time,"Visual Arts","Adjunct Professor","6; 9","English (100.00%); Health Sciences (100.00%)",2,No,0,0,,,No
+400051,"Talia Farouk",Full-Time,"Visual Arts","Adjunct Professor","9; 17","Health Sciences (100.00%); History & Philosophy (100.00%)",2,No,0,0,,,No
+400052,"Darius Hassan",Full-Time,"Visual Arts","Adjunct Professor","9; 17","Health Sciences (100.00%); History & Philosophy (100.00%)",2,No,0,0,,,No
+400053,"Serena Ibrahim",Full-Time,"Visual Arts","Adjunct Professor","3; 9","Mathematics (100.00%); Health Sciences (100.00%)",2,No,0,0,,,No
+400054,"Julian Jabbar",Full-Time,"Visual Arts","Adjunct Professor","3; 18","Mathematics (100.00%); Management, Marketing & Finance (100.00%)",2,No,0,0,,,No
+400055,"Nadia Karim",Full-Time,"Visual Arts","Adjunct Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400056,"Cyrus Malik",Full-Time,"Visual Arts","Adjunct Professor","3; 4","Mathematics (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400057,"Layla Nasir",Full-Time,"Visual Arts","Adjunct Professor","3; 7","Mathematics (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400058,"Omar Omar",Full-Time,"Visual Arts","Adjunct Professor","3; 7","Mathematics (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400059,"Yasmine Rashid",Full-Time,"Visual Arts","Adjunct Professor","3; 10","Mathematics (100.00%); Arts and Media (100.00%)",2,No,0,0,,,No
+400060,"Kareem Saleem",Full-Time,"Visual Arts","Adjunct Professor","3; 10","Mathematics (100.00%); Arts and Media (100.00%)",2,No,0,0,,,No
+400061,"Aisha Tariq",Full-Time,"Visual Arts","Adjunct Professor","3; 18","Mathematics (100.00%); Management, Marketing & Finance (100.00%)",2,No,0,0,,,No
+400062,"Tariq Usman",Full-Time,"Visual Arts","Adjunct Professor","3; 19","Mathematics (100.00%); Mathematics, Computer & Information Science (100.00%)",2,No,0,0,,,No
+400063,"Zara Waleed",Full-Time,"Visual Arts","Adjunct Professor","3; 19","Mathematics (100.00%); Mathematics, Computer & Information Science (100.00%)",2,No,0,0,,,No
+400064,"Rashid Yahya",Full-Time,"Visual Arts","Adjunct Professor","3; 19","Mathematics (100.00%); Mathematics, Computer & Information Science (100.00%)",2,No,0,0,,,No
+400065,"Leila Zubair",Full-Time,"Visual Arts","Adjunct Professor","3; 20","Mathematics (100.00%); Media & American Studies (100.00%)",2,No,0,0,,,No
+400066,"Amir Ahmed",Full-Time,"Visual Arts","Adjunct Professor","3; 20","Mathematics (100.00%); Media & American Studies (100.00%)",2,No,0,0,,,No
+400067,"Samira Ali",Full-Time,"Visual Arts","Adjunct Professor","4; 5","Natural Sciences (100.00%); Engineering (100.00%)",2,No,0,0,,,No
+400068,"Farid Bilal",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400069,"Layth Hamza",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400070,"Nour Imran",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400071,"Karim Khalid",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400072,"Jamila Layth",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400073,"Hadi Mansoor",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400074,"Mona Nabeel",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400075,"Faris Owais",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400076,"Safia Qasim",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400077,"Tamer Rafi",Full-Time,"Visual Arts","Adjunct Professor","1; 4","Computer Science (100.00%); Natural Sciences (100.00%)",2,No,0,0,,,No
+400078,"Rana Sami",Full-Time,"Visual Arts","Adjunct Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400079,"Adel Tariq",Full-Time,"Visual Arts","Adjunct Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400080,"Lina Usman",Full-Time,"Visual Arts","Adjunct Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400081,"Omar Waleed",Full-Time,"Visual Arts","Adjunct Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No
+400082,"Yasmine Yahya",Full-Time,"Visual Arts","Adjunct Professor","1; 7","Computer Science (100.00%); Social Sciences (100.00%)",2,No,0,0,,,No

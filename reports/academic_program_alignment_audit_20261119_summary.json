@@ -1,0 +1,99 @@
+{
+    "database": "ashford_waleed",
+    "audit_date": "2026-11-19",
+    "semester_IDs": {
+        "Fall 2026": 1,
+        "Spring 2027": 2
+    },
+    "student_count": 1620,
+    "student_counts_by_level": {
+        "Undergraduate": 1220,
+        "Graduate": 400
+    },
+    "valid_active_enrollments": {
+        "Fall 2026": 1619,
+        "Spring 2027": 1861
+    },
+    "enrollment_alignment_by_term": {
+        "Fall 2026": {
+            "Valid major/minor requirement fit": 560,
+            "Possible mismatch — no declared major/minor mapping; may be Gen Ed/elective": 1053,
+            "Unverified — graduate degree requirements not configured": 6
+        },
+        "Spring 2027": {
+            "Possible mismatch — no declared major/minor mapping; may be Gen Ed/elective": 1455,
+            "Valid major/minor requirement fit": 406
+        }
+    },
+    "enrollments_by_alignment": {
+        "Valid major/minor requirement fit": 966,
+        "Possible mismatch — mapping unavailable": 2508,
+        "Graduate requirements unconfigured": 6,
+        "Invalid/canceled section record": 10
+    },
+    "graduate_requirement_unverified_enrollments": 6,
+    "possible_unmapped_enrollments": 2508,
+    "students_with_possible_unmapped_enrollments": 586,
+    "invalid_cancelled_or_semester_mismatch_enrollments": 10,
+    "students_with_confirmed_registration_issues": 577,
+    "duplicate_student_course_semester_groups": 170,
+    "duplicate_rows_in_groups": 468,
+    "future_dated_history_rows": 0,
+    "prerequisite_results": {
+        "Met": 472,
+        "Not Met": 1251,
+        "No published prerequisites": 1757
+    },
+    "duplicate_groups_by_term": {
+        "Fall 2026": {
+            "groups": 34,
+            "extra_rows": 53
+        },
+        "Spring 2027": {
+            "groups": 136,
+            "extra_rows": 245
+        }
+    },
+    "duplicate_extra_enrollment_rows": 298,
+    "student_history_integrity_counts": {
+        "course_ID_mismatch": 436,
+        "semester_ID_mismatch": 48,
+        "future_dated_history": 0
+    },
+    "published_major_requirement_rows": 156,
+    "major_declaration_mismatch_students": 498,
+    "major_records_named_minor_in_student_declarations": 3,
+    "programs_without_published_requirement_assignments": 25,
+    "registration_issue_reasons": {
+        "unmet_prerequisites": 1251,
+        "prior_passing_course": 394,
+        "course_level_mismatch": 697,
+        "duplicate_same_course": 468,
+        "invalid_or_canceled_section": 10
+    },
+    "published_minor_requirement_rows": 61,
+    "general_or_elective_mapping_tables": [],
+    "confirmed_program_mismatch_enrollments": 0,
+    "limitations": [
+        "No General Education or Elective requirement mapping table was found. Courses absent from major/minor requirements remain possible mismatches, not confirmed unrelated courses.",
+        "Graduate_Student.Program exists, but no graduate requirement table was found; graduate enrollment is not evaluated against undergraduate requirements.",
+        "Requirement progress uses Student_History best grade per course and each published minimum grade, matching current Degree Audit logic.",
+        "Prerequisites use Course_Prerequisite and Student_History under application minimum-grade rules; no corequisite table was found.",
+        "Future-dated Student_History grades remain part of the existing Degree Audit calculation and are separately flagged; no records were changed.",
+        "Only registrations whose section semester matches Enrollment.semester_ID and whose section is not canceled count as active."
+    ],
+    "report_files": {
+        "students": "reports/academic_program_alignment_audit_20261119_students.csv",
+        "registrations": "reports/academic_program_alignment_audit_20261119_registrations.csv",
+        "requirements": "reports/academic_program_alignment_audit_20261119_requirements.csv",
+        "next_requirements": "reports/academic_program_alignment_audit_20261119_next_requirements.csv",
+        "data_issues": "reports/academic_program_alignment_audit_20261119_data_issues.csv"
+    },
+    "output_row_counts": {
+        "students": 1620,
+        "registrations": 3490,
+        "requirements": 17093,
+        "next_requirements": 2761,
+        "data_issues": 3271
+    }
+}

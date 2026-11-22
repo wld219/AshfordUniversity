@@ -5,6 +5,7 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once '../includes/functions/faculty_teaching_load.php';
 
 require_role(['Faculty']);
 $facultyID = (int) $_SESSION['user_id'];
@@ -14,6 +15,10 @@ $semesterOptions = all_rows(
     $pdo,
     "SELECT semester_ID, semester_Name, semester_Start
      FROM (
+        SELECT DISTINCT s.semester_ID, s.semester_Name, s.semester_Start
+        FROM Semester s
+        WHERE s.semester_Name IN ('Fall 2026', 'Spring 2027')
+        UNION
         SELECT DISTINCT s.semester_ID, s.semester_Name, s.semester_Start
         FROM Semester s
         JOIN Course_Section cs ON cs.semester_ID = s.semester_ID
@@ -63,6 +68,11 @@ $semesterName = $semesterOptionsById[$semesterId]['semester_Name'] ?? '';
 $semester = (string)$semesterId;
 $isHistoricalSemester = $semesterName !== ''
     && !in_array($semesterName, ['Fall 2026', 'Spring 2027'], true);
+$rosterWorkload = null;
+if (in_array($semesterName, ['Fall 2026', 'Spring 2027'], true)) {
+    $rosterSectionsForWorkload = faculty_teaching_sections($pdo, $facultyID, $semesterId);
+    $rosterWorkload = faculty_teaching_workload_summary($rosterSectionsForWorkload);
+}
 
 // Handle midterm grade submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_midterm_grade') {
@@ -231,7 +241,8 @@ if ($crn > 0) {
              JOIN User u ON u.user_ID = e.student_ID
              LEFT JOIN Login l ON l.user_ID = e.student_ID
              LEFT JOIN Student st ON st.student_ID = e.student_ID
-             JOIN Course_Section cs ON cs.CRN = e.CRN
+             JOIN Course_Section cs
+               ON cs.CRN = e.CRN AND cs.semester_ID = e.semester_ID
              JOIN Semester sem ON sem.semester_ID = cs.semester_ID
              LEFT JOIN (
                 SELECT student_ID, CRN,
@@ -241,6 +252,7 @@ if ($crn > 0) {
                         AS absent_count,
                     COUNT(*) AS record_count
                 FROM Attendance
+                WHERE attendance_Date <= CURDATE()
                 GROUP BY student_ID, CRN
              ) a ON a.student_ID = e.student_ID AND a.CRN = e.CRN
              WHERE e.CRN = ?
@@ -258,12 +270,14 @@ if ($crn > 0) {
              FROM Attendance a
              JOIN Enrollment e
                ON e.student_ID = a.student_ID AND e.CRN = a.CRN
-             JOIN Course_Section cs ON cs.CRN = e.CRN
+             JOIN Course_Section cs
+               ON cs.CRN = e.CRN AND cs.semester_ID = e.semester_ID
              JOIN Semester s ON s.semester_ID = cs.semester_ID
              WHERE a.CRN = ?
                AND cs.faculty_ID = ?
                AND s.semester_ID = ?
                AND cs.is_Cancelled = 0
+               AND a.attendance_Date <= CURDATE()
              ORDER BY a.attendance_Date DESC",
             [$crn, $facultyID, $semesterId]
         );
@@ -296,5 +310,13 @@ $averageAttendance = $totalRecorded > 0
 
 page_start('Course Rosters', 'Faculty', 'rosters.php');
 flash();
+if ($rosterWorkload !== null): ?>
+    <p role="status" style="max-width:1250px;margin:0 auto 12px;padding:12px 16px;border-left:4px solid #1d4ed8;background:#eff6ff;color:#142b4d;border-radius:8px">
+        <?= e($semesterName) ?> teaching workload:
+        <strong><?= $rosterWorkload['teaching_credits'] === null ? 'Unknown credits · Unknown' : (int) $rosterWorkload['teaching_credits'] . ' credits · ' . e($rosterWorkload['status']) ?></strong>
+        (<?= (int) $rosterWorkload['assigned_sections'] ?> active assigned sections)
+    </p>
+<?php endif; ?>
+<?php
 require_once __DIR__ . '/partials/rosters_view.php';
 page_end();

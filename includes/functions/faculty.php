@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-// Faculty workload rules (specification)
-//   - Full-time faculty teach at most two sections.
-//   - Part-time faculty teach exactly one section.
-//   - Full-time faculty may not teach two overlapping sections.
+// Faculty assignment rules.
+//   - Workload uses actual credits from distinct active CRNs, by semester.
+//   - 12+ credits is Full-Time workload; below 12 is Part-Time workload.
+//     These are planning classifications, not section caps or hard minimums.
+//   - Active teaching meetings may not overlap within the same semester.
 //   - Full-time faculty belong to at most three departments.
 //   - Part-time faculty belong to exactly one department.
 //   - Full-time faculty may have at most 15 advisees.
@@ -72,7 +73,8 @@ function faculty_can_teach_section(
     int $facultyID,
     int $timeSlotID,
     ?int $ignoreCRN = null,
-    ?int $semesterID = null
+    ?int $semesterID = null,
+    string $courseID = ''
 ): array {
     if ($semesterID === null && $ignoreCRN !== null) {
         $existing = one(
@@ -89,35 +91,12 @@ function faculty_can_teach_section(
 
     $faculty = one(
         $pdo,
-        'SELECT faculty_Type FROM Faculty WHERE faculty_ID = ?',
+        'SELECT faculty_ID FROM Faculty WHERE faculty_ID = ?',
         [$facultyID]
     );
 
     if (!$faculty) {
         return [false, 'Faculty record not found.'];
-    }
-
-    $isFullTime = $faculty['faculty_Type'] === 'Full-Time';
-
-    $sql = "SELECT COUNT(*) AS total FROM Course_Section
-            WHERE faculty_ID = ? AND semester_ID = ?
-              AND is_Cancelled = 0";
-
-    $params = [$facultyID, $semesterID];
-
-    if ($ignoreCRN !== null) {
-        $sql .= " AND CRN <> ?";
-        $params[] = $ignoreCRN;
-    }
-
-    $current = (int) (one($pdo, $sql, $params)['total'] ?? 0);
-
-    if ($isFullTime && $current >= 2) {
-        return [false, 'Full-time faculty may teach at most two sections per semester.'];
-    }
-
-    if (!$isFullTime && $current >= 1) {
-        return [false, 'Part-time faculty may teach at most one section per semester.'];
     }
 
     if (faculty_slot_overlaps(
@@ -126,7 +105,57 @@ function faculty_can_teach_section(
         return [false, 'Faculty has an overlapping course section in this semester.'];
     }
 
-    return [true, 'OK'];
+    $projected = faculty_projected_teaching_workload(
+        $pdo, $facultyID, $semesterID, $courseID, $ignoreCRN
+    );
+    $loadClass = $projected['credits'] >= 12 ? 'Full-Time workload' : 'Part-Time workload';
+    return [true, "OK; projected semester workload is {$projected['credits']} credits ({$loadClass})."];
+}
+
+/**
+ * Calculate distinct active section credits for this faculty member and term,
+ * optionally replacing an existing CRN with the proposed course.
+ *
+ * @return array{credits:int, sections:int, status:string}
+ */
+function faculty_projected_teaching_workload(
+    PDO $pdo,
+    int $facultyID,
+    int $semesterID,
+    string $courseID,
+    ?int $ignoreCRN = null
+): array {
+    $sql = "SELECT COALESCE(SUM(active.course_Credits), 0) AS credits,
+                   COUNT(*) AS sections
+            FROM (
+                SELECT cs.CRN, MAX(c.course_Credits) AS course_Credits
+                FROM Course_Section cs
+                JOIN Course c ON c.course_ID = cs.course_ID
+                WHERE cs.faculty_ID = ?
+                  AND cs.semester_ID = ?
+                  AND cs.is_Cancelled = 0";
+    $params = [$facultyID, $semesterID];
+    if ($ignoreCRN !== null) {
+        $sql .= ' AND cs.CRN <> ?';
+        $params[] = $ignoreCRN;
+    }
+    $sql .= ' GROUP BY cs.CRN) active';
+
+    $current = one($pdo, $sql, $params) ?? ['credits' => 0, 'sections' => 0];
+    $proposedCredits = 0;
+    if ($courseID !== '') {
+        $course = one($pdo, 'SELECT course_Credits FROM Course WHERE course_ID = ?', [$courseID]);
+        if ($course !== null) {
+            $proposedCredits = max(0, (int) $course['course_Credits']);
+        }
+    }
+
+    $credits = (int) $current['credits'] + $proposedCredits;
+    return [
+        'credits' => $credits,
+        'sections' => (int) $current['sections'] + ($courseID !== '' ? 1 : 0),
+        'status' => $credits >= 12 ? 'Full-Time (FT)' : 'Part-Time (PT)',
+    ];
 }
 
 // Is this faculty member assigned to a department that owns the course?
@@ -269,31 +298,16 @@ function faculty_rule_violations(PDO $pdo): array
 		$name = (string) $member['faculty_Name'];
 		$isFullTime = $member['faculty_Type'] === 'Full-Time';
 
-		// Teaching load.
-		$sectionCount = (int) (one(
+		// Workload is calculated by the shared semester helper and is not a
+		// section-count violation here.
+		// Overlapping meetings are checked within each semester for all faculty.
+		$overlaps = all_rows(
 			$pdo,
-			'SELECT COUNT(*) AS total FROM Course_Section
-			WHERE faculty_ID = ? AND is_Cancelled = 0',
-			[$facultyID]
-		)['total'] ?? 0);
-
-		if ($isFullTime && $sectionCount > 2) {
-			$violations[] = "{$name} (ID {$facultyID}) teaches {$sectionCount} sections; full-time faculty may teach at most two.";
-		}
-
-		if (!$isFullTime && $sectionCount !== 1) {
-			$violations[] = "{$name} (ID {$facultyID}) teaches {$sectionCount} sections; part-time faculty must teach exactly one.";
-		}
-
-		// Overlapping meetings for full-time faculty.
-		if ($isFullTime) {
-
-			$overlaps = all_rows(
-				$pdo,
-				"SELECT a.CRN AS crn_a, b.CRN AS crn_b
+			"SELECT a.semester_ID, a.CRN AS crn_a, b.CRN AS crn_b
 				FROM Course_Section a
 				JOIN Course_Section b
 					ON b.faculty_ID = a.faculty_ID
+					AND b.semester_ID = a.semester_ID
 					AND b.CRN > a.CRN
 					AND b.is_Cancelled = 0
 				JOIN Time_Slot_Day day_a
@@ -313,12 +327,11 @@ function faculty_rule_violations(PDO $pdo): array
 					AND a.is_Cancelled = 0
 					AND time_a.start_Time < time_b.end_Time
 					AND time_b.start_Time < time_a.end_Time",
-				[$facultyID]
-			);
+			[$facultyID]
+		);
 
-			foreach ($overlaps as $overlap) {
-				$violations[] = "{$name} (ID {$facultyID}) teaches overlapping sections {$overlap['crn_a']} and {$overlap['crn_b']}.";
-			}
+		foreach ($overlaps as $overlap) {
+			$violations[] = "{$name} (ID {$facultyID}) teaches overlapping sections {$overlap['crn_a']} and {$overlap['crn_b']} in semester {$overlap['semester_ID']}.";
 		}
 
 		// Department membership.
@@ -385,9 +398,7 @@ function faculty_rule_violations(PDO $pdo): array
 function faculty_rule_summary(array $violations): array
 {
 	$labels = [
-		'at most two' => 'Full-time faculty teaching more than two sections',
-		'exactly one' => 'Part-time faculty not teaching exactly one section',
-		'overlapping' => 'Full-time faculty teaching overlapping sections',
+		'overlapping' => 'Faculty teaching overlapping sections in one semester',
 		'at most three' => 'Full-time faculty in more than three departments',
 		'only one department' => 'Part-time faculty in other than one department',
 		'may not have advisees' => 'Part-time faculty holding advisees',

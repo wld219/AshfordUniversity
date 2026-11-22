@@ -1,0 +1,69 @@
+student_ID,semester_ID,course_ID,source_CRN,planned_action,target_CRN,result,details
+100004,1,VD1001,10353,same-course section transfer,140080,transferred,Same-course transfer committed and audited.
+100006,1,ED1004,10321,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100033,1,SS5006,10298,same-course section transfer,10299,dropped,Same-course replacement rejected by registration validator: SS5006 is classified Graduate while student 100033 is Undergraduate. Source had no linked academic records; safe fallback drop committed and audited.
+100033,1,HS1001,10330,same-course section transfer,140066,transferred,Same-course transfer committed and audited.
+100038,1,HS1001,10329,same-course section transfer,140049,transferred,Same-course transfer committed and audited.
+100041,1,EG2009,10235,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100053,1,SS3011,10302,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100088,1,VD5001,10362,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100105,1,NS3010,10202,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100131,1,VD5001,10362,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100171,1,HS1001,10330,same-course section transfer,140049,transferred,Same-course transfer committed and audited.
+100236,1,HS3010,10336,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100236,1,VD4018,10368,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100279,1,SS2009,10289,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100285,1,HS3010,10336,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100318,1,EN2009,10268,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100368,1,SS3010,10291,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100409,1,ED4016,10324,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100479,1,NS4018,10207,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100004,2,NS2007,20203,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100005,2,NS5002,20225,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100009,2,MA2008,20146,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100018,2,CS5005,20046,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100025,2,MA4018,20167,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100028,2,MA1001,20132,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100037,2,BU5005,20105,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100038,2,MA3012,20152,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100055,2,NS1002,20194,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100061,2,CS5003,20039,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100079,2,CS2006,20011,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100085,2,EG1002,20248,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100097,2,NS2009,20215,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100098,2,BU5006,20118,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100104,2,CS1005,20010,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100125,2,CS3011,20052,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100126,2,BU5004,20102,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100128,2,EG3012,20259,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100144,2,CS1002,20005,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100146,2,MA4018,20173,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100149,2,BU3012,20085,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100153,2,MA5004,20161,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100155,2,MA5002,20176,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100162,2,BU1003,20072,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100168,2,BU5005,20105,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100171,2,CS1002,20004,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100179,2,EG3011,20258,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100185,2,CS5004,20042,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100202,2,NS2008,20207,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100210,2,BU3013,20110,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100211,2,BU3013,20119,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100227,2,BU5006,20115,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100258,2,CS2008,20021,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100267,2,NS2007,20206,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100276,2,BU3012,20085,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100278,2,MA2009,20151,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100301,2,NS2008,20208,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100318,2,MA4014,20171,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100319,2,BU5006,20108,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100323,2,EG3012,20259,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100342,2,CS5001,20035,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100365,2,BU5006,20115,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100376,2,NS2007,20202,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100383,2,EN1001,20279,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100396,2,SS1005,20306,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100400,2,EG3011,20257,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100426,2,CS5005,20045,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100461,2,NS5002,20225,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.
+100470,2,BU5004,20100,drop only,,dropped,Conflict enrollment removed; academic dependents were absent and audit entry recorded.

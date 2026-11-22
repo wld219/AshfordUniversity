@@ -40,24 +40,30 @@ function boot(){
   if(!rows.length)return;
   table.dataset.asUiReady='1';
   const headings=Array.from(header.cells);
-  const statusCol=headings.findIndex(h=>/^(status|appointment status)$/i.test(h.textContent.trim()));
+  const addToolbar=!document.body.classList.contains('student-portal-theme');
+  const statusCol=addToolbar?headings.findIndex(h=>/^(status|appointment status)$/i.test(h.textContent.trim())):-1;
   const holder=table.closest('.table-wrap')||table;
   holder.classList.add('as-enhanced-table');
-  const tools=document.createElement('div');tools.className='as-ui-toolbar';
-  const search=document.createElement('input');search.type='search';search.placeholder='Search displayed rows…';search.setAttribute('aria-label','Search displayed table rows');
-  const status=document.createElement('select');status.setAttribute('aria-label','Filter displayed rows by status');
-  if(statusCol>=0){
-   const opts=['All statuses',...new Set(rows.map(r=>r.cells[statusCol]?.textContent.trim()).filter(Boolean))];
-   opts.forEach((val,i)=>{const option=document.createElement('option');option.value=i===0?'':val;option.textContent=val;status.append(option);});
+  let search=null,status=null,exportBtn=null;
+  if(addToolbar){
+   const tools=document.createElement('div');tools.className='as-ui-toolbar';
+   search=document.createElement('input');search.type='search';search.placeholder='Search displayed rows…';search.setAttribute('aria-label','Search displayed table rows');
+   status=document.createElement('select');status.setAttribute('aria-label','Filter displayed rows by status');
+   if(statusCol>=0){
+    const opts=['All statuses',...new Set(rows.map(r=>r.cells[statusCol]?.textContent.trim()).filter(Boolean))];
+    opts.forEach((val,i)=>{const option=document.createElement('option');option.value=i===0?'':val;option.textContent=val;status.append(option);});
+   }
+   const clear=document.createElement('button');clear.type='button';clear.textContent='Reset';
+   exportBtn=document.createElement('button');exportBtn.type='button';exportBtn.textContent='Export CSV';
+   const count=document.createElement('small');count.className='as-ui-count';count.setAttribute('aria-live','polite');
+   tools.append(search);
+   if(statusCol>=0)tools.append(status);
+   tools.append(clear,exportBtn,count);
+   holder.parentNode.insertBefore(tools,holder);
+   clear.addEventListener('click',()=>{search.value='';status.value='';update();});
   }
-  const clear=document.createElement('button');clear.type='button';clear.textContent='Reset';
-  const exportBtn=document.createElement('button');exportBtn.type='button';exportBtn.textContent='Export CSV';
-  const count=document.createElement('small');count.className='as-ui-count';count.setAttribute('aria-live','polite');
-  tools.append(search);
-  if(statusCol>=0)tools.append(status);
-  tools.append(clear,exportBtn,count);
-  holder.parentNode.insertBefore(tools,holder);
   function update(){
+   if(!addToolbar)return;
    let shown=0;const term=search.value.trim().toLowerCase();
    rows.forEach(row=>{
     const ok=row.textContent.toLowerCase().includes(term) &&
@@ -66,8 +72,7 @@ function boot(){
    });
    count.textContent=shown+' / '+rows.length+' displayed-page rows';
   }
-  search.addEventListener('input',update);status.addEventListener('change',update);
-  clear.addEventListener('click',()=>{search.value='';status.value='';update();});
+  if(addToolbar){search.addEventListener('input',update);status.addEventListener('change',update);}
   let last=-1,asc=true;
   headings.forEach((th,i)=>{
    if(/^(action|actions)$/i.test(th.textContent.trim()))return;
@@ -81,7 +86,7 @@ function boot(){
    th.addEventListener('click',sort);
    th.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();sort();}});
   });
-  exportBtn.addEventListener('click',()=>{
+  if(addToolbar)exportBtn.addEventListener('click',()=>{
    const quoted=s=>'"'+String(s).replace(/"/g,'""')+'"';
    const fields=[headings.map(h=>h.textContent.trim()),...rows.filter(r=>!r.hidden).map(r=>Array.from(r.cells).map(c=>csvCellValue(c)))];
    const csv='\uFEFF'+fields.map(line=>line.map(quoted).join(',')).join('\r\n');

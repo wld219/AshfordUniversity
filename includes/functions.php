@@ -50,6 +50,7 @@ foreach ([
 	'validation_semester.php',
 	'validation_assignment.php',
 	'master_schedule.php',
+	'student_academic_program.php',
 ] as $module) {
 	require_once __DIR__ . '/functions/' . $module;
 }
@@ -111,4 +112,46 @@ function semester_id(
 	}
 
 	return null;
+}
+
+/**
+ * Semesters available in the Student portal's current/upcoming selectors.
+ * IDs are loaded from Semester; transcript history remains unrestricted.
+ */
+function student_portal_semesters(PDO $pdo): array
+{
+	return all_rows(
+		$pdo,
+		"SELECT semester_ID, semester_Name
+		 FROM Semester
+		 WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+		 ORDER BY CASE semester_Name
+			 WHEN 'Fall 2026' THEN 1
+			 WHEN 'Spring 2027' THEN 2
+		 END"
+	);
+}
+
+/** Fall 2026 is the Student portal's default term when it exists. */
+function student_portal_default_semester_id(array $semesters): ?int
+{
+	foreach ($semesters as $semester) {
+		if (($semester['semester_Name'] ?? '') === 'Fall 2026') {
+			return (int) $semester['semester_ID'];
+		}
+	}
+
+	return isset($semesters[0]['semester_ID']) ? (int) $semesters[0]['semester_ID'] : null;
+}
+
+/** Reject semester IDs outside the current/upcoming Student portal list. */
+function student_portal_selected_semester_id(array $semesters, ?int $requestedID): ?int
+{
+	foreach ($semesters as $semester) {
+		if ($requestedID !== null && (int) $semester['semester_ID'] === $requestedID) {
+			return $requestedID;
+		}
+	}
+
+	return student_portal_default_semester_id($semesters);
 }

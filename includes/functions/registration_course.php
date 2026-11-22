@@ -123,6 +123,8 @@ function check_time_conflict(PDO $pdo, int $studentID, array $section): ?string
 			FROM Enrollment
 			JOIN Course_Section
 				ON Course_Section.CRN = Enrollment.CRN
+				AND Course_Section.semester_ID = Enrollment.semester_ID
+				AND Course_Section.is_Cancelled = 0
 			JOIN Time_Slot_Day my_day
 				ON my_day.time_Slot_ID = Course_Section.time_Slot_ID
 			JOIN Time_Slot_Day new_day

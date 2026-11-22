@@ -21,7 +21,8 @@ if ($email === '' || $password === '') {
 	exit;
 }
 
-$sql = "SELECT Login.*, User.first_Name, User.last_Name
+$sql = "SELECT Login.*, User.first_Name, User.last_Name,
+			User.user_Type AS profile_User_Type, User.is_active AS profile_is_active
 		FROM Login
 		JOIN User ON User.user_ID = Login.user_ID
 		WHERE Login.user_Email = ?
@@ -40,6 +41,16 @@ if (!$user) {
 
 if ($user['lock_var']) {
 	$_SESSION['login_error'] = 'This account is locked. Contact an administrator.';
+	header('Location: ' . url('index.php'));
+	exit;
+}
+
+// A Login row alone must not grant portal access: the shared User record is
+// the role and activation authority. Fail closed if the records disagree or
+// an administrator has deactivated the account.
+if (!(bool) $user['profile_is_active']
+	|| $user['profile_User_Type'] !== $user['user_Type']) {
+	$_SESSION['login_error'] = 'This account is unavailable. Contact an administrator.';
 	header('Location: ' . url('index.php'));
 	exit;
 }

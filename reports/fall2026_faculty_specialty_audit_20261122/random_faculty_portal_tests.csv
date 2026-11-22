@@ -1,0 +1,21 @@
+faculty_ID,name,employment_type,departments,tested_Fall_CRN,dashboard,my_schedule,course_rosters_and_grades,attendance,unauthorized_roster_access,unauthorized_attendance_access,authentication_method
+200007,Nathan Claire Wilson,Full-Time,"Engineering; Health Sciences; Accounting, Taxation & Business Law",10007,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200013,Nicole Michael Gonzalez,Full-Time,Mathematics; Engineering; Adolescence Education,10226,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200328,Mia Alexander King,Part-Time,Arts and Media,10357,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200144,Rachel Grace Flores,Full-Time,Business; Engineering; Social Sciences,10237,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200014,Nathan Louise Carter,Full-Time,Mathematics; Engineering; Chemistry & Physics,140096,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200162,Nicholas Lee Thompson,Full-Time,Computer Science; Business; Social Sciences,140090,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200275,Grace Louise Thomas,Part-Time,Education,10326,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200134,Mia Michelle Augustin,Full-Time,Engineering; Social Sciences,10229,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200246,Destiny Flores,Full-Time,Computer Science; English; Arts and Media,140040,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200293,Destiny Thomas Lewis,Part-Time,Health Sciences,10344,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200020,Malcolm Wright,Full-Time,"Mathematics; English; Politics, Economics & Law",10263,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200123,Samuel Jean Joseph,Full-Time,Mathematics; Natural Sciences; Health Sciences,10202,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200310,Jessica Charles,Part-Time,Social Sciences,10292,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200036,Victoria Nicole Wright,Full-Time,Mathematics; Natural Sciences; Visual Arts,140106,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200079,Ava Marie Lopez,Full-Time,Business; English,10265,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200270,Anthony Alexander Rivera,Part-Time,Education,10321,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200339,Ariana Jean,Part-Time,Arts and Media,10368,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200332,Ethan Michelle Altidor,Part-Time,Arts and Media,10361,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200276,Eric Anthony Joseph,Part-Time,Education,10327,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login
+200254,David Desir,Part-Time,Education,10305,PASS,PASS,PASS,PASS,PASS,PASS,Isolated session fixture; not password login

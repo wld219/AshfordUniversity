@@ -50,10 +50,8 @@ function registration_window_status(
 }
 
 /*
- * The semester a student should currently be registering for: the newest
- * term that has open, non-cancelled sections and an open registration
- * window. When no window is open this falls back to the newest term with
- * sections, so pages still render instead of showing nothing.
+ * Current/upcoming registration term. Fall 2026 is prioritized, then Spring
+ * 2027; all older and later terms are excluded from Student registration.
  */
 function current_registration_semester(PDO $pdo): ?int
 {
@@ -63,8 +61,12 @@ function current_registration_semester(PDO $pdo): ?int
 		FROM Semester s
 		JOIN Course_Section cs
 			ON cs.semester_ID = s.semester_ID AND cs.is_Cancelled = 0
+		WHERE s.semester_Name IN ('Fall 2026', 'Spring 2027')
 		GROUP BY s.semester_ID
-		ORDER BY s.semester_Name DESC"
+		ORDER BY CASE s.semester_Name
+			WHEN 'Fall 2026' THEN 1
+			WHEN 'Spring 2027' THEN 2
+		END"
 	);
 
 	$newestWithSections = null;

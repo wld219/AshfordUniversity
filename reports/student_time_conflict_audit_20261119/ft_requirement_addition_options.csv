@@ -1,0 +1,72 @@
+student_ID,semester,credits_now,status_now,course_ID,course_title,credits,requirement,CRN,section,available_Seats,registration_check
+100088,"Fall 2026",8,"Part-Time (PT)",BU1002,"Financial Accounting",4,"Major — Accounting (min C)",140086,002,4,ELIGIBLE
+100088,"Fall 2026",8,"Part-Time (PT)",BU2006,"Organizational Behavior",4,"Major — Accounting (min C)",140088,002,3,"Registration blocked: prerequisite requirements are not satisfied."
+100088,"Fall 2026",8,"Part-Time (PT)",BU2009,"Microeconomics for Business",4,"Major — Accounting (min C)",140089,001,7,ELIGIBLE
+100088,"Fall 2026",8,"Part-Time (PT)",BU3011,"Business Statistics",4,"Major — Accounting (min C)",140092,003,1,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS1004,"Principles of Economics",4,"Major — Psychology (min C)",140074,001,9,ELIGIBLE
+100105,"Fall 2026",8,"Part-Time (PT)",SS2006,"Social Science Research Methods",4,"Major — Psychology (min C)",140076,005,9,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS2006,"Social Science Research Methods",4,"Major — Psychology (min C)",10303,002,1,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS2009,"American Government",4,"Major — Psychology (min C)",140077,003,9,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS2009,"American Government",4,"Major — Psychology (min C)",10289,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS3010,"Social Problems",4,"Major — Psychology (min C)",10291,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS3011,"Developmental Psychology",4,"Major — Psychology (min C)",140078,003,4,"Registration blocked: prerequisite requirements are not satisfied."
+100105,"Fall 2026",8,"Part-Time (PT)",SS3011,"Developmental Psychology",4,"Major — Psychology (min C)",10302,002,2,"Registration blocked: prerequisite requirements are not satisfied."
+100236,"Fall 2026",8,"Part-Time (PT)",EN1002,"Introduction to Literature",4,"Major — English (min C)",140040,004,4,ELIGIBLE
+100236,"Fall 2026",8,"Part-Time (PT)",EN1002,"Introduction to Literature",4,"Major — English (min C)",10263,001,3,ELIGIBLE
+100236,"Fall 2026",8,"Part-Time (PT)",EN1002,"Introduction to Literature",4,"Major — English (min C)",10264,002,2,ELIGIBLE
+100236,"Fall 2026",8,"Part-Time (PT)",EN2006,"Introduction to Linguistics",4,"Major — English (min C)",10265,001,2,ELIGIBLE
+100236,"Fall 2026",8,"Part-Time (PT)",EN2006,"Introduction to Linguistics",4,"Major — English (min C)",10266,002,2,"Registration blocked: this course has a time conflict."
+100236,"Fall 2026",8,"Part-Time (PT)",EN3013,"Technical Writing",4,"Major — English (min C)",140041,001,1,ELIGIBLE
+100236,"Fall 2026",8,"Part-Time (PT)",EN4017,"Language and Culture",4,"Major — English (min C)",140042,003,5,"Registration blocked: prerequisite requirements are not satisfied."
+100025,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20005,003,2,"Registration blocked: this course has a time conflict."
+100025,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20004,002,1,ELIGIBLE
+100025,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20006,004,1,ELIGIBLE
+100025,"Spring 2027",8,"Part-Time (PT)",CS1005,"Computer Networks",4,"Major — Computer Science (min C)",20010,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100025,"Spring 2027",8,"Part-Time (PT)",CS2006,"Software Engineering",4,"Major — Computer Science (min C)",20011,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100025,"Spring 2027",8,"Part-Time (PT)",CS2007,"Introduction to Computing",4,"Major — Computer Science (min C)",20015,004,1,ELIGIBLE
+100025,"Spring 2027",8,"Part-Time (PT)",CS3011,"Algorithm Design",4,"Major — Computer Science (min C)",20052,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100028,"Spring 2027",8,"Part-Time (PT)",BU1003,"Managerial Accounting",4,"Major — Accounting (min C)",20072,002,1,"Registration blocked: prerequisite requirements are not satisfied."
+100028,"Spring 2027",8,"Part-Time (PT)",BU1003,"Managerial Accounting",4,"Major — Accounting (min C)",20074,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100028,"Spring 2027",8,"Part-Time (PT)",BU3013,"Operations Management",4,"Major — Accounting (min C)",20110,002,1,"Registration blocked: prerequisite requirements are not satisfied."
+100028,"Spring 2027",8,"Part-Time (PT)",BU3013,"Operations Management",4,"Major — Accounting (min C)",20119,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100061,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20005,003,2,ELIGIBLE
+100061,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20004,002,1,ELIGIBLE
+100061,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20006,004,1,ELIGIBLE
+100061,"Spring 2027",8,"Part-Time (PT)",CS1005,"Computer Networks",4,"Major — Computer Science (min C)",20010,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100061,"Spring 2027",8,"Part-Time (PT)",CS2006,"Software Engineering",4,"Major — Computer Science (min C)",20011,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100061,"Spring 2027",8,"Part-Time (PT)",CS2007,"Introduction to Computing",4,"Major — Computer Science (min C)",20015,004,1,ELIGIBLE
+100061,"Spring 2027",8,"Part-Time (PT)",CS3011,"Algorithm Design",4,"Major — Computer Science (min C)",20052,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",EG1002,"Engineering Mechanics",4,"Major — Engineering (min C)",20248,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",EG3011,Dynamics,4,"Major — Engineering (min C)",20257,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",EG3011,Dynamics,4,"Major — Engineering (min C)",20258,002,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Minor — Cybersecurity (min C)",20005,003,2,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Minor — Cybersecurity (min C)",20004,002,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Minor — Cybersecurity (min C)",20006,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",CS1005,"Computer Networks",4,"Minor — Cybersecurity (min C)",20010,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100079,"Spring 2027",8,"Part-Time (PT)",CS2007,"Introduction to Computing",4,"Minor — Cybersecurity (min C)",20015,004,1,ELIGIBLE
+100085,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20005,003,2,ELIGIBLE
+100085,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20004,002,1,ELIGIBLE
+100085,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Computer Science (min C)",20006,004,1,ELIGIBLE
+100085,"Spring 2027",8,"Part-Time (PT)",CS1005,"Computer Networks",4,"Major — Computer Science (min C)",20010,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100085,"Spring 2027",8,"Part-Time (PT)",CS2006,"Software Engineering",4,"Major — Computer Science (min C)",20011,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100085,"Spring 2027",8,"Part-Time (PT)",CS2007,"Introduction to Computing",4,"Major — Computer Science (min C)",20015,004,1,ELIGIBLE
+100085,"Spring 2027",8,"Part-Time (PT)",CS3011,"Algorithm Design",4,"Major — Computer Science (min C)",20052,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100098,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Cybersecurity (min C)",20005,003,2,ELIGIBLE
+100098,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Cybersecurity (min C)",20004,002,1,ELIGIBLE
+100098,"Spring 2027",8,"Part-Time (PT)",CS1002,"Object-Oriented Programming with Java",4,"Major — Cybersecurity (min C)",20006,004,1,ELIGIBLE
+100098,"Spring 2027",8,"Part-Time (PT)",CS1005,"Computer Networks",4,"Major — Cybersecurity (min C)",20010,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100098,"Spring 2027",8,"Part-Time (PT)",CS2006,"Software Engineering",4,"Major — Cybersecurity (min C)",20011,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100098,"Spring 2027",8,"Part-Time (PT)",CS2007,"Introduction to Computing",4,"Major — Cybersecurity (min C)",20015,004,1,ELIGIBLE
+100098,"Spring 2027",8,"Part-Time (PT)",CS3011,"Algorithm Design",4,"Major — Cybersecurity (min C)",20052,001,1,"Registration blocked: prerequisite requirements are not satisfied."
+100162,"Spring 2027",8,"Part-Time (PT)",NS1002,"General Chemistry",4,"Major — Biology (min C)",20194,002,1,ELIGIBLE
+100162,"Spring 2027",8,"Part-Time (PT)",NS2007,"Introduction to Scientific Inquiry",4,"Major — Biology (min C)",20202,002,1,ELIGIBLE
+100162,"Spring 2027",8,"Part-Time (PT)",NS2007,"Introduction to Scientific Inquiry",4,"Major — Biology (min C)",20203,003,1,ELIGIBLE
+100162,"Spring 2027",8,"Part-Time (PT)",NS2007,"Introduction to Scientific Inquiry",4,"Major — Biology (min C)",20206,006,1,ELIGIBLE
+100276,"Spring 2027",8,"Part-Time (PT)",VD3010,Photography,4,"Major — Media Studies (min C)",140029,001,10,ELIGIBLE
+100319,"Spring 2027",8,"Part-Time (PT)",EG3011,Dynamics,4,"Major — Engineering (min C)",20257,001,1,ELIGIBLE
+100319,"Spring 2027",8,"Part-Time (PT)",EG3011,Dynamics,4,"Major — Engineering (min C)",20258,002,1,ELIGIBLE
+100376,"Spring 2027",8,"Part-Time (PT)",BU3013,"Operations Management",4,"Major — Accounting (min C)",20110,002,1,"Registration blocked: prerequisite requirements are not satisfied."
+100376,"Spring 2027",8,"Part-Time (PT)",BU3013,"Operations Management",4,"Major — Accounting (min C)",20119,004,1,"Registration blocked: prerequisite requirements are not satisfied."
+100396,"Spring 2027",8,"Part-Time (PT)",BU3012,Entrepreneurship,4,"Minor — Marketing (min C)",20085,002,2,"Registration blocked: prerequisite requirements are not satisfied."
+100400,"Spring 2027",8,"Part-Time (PT)",BU3013,"Operations Management",4,"Major — Accounting (min C)",20110,002,1,"Registration blocked: you have a hold."
+100400,"Spring 2027",8,"Part-Time (PT)",BU3013,"Operations Management",4,"Major — Accounting (min C)",20119,004,1,"Registration blocked: you have a hold."

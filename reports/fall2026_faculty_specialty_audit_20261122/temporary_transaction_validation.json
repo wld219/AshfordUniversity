@@ -1,0 +1,300 @@
+{
+  "database": "ashford_waleed_fall_test_20261121_232146",
+  "engine": "InnoDB",
+  "proposed_moves": 46,
+  "changed_rows_during_test": 46,
+  "faculty_conflicts_after": 0,
+  "room_conflicts_after": 0,
+  "department_mismatches_after": 0,
+  "saturday_sections_after": 0,
+  "missing_rooms_after": 0,
+  "fall_sections_after": 197,
+  "spring_sections_tested": 198,
+  "fall_enrollment_rows_unchanged_count": 1619,
+  "faculty_teaching_before": 116,
+  "faculty_teaching_after_temporary": 112,
+  "faculty_by_employment_before": [
+    {
+      "faculty_Type": "Full-Time",
+      "n": 45
+    },
+    {
+      "faculty_Type": "Part-Time",
+      "n": 71
+    }
+  ],
+  "faculty_by_employment_after_temporary": [
+    {
+      "faculty_Type": "Full-Time",
+      "n": 70
+    },
+    {
+      "faculty_Type": "Part-Time",
+      "n": 42
+    }
+  ],
+  "workload_buckets_before": [
+    {
+      "bucket": "0",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 277
+    },
+    {
+      "bucket": "1",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 6
+    },
+    {
+      "bucket": "2",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 1
+    },
+    {
+      "bucket": "3",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 34
+    },
+    {
+      "bucket": "4+",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 4
+    },
+    {
+      "bucket": "0",
+      "faculty_Type": "Part-Time",
+      "faculty_count": 29
+    },
+    {
+      "bucket": "1",
+      "faculty_Type": "Part-Time",
+      "faculty_count": 71
+    }
+  ],
+  "workload_buckets_after_temporary": [
+    {
+      "bucket": "0",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 252
+    },
+    {
+      "bucket": "1",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 25
+    },
+    {
+      "bucket": "2",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 9
+    },
+    {
+      "bucket": "3",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 32
+    },
+    {
+      "bucket": "4+",
+      "faculty_Type": "Full-Time",
+      "faculty_count": 4
+    },
+    {
+      "bucket": "0",
+      "faculty_Type": "Part-Time",
+      "faculty_count": 58
+    },
+    {
+      "bucket": "1",
+      "faculty_Type": "Part-Time",
+      "faculty_count": 42
+    }
+  ],
+  "academic_records_equal_inside_transaction": true,
+  "rollback_restores_snapshot": true,
+  "post_rollback": {
+    "faculty_assignments": [
+      {
+        "CRN": 140104,
+        "faculty_ID": 200122
+      },
+      {
+        "CRN": 10229,
+        "faculty_ID": 200134
+      },
+      {
+        "CRN": 10230,
+        "faculty_ID": 200134
+      },
+      {
+        "CRN": 10231,
+        "faculty_ID": 200110
+      },
+      {
+        "CRN": 10232,
+        "faculty_ID": 200110
+      },
+      {
+        "CRN": 10233,
+        "faculty_ID": 200149
+      },
+      {
+        "CRN": 10234,
+        "faculty_ID": 200149
+      },
+      {
+        "CRN": 10235,
+        "faculty_ID": 200191
+      },
+      {
+        "CRN": 10236,
+        "faculty_ID": 200191
+      },
+      {
+        "CRN": 10237,
+        "faculty_ID": 200144
+      },
+      {
+        "CRN": 140071,
+        "faculty_ID": 200008
+      },
+      {
+        "CRN": 10301,
+        "faculty_ID": 200319
+      },
+      {
+        "CRN": 10303,
+        "faculty_ID": 200321
+      },
+      {
+        "CRN": 10304,
+        "faculty_ID": 200322
+      },
+      {
+        "CRN": 10289,
+        "faculty_ID": 200307
+      },
+      {
+        "CRN": 10290,
+        "faculty_ID": 200308
+      },
+      {
+        "CRN": 10305,
+        "faculty_ID": 200254
+      },
+      {
+        "CRN": 10306,
+        "faculty_ID": 200255
+      },
+      {
+        "CRN": 10307,
+        "faculty_ID": 200256
+      },
+      {
+        "CRN": 10308,
+        "faculty_ID": 200257
+      },
+      {
+        "CRN": 10309,
+        "faculty_ID": 200258
+      },
+      {
+        "CRN": 10310,
+        "faculty_ID": 200259
+      },
+      {
+        "CRN": 10311,
+        "faculty_ID": 200260
+      },
+      {
+        "CRN": 10312,
+        "faculty_ID": 200261
+      },
+      {
+        "CRN": 10322,
+        "faculty_ID": 200271
+      },
+      {
+        "CRN": 10323,
+        "faculty_ID": 200272
+      },
+      {
+        "CRN": 10328,
+        "faculty_ID": 200277
+      },
+      {
+        "CRN": 10324,
+        "faculty_ID": 200273
+      },
+      {
+        "CRN": 10325,
+        "faculty_ID": 200274
+      },
+      {
+        "CRN": 10336,
+        "faculty_ID": 200285
+      },
+      {
+        "CRN": 10337,
+        "faculty_ID": 200286
+      },
+      {
+        "CRN": 10353,
+        "faculty_ID": 200324
+      },
+      {
+        "CRN": 10354,
+        "faculty_ID": 200325
+      },
+      {
+        "CRN": 10355,
+        "faculty_ID": 200326
+      },
+      {
+        "CRN": 10356,
+        "faculty_ID": 200327
+      },
+      {
+        "CRN": 10357,
+        "faculty_ID": 200328
+      },
+      {
+        "CRN": 10365,
+        "faculty_ID": 200336
+      },
+      {
+        "CRN": 10366,
+        "faculty_ID": 200337
+      },
+      {
+        "CRN": 10367,
+        "faculty_ID": 200338
+      },
+      {
+        "CRN": 10370,
+        "faculty_ID": 200341
+      },
+      {
+        "CRN": 10007,
+        "faculty_ID": 200007
+      },
+      {
+        "CRN": 10008,
+        "faculty_ID": 200007
+      },
+      {
+        "CRN": 10009,
+        "faculty_ID": 200007
+      },
+      {
+        "CRN": 140051,
+        "faculty_ID": 200246
+      },
+      {
+        "CRN": 140052,
+        "faculty_ID": 200095
+      },
+      {
+        "CRN": 140061,
+        "faculty_ID": 200095
+      }
+    ]
+  }
+}

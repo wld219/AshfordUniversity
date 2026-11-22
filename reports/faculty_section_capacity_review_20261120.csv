@@ -1,0 +1,13 @@
+issue,semester,semester_ID,CRN,course_ID,course_title,section,faculty_ID,faculty_name,available_Seats_field,enrolled_students,physical_room_capacity,note
+available_Seats_counter_mismatch,"Fall 2026",1,10229,EG2007,"Engineering Graphics",2,200136,"Jessica Grace Thompson",0,9,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10231,EG2007,"Engineering Graphics",4,200138,"Liam Nicole Jackson",0,9,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10232,EG2007,"Engineering Graphics",5,200139,"Isabella Michelle Green",0,9,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10260,EN1001,"College Composition",1,200240,"Maya David Taylor",2,7,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10262,EN1001,"College Composition",3,200242,"Joshua Louise Williams",1,8,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10264,EN1002,"Introduction to Literature",2,200244,"Julian Anthony Jones",2,7,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10265,EN2006,"Introduction to Linguistics",1,200245,"Zoe Lee Hernandez",2,7,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10267,EN2009,"World Literature",1,200247,"Natalie Grace Etienne",0,9,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10269,EN4017,"Language and Culture",1,200249,"James Miller",0,9,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+available_Seats_counter_mismatch,"Fall 2026",1,10270,EN4017,"Language and Culture",2,200250,"Brandon James Davis",0,9,10,"Stored available_Seats differs from room capacity minus matching semester enrollments."
+enrollment_exceeds_physical_capacity,"Spring 2027",2,20012,CS2007,"Introduction to Computing",1,200161,"Aaliyah Elise Anderson",0,11,10,"Existing enrollments exceed linked room capacity; do not force reassignment."
+enrollment_exceeds_physical_capacity,"Spring 2027",2,20069,BU1002,"Financial Accounting",4,200188,"Sophia James Rodriguez",0,11,10,"Existing enrollments exceed linked room capacity; do not force reassignment."

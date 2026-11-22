@@ -30,14 +30,9 @@ function validate_schedule_row(array $row): array
 		$errors[] = 'Faculty member is not in the course department.';
 	}
 
-	// Faculty workload rules
-	if (($row['faculty_Type'] ?? '') === 'Full-Time' && (int) ($row['faculty_Section_Count'] ?? 0) > 2) {
-		$errors[] = 'Full-time faculty exceeds the two-section teaching limit.';
-	}
-
-	if (($row['faculty_Type'] ?? '') === 'Part-Time' && (int) ($row['faculty_Section_Count'] ?? 0) > 1) {
-		$errors[] = 'Part-time faculty exceeds the single-section teaching limit.';
-	}
+	// Employment type is not a schedule-validity rule. Semester workload is
+	// calculated from distinct active CRNs in schedules.php and classified at
+	// 12 credits, but planning targets do not block otherwise-valid assignments.
 
 	// Room capacity: available seats must fit the room
 	if (

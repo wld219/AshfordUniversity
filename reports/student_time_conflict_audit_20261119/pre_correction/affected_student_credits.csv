@@ -1,0 +1,86 @@
+student_ID,academic_level,semester_ID,semester_Name,current_course_count,proposed_course_count,current_credits,proposed_credits,current_status,proposed_status
+100004,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100006,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100033,Undergraduate,1,"Fall 2026",4,2,16,8,"Full-Time (FT)","Part-Time (PT)"
+100038,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100041,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100053,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100088,Undergraduate,1,"Fall 2026",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100105,Undergraduate,1,"Fall 2026",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100131,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100171,Undergraduate,1,"Fall 2026",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100236,Undergraduate,1,"Fall 2026",4,2,16,8,"Full-Time (FT)","Part-Time (PT)"
+100279,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100285,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100318,Undergraduate,1,"Fall 2026",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100368,Undergraduate,1,"Fall 2026",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100409,Undergraduate,1,"Fall 2026",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100479,Undergraduate,1,"Fall 2026",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100004,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100005,Undergraduate,2,"Spring 2027",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100009,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100018,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100025,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100028,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100037,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100038,Undergraduate,2,"Spring 2027",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100055,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100061,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100079,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100085,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100097,Undergraduate,2,"Spring 2027",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100098,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100104,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100125,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100126,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100128,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100144,Undergraduate,2,"Spring 2027",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100146,Undergraduate,2,"Spring 2027",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100149,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100153,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100155,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100162,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100168,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100171,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100179,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100185,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100202,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100210,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100211,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100227,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100258,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100267,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100276,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100278,Undergraduate,2,"Spring 2027",2,1,8,4,"Part-Time (PT)","Part-Time (PT)"
+100301,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100318,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100319,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100323,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100342,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100365,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100376,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100383,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100396,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100400,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100426,Undergraduate,2,"Spring 2027",3,2,12,8,"Full-Time (FT)","Part-Time (PT)"
+100461,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100470,Undergraduate,2,"Spring 2027",4,3,16,12,"Full-Time (FT)","Full-Time (FT)"
+100505,Undergraduate,2,"Spring 2027",30,18,120,72,Overloaded,Overloaded
+100506,Undergraduate,2,"Spring 2027",32,20,128,80,Overloaded,Overloaded
+100507,Undergraduate,2,"Spring 2027",35,23,140,92,Overloaded,Overloaded
+100508,Undergraduate,2,"Spring 2027",36,23,144,92,Overloaded,Overloaded
+100509,Undergraduate,2,"Spring 2027",31,22,124,88,Overloaded,Overloaded
+100510,Undergraduate,2,"Spring 2027",22,20,88,80,Overloaded,Overloaded
+100517,Undergraduate,2,"Spring 2027",20,16,80,64,Overloaded,Overloaded
+100518,Undergraduate,2,"Spring 2027",13,9,52,36,Overloaded,Overloaded
+100519,Undergraduate,2,"Spring 2027",28,19,112,76,Overloaded,Overloaded
+100520,Undergraduate,2,"Spring 2027",13,11,52,44,Overloaded,Overloaded
+100521,Undergraduate,2,"Spring 2027",28,21,112,84,Overloaded,Overloaded
+100522,Undergraduate,2,"Spring 2027",20,18,80,72,Overloaded,Overloaded
+100529,Undergraduate,2,"Spring 2027",7,6,28,24,Overloaded,Overloaded
+100531,Undergraduate,2,"Spring 2027",10,8,40,32,Overloaded,Overloaded
+100532,Undergraduate,2,"Spring 2027",6,5,24,20,Overloaded,Overloaded
+100533,Undergraduate,2,"Spring 2027",16,14,64,56,Overloaded,Overloaded
+100534,Undergraduate,2,"Spring 2027",18,16,72,64,Overloaded,Overloaded
+100546,Undergraduate,2,"Spring 2027",12,11,48,44,Overloaded,Overloaded
+100570,Undergraduate,2,"Spring 2027",6,5,24,20,Overloaded,Overloaded

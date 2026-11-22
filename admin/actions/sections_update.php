@@ -157,7 +157,8 @@ if (one($pdo, "SELECT cs.CRN FROM Course_Section cs
 	$facultyID,
 	$timeSlotID,
 	$crn,
-    (int) $section['semester_ID']
+    (int) $section['semester_ID'],
+	$courseID
 );
 
 if (!$canTeach) {

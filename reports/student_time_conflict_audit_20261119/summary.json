@@ -1,0 +1,883 @@
+{
+    "database": "ashford_waleed",
+    "generated_at": "2026-11-19T09:46:18-05:00",
+    "read_only": true,
+    "enrollment_removals_executed": 0,
+    "student_count": 1620,
+    "terms": {
+        "Fall 2026": {
+            "active_enrollment_rows": 1618,
+            "students_with_conflicts": 0,
+            "conflict_pairs": 0,
+            "proposed_removals": 0,
+            "affected_student_semester_pairs": 0,
+            "drop_window_open_in_application": "Yes",
+            "drop_window_message": "Open"
+        },
+        "Spring 2027": {
+            "active_enrollment_rows": 1862,
+            "students_with_conflicts": 19,
+            "conflict_pairs": 116,
+            "proposed_removals": 98,
+            "affected_student_semester_pairs": 19,
+            "drop_window_open_in_application": "Yes",
+            "drop_window_message": "Open"
+        }
+    },
+    "active_enrollments_in_target_terms": 3480,
+    "cancelled_enrollment_rows_excluded": 10,
+    "section_semester_mismatch_rows_excluded": 0,
+    "active_enrollments_with_no_resolvable_day_and_period": 0,
+    "active_sections_with_both_lecture_and_lab_room_ids": 0,
+    "total_conflict_pairs": 116,
+    "student_semester_pairs_with_conflicts": 19,
+    "proposed_removals": 98,
+    "proposed_removals_flagged_for_manual_review": 98,
+    "conflict_components": 87,
+    "components_with_tied_maximum_solutions": 87,
+    "registration_timestamp_note": "Enrollment has no registration timestamp. Where tied maximum schedules exist, the proposal first preserves records with grades/history/dependent rows, then uses the earliest known Waitlist.enrolled_At where available and CRN ascending as a deterministic fallback. CRN order is not proof of registration order.",
+    "meeting_model_note": "Course_Section has one time_Slot_ID. Lecture_ID and Lab_ID identify rooms; this schema does not store separate lecture/lab meeting times. All overlap checks use the section time slot and its Time_Slot_Day/Time_Slot_Period/Period records.",
+    "dropped_course_note": "The existing Student drop action deletes the Enrollment row when eligible; removed rows are absent from both schedule conflict checks and student-facing enrollment lists. Student_History is preserved.",
+    "counts": null,
+    "affected_student_semester_pairs": [
+        {
+            "student_ID": 100505,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 30,
+            "proposed_course_count": 18,
+            "current_credits": 120,
+            "proposed_credits": 72,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100506,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 32,
+            "proposed_course_count": 20,
+            "current_credits": 128,
+            "proposed_credits": 80,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100507,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 35,
+            "proposed_course_count": 23,
+            "current_credits": 140,
+            "proposed_credits": 92,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100508,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 36,
+            "proposed_course_count": 23,
+            "current_credits": 144,
+            "proposed_credits": 92,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100509,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 31,
+            "proposed_course_count": 22,
+            "current_credits": 124,
+            "proposed_credits": 88,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100510,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 22,
+            "proposed_course_count": 20,
+            "current_credits": 88,
+            "proposed_credits": 80,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100517,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 20,
+            "proposed_course_count": 16,
+            "current_credits": 80,
+            "proposed_credits": 64,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100518,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 13,
+            "proposed_course_count": 9,
+            "current_credits": 52,
+            "proposed_credits": 36,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100519,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 28,
+            "proposed_course_count": 19,
+            "current_credits": 112,
+            "proposed_credits": 76,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100520,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 13,
+            "proposed_course_count": 11,
+            "current_credits": 52,
+            "proposed_credits": 44,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100521,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 28,
+            "proposed_course_count": 21,
+            "current_credits": 112,
+            "proposed_credits": 84,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100522,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 20,
+            "proposed_course_count": 18,
+            "current_credits": 80,
+            "proposed_credits": 72,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100529,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 7,
+            "proposed_course_count": 6,
+            "current_credits": 28,
+            "proposed_credits": 24,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100531,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 10,
+            "proposed_course_count": 8,
+            "current_credits": 40,
+            "proposed_credits": 32,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100532,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 6,
+            "proposed_course_count": 5,
+            "current_credits": 24,
+            "proposed_credits": 20,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100533,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 16,
+            "proposed_course_count": 14,
+            "current_credits": 64,
+            "proposed_credits": 56,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100534,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 18,
+            "proposed_course_count": 16,
+            "current_credits": 72,
+            "proposed_credits": 64,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100546,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 12,
+            "proposed_course_count": 11,
+            "current_credits": 48,
+            "proposed_credits": 44,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        },
+        {
+            "student_ID": 100570,
+            "academic_level": "Undergraduate",
+            "semester_ID": 2,
+            "semester_Name": "Spring 2027",
+            "current_course_count": 6,
+            "proposed_course_count": 5,
+            "current_credits": 24,
+            "proposed_credits": 20,
+            "current_status": "Overloaded",
+            "proposed_status": "Overloaded"
+        }
+    ],
+    "component_details": [
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 5,
+            "max_kept": 1,
+            "optimal_sets": 5
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100505,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 5,
+            "max_kept": 1,
+            "optimal_sets": 5
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100506,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 3,
+            "max_kept": 1,
+            "optimal_sets": 3
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100507,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100508,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100509,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100510,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100510,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100517,
+            "semester_Name": "Spring 2027",
+            "component_size": 3,
+            "max_kept": 1,
+            "optimal_sets": 3
+        },
+        {
+            "student_ID": 100517,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100517,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100518,
+            "semester_Name": "Spring 2027",
+            "component_size": 4,
+            "max_kept": 1,
+            "optimal_sets": 4
+        },
+        {
+            "student_ID": 100518,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 3,
+            "max_kept": 1,
+            "optimal_sets": 3
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100519,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100520,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100520,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100521,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100522,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100522,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100529,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100531,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100531,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100532,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100533,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100533,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100534,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100534,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100546,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        },
+        {
+            "student_ID": 100570,
+            "semester_Name": "Spring 2027",
+            "component_size": 2,
+            "max_kept": 1,
+            "optimal_sets": 2
+        }
+    ]
+}

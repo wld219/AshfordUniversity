@@ -1,0 +1,111 @@
+﻿faculty_ID,faculty_name,CRN,history_course_ID,section_course_ID,history_semester_ID,history_semester,section_semester_ID,section_semester,section_faculty_ID,is_Cancelled,comparison
+200251,Darius Harris,10001,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200001,0,Faculty differs from Course_Section; Course differs from Course_Section
+200252,Isabella Moore,10002,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200002,0,Faculty differs from Course_Section; Course differs from Course_Section
+200253,Brittany Nguyen,10003,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200003,0,Faculty differs from Course_Section; Course differs from Course_Section
+200254,David Desir,10004,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200004,0,Faculty differs from Course_Section; Course differs from Course_Section
+200255,Ava Harris,10005,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200005,0,Faculty differs from Course_Section; Course differs from Course_Section
+200301,Daniel Altidor,10006,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200006,0,Faculty differs from Course_Section; Course differs from Course_Section
+200302,Mia King,10007,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200007,0,Faculty differs from Course_Section; Course differs from Course_Section
+200303,Andre Allen,10008,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200008,0,Faculty differs from Course_Section; Course differs from Course_Section
+200304,Daniel White,10009,CS1001,BU3071,1,Fall 2026,1,Fall 2026,200009,0,Faculty differs from Course_Section; Course differs from Course_Section
+200166,Gabriel Scott,10201,NS3010,NS3010,1,Fall 2026,1,Fall 2026,200124,0,Faculty differs from Course_Section
+200167,Madison Miller,10202,NS3010,NS3010,1,Fall 2026,1,Fall 2026,200125,0,Faculty differs from Course_Section
+200168,Julian Davis,10203,NS3011,NS3011,1,Fall 2026,1,Fall 2026,200126,0,Faculty differs from Course_Section
+200169,Michael Rodriguez,10204,NS3011,NS3011,1,Fall 2026,1,Fall 2026,200127,0,Faculty differs from Course_Section
+200170,Maria Nguyen,10205,NS3013,NS3013,1,Fall 2026,1,Fall 2026,200128,0,Faculty differs from Course_Section
+200216,Marcus Hall,10206,NS3013,NS3013,1,Fall 2026,1,Fall 2026,200129,0,Faculty differs from Course_Section
+200217,Gabriella Perez,10207,NS4018,NS4018,1,Fall 2026,1,Fall 2026,200130,0,Faculty differs from Course_Section
+200219,Isabella Jean,10209,NS5001,NS5001,1,Fall 2026,1,Fall 2026,200119,0,Faculty differs from Course_Section
+200220,Sophia Pierre,10210,NS5001,NS5001,1,Fall 2026,1,Fall 2026,200120,0,Faculty differs from Course_Section
+200016,Mason Carter,10211,NS5002,NS5002,1,Fall 2026,1,Fall 2026,200121,0,Faculty differs from Course_Section
+200017,Destiny Ramirez,10212,NS5002,NS5002,1,Fall 2026,1,Fall 2026,200122,0,Faculty differs from Course_Section
+200019,Jordan Clark,10213,NS5003,NS5003,1,Fall 2026,1,Fall 2026,200123,0,Faculty differs from Course_Section
+200272,Ashley Lewis,10225,EG1001,EG1001,1,Fall 2026,1,Fall 2026,200132,0,Faculty differs from Course_Section
+200273,Leah Nguyen,10226,EG1001,EG1001,1,Fall 2026,1,Fall 2026,200133,0,Faculty differs from Course_Section
+200274,Leah Charles,10227,EG1001,EG1001,1,Fall 2026,1,Fall 2026,200134,0,Faculty differs from Course_Section
+200275,Grace Thomas,10228,EG2007,EG2007,1,Fall 2026,1,Fall 2026,200135,0,Faculty differs from Course_Section
+200321,Andrew Miller,10229,EG2007,EG2007,1,Fall 2026,1,Fall 2026,200136,0,Faculty differs from Course_Section
+200322,Isabella Clark,10230,EG2007,EG2007,1,Fall 2026,1,Fall 2026,200137,0,Faculty differs from Course_Section
+200324,Nicole Thomas,10232,EG2007,EG2007,1,Fall 2026,1,Fall 2026,200139,0,Faculty differs from Course_Section
+200325,Ariana Thomas,10233,EG2007,EG2007,1,Fall 2026,1,Fall 2026,200140,0,Faculty differs from Course_Section
+200021,Isabella Perez,10234,EG2007,EG2007,1,Fall 2026,1,Fall 2026,200141,0,Faculty differs from Course_Section
+200022,Isabella Green,10235,EG2009,EG2009,1,Fall 2026,1,Fall 2026,200142,0,Faculty differs from Course_Section
+200023,Nia Rodriguez,10236,EG2009,EG2009,1,Fall 2026,1,Fall 2026,200143,0,Faculty differs from Course_Section
+200024,Chloe Taylor,10237,EG2009,EG2009,1,Fall 2026,1,Fall 2026,200144,0,Faculty differs from Course_Section
+200025,Elijah Augustin,10238,EG3010,EG3010,1,Fall 2026,1,Fall 2026,200145,0,Faculty differs from Course_Section
+200071,Gabriel Hall,10239,EG3010,EG3010,1,Fall 2026,1,Fall 2026,200146,0,Faculty differs from Course_Section
+200072,Gabriel Thomas,10240,EG4015,EG4015,1,Fall 2026,1,Fall 2026,200147,0,Faculty differs from Course_Section
+200073,Michael Johnson,10241,EG4015,EG4015,1,Fall 2026,1,Fall 2026,200148,0,Faculty differs from Course_Section
+200074,Gabriel Jean,10242,EG4015,EG4015,1,Fall 2026,1,Fall 2026,200149,0,Faculty differs from Course_Section
+200276,Eric Joseph,10260,EN1001,EN1001,1,Fall 2026,1,Fall 2026,200240,0,Faculty differs from Course_Section
+200277,Brianna Gonzalez,10261,EN1001,EN1001,1,Fall 2026,1,Fall 2026,200241,0,Faculty differs from Course_Section
+200278,Maya Lopez,10262,EN1001,EN1001,1,Fall 2026,1,Fall 2026,200242,0,Faculty differs from Course_Section
+200279,Marcus Rivera,10263,EN1002,EN1002,1,Fall 2026,1,Fall 2026,200243,0,Faculty differs from Course_Section
+200280,Aaron Wright,10264,EN1002,EN1002,1,Fall 2026,1,Fall 2026,200244,0,Faculty differs from Course_Section
+200326,Joshua Martin,10265,EN2006,EN2006,1,Fall 2026,1,Fall 2026,200245,0,Faculty differs from Course_Section
+200327,Mia Jones,10266,EN2006,EN2006,1,Fall 2026,1,Fall 2026,200246,0,Faculty differs from Course_Section
+200328,Mia King,10267,EN2009,EN2009,1,Fall 2026,1,Fall 2026,200247,0,Faculty differs from Course_Section
+200329,Malcolm White,10268,EN2009,EN2009,1,Fall 2026,1,Fall 2026,200248,0,Faculty differs from Course_Section
+200330,Rachel Baptiste,10269,EN4017,EN4017,1,Fall 2026,1,Fall 2026,200249,0,Faculty differs from Course_Section
+200026,Zoe Hernandez,10270,EN4017,EN4017,1,Fall 2026,1,Fall 2026,200250,0,Faculty differs from Course_Section
+200027,Elijah Walker,10271,EN5001,EN5001,1,Fall 2026,1,Fall 2026,200344,0,Faculty differs from Course_Section
+200028,Jonathan Hall,10272,EN5001,EN5001,1,Fall 2026,1,Fall 2026,200345,0,Faculty differs from Course_Section
+200029,Jonathan Adams,10273,EN5002,EN5002,1,Fall 2026,1,Fall 2026,200346,0,Faculty differs from Course_Section
+200332,Ethan Altidor,10289,SS2009,SS2009,1,Fall 2026,1,Fall 2026,200307,0,Faculty differs from Course_Section
+200333,Kevin Baker,10290,SS2009,SS2009,1,Fall 2026,1,Fall 2026,200308,0,Faculty differs from Course_Section
+200334,Isabella Campbell,10291,SS3010,SS3010,1,Fall 2026,1,Fall 2026,200309,0,Faculty differs from Course_Section
+200335,Victoria Martin,10292,SS3010,SS3010,1,Fall 2026,1,Fall 2026,200310,0,Faculty differs from Course_Section
+200031,Adrian Baker,10293,SS3011,SS3011,1,Fall 2026,1,Fall 2026,200311,0,Faculty differs from Course_Section
+200032,Gabriella Williams,10294,SS5001,SS5001,1,Fall 2026,1,Fall 2026,200312,0,Faculty differs from Course_Section
+200033,James Garcia,10295,SS5001,SS5001,1,Fall 2026,1,Fall 2026,200313,0,Faculty differs from Course_Section
+200034,Ethan Lee,10296,SS5002,SS5002,1,Fall 2026,1,Fall 2026,200314,0,Faculty differs from Course_Section
+200035,Ashley Lopez,10297,SS5002,SS5002,1,Fall 2026,1,Fall 2026,200315,0,Faculty differs from Course_Section
+200081,Gabriel Torres,10298,SS5006,SS5006,1,Fall 2026,1,Fall 2026,200316,0,Faculty differs from Course_Section
+200082,Taylor Sanchez,10299,SS5006,SS5006,1,Fall 2026,1,Fall 2026,200317,0,Faculty differs from Course_Section
+200083,Riley Desir,10300,SS5006,SS5006,1,Fall 2026,1,Fall 2026,200318,0,Faculty differs from Course_Section
+200084,Eric Baker,10301,SS2006,SS2006,1,Fall 2026,1,Fall 2026,200319,0,Faculty differs from Course_Section
+200085,Caleb Sanchez,10302,SS3011,SS3011,1,Fall 2026,1,Fall 2026,200320,0,Faculty differs from Course_Section
+200131,Jasmine Martinez,10303,SS2006,SS2006,1,Fall 2026,1,Fall 2026,200321,0,Faculty differs from Course_Section
+200132,Camila Thomas,10304,SS2006,SS2006,1,Fall 2026,1,Fall 2026,200322,0,Faculty differs from Course_Section
+200286,Sophia Wright,10305,ED1001,ED1001,1,Fall 2026,1,Fall 2026,200254,0,Faculty differs from Course_Section
+200287,Ethan Anderson,10306,ED1001,ED1001,1,Fall 2026,1,Fall 2026,200255,0,Faculty differs from Course_Section
+200288,Caleb Lewis,10307,ED2006,ED2006,1,Fall 2026,1,Fall 2026,200256,0,Faculty differs from Course_Section
+200289,Ariana Young,10308,ED2006,ED2006,1,Fall 2026,1,Fall 2026,200257,0,Faculty differs from Course_Section
+200290,Adrian Augustin,10309,ED2007,ED2007,1,Fall 2026,1,Fall 2026,200258,0,Faculty differs from Course_Section
+200336,Brian Louis,10310,ED2007,ED2007,1,Fall 2026,1,Fall 2026,200259,0,Faculty differs from Course_Section
+200337,Elena Flores,10311,ED2008,ED2008,1,Fall 2026,1,Fall 2026,200260,0,Faculty differs from Course_Section
+200338,Caleb Adams,10312,ED2008,ED2008,1,Fall 2026,1,Fall 2026,200261,0,Faculty differs from Course_Section
+200087,Jordan Nguyen,10321,ED1004,ED1004,1,Fall 2026,1,Fall 2026,200270,0,Faculty differs from Course_Section
+200088,Elena Brown,10322,ED2009,ED2009,1,Fall 2026,1,Fall 2026,200271,0,Faculty differs from Course_Section
+200089,Lauren Jean,10323,ED2009,ED2009,1,Fall 2026,1,Fall 2026,200272,0,Faculty differs from Course_Section
+200090,Victoria Hernandez,10324,ED4016,ED4016,1,Fall 2026,1,Fall 2026,200273,0,Faculty differs from Course_Section
+200136,Jessica Thompson,10325,ED4017,ED4017,1,Fall 2026,1,Fall 2026,200274,0,Faculty differs from Course_Section
+200137,Samantha Wright,10326,ED4017,ED4017,1,Fall 2026,1,Fall 2026,200275,0,Faculty differs from Course_Section
+200138,Liam Jackson,10327,ED5006,ED5006,1,Fall 2026,1,Fall 2026,200276,0,Faculty differs from Course_Section
+200139,Isabella Green,10328,ED2009,ED2009,1,Fall 2026,1,Fall 2026,200277,0,Faculty differs from Course_Section
+200291,Jonathan Taylor,10329,HS1001,HS1001,1,Fall 2026,1,Fall 2026,200278,0,Faculty differs from Course_Section
+200292,Leah Augustin,10330,HS1001,HS1001,1,Fall 2026,1,Fall 2026,200279,0,Faculty differs from Course_Section
+200293,Destiny Lewis,10331,HS1003,HS1003,1,Fall 2026,1,Fall 2026,200280,0,Faculty differs from Course_Section
+200341,Lauren Campbell,10334,HS2008,HS2008,1,Fall 2026,1,Fall 2026,200283,0,Faculty differs from Course_Section
+200342,Matthew Jean,10335,HS2008,HS2008,1,Fall 2026,1,Fall 2026,200284,0,Faculty differs from Course_Section
+200343,Nicholas Scott,10336,HS3010,HS3010,1,Fall 2026,1,Fall 2026,200285,0,Faculty differs from Course_Section
+200344,Kayla Perez,10337,HS3010,HS3010,1,Fall 2026,1,Fall 2026,200286,0,Faculty differs from Course_Section
+200345,Gabriel White,10338,HS3011,HS3011,1,Fall 2026,1,Fall 2026,200287,0,Faculty differs from Course_Section
+200041,Gabriella Hall,10339,HS3011,HS3011,1,Fall 2026,1,Fall 2026,200288,0,Faculty differs from Course_Section
+200042,Nicholas Smith,10340,HS5001,HS5001,1,Fall 2026,1,Fall 2026,200289,0,Faculty differs from Course_Section
+200043,Grace Roberts,10341,HS5001,HS5001,1,Fall 2026,1,Fall 2026,200290,0,Faculty differs from Course_Section
+200044,Naomi Johnson,10342,HS5002,HS5002,1,Fall 2026,1,Fall 2026,200291,0,Faculty differs from Course_Section
+200045,Brandon Baker,10343,HS5002,HS5002,1,Fall 2026,1,Fall 2026,200292,0,Faculty differs from Course_Section
+200091,Brian Lewis,10344,HS1003,HS1003,1,Fall 2026,1,Fall 2026,200293,0,Faculty differs from Course_Section
+200346,Kevin Davis,10357,VD1004,VD1004,1,Fall 2026,1,Fall 2026,200328,0,Faculty differs from Course_Section
+200046,David Nguyen,10362,VD5001,VD5001,1,Fall 2026,1,Fall 2026,200333,0,Faculty differs from Course_Section
+200047,Matthew Allen,10363,VD5001,VD5001,1,Fall 2026,1,Fall 2026,200334,0,Faculty differs from Course_Section
+200048,David Brown,10364,VD5003,VD5003,1,Fall 2026,1,Fall 2026,200335,0,Faculty differs from Course_Section
+200049,Ava Hernandez,10365,VD2006,VD2006,1,Fall 2026,1,Fall 2026,200336,0,Faculty differs from Course_Section
+200050,Ava Baker,10366,VD2006,VD2006,1,Fall 2026,1,Fall 2026,200337,0,Faculty differs from Course_Section
+200096,Ethan Gonzalez,10367,VD3010,VD3010,1,Fall 2026,1,Fall 2026,200338,0,Faculty differs from Course_Section
+200097,Victoria Allen,10368,VD4018,VD4018,1,Fall 2026,1,Fall 2026,200339,0,Faculty differs from Course_Section
+200098,Jada Flores,10369,VD5006,VD5006,1,Fall 2026,1,Fall 2026,200340,0,Faculty differs from Course_Section
+200099,Taylor Lewis,10370,VD3010,VD3010,1,Fall 2026,1,Fall 2026,200341,0,Faculty differs from Course_Section
+200100,Destiny Nelson,10371,VD4018,VD4018,1,Fall 2026,1,Fall 2026,200342,0,Faculty differs from Course_Section
+200146,Grace White,10372,VD5006,VD5006,1,Fall 2026,1,Fall 2026,200343,0,Faculty differs from Course_Section

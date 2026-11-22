@@ -2,225 +2,140 @@
 
 declare(strict_types=1);
 
-// Data for the student dashboard.
-
-// Student information
+// All overview data is scoped to the authenticated Student session.
 $student = one(
 	$pdo,
-	"SELECT
-			User.user_ID,
-			User.first_Name,
-			User.middle_Name,
-			User.last_Name,
-			Student.student_Type,
-			Major.major_Name,
-			Graduate_Student.Program AS graduate_Program,
-			CONCAT(advisor_User.first_Name, ' ', advisor_User.last_Name) AS advisor_Name
-		FROM User
-		JOIN Student
-			ON Student.student_ID = User.user_ID
-		LEFT JOIN Major
-			ON Major.major_ID = Student.major_ID
-		LEFT JOIN Graduate_Student
-			ON Graduate_Student.student_ID = Student.student_ID
-		LEFT JOIN Advisor
-			ON Advisor.student_ID = Student.student_ID
-		LEFT JOIN User AS advisor_User
-			ON advisor_User.user_ID = Advisor.faculty_ID
-		WHERE User.user_ID = ?",
+	"SELECT u.user_ID, u.first_Name, u.middle_Name, u.last_Name,
+			st.student_Type, st.major_ID, m.major_Name AS stored_major_Name,
+			gs.Program AS graduate_Program
+	 FROM Student st
+	 JOIN User u ON u.user_ID = st.student_ID
+	 LEFT JOIN Major m ON m.major_ID = st.major_ID
+	 LEFT JOIN Graduate_Student gs ON gs.student_ID = st.student_ID
+	 WHERE st.student_ID = ? AND u.user_Type = 'Student'",
 	[$studentID]
 );
 
+$displayName = trim(implode(' ', array_filter([
+	(string) ($student['first_Name'] ?? ''),
+	(string) ($student['middle_Name'] ?? ''),
+	(string) ($student['last_Name'] ?? ''),
+], static fn(string $part): bool => $part !== '')));
+$displayName = $displayName !== '' ? $displayName : 'Student';
 
+$studentAcademicProgram = resolve_student_academic_program($pdo, $studentID);
+$studentMajorDisplay = (string) $studentAcademicProgram['major_display'];
+$studentMinorDisplay = (string) $studentAcademicProgram['minor_display'];
+$studentProgramLabel = ($student['student_Type'] ?? '') === 'Graduate' ? 'Degree Program' : 'Major';
+$studentProgramDisplay = ($student['student_Type'] ?? '') === 'Graduate'
+	? (string) $studentAcademicProgram['degree_program_display']
+	: $studentMajorDisplay;
+$studentAdditionalMajors = $studentAcademicProgram['additional_major_names'];
+$studentMajorCandidates = $studentAcademicProgram['candidate_major_names'];
+$studentProgramReviewMessage = $studentAcademicProgram['review_message'];
 
-// ASHFORD_STUDENT_MINOR_OVERVIEW_V1
-$studentMinorNames = [];
-
-$minorRows = all_rows(
-    $pdo,
-    "SELECT DISTINCT m.minor_Name
-     FROM Student_Minor sm
-     JOIN Minor m ON m.minor_ID = sm.minor_ID
-     WHERE sm.student_ID = ?
-     ORDER BY m.minor_Name",
-    [$studentID]
-);
-
-foreach ($minorRows as $minorRow) {
-    $studentMinorNames[] = (string)$minorRow['minor_Name'];
-}
-
-$studentMinorDisplay = implode(', ', $studentMinorNames);
-
-// Semester selector and selected-semester course list.
-$availableSemesters = all_rows(
-    $pdo,
-    "SELECT semester_ID, semester_Name
-     FROM Semester
-     WHERE semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
-     ORDER BY CASE semester_Name
-         WHEN 'Spring 2026' THEN 1
-         WHEN 'Fall 2026' THEN 2
-         WHEN 'Spring 2027' THEN 3
-     END"
-);
-
-$semesterIDs = array_map(
-    static fn(array $row): int => (int) $row['semester_ID'],
-    $availableSemesters
-);
-
+// Select only Fall 2026 or Spring 2027, with Fall 2026 as the safe default.
+$availableSemesters = student_portal_semesters($pdo);
 $requestedSemester = filter_input(INPUT_GET, 'semester', FILTER_VALIDATE_INT);
-
-$defaultSemester = null;
-foreach ($availableSemesters as $term) {
-    if ($term['semester_Name'] === 'Fall 2026') {
-        $defaultSemester = (int)$term['semester_ID'];
-        break;
-    }
+if ($requestedSemester === null && isset($_GET['semester']) && is_scalar($_GET['semester'])) {
+	$requestedSemester = filter_var($_GET['semester'], FILTER_VALIDATE_INT);
 }
-
-$currentSemester = (
-    $requestedSemester !== null
-    && $requestedSemester !== false
-    && in_array($requestedSemester, $semesterIDs, true)
-)
-    ? $requestedSemester
-    : ($defaultSemester ?? ($semesterIDs[0] ?? null));
-
-$schedule = $currentSemester !== null
-	? student_semester_registered_courses($pdo, $studentID, (int) $currentSemester)
-	: [];
-
-$semesterCourseLists = [];
-foreach ($availableSemesters as $term) {
-    $termID = (int)$term['semester_ID'];
-    $semesterCourseLists[$termID] = $termID === (int)$currentSemester
-        ? $schedule
-        : student_semester_registered_courses($pdo, $studentID, $termID);
-}
-
-
-// Registration holds
-$holds = all_rows(
-	$pdo,
-	"SELECT
-			Hold.hold_Type
-		FROM Student_Hold
-		JOIN Hold
-			ON Hold.hold_ID = Student_Hold.hold_ID
-		WHERE Student_Hold.student_ID = ?",
-	[$studentID]
+$currentSemester = student_portal_selected_semester_id(
+	$availableSemesters,
+	is_int($requestedSemester) ? $requestedSemester : null
 );
-
-
-// Semester credits and status use only active sections in the selected term.
+$semesterLabel = 'Semester unavailable';
+$currentSemesterLabel = 'Not available yet';
+$upcomingSemesterLabel = 'Not available yet';
+foreach ($availableSemesters as $term) {
+	if ((int) $term['semester_ID'] === (int) $currentSemester) {
+		$semesterLabel = (string) $term['semester_Name'];
+	}
+	if ($term['semester_Name'] === 'Fall 2026') {
+		$currentSemesterLabel = (string) $term['semester_Name'];
+	}
+	if ($term['semester_Name'] === 'Spring 2027') {
+		$upcomingSemesterLabel = (string) $term['semester_Name'];
+	}
+}
+$schedule = $currentSemester !== null
+	? student_semester_registered_courses($pdo, $studentID, $currentSemester)
+	: [];
+if ($schedule !== [] && $currentSemester !== null) {
+	$sectionCRNs = array_values(array_unique(array_map(
+		static fn(array $course): int => (int) $course['CRN'],
+		$schedule
+	)));
+	$marks = implode(',', array_fill(0, count($sectionCRNs), '?'));
+	$sectionRows = all_rows(
+		$pdo,
+		"SELECT CRN, section_No
+		 FROM Course_Section
+		 WHERE semester_ID = ? AND is_Cancelled = 0 AND CRN IN ($marks)",
+		array_merge([$currentSemester], $sectionCRNs)
+	);
+	$sectionNumbers = [];
+	foreach ($sectionRows as $sectionRow) {
+		$sectionNumbers[(int) $sectionRow['CRN']] = (int) $sectionRow['section_No'];
+	}
+	foreach ($schedule as &$course) {
+		$course['section_No'] = $sectionNumbers[(int) $course['CRN']] ?? null;
+	}
+	unset($course);
+}
 $semesterEnrollmentStatus = $currentSemester !== null
-	? student_semester_enrollment_status($pdo, $studentID, (int) $currentSemester)
+	? student_semester_enrollment_status($pdo, $studentID, $currentSemester)
 	: null;
 
-
-// Credit-weighted GPA from completed course history.
-// grade_points() excludes grades that do not contribute grade points.
-$historyGrades = all_rows(
-    $pdo,
-    "SELECT sh.Grade, c.course_Credits
-     FROM Student_History AS sh
-     JOIN Course AS c ON c.course_ID = sh.course_ID
-     WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
-    [$studentID]
-) ?? [];
-
-$gpa = null;
-$weightedPoints = 0.0;
-$gradedCredits = 0.0;
-foreach ($historyGrades as $row) {
-    $points = grade_points($row['Grade']);
-    $courseCredits = (float) $row['course_Credits'];
-    if ($points !== null && $courseCredits > 0) {
-        $weightedPoints += $points * $courseCredits;
-        $gradedCredits += $courseCredits;
-    }
-}
-if ($gradedCredits > 0) {
-    $gpa = round($weightedPoints / $gradedCredits, 2);
-}
-
-// Midterm grades for current enrolled courses.
-$midtermGrades = [];
-if ($currentSemester !== null) {
-    $midtermRows = all_rows(
-        $pdo,
-        "SELECT
-                e.CRN,
-                c.course_ID,
-                c.course_Name,
-                e.midterm_Grade,
-                e.midterm_Submitted_At
-            FROM Enrollment e
-            JOIN Course_Section cs ON cs.CRN = e.CRN
-            JOIN Course c ON c.course_ID = cs.course_ID
-            WHERE e.student_ID = ?
-                AND e.semester_ID = ?
-                AND e.midterm_Grade IS NOT NULL
-            ORDER BY c.course_ID",
-        [$studentID, $currentSemester]
-    ) ?? [];
-    foreach ($midtermRows as $row) {
-        $midtermGrades[(int) $row['CRN']] = $row;
-    }
-}
-
-// Upcoming deadlines for the current semester.
-$upcomingDeadlines = [];
-if ($currentSemester !== null) {
-    $deadlineRow = one(
-        $pdo,
-        "SELECT
-                registration_End,
-                drop_Deadline,
-                grade_Deadline
-            FROM Semester
-            WHERE semester_ID = ?",
-        [$currentSemester]
-    );
-    if ($deadlineRow) {
-        $now = new DateTimeImmutable('now');
-        $fields = [
-            'registration_End' => 'Registration Deadline',
-            'drop_Deadline' => 'Drop Deadline',
-            'grade_Deadline' => 'Grade Submission Deadline',
-        ];
-        foreach ($fields as $dbField => $label) {
-            if ($deadlineRow[$dbField] !== null) {
-                $deadlineDate = new DateTimeImmutable((string) $deadlineRow[$dbField]);
-                $daysRemaining = (int) $now->diff($deadlineDate)->format('%r%a');
-                $upcomingDeadlines[] = [
-                    'label' => $label,
-                    'date' => $deadlineRow[$dbField],
-                    'daysRemaining' => $daysRemaining,
-                    'isPast' => $daysRemaining < 0,
-                ];
-            }
-        }
-        usort($upcomingDeadlines, static fn(array $a, array $b) => $a['daysRemaining'] <=> $b['daysRemaining']);
-    }
-}
-
-// Total credits earned toward degree (from Student_History).
-$degreeCredits = 0;
-$degreeCreditRow = one(
-    $pdo,
-    "SELECT COALESCE(SUM(c.course_Credits), 0) AS total
-     FROM Student_History sh
-     JOIN Course c ON c.course_ID = sh.course_ID
-     WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
-    [$studentID]
+// Advisor has no active flag; show the latest recorded assignment.
+$advisor = one(
+	$pdo,
+	"SELECT CONCAT_WS(' ', u.first_Name, u.last_Name) AS advisor_Name
+	 FROM Advisor a
+	 JOIN User u ON u.user_ID = a.faculty_ID
+	 WHERE a.student_ID = ?
+	 ORDER BY a.date_Of_Appnt DESC, a.faculty_ID
+	 LIMIT 1",
+	[$studentID]
 );
-if ($degreeCreditRow) {
-    $degreeCredits = (int) $degreeCreditRow['total'];
-}
+$advisorName = (string) ($advisor['advisor_Name'] ?? 'Not assigned');
 
-// Required credits for graduation (default 120, can be adjusted per major).
-$requiredCredits = 120;
-$creditProgress = $degreeCredits > 0 ? min(100, round(($degreeCredits / $requiredCredits) * 100, 1)) : 0;
+// Student_Hold has no status/expiry column, so all linked hold records are
+// treated as active until the schema provides a different lifecycle field.
+$holds = all_rows(
+	$pdo,
+	"SELECT h.hold_Type
+	 FROM Student_Hold sh
+	 JOIN Hold h ON h.hold_ID = sh.hold_ID
+	 WHERE sh.student_ID = ?
+	 ORDER BY h.hold_Type",
+	[$studentID]
+);
+$holdTypes = array_values(array_unique(array_map(
+	static fn(array $hold): string => (string) $hold['hold_Type'],
+	$holds
+)));
+$registrationHoldDisplay = $holdTypes === []
+	? 'No Active Holds'
+	: count($holdTypes) . ' Active Hold' . (count($holdTypes) === 1 ? '' : 's') . ': ' . implode(', ', $holdTypes);
+
+// Keep the existing grade-point scale and credit-weighted transcript behavior.
+$historyGrades = all_rows(
+	$pdo,
+	"SELECT sh.Grade, c.course_Credits
+	 FROM Student_History sh
+	 JOIN Course c ON c.course_ID = sh.course_ID
+	 WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL",
+	[$studentID]
+);
+$weightedPoints = 0.0;
+$gradedCredits = 0;
+foreach ($historyGrades as $row) {
+	$points = grade_points((string) $row['Grade']);
+	$credits = (int) $row['course_Credits'];
+	if ($points !== null && $credits > 0) {
+		$weightedPoints += $points * $credits;
+		$gradedCredits += $credits;
+	}
+}
+$gpa = $gradedCredits > 0 ? round($weightedPoints / $gradedCredits, 2) : null;

@@ -3,6 +3,7 @@
 require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
+require_once '../includes/helpers.php';
 
 require_role(['Faculty']);
 
@@ -21,15 +22,21 @@ $sql = "SELECT
             Faculty.faculty_Rank,
             Faculty.faculty_Type,
             Faculty.Specialty,
-            Faculty.office_Building,
-            Faculty.office_Room,
-            Faculty.office_Hours,
-            Faculty.office_Phone
+            Building.Bldg_Name AS office_Building,
+            Room.room_Number AS office_Room,
+            NULL AS office_Hours,
+            NULL AS office_Phone
         FROM User
         JOIN Faculty
             ON Faculty.faculty_ID = User.user_ID
         JOIN Login
             ON Login.user_ID = User.user_ID
+        LEFT JOIN Office
+            ON Office.office_ID = Faculty.office_ID
+        LEFT JOIN Room
+            ON Room.room_ID = Office.office_ID
+        LEFT JOIN Building
+            ON Building.Bldg_ID = Room.Bldg_ID
         WHERE User.user_ID = ?";
 
 $faculty = one(

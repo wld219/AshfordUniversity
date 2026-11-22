@@ -1,0 +1,171 @@
+﻿semester_ID,semester,student_ID,student_name,course_ID,course_Name,CRNs,section_numbers,row_count,graded_rows,attendance_rows,history_rows
+1,Fall 2026,100017,Matthew Gonzalez,BU3071,Information Technology & Application,10004; 10005,4; 5,2,0,0,0
+1,Fall 2026,100019,Daniel Martin,EG2007,Engineering Graphics,10231; 10234,4; 7,2,0,0,0
+1,Fall 2026,100020,Jordan Thompson,BU3071,Information Technology & Application,10001; 10006,1; 6,2,0,0,0
+1,Fall 2026,100027,Isaiah Brown,BU3071,Information Technology & Application,10007; 10008; 10009; 10010,7; 8; 9; 10,4,4,8,0
+1,Fall 2026,100028,Gabriel Lopez,BU3071,Information Technology & Application,10007; 10008; 10009; 10010,7; 8; 9; 10,4,4,8,0
+1,Fall 2026,100029,Kiara Campbell,EG3010,Statics,10238; 10239,1; 2,2,0,0,0
+1,Fall 2026,100045,Daniel Etienne,EG2009,Engineering Mathematics,10235; 10237,1; 3,2,0,0,0
+1,Fall 2026,100049,Anthony Jean,BU3071,Information Technology & Application,10001; 10008; 10009; 10010,1; 8; 9; 10,4,4,14,1
+1,Fall 2026,100050,Jonathan Wright,BU3071,Information Technology & Application,10004; 10008,4; 8,2,0,0,0
+1,Fall 2026,100055,Ryan Lewis,BU3071,Information Technology & Application,10007; 10008; 10009; 10010,7; 8; 9; 10,4,4,8,0
+1,Fall 2026,100069,David Lopez,BU3071,Information Technology & Application,10007; 10008; 10009; 10010,7; 8; 9; 10,4,4,8,0
+1,Fall 2026,100073,Jessica Baker,BU3071,Information Technology & Application,10002; 10008; 10009; 10010,2; 8; 9; 10,4,4,14,1
+1,Fall 2026,100079,Ethan King,HS3011,Healthcare Ethics,10338; 10339,1; 2,2,0,0,0
+1,Fall 2026,100085,Brian Ramirez,BU3071,Information Technology & Application,10002; 10008; 10009; 10010,2; 8; 9; 10,4,4,14,1
+1,Fall 2026,100087,Ava Ramirez,BU3071,Information Technology & Application,10007; 10008; 10009; 10010,7; 8; 9; 10,4,4,8,0
+1,Fall 2026,100091,Ashley Baker,BU3071,Information Technology & Application,10001; 10007; 10009; 10010,1; 7; 9; 10,4,4,8,1
+1,Fall 2026,100093,Gabriel Davis,SS2006,Social Science Research Methods,10301; 10304,1; 3,2,0,0,0
+1,Fall 2026,100099,Isaiah Young,EN2009,World Literature,10267; 10268,1; 2,2,2,4,0
+1,Fall 2026,100099,Isaiah Young,EN4017,Language and Culture,10269; 10270,1; 2,2,2,4,0
+1,Fall 2026,100104,David Flores,BU3071,Information Technology & Application,10007; 10010,7; 10,2,2,4,0
+1,Fall 2026,100129,Christopher Sanchez,EN1001,College Composition,10260; 10262,1; 3,2,0,0,0
+1,Fall 2026,100227,Liam Etienne,EG2007,Engineering Graphics,10228; 10231,1; 4,2,0,0,0
+1,Fall 2026,100230,Ryan Joseph,SS2006,Social Science Research Methods,10303; 10304,2; 3,2,0,0,0
+1,Fall 2026,100240,Naomi Sanchez,EN2009,World Literature,10267; 10268,1; 2,2,2,4,0
+1,Fall 2026,100240,Naomi Sanchez,EN4017,Language and Culture,10269; 10270,1; 2,2,2,4,0
+1,Fall 2026,100261,Natalie Torres,EG2007,Engineering Graphics,10229; 10232,2; 5,2,0,0,0
+1,Fall 2026,100277,Grace Louis,SS2009,American Government,10289; 10290,1; 2,2,0,0,0
+1,Fall 2026,100284,Elena Williams,EN1002,Introduction to Literature,10263; 10264,1; 2,2,2,4,0
+1,Fall 2026,100297,Lauren Wright,EG2007,Engineering Graphics,10228; 10233,1; 6,2,0,0,0
+1,Fall 2026,100347,Jason King,EG2007,Engineering Graphics,10228; 10230,1; 3,2,0,0,0
+1,Fall 2026,100367,Nicholas Wilson,EN2009,World Literature,10267; 10268,1; 2,2,2,4,0
+1,Fall 2026,100389,Maria Pierre,EN2009,World Literature,10267; 10268,1; 2,2,2,4,0
+1,Fall 2026,100496,Destiny Flores,EG2007,Engineering Graphics,10228; 10229,1; 2,2,0,0,0
+1,Fall 2026,100523,Sarah Adams,EG2007,Engineering Graphics,10229; 10230; 10232,2; 3; 5,3,3,6,0
+2,Spring 2027,100022,Adrian Baptiste,MA1004,Discrete Mathematics,20138; 20139,4; 5,2,0,0,0
+2,Spring 2027,100026,Marcus Augustin,MA2009,Mathematical Reasoning,20147; 20150,1; 4,2,0,0,0
+2,Spring 2027,100031,Vanessa Campbell,MA1004,Discrete Mathematics,20137; 20139,3; 5,2,0,0,0
+2,Spring 2027,100041,Aaliyah Taylor,BU3013,Operations Management,20111; 20119,3; 4,2,0,0,0
+2,Spring 2027,100064,Mia Allen,BU1002,Financial Accounting,20068; 20070,3; 5,2,0,0,0
+2,Spring 2027,100099,Isaiah Young,EN1001,College Composition,20278; 20279; 20280,1; 2; 3,3,3,6,0
+2,Spring 2027,100099,Isaiah Young,EN3013,Technical Writing,20290; 20291,1; 2,2,2,4,0
+2,Spring 2027,100130,Maria Hill,BU1002,Financial Accounting,20067; 20069,2; 4,2,0,0,0
+2,Spring 2027,100148,Jason Jones,NS1003,General Physics,20196; 20198,2; 4,2,0,0,0
+2,Spring 2027,100192,Samantha Torres,BU3012,Entrepreneurship,20084; 20086,1; 3,2,0,0,0
+2,Spring 2027,100212,Maya Davis,EN1001,College Composition,20278; 20279; 20280,1; 2; 3,3,3,6,0
+2,Spring 2027,100212,Maya Davis,EN3013,Technical Writing,20290; 20291,1; 2,2,2,4,0
+2,Spring 2027,100215,Destiny Scott,CS5003,Machine Learning,20038; 20040,1; 3,2,0,0,0
+2,Spring 2027,100240,Naomi Sanchez,EN1001,College Composition,20278; 20279; 20280,1; 2; 3,3,3,6,0
+2,Spring 2027,100240,Naomi Sanchez,EN3013,Technical Writing,20290; 20291,1; 2,2,2,4,0
+2,Spring 2027,100248,Matthew Nguyen,NS2008,Earth Science,20207; 20212,1; 6,2,0,0,0
+2,Spring 2027,100284,Elena Williams,EN1001,College Composition,20278; 20279; 20280,1; 2; 3,3,3,6,0
+2,Spring 2027,100284,Elena Williams,EN3013,Technical Writing,20290; 20291,1; 2,2,2,4,0
+2,Spring 2027,100355,Leah Garcia,CS5003,Machine Learning,20038; 20041,1; 4,2,0,0,0
+2,Spring 2027,100367,Nicholas Wilson,EN1001,College Composition,20278; 20279,1; 2,2,2,4,0
+2,Spring 2027,100389,Maria Pierre,EN1001,College Composition,20278; 20279,1; 2,2,2,4,0
+2,Spring 2027,100395,Nathan Thompson,EG1001,Introduction to Engineering,20243; 20245,3; 5,2,0,0,0
+2,Spring 2027,100436,Kayla Torres,MA1004,Discrete Mathematics,20140; 20141,6; 7,2,0,0,0
+2,Spring 2027,100457,Cameron Rodriguez,MA1004,Discrete Mathematics,20135; 20137,1; 3,2,0,0,0
+2,Spring 2027,100492,Naomi Moore,NS2007,Introduction to Scientific Inquiry,20203; 20205,3; 5,2,0,0,0
+2,Spring 2027,100505,Aaron Nguyen,CS1001,Introduction to Programming,20001; 20002,1; 2,2,2,4,0
+2,Spring 2027,100505,Aaron Nguyen,CS1002,Object-Oriented Programming with Java,20003; 20004; 20006,1; 2; 4,3,3,6,0
+2,Spring 2027,100505,Aaron Nguyen,CS1004,Database Systems,20048; 20049; 20050; 20051,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100505,Aaron Nguyen,CS1005,Computer Networks,20009; 20010,3; 4,2,2,10,0
+2,Spring 2027,100505,Aaron Nguyen,CS2007,Introduction to Computing,20012; 20013; 20016; 20018,1; 2; 5; 7,4,4,8,0
+2,Spring 2027,100505,Aaron Nguyen,CS2008,Web Development,20019; 20020; 20021; 20022,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100505,Aaron Nguyen,CS3011,Algorithm Design,20054; 20055,3; 4,2,2,4,0
+2,Spring 2027,100505,Aaron Nguyen,CS5001,Advanced Algorithms,20036; 20037,3; 4,2,2,4,0
+2,Spring 2027,100505,Aaron Nguyen,CS5005,Advanced Database Research,20044; 20046,1; 3,2,2,4,0
+2,Spring 2027,100506,Nia Charles,CS1001,Introduction to Programming,20001; 20002,1; 2,2,2,4,0
+2,Spring 2027,100506,Nia Charles,CS1002,Object-Oriented Programming with Java,20003; 20004; 20006,1; 2; 4,3,3,6,0
+2,Spring 2027,100506,Nia Charles,CS1004,Database Systems,20049; 20050; 20051,2; 3; 4,3,3,6,0
+2,Spring 2027,100506,Nia Charles,CS1005,Computer Networks,20009; 20010,3; 4,2,2,10,0
+2,Spring 2027,100506,Nia Charles,CS2007,Introduction to Computing,20012; 20013; 20016; 20018,1; 2; 5; 7,4,4,8,0
+2,Spring 2027,100506,Nia Charles,CS2008,Web Development,20019; 20020; 20021; 20022,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100506,Nia Charles,CS3011,Algorithm Design,20054; 20055,3; 4,2,2,4,0
+2,Spring 2027,100506,Nia Charles,CS5001,Advanced Algorithms,20034; 20035; 20036; 20037,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100506,Nia Charles,CS5005,Advanced Database Research,20044; 20045; 20046,1; 2; 3,3,3,6,0
+2,Spring 2027,100507,Elena Flores,BU1002,Financial Accounting,20066; 20067; 20068; 20069; 20070,1; 2; 3; 4; 5,5,5,10,0
+2,Spring 2027,100507,Elena Flores,BU1003,Managerial Accounting,20071; 20072; 20073; 20074,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100507,Elena Flores,BU2009,Microeconomics for Business,20076; 20078; 20079,1; 3; 4,3,3,6,0
+2,Spring 2027,100507,Elena Flores,BU3010,Macroeconomics for Business,20080; 20081; 20082; 20083,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100507,Elena Flores,BU3012,Entrepreneurship,20084; 20085; 20087,1; 2; 4,3,3,12,0
+2,Spring 2027,100507,Elena Flores,BU3013,Operations Management,20109; 20110; 20111; 20119,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100507,Elena Flores,BU4014,Human Resource Management,20112; 20113; 20114; 20120,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100507,Elena Flores,BU5002,Advanced Financial Analysis,20106; 20107,1; 2,2,2,4,0
+2,Spring 2027,100507,Elena Flores,BU5003,Business Analytics,20097; 20098,1; 2,2,2,4,0
+2,Spring 2027,100507,Elena Flores,BU5004,Global Marketing Strategy,20100; 20101,1; 2,2,2,4,0
+2,Spring 2027,100508,Adrian Gonzalez,BU1002,Financial Accounting,20066; 20067; 20068; 20069; 20070,1; 2; 3; 4; 5,5,5,10,0
+2,Spring 2027,100508,Adrian Gonzalez,BU1003,Managerial Accounting,20071; 20072; 20073; 20074,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100508,Adrian Gonzalez,BU2009,Microeconomics for Business,20076; 20078; 20079,1; 3; 4,3,3,6,0
+2,Spring 2027,100508,Adrian Gonzalez,BU3010,Macroeconomics for Business,20080; 20081; 20082; 20083,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100508,Adrian Gonzalez,BU3012,Entrepreneurship,20085; 20087,2; 4,2,2,10,0
+2,Spring 2027,100508,Adrian Gonzalez,BU3013,Operations Management,20109; 20110; 20111; 20119,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100508,Adrian Gonzalez,BU4014,Human Resource Management,20112; 20113; 20114; 20120,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100508,Adrian Gonzalez,BU5002,Advanced Financial Analysis,20106; 20107,1; 2,2,2,4,0
+2,Spring 2027,100508,Adrian Gonzalez,BU5003,Business Analytics,20097; 20098,1; 2,2,2,4,0
+2,Spring 2027,100508,Adrian Gonzalez,BU5004,Global Marketing Strategy,20100; 20101; 20102,1; 2; 3,3,3,6,0
+2,Spring 2027,100508,Adrian Gonzalez,BU5006,Quantitative Business Research,20115; 20116,2; 3,2,2,4,0
+2,Spring 2027,100509,Chloe Joseph,MA1001,Calculus I,20129; 20131; 20132,1; 3; 4,3,3,6,0
+2,Spring 2027,100509,Chloe Joseph,MA1002,Calculus II,20133; 20134,1; 2,2,2,4,0
+2,Spring 2027,100509,Chloe Joseph,MA1004,Discrete Mathematics,20135; 20136; 20137; 20139; 20141; 20142,1; 2; 3; 5; 7; 8,6,6,12,0
+2,Spring 2027,100509,Chloe Joseph,MA2007,College Algebra,20143; 20144; 20145,1; 2; 3,3,3,6,0
+2,Spring 2027,100509,Chloe Joseph,MA2009,Mathematical Reasoning,20147; 20148; 20149; 20150; 20151,1; 2; 3; 4; 5,5,5,10,0
+2,Spring 2027,100509,Chloe Joseph,MA3013,Abstract Algebra Fundamentals,20165; 20170,1; 2,2,2,4,0
+2,Spring 2027,100509,Chloe Joseph,MA4018,Mathematics Capstone,20167; 20172; 20173,1; 2; 3,3,3,6,0
+2,Spring 2027,100509,Chloe Joseph,MA5003,Advanced Statistical Methods,20177; 20178; 20180,1; 2; 4,3,3,6,0
+2,Spring 2027,100510,Cameron Gonzalez,NS1002,General Chemistry,20193; 20194,1; 2,2,2,4,0
+2,Spring 2027,100510,Cameron Gonzalez,NS1003,General Physics,20195; 20196; 20197; 20198; 20199,1; 2; 3; 4; 5,5,5,10,0
+2,Spring 2027,100510,Cameron Gonzalez,NS2007,Introduction to Scientific Inquiry,20201; 20203; 20204; 20205; 20206,1; 3; 4; 5; 6,5,5,10,0
+2,Spring 2027,100510,Cameron Gonzalez,NS2008,Earth Science,20207; 20208; 20209; 20210; 20211; 20212,1; 2; 3; 4; 5; 6,6,6,12,0
+2,Spring 2027,100511,Ashley Etienne,EG1001,Introduction to Engineering,20244; 20246; 20247,4; 6; 7,3,3,6,0
+2,Spring 2027,100511,Ashley Etienne,EG3011,Dynamics,20257; 20258,1; 2,2,2,4,0
+2,Spring 2027,100517,Ariana Johnson,CS1001,Introduction to Programming,20001; 20002,1; 2,2,2,4,0
+2,Spring 2027,100517,Ariana Johnson,CS1002,Object-Oriented Programming with Java,20003; 20004; 20006,1; 2; 4,3,3,6,0
+2,Spring 2027,100517,Ariana Johnson,CS2007,Introduction to Computing,20012; 20013; 20016,1; 2; 5,3,3,6,0
+2,Spring 2027,100517,Ariana Johnson,CS2008,Web Development,20019; 20020; 20022,1; 2; 4,3,3,6,0
+2,Spring 2027,100517,Ariana Johnson,CS5005,Advanced Database Research,20045; 20046,2; 3,2,2,4,0
+2,Spring 2027,100518,Aaliyah White,CS1001,Introduction to Programming,20001; 20002,1; 2,2,2,4,0
+2,Spring 2027,100518,Aaliyah White,CS1002,Object-Oriented Programming with Java,20004; 20006,2; 4,2,2,4,0
+2,Spring 2027,100518,Aaliyah White,CS2007,Introduction to Computing,20012; 20013; 20016,1; 2; 5,3,3,6,0
+2,Spring 2027,100518,Aaliyah White,CS2008,Web Development,20019; 20022,1; 4,2,2,4,0
+2,Spring 2027,100519,Natalie Carter,BU1002,Financial Accounting,20067; 20068; 20069; 20070,2; 3; 4; 5,4,4,8,0
+2,Spring 2027,100519,Natalie Carter,BU1003,Managerial Accounting,20071; 20073; 20074,1; 3; 4,3,3,6,0
+2,Spring 2027,100519,Natalie Carter,BU2009,Microeconomics for Business,20076; 20078,1; 3,2,2,4,0
+2,Spring 2027,100519,Natalie Carter,BU3010,Macroeconomics for Business,20080; 20081,1; 2,2,2,4,0
+2,Spring 2027,100519,Natalie Carter,BU3013,Operations Management,20109; 20110; 20119,1; 2; 4,3,3,6,0
+2,Spring 2027,100519,Natalie Carter,BU4014,Human Resource Management,20112; 20113; 20114; 20120,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100519,Natalie Carter,BU5003,Business Analytics,20097; 20099,1; 3,2,2,4,0
+2,Spring 2027,100519,Natalie Carter,BU5004,Global Marketing Strategy,20100; 20102,1; 3,2,2,4,0
+2,Spring 2027,100519,Natalie Carter,BU5006,Quantitative Business Research,20116; 20117,3; 4,2,2,4,0
+2,Spring 2027,100520,Victoria Desir,BU1002,Financial Accounting,20069; 20070,4; 5,2,2,4,0
+2,Spring 2027,100520,Victoria Desir,BU2009,Microeconomics for Business,20076; 20078,1; 3,2,2,4,0
+2,Spring 2027,100520,Victoria Desir,BU3013,Operations Management,20109; 20119,1; 4,2,2,4,0
+2,Spring 2027,100521,Grace Williams,MA1001,Calculus I,20129; 20132,1; 4,2,2,4,0
+2,Spring 2027,100521,Grace Williams,MA1004,Discrete Mathematics,20135; 20136; 20137; 20139; 20141,1; 2; 3; 5; 7,5,5,10,0
+2,Spring 2027,100521,Grace Williams,MA2007,College Algebra,20143; 20144; 20145,1; 2; 3,3,3,6,0
+2,Spring 2027,100521,Grace Williams,MA2009,Mathematical Reasoning,20147; 20148; 20149; 20150,1; 2; 3; 4,4,4,8,0
+2,Spring 2027,100521,Grace Williams,MA3013,Abstract Algebra Fundamentals,20165; 20170,1; 2,2,2,4,0
+2,Spring 2027,100521,Grace Williams,MA4018,Mathematics Capstone,20167; 20172; 20173,1; 2; 3,3,3,6,0
+2,Spring 2027,100521,Grace Williams,MA5002,Abstract Algebra,20168; 20174,1; 3,2,2,4,0
+2,Spring 2027,100521,Grace Williams,MA5005,Topology,20163; 20164,1; 2,2,2,4,0
+2,Spring 2027,100522,Andrew Johnson,NS1003,General Physics,20195; 20196; 20198; 20199,1; 2; 4; 5,4,4,8,0
+2,Spring 2027,100522,Andrew Johnson,NS2007,Introduction to Scientific Inquiry,20201; 20203; 20204; 20205; 20206,1; 3; 4; 5; 6,5,5,10,0
+2,Spring 2027,100522,Andrew Johnson,NS2008,Earth Science,20207; 20208; 20209; 20210; 20211; 20212,1; 2; 3; 4; 5; 6,6,6,12,0
+2,Spring 2027,100523,Sarah Adams,EG1001,Introduction to Engineering,20244; 20246; 20247,4; 6; 7,3,3,6,0
+2,Spring 2027,100529,Samantha Pierre,CS1001,Introduction to Programming,20001; 20002,1; 2,2,2,4,0
+2,Spring 2027,100530,Liam King,CS5001,Advanced Algorithms,20035; 20037,2; 4,2,2,4,0
+2,Spring 2027,100531,Malcolm Martinez,BU1002,Financial Accounting,20069; 20070,4; 5,2,2,4,0
+2,Spring 2027,100533,Darius Desir,MA1004,Discrete Mathematics,20136; 20137,2; 3,2,2,4,0
+2,Spring 2027,100533,Darius Desir,MA2009,Mathematical Reasoning,20148; 20150,2; 4,2,2,4,0
+2,Spring 2027,100533,Darius Desir,MA3013,Abstract Algebra Fundamentals,20165; 20170,1; 2,2,2,4,0
+2,Spring 2027,100533,Darius Desir,MA5004,Mathematical Optimization,20161; 20162,1; 2,2,2,4,0
+2,Spring 2027,100533,Darius Desir,MA5005,Topology,20163; 20164,1; 2,2,2,4,0
+2,Spring 2027,100534,Nathan Joseph,NS1003,General Physics,20195; 20196; 20198; 20199,1; 2; 4; 5,4,4,8,0
+2,Spring 2027,100534,Nathan Joseph,NS2007,Introduction to Scientific Inquiry,20201; 20203; 20204; 20206,1; 3; 4; 6,4,4,8,0
+2,Spring 2027,100534,Nathan Joseph,NS2008,Earth Science,20207; 20208; 20209; 20210; 20211; 20212,1; 2; 3; 4; 5; 6,6,6,12,0
+2,Spring 2027,100535,Madison Augustin,EG1001,Introduction to Engineering,20244; 20246; 20247,4; 6; 7,3,3,6,0
+2,Spring 2027,100546,Lucas Perez,NS1003,General Physics,20195; 20196; 20199,1; 2; 5,3,3,6,0
+2,Spring 2027,100546,Lucas Perez,NS2007,Introduction to Scientific Inquiry,20201; 20204; 20206,1; 4; 6,3,3,6,0
+2,Spring 2027,100546,Lucas Perez,NS2008,Earth Science,20208; 20209; 20211,2; 3; 5,3,3,6,0
+2,Spring 2027,100547,Jasmine Baptiste,EG1001,Introduction to Engineering,20244; 20246; 20247,4; 6; 7,3,3,6,0
+2,Spring 2027,100557,Jason Ramirez,MA5003,Advanced Statistical Methods,20178; 20179,2; 3,2,2,4,0
+2,Spring 2027,100558,Cameron Wilson,NS1003,General Physics,20195; 20196,1; 2,2,2,4,0
+2,Spring 2027,100558,Cameron Wilson,NS2007,Introduction to Scientific Inquiry,20201; 20204; 20206,1; 4; 6,3,3,6,0
+2,Spring 2027,100559,Jada Hernandez,EG1001,Introduction to Engineering,20246; 20247,6; 7,2,2,4,0
+2,Spring 2027,100570,David Johnson,NS1003,General Physics,20195; 20196,1; 2,2,2,4,0
+2,Spring 2027,100570,David Johnson,NS2007,Introduction to Scientific Inquiry,20201; 20206,1; 6,2,2,4,0
+2,Spring 2027,100581,Isabella Altidor,MA5003,Advanced Statistical Methods,20177; 20179,1; 3,2,2,4,0
+2,Spring 2027,100587,Sophia Nelson,MA5003,Advanced Statistical Methods,20178; 20180,2; 4,2,0,0,0
+2,Spring 2027,100653,Mia Campbell,MA5003,Advanced Statistical Methods,20177; 20180,1; 4,2,2,4,0

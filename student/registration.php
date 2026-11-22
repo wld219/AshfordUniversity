@@ -11,7 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $crn = (int) ($_POST['crn'] ?? 0);
     require_once __DIR__ . '/registration_actions.php';
 }
-$registrationNotice = current_registration_semester($pdo);
+$semesterOptions = all_rows(
+    $pdo,
+    "SELECT semester_ID, semester_Name
+     FROM Semester
+     WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+     ORDER BY CASE semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 END"
+) ?? [];
+$semesterByName = [];
+foreach ($semesterOptions as $option) {
+    $semesterByName[(string) $option['semester_Name']] = (int) $option['semester_ID'];
+}
+$defaultSemesterID = $semesterByName['Fall 2026'] ?? current_registration_semester($pdo);
+$requestedSemesterID = filter_var($_GET['semester'] ?? null, FILTER_VALIDATE_INT);
+$validSemesterIDs = array_map(static fn($option) => (int) $option['semester_ID'], $semesterOptions);
+$registrationNotice = $requestedSemesterID !== false && $requestedSemesterID !== null
+    && in_array((int) $requestedSemesterID, $validSemesterIDs, true)
+        ? (int) $requestedSemesterID
+        : $defaultSemesterID;
 $windowOpen = false;
 $windowMessage = 'No registration semester is available.';
 $semesterName = 'No semester available';
@@ -30,6 +47,9 @@ $departments = all_rows($pdo, 'SELECT dept_ID, dept_Name FROM Department ORDER B
 $crnFilter = trim((string) ($_GET['crn_filter'] ?? ''));
 $facultyFilter = trim((string) ($_GET['faculty'] ?? ''));
 $seatsFilter = trim((string) ($_GET['seats'] ?? ''));
+$levelFilter = trim((string) ($_GET['level'] ?? ''));
+$dayFilter = trim((string) ($_GET['day'] ?? ''));
+$timeFilter = trim((string) ($_GET['time'] ?? ''));
 
 $crnFilter = substr($crnFilter, 0, 30);
 $facultyFilter = substr($facultyFilter, 0, 30);
@@ -43,6 +63,17 @@ if ($facultyFilter !== '' && !ctype_digit($facultyFilter)) {
 if (!in_array($seatsFilter, ['', 'open', 'full'], true)) {
     $seatsFilter = '';
 }
+if (!in_array($levelFilter, ['', 'Undergraduate', 'Graduate'], true)) {
+    $levelFilter = '';
+}
+$validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+if (!in_array($dayFilter, array_merge([''], $validDays), true)) {
+    $dayFilter = '';
+}
+if (!in_array($timeFilter, ['', 'morning', 'afternoon', 'evening'], true)) {
+    $timeFilter = '';
+}
+$dayOptions = all_rows($pdo, 'SELECT day_Of_Week FROM Day ORDER BY day_ID') ?? [];
 
 $facultyOptions = all_rows(
     $pdo,
@@ -55,14 +86,30 @@ $facultyOptions = all_rows(
 
 $sections = [];
 if ($registrationNotice !== null) {
-    $sql = 'SELECT c.course_ID, c.course_Name, c.course_Credits, d.dept_Name,
+    $sql = 'SELECT c.course_ID, c.course_Name, c.course_Credits, c.course_Type, d.dept_Name,
                    cs.CRN, cs.section_No, cs.available_Seats, cs.time_Slot_ID,
+                   cs.lecture_ID, cs.lab_ID,
+                   CASE WHEN cs.lecture_ID IS NOT NULL AND cs.lab_ID IS NOT NULL THEN "Lecture / Lab"
+                        WHEN cs.lab_ID IS NOT NULL THEN "Lab" ELSE "Lecture" END AS section_Type,
+                   (SELECT GROUP_CONCAT(dy.day_Of_Week ORDER BY dy.day_ID SEPARATOR ", ")
+                    FROM Time_Slot_Day tsd JOIN Day dy ON dy.day_ID = tsd.day_ID
+                    WHERE tsd.time_Slot_ID = cs.time_Slot_ID) AS meeting_Days,
+                   (SELECT MIN(p.start_Time) FROM Time_Slot_Period tsp
+                    JOIN Period p ON p.period_ID = tsp.period_ID WHERE tsp.time_Slot_ID = cs.time_Slot_ID) AS meeting_Start,
+                   (SELECT MAX(p.end_Time) FROM Time_Slot_Period tsp
+                    JOIN Period p ON p.period_ID = tsp.period_ID WHERE tsp.time_Slot_ID = cs.time_Slot_ID) AS meeting_End,
+                   lr.room_Number AS lecture_Room_Number, lb.Bldg_Name AS lecture_Building_Name,
+                   labr.room_Number AS lab_Room_Number, labb.Bldg_Name AS lab_Building_Name,
                    TRIM(CONCAT(u.first_Name, CHAR(32), u.last_Name)) AS faculty_Name
             FROM Course_Section cs
             JOIN Course c ON c.course_ID = cs.course_ID
             JOIN Department d ON d.dept_ID = c.dept_ID
             LEFT JOIN Faculty f ON f.faculty_ID = cs.faculty_ID
             LEFT JOIN User u ON u.user_ID = f.faculty_ID
+            LEFT JOIN Room lr ON lr.room_ID = cs.lecture_ID
+            LEFT JOIN Building lb ON lb.Bldg_ID = lr.Bldg_ID
+            LEFT JOIN Room labr ON labr.room_ID = cs.lab_ID
+            LEFT JOIN Building labb ON labb.Bldg_ID = labr.Bldg_ID
             WHERE cs.semester_ID = ? AND cs.is_Cancelled = 0';
     $params = [(int) $registrationNotice];
     if ($search !== '') {
@@ -76,7 +123,7 @@ if ($registrationNotice !== null) {
         $conditions = [];
 
         foreach ($terms as $term) {
-            $conditions[] = '(c.course_Name LIKE ? OR CAST(c.course_ID AS CHAR) LIKE ?)';
+            $conditions[] = '(c.course_Name LIKE ? OR c.course_ID LIKE ?)';
             $params[] = '%' . $term . '%';
             $params[] = '%' . $term . '%';
         }
@@ -106,14 +153,41 @@ if ($registrationNotice !== null) {
         $sql .= ' AND cs.available_Seats <= 0';
     }
 
+    if ($levelFilter !== '') {
+        $sql .= ' AND c.course_Type = ?';
+        $params[] = $levelFilter;
+    }
+    if ($dayFilter !== '') {
+        $sql .= ' AND EXISTS (
+            SELECT 1 FROM Time_Slot_Day filter_day
+            JOIN Day filter_day_name ON filter_day_name.day_ID = filter_day.day_ID
+            WHERE filter_day.time_Slot_ID = cs.time_Slot_ID AND filter_day_name.day_Of_Week = ?
+        )';
+        $params[] = $dayFilter;
+    }
+    if ($timeFilter !== '') {
+        $timeRange = [
+            'morning' => ['00:00:00', '11:59:59'],
+            'afternoon' => ['12:00:00', '16:59:59'],
+            'evening' => ['17:00:00', '23:59:59'],
+        ][$timeFilter];
+        $sql .= ' AND EXISTS (
+            SELECT 1 FROM Time_Slot_Period filter_period_slot
+            JOIN Period filter_period ON filter_period.period_ID = filter_period_slot.period_ID
+            WHERE filter_period_slot.time_Slot_ID = cs.time_Slot_ID
+              AND filter_period.start_Time >= ? AND filter_period.start_Time <= ?
+        )';
+        array_push($params, $timeRange[0], $timeRange[1]);
+    }
+
     $sql .= ' ORDER BY c.course_ID, cs.section_No';
     $sections = all_rows($pdo, $sql, $params) ?? [];
 }
 $creditRow = $registrationNotice === null ? null : one($pdo,
     'SELECT COALESCE(SUM(c.course_Credits), 0) AS total FROM Enrollment en
-     JOIN Course_Section cs ON cs.CRN = en.CRN
+     JOIN Course_Section cs ON cs.CRN = en.CRN AND cs.semester_ID = en.semester_ID
      JOIN Course c ON c.course_ID = cs.course_ID
-     WHERE en.student_ID = ? AND en.semester_ID = ?',
+     WHERE en.student_ID = ? AND en.semester_ID = ? AND cs.is_Cancelled = 0',
     [$studentID, (int) $registrationNotice]);
 $registeredCredits = (int) ($creditRow['total'] ?? 0);
 $creditLimit = student_credit_limit($pdo, $studentID);
@@ -124,11 +198,26 @@ $myRegisteredCourses = [];
 if ($registrationNotice !== null) {
     $myRegisteredCourses = all_rows($pdo,
         'SELECT en.CRN, en.Grade, c.course_ID, c.course_Name, c.course_Credits,
-                cs.section_No, cs.available_Seats
+                cs.section_No, cs.available_Seats, cs.time_Slot_ID, cs.lecture_ID, cs.lab_ID,
+                CASE WHEN cs.lecture_ID IS NOT NULL AND cs.lab_ID IS NOT NULL THEN "Lecture / Lab"
+                     WHEN cs.lab_ID IS NOT NULL THEN "Lab" ELSE "Lecture" END AS section_Type,
+                (SELECT GROUP_CONCAT(dy.day_Of_Week ORDER BY dy.day_ID SEPARATOR ", ")
+                 FROM Time_Slot_Day tsd JOIN Day dy ON dy.day_ID = tsd.day_ID
+                 WHERE tsd.time_Slot_ID = cs.time_Slot_ID) AS meeting_Days,
+                (SELECT MIN(p.start_Time) FROM Time_Slot_Period tsp
+                 JOIN Period p ON p.period_ID = tsp.period_ID WHERE tsp.time_Slot_ID = cs.time_Slot_ID) AS meeting_Start,
+                (SELECT MAX(p.end_Time) FROM Time_Slot_Period tsp
+                 JOIN Period p ON p.period_ID = tsp.period_ID WHERE tsp.time_Slot_ID = cs.time_Slot_ID) AS meeting_End,
+                lr.room_Number AS lecture_Room_Number, lb.Bldg_Name AS lecture_Building_Name,
+                labr.room_Number AS lab_Room_Number, labb.Bldg_Name AS lab_Building_Name
          FROM Enrollment en
-         JOIN Course_Section cs ON cs.CRN = en.CRN
+         JOIN Course_Section cs ON cs.CRN = en.CRN AND cs.semester_ID = en.semester_ID
          JOIN Course c ON c.course_ID = cs.course_ID
-         WHERE en.student_ID = ? AND en.semester_ID = ?
+         LEFT JOIN Room lr ON lr.room_ID = cs.lecture_ID
+         LEFT JOIN Building lb ON lb.Bldg_ID = lr.Bldg_ID
+         LEFT JOIN Room labr ON labr.room_ID = cs.lab_ID
+         LEFT JOIN Building labb ON labb.Bldg_ID = labr.Bldg_ID
+         WHERE en.student_ID = ? AND en.semester_ID = ? AND cs.is_Cancelled = 0
          ORDER BY c.course_ID, cs.section_No',
         [$studentID, (int) $registrationNotice]) ?? [];
 }

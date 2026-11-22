@@ -1,0 +1,3 @@
+student_ID,student_name,Student.major_ID,Student.major_name,Student_Major_rows,recommendation
+100144,Andre Elise Adams,34,"Accounting, B.S.","34 — Accounting, B.S. [chosen 2026-11-13]; 65 — Accounting, M.S. [chosen 2026-11-17]",Preserve both linked program values; the stored value appears in Student_Major. Confirm catalog/academic-level classification before any future edits.
+300002,Rachel Anthony Robinson,1,Computer Science,1 — Computer Science [chosen 2026-10-31]; 45 — Computer & Information Sciences Degree [chosen 2026-10-31],Preserve both linked program values; the stored value appears in Student_Major. Confirm catalog/academic-level classification before any future edits.

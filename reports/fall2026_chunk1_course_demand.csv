@@ -1,0 +1,130 @@
+course_ID,course_Name,department_ID,credits,potential_students_with_unpassed_prerequisite_met_requirement,active_Fall2026_sections,physical_seats,currently_open_seats,qualified_faculty_with_remaining_section_capacity,aggregate_remaining_qualified_faculty_assignments,additional_10_seat_sections_if_every_candidate_requested_this_course_non_additive
+BU1001,"Introduction to Business",2,4,85,0,0,0,84,161,9
+BU1002,"Financial Accounting",2,4,64,0,0,0,84,161,7
+BU1003,"Managerial Accounting",2,4,3,0,0,0,84,161,1
+BU1004,"Principles of Marketing",2,4,15,0,0,0,84,161,2
+BU1005,"Corporate Finance",2,4,19,0,0,0,84,161,2
+BU2006,"Organizational Behavior",2,4,54,0,0,0,84,161,6
+BU2007,"Business Communication",2,4,72,0,0,0,84,161,8
+BU2008,"Business Law",2,4,26,0,0,0,84,161,3
+BU2009,"Microeconomics for Business",2,4,24,0,0,0,84,161,3
+BU3011,"Business Statistics",2,4,65,0,0,0,84,161,7
+BU3012,Entrepreneurship,2,4,29,0,0,0,84,161,3
+BU4015,"Consumer Behavior",2,4,25,0,0,0,84,161,3
+BU4016,"Tax Accounting",2,4,27,0,0,0,84,161,3
+BU4017,Auditing,2,4,58,0,0,0,84,161,6
+BU4018,"Business Capstone",2,4,59,0,0,0,84,161,6
+CS1001,"Introduction to Programming",1,4,34,1,0,0,73,138,4
+CS1002,"Object-Oriented Programming with Java",1,4,64,1,0,0,73,138,7
+CS1003,"Data Structures",1,4,34,0,0,0,73,138,4
+CS1005,"Computer Networks",1,4,11,0,0,0,73,138,2
+CS2006,"Software Engineering",1,4,54,0,0,0,73,138,6
+CS2007,"Introduction to Computing",1,4,70,0,0,0,73,138,7
+CS3010,"Operating Systems",1,4,70,0,0,0,73,138,7
+CS3011,"Algorithm Design",1,4,16,0,0,0,73,138,2
+CS3012,"Introduction to Cybersecurity",1,4,9,0,0,0,73,138,1
+CS4014,"Mobile Application Development",1,4,25,0,0,0,73,138,3
+CS4015,"Data Science Fundamentals",1,4,8,0,0,0,73,138,1
+CS4016,"Programming Languages",1,4,8,0,0,0,73,138,1
+CS4017,"Software Testing",1,4,3,0,0,0,73,138,1
+CS4018,"Computer Science Capstone",1,4,16,0,0,0,73,138,2
+ED1001,"Foundations of Education",8,4,27,2,20,0,51,94,3
+ED1002,"Educational Psychology",8,4,20,0,0,0,51,94,2
+ED1003,"Curriculum Design",8,4,20,0,0,0,51,94,2
+ED1004,"Classroom Assessment",8,4,9,1,10,0,51,94,1
+ED1005,"Educational Technology",8,4,20,0,0,0,51,94,2
+ED2007,"Child Development",8,4,5,2,20,0,51,94,1
+ED2009,"Learning and Motivation",8,4,4,3,30,0,51,94,1
+ED3010,"Literacy Foundations",8,4,25,0,0,0,51,94,3
+ED3011,"Teaching Mathematics",8,4,25,0,0,0,51,94,3
+ED4014,"Classroom Management",8,4,25,0,0,0,51,94,3
+ED4017,"Teaching Methods Seminar",8,4,24,2,20,3,51,94,3
+ED4018,"Education Capstone",8,4,16,0,0,0,51,94,2
+EG1001,"Introduction to Engineering",5,4,35,3,30,0,80,129,4
+EG1002,"Engineering Mechanics",5,4,12,0,0,0,80,129,2
+EG1003,"Circuit Analysis",5,4,12,0,0,0,80,129,2
+EG1004,Thermodynamics,5,4,17,0,0,0,80,129,2
+EG1005,"Materials Science",5,4,12,0,0,0,80,129,2
+EG2006,"Engineering Design",5,4,42,0,0,0,80,129,5
+EG2007,"Engineering Graphics",5,4,4,7,70,0,80,129,1
+EG2008,"Engineering Computing",5,4,12,0,0,0,80,129,2
+EG2009,"Engineering Mathematics",5,4,12,3,30,0,80,129,2
+EG3010,Statics,5,4,5,2,20,0,80,129,1
+EG3011,Dynamics,5,4,20,0,0,0,80,129,2
+EG4016,"Project Management for Engineers",5,4,35,0,0,0,80,129,4
+EG4018,"Engineering Capstone",5,4,8,0,0,0,80,129,1
+EN1001,"College Composition",6,4,27,3,30,0,62,106,3
+EN1002,"Introduction to Literature",6,4,32,2,20,0,62,106,4
+EN1003,"American Literature",6,4,14,0,0,0,62,106,2
+EN1004,"British Literature",6,4,14,0,0,0,62,106,2
+EN1005,"Creative Writing",6,4,23,0,0,0,62,106,3
+EN2006,"Introduction to Linguistics",6,4,9,2,20,0,62,106,1
+EN2008,"Literature and Society",6,4,15,0,0,0,62,106,2
+EN3010,Poetry,6,4,39,0,0,0,62,106,4
+EN3013,"Technical Writing",6,4,46,0,0,0,62,106,5
+EN4014,"Rhetoric and Argument",6,4,46,0,0,0,62,106,5
+EN4016,"Children's Literature",6,4,39,0,0,0,62,106,4
+EN4017,"Language and Culture",6,4,44,2,20,0,62,106,5
+EN4018,"English Capstone",6,4,24,0,0,0,62,106,3
+HS1001,"Introduction to Health Sciences",9,4,28,2,20,0,58,99,3
+HS1002,"Human Anatomy",9,4,21,0,0,0,58,99,3
+HS1004,"Principles of Nutrition",9,4,20,0,0,0,58,99,2
+HS1005,"Introduction to Public Health",9,4,21,0,0,0,58,99,3
+HS2006,"Health Administration",9,4,20,0,0,0,58,99,2
+HS2009,"Health Communication",9,4,25,0,0,0,58,99,3
+HS3011,"Healthcare Ethics",9,4,24,2,20,0,58,99,3
+HS3012,"Health Statistics",9,4,46,0,0,0,58,99,5
+HS3013,"Community Health",9,4,25,0,0,0,58,99,3
+HS4015,"Health Informatics",9,4,25,0,0,0,58,99,3
+HS4017,"Evidence-Based Health Practice",9,4,25,0,0,0,58,99,3
+MA1001,"Calculus I",3,4,42,0,0,0,90,167,5
+MA1002,"Calculus II",3,4,10,0,0,0,90,167,1
+MA1003,"Linear Algebra",3,4,9,0,0,0,90,167,1
+MA1004,"Discrete Mathematics",3,4,23,0,0,0,90,167,3
+MA1005,"Probability and Statistics",3,4,10,0,0,0,90,167,1
+MA2006,"Differential Equations",3,4,25,0,0,0,90,167,3
+MA2009,"Mathematical Reasoning",3,4,23,0,0,0,90,167,3
+MA3010,"Calculus III",3,4,28,0,0,0,90,167,3
+MA3011,"Introduction to Proofs",3,4,27,0,0,0,90,167,3
+MA3012,"Numerical Methods",3,4,25,0,0,0,90,167,3
+MA4015,"Mathematical Modeling",3,4,25,0,0,0,90,167,3
+NS1001,"General Biology",4,4,44,0,0,0,93,160,5
+NS1002,"General Chemistry",4,4,24,0,0,0,93,160,3
+NS1003,"General Physics",4,4,25,0,0,0,93,160,3
+NS1004,"Environmental Science",4,4,2,0,0,0,93,160,1
+NS1005,Genetics,4,4,3,0,0,0,93,160,1
+NS2006,Biochemistry,4,4,50,0,0,0,93,160,5
+NS2007,"Introduction to Scientific Inquiry",4,4,49,0,0,0,93,160,5
+NS3010,Ecology,4,4,6,2,20,0,93,160,1
+NS3011,"Organic Chemistry I",4,4,3,2,20,0,93,160,1
+NS3013,"Cell Biology",4,4,9,2,20,0,93,160,1
+NS4014,Microbiology,4,4,20,0,0,0,93,160,2
+NS4015,"Conservation Biology",4,4,21,0,0,0,93,160,3
+NS4016,"Scientific Data Analysis",4,4,25,0,0,0,93,160,3
+NS4018,"Natural Sciences Capstone",4,4,5,2,20,1,93,160,1
+SS1001,"Introduction to Psychology",7,4,48,0,0,0,66,114,5
+SS1002,"Introduction to Sociology",7,4,47,0,0,0,66,114,5
+SS1003,"Introduction to Political Science",7,4,25,0,0,0,66,114,3
+SS1004,"Principles of Economics",7,4,20,0,0,0,66,114,2
+SS2006,"Social Science Research Methods",7,4,23,3,30,0,66,114,3
+SS2007,"Cultural Anthropology",7,4,49,0,0,0,66,114,5
+SS2008,"Human Geography",7,4,28,0,0,0,66,114,3
+SS2009,"American Government",7,4,5,2,20,0,66,114,1
+SS3010,"Social Problems",7,4,7,2,20,0,66,114,1
+SS3011,"Developmental Psychology",7,4,9,2,20,0,66,114,1
+SS3012,"Social Psychology",7,4,26,0,0,0,66,114,3
+SS4014,"Introduction to Criminology",7,4,27,0,0,0,66,114,3
+SS4018,"Social Sciences Capstone",7,4,25,0,0,0,66,114,3
+VD1001,"Introduction to Digital Media",10,4,40,1,10,0,62,101,4
+VD1002,"Graphic Design Fundamentals",10,4,11,0,0,0,62,101,2
+VD1003,"Introduction to Studio Art",10,4,12,2,20,0,62,101,2
+VD1004,"Film Studies",10,4,10,2,20,0,62,101,1
+VD1005,"Media Production",10,4,16,2,20,0,62,101,2
+VD2006,"Visual Communication",10,4,13,2,20,0,62,101,2
+VD2007,"Art Appreciation",10,4,24,0,0,0,62,101,3
+VD2008,"Media Literacy",10,4,23,0,0,0,62,101,3
+VD3010,Photography,10,4,23,2,20,1,62,101,3
+VD3011,"Design Principles",10,4,37,0,0,0,62,101,4
+VD3012,"Audio Production",10,4,20,0,0,0,62,101,2
+VD4016,"Media Ethics",10,4,26,0,0,0,62,101,3
+VD4018,"Arts and Media Capstone",10,4,12,2,20,0,62,101,2

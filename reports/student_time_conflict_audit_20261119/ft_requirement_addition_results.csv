@@ -1,0 +1,12 @@
+student_ID,semester,course_ID,CRN,section,credits_added,requirement,result,details
+100079,"Spring 2027",CS2007,20015,004,4,"Minor — Cybersecurity (min C)",registered,"Application registration validator passed; audit entry recorded."
+100105,"Fall 2026",SS1004,140074,001,4,"Major — Psychology (min C)",registered,"Application registration validator passed; audit entry recorded."
+100276,"Spring 2027",VD3010,140029,001,4,"Major — Media Studies (min C)",registered,"Application registration validator passed; audit entry recorded."
+100088,"Fall 2026",BU2009,140089,001,4,"Major — Accounting (min C)",registered,"Application registration validator passed; audit entry recorded."
+100319,"Spring 2027",EG3011,20257,001,4,"Major — Engineering (min C)",registered,"Application registration validator passed; audit entry recorded."
+100025,"Spring 2027",CS1002,20004,002,4,"Major — Computer Science (min C)",registered,"Application registration validator passed; audit entry recorded."
+100061,"Spring 2027",CS1002,20005,003,4,"Major — Computer Science (min C)",registered,"Application registration validator passed; audit entry recorded."
+100085,"Spring 2027",CS1002,20005,003,4,"Major — Computer Science (min C)",registered,"Application registration validator passed; audit entry recorded."
+100098,"Spring 2027",CS1002,20006,004,4,"Major — Cybersecurity (min C)",registered,"Application registration validator passed; audit entry recorded."
+100162,"Spring 2027",NS1002,20194,002,4,"Major — Biology (min C)",registered,"Application registration validator passed; audit entry recorded."
+100236,"Fall 2026",EN1002,140040,004,4,"Major — English (min C)",registered,"Application registration validator passed; audit entry recorded."

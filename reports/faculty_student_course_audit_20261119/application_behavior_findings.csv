@@ -1,0 +1,2 @@
+﻿finding_type,semester,route,CRNs,student_or_faculty_IDs,details,recommendation
+Confirmed application behavior,Spring 2027,faculty/dashboard.php (Faculty My Courses),20077; 140028; 140035,200004; 200007; 200196,"Dashboard query filters by faculty_ID and semester name but not Course_Section.is_Cancelled. It displays canceled sections; Faculty Schedule, Faculty Roster, Student Registration, and Student My Schedule exclude them.","After approval, add the is_Cancelled=0 condition to the dashboard My Courses query; do not change section or enrollment records."

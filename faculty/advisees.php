@@ -4,6 +4,7 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once '../includes/functions/faculty_teaching_load.php';
 
 require_role(['Faculty']);
 
@@ -270,6 +271,55 @@ $swapCandidates = all_rows(
 	[$facultyID, $facultyID]
 );
 
+// Workload filters are presentation-only. The unfiltered candidate set above
+// continues to govern the existing official faculty_Type/shared-department
+// eligibility checks and POST authorization.
+$workloadSemesterOptions = all_rows(
+	$pdo,
+	"SELECT semester_ID, semester_Name FROM Semester
+	 WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+	 ORDER BY CASE semester_Name WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 ELSE 3 END"
+);
+$workloadSemesterById = [];
+$fallWorkloadSemesterId = null;
+foreach ($workloadSemesterOptions as $option) {
+	$optionId = (int) $option['semester_ID'];
+	$workloadSemesterById[$optionId] = $option;
+	if ($option['semester_Name'] === 'Fall 2026') {
+		$fallWorkloadSemesterId = $optionId;
+	}
+}
+$defaultWorkloadSemesterId = $fallWorkloadSemesterId ?? (int) (array_key_first($workloadSemesterById) ?? 0);
+$requestedWorkloadSemesterId = filter_var($_GET['semester'] ?? null, FILTER_VALIDATE_INT);
+$workloadSemesterId = $requestedWorkloadSemesterId !== false
+	&& $requestedWorkloadSemesterId !== null
+	&& isset($workloadSemesterById[$requestedWorkloadSemesterId])
+		? $requestedWorkloadSemesterId
+		: $defaultWorkloadSemesterId;
+$workloadSemesterName = $workloadSemesterById[$workloadSemesterId]['semester_Name'] ?? 'Fall 2026';
+$workloadFilter = strtolower(trim((string) ($_GET['workload_status'] ?? 'all')));
+if (!in_array($workloadFilter, ['all', 'ft', 'pt'], true)) {
+	$workloadFilter = 'all';
+}
+$candidateWorkloadDirectory = faculty_workload_directory($pdo, $workloadSemesterId);
+foreach ($swapCandidates as &$candidate) {
+	$candidateWorkload = $candidateWorkloadDirectory['by_faculty'][(int) $candidate['faculty_ID']] ?? [
+		'teaching_credits' => null,
+		'status' => 'Unknown',
+	];
+	$candidate['teaching_credits'] = $candidateWorkload['teaching_credits'];
+	$candidate['workload_status'] = $candidateWorkload['status'];
+}
+unset($candidate);
+$visibleSwapCandidates = array_values(array_filter(
+	$swapCandidates,
+	static function (array $candidate) use ($workloadFilter): bool {
+		return $workloadFilter === 'all'
+			|| ($workloadFilter === 'ft' && $candidate['workload_status'] === 'Full-Time (FT)')
+			|| ($workloadFilter === 'pt' && $candidate['workload_status'] === 'Part-Time (PT)');
+	}
+));
+
 $selectedFacultyID = filter_var($_GET['faculty_id'] ?? null, FILTER_VALIDATE_INT);
 $validCandidate = false;
 foreach($swapCandidates as $c) if((int)$c['faculty_ID']===$selectedFacultyID) $validCandidate=true;
@@ -295,6 +345,8 @@ flash();
 .status-good{color:#166534;font-weight:600}
 .status-warning{color:#b45309;font-weight:600}
 .status-unknown{color:#6b7280;font-weight:600}
+.adv-filter-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin:12px 0}
+.adv-filter-row button{min-height:44px}
 </style>
 <div class="adv-top">
 <section class="card" id="assign-advisee">
@@ -317,9 +369,27 @@ flash();
  <span class="adv-pill">Faculty Advising</span><h2>Swap Advisees</h2>
  <p class="muted">Exchange one or more students with a full-time faculty member in a shared department.</p>
  <?php if(!$swapCandidates): ?><p>No eligible faculty members available.</p><?php else: ?>
+ <form method="get" action="<?= e(url('faculty/advisees.php')) ?>#swap-advisees" class="adv-filter-row">
+  <div><label for="workload-semester">Workload semester</label><select name="semester" id="workload-semester">
+   <?php foreach($workloadSemesterOptions as $option): ?><option value="<?= (int)$option['semester_ID'] ?>" <?= (int)$option['semester_ID']===$workloadSemesterId?'selected':'' ?>><?= e($option['semester_Name']) ?></option><?php endforeach; ?>
+  </select></div>
+  <div><label for="workload-status">Calculated workload</label><select name="workload_status" id="workload-status">
+   <option value="all" <?= $workloadFilter==='all'?'selected':'' ?>>All eligible faculty</option>
+   <option value="ft" <?= $workloadFilter==='ft'?'selected':'' ?>>Full-Time (FT)</option>
+   <option value="pt" <?= $workloadFilter==='pt'?'selected':'' ?>>Part-Time (PT)</option>
+  </select></div>
+  <button class="btn" type="submit">Apply Filter</button>
+ </form>
+ <p class="adv-help" role="status">
+  <?= e($workloadSemesterName) ?> workload across all <?= (int)$candidateWorkloadDirectory['faculty_count'] ?> faculty records:
+  <?= (int)$candidateWorkloadDirectory['full_time_count'] ?> FT · <?= (int)$candidateWorkloadDirectory['part_time_count'] ?> PT.
+  The filter only narrows this list; existing advising eligibility remains unchanged.
+ </p>
+ <?php if(!$visibleSwapCandidates): ?><p>No eligible faculty match this workload filter. Choose another filter or semester.</p><?php else: ?>
  <form method="get" action="<?= e(url('faculty/advisees.php')) ?>#swap-advisees" class="adv-form">
+  <input type="hidden" name="semester" value="<?= $workloadSemesterId ?>"><input type="hidden" name="workload_status" value="<?= e($workloadFilter) ?>">
   <div><label for="swap_faculty">Faculty member</label><select name="faculty_id" id="swap_faculty" required><option value="">Select faculty member</option>
-  <?php foreach($swapCandidates as $c): ?><option value="<?= e($c['faculty_ID']) ?>" <?= (int)$selectedFacultyID===(int)$c['faculty_ID']?'selected':'' ?>><?= e($c['name']) ?> (<?= e($c['advisee_count']) ?> of 15)</option><?php endforeach; ?>
+  <?php foreach($visibleSwapCandidates as $c): ?><option value="<?= e($c['faculty_ID']) ?>" <?= (int)$selectedFacultyID===(int)$c['faculty_ID']?'selected':'' ?>><?= e($c['name']) ?> (<?= e($c['advisee_count']) ?> of 15 · <?= $c['teaching_credits'] === null ? 'Unknown credits' : (int)$c['teaching_credits'] . ' credits' ?> · <?= e($c['workload_status']) ?>)</option><?php endforeach; ?>
   </select></div><button class="btn" type="submit">Choose Advisees to Swap</button>
  </form>
  <?php if($validCandidate): ?>
@@ -337,6 +407,7 @@ flash();
   </form>
   <?php else: ?><p class="adv-help">No compatible advisees are available for this faculty pair.</p><?php endif; ?>
  <?php elseif($selectedFacultyID): ?><p class="adv-help">Select a faculty member from the list.</p><?php endif; ?>
+ <?php endif; ?>
  <?php endif; ?>
 </section>
 </div>

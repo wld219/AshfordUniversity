@@ -240,6 +240,9 @@ $initialTab = 'search';
 
 <section class="card" id="users-workspace" data-initial-tab="<?= e($initialTab) ?>">
 <div class="dashboard-section-heading"><div><p class="dashboard-eyebrow">Administration</p><h2>User Management</h2></div><span class="badge"><?= e($securityLevel) ?><?= $isLockManager ? ' · Lock Manager' : '' ?></span></div>
+<?php if ($canManageUsers): ?>
+<p style="margin:12px 0 0"><a class="btn light" href="<?= e(url('admin/faculty-activation.php')) ?>">Activate existing Faculty accounts</a></p>
+<?php endif; ?>
 <div class="users-tabs" role="tablist" aria-label="User management">
 <button type="button" class="users-tab" data-users-tab="search" aria-selected="false">List Users</button>
 <?php if ($canManageUsers): ?>

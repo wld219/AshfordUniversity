@@ -1,0 +1,12 @@
+student_ID,semester,credits_now,status_now,course_ID,course_title,credits,requirement,CRN,section,available_Seats,registration_check
+100079,Spring 2027,8,Part-Time (PT),CS2007,Introduction to Computing,4,Minor — Cybersecurity (min C),20015,004,1,ELIGIBLE
+100105,Fall 2026,8,Part-Time (PT),SS1004,Principles of Economics,4,Major — Psychology (min C),140074,001,9,ELIGIBLE
+100276,Spring 2027,8,Part-Time (PT),VD3010,Photography,4,Major — Media Studies (min C),140029,001,10,ELIGIBLE
+100088,Fall 2026,8,Part-Time (PT),BU2009,Microeconomics for Business,4,Major — Accounting (min C),140089,001,7,ELIGIBLE
+100319,Spring 2027,8,Part-Time (PT),EG3011,Dynamics,4,Major — Engineering (min C),20257,001,1,ELIGIBLE
+100025,Spring 2027,8,Part-Time (PT),CS1002,Object-Oriented Programming with Java,4,Major — Computer Science (min C),20004,002,1,ELIGIBLE
+100061,Spring 2027,8,Part-Time (PT),CS1002,Object-Oriented Programming with Java,4,Major — Computer Science (min C),20005,003,2,ELIGIBLE
+100085,Spring 2027,8,Part-Time (PT),CS1002,Object-Oriented Programming with Java,4,Major — Computer Science (min C),20005,003,2,ELIGIBLE
+100098,Spring 2027,8,Part-Time (PT),CS1002,Object-Oriented Programming with Java,4,Major — Cybersecurity (min C),20006,004,1,ELIGIBLE
+100162,Spring 2027,8,Part-Time (PT),NS1002,General Chemistry,4,Major — Biology (min C),20194,002,1,ELIGIBLE
+100236,Fall 2026,8,Part-Time (PT),EN1002,Introduction to Literature,4,Major — English (min C),140040,004,4,ELIGIBLE

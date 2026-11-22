@@ -3,6 +3,7 @@
 require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
+require_once '../includes/helpers.php';
 
 require_role(['Faculty']);
 

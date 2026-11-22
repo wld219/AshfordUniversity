@@ -8,27 +8,29 @@ require_once '../includes/helpers.php';
 
 require_role(['Faculty']);
 require_once __DIR__ . '/attendance-window.php';
+require_once __DIR__ . '/attendance-support.php';
 
 $facultyID = (int) $_SESSION['user_id'];
+$semesterOptions = faculty_attendance_semesters($pdo);
+$semesterId = faculty_attendance_selected_semester(
+    $semesterOptions,
+    $_GET['semester_ID'] ?? null
+);
+$semesterName = '';
+foreach ($semesterOptions as $option) {
+    if ((int) $option['semester_ID'] === $semesterId) {
+        $semesterName = (string) $option['semester_Name'];
+        break;
+    }
+}
 $today = new DateTimeImmutable('today', new DateTimeZone('America/New_York'));
 $weekStart = $today->modify('Monday this week');
 $weekEnd = $weekStart->modify('+6 days');
 
-$sections = all_rows(
-    $pdo,
-    "SELECT cs.CRN, cs.course_ID, c.course_Name, s.semester_Name,
-            cs.semester_ID, cs.time_Slot_ID
-     FROM Course_Section cs
-     JOIN Course c ON c.course_ID = cs.course_ID
-     JOIN Semester s ON s.semester_ID = cs.semester_ID
-     WHERE cs.faculty_ID = ?
-       AND cs.is_Cancelled = 0
-       AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
-     ORDER BY CASE s.semester_Name WHEN 'Fall 2026' THEN 1 ELSE 2 END, c.course_ID, cs.section_No",
-    [$facultyID]
-);
+$sections = faculty_attendance_sections($pdo, $facultyID, $semesterId);
 
-$selectedCRN = (int) ($_GET['crn'] ?? 0);
+$selectedCRNValue = filter_var($_GET['crn'] ?? null, FILTER_VALIDATE_INT);
+$selectedCRN = $selectedCRNValue === false ? 0 : (int) $selectedCRNValue;
 $section = null;
 
 foreach ($sections as $item) {
@@ -45,13 +47,15 @@ if (!$section && $selectedCRN === 0 && $sections) {
 $crn = $section ? (int) $section['CRN'] : 0;
 
 $attendanceOpen = false;
-$attendanceMessage = 'No course selected.';
+$attendanceMessage = $section ? 'Attendance is available only during the scheduled class.' : 'No course selected.';
 
 if ($crn) {
-    [$attendanceOpen, $attendanceMessage] =
-        attendance_date_allowed(
-            $pdo, $crn, $today->format('Y-m-d')
-        );
+    [$dateAllowed, $attendanceMessage] = attendance_date_allowed(
+        $pdo, $crn, $today->format('Y-m-d')
+    );
+    if ($dateAllowed) {
+        [$attendanceOpen, $attendanceMessage] = attendance_window_status($pdo, $crn);
+    }
 }
 
 
@@ -87,16 +91,8 @@ $meetingDays = [];
 $attendance = [];
 
 if ($section) {
-    $roster = all_rows(
-        $pdo,
-        "SELECT e.student_ID, u.first_Name, u.last_Name
-         FROM Enrollment e
-         JOIN User u ON u.user_ID = e.student_ID
-         JOIN Course_Section cs ON cs.CRN = e.CRN AND cs.semester_ID = e.semester_ID
-         WHERE e.CRN = ? AND e.semester_ID = ?
-         ORDER BY u.last_Name, u.first_Name, e.student_ID",
-        [$crn, (int)$section['semester_ID']]
-    );
+    $section['faculty_ID'] = $facultyID;
+    $roster = faculty_attendance_roster($pdo, $section, $today->format('Y-m-d'));
 
     $scheduledDays = all_rows(
         $pdo,
@@ -132,6 +128,7 @@ if ($section) {
         "SELECT student_ID, attendance_Date, Present_Absent
          FROM Attendance
          WHERE CRN = ?
+           AND attendance_Date <= CURDATE()
            AND student_ID IN (
                SELECT student_ID
                FROM Enrollment
@@ -403,8 +400,25 @@ flash();
         <?php endif; ?>
     </div>
 
+    <?php if (count($semesterOptions) > 0): ?>
+        <form method="get" class="wa-controls">
+            <div>
+                <label for="attendance-semester"><strong>Semester</strong></label>
+                <select name="semester_ID" id="attendance-semester" onchange="this.form.submit()">
+                    <?php foreach ($semesterOptions as $option): ?>
+                        <option value="<?= e($option['semester_ID']) ?>" <?= (int)$option['semester_ID'] === $semesterId ? 'selected' : '' ?>>
+                            <?= e($option['semester_Name']) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <?php if ($section): ?><input type="hidden" name="crn" value="<?= e($crn) ?>"><?php endif; ?>
+            <noscript><button type="submit" class="btn">View Semester</button></noscript>
+        </form>
+    <?php endif; ?>
+
     <?php if (!$sections): ?>
-        <p class="wa-muted">No course sections assigned to you.</p>
+        <p class="wa-muted">No active course sections assigned to you for <?= e($semesterName ?: 'this semester') ?>.</p>
     <?php else: ?>
         
 <?php if (count($sections) <= 5): ?>
@@ -412,7 +426,7 @@ flash();
         <?php foreach ($sections as $item): ?>
             <a
                 class="wa-course-tab <?= (int)$item['CRN'] === $crn ? 'active' : '' ?>"
-                href="?crn=<?= e($item['CRN']) ?>"
+                href="?semester_ID=<?= e($semesterId) ?>&crn=<?= e($item['CRN']) ?>"
                 <?= (int)$item['CRN'] === $crn ? 'aria-current="page"' : '' ?>
             >
                 <strong><?= e($item['course_ID']) ?></strong>
@@ -440,6 +454,10 @@ flash();
 <?php endif; ?>
 
 
+        <?php if (!$section): ?>
+            <p class="wa-muted">Select one of your active course sections for <?= e($semesterName ?: 'this semester') ?>.</p>
+        <?php endif; ?>
+
         <?php if ($section): ?>
             <h3><?= e($section['course_ID'] . ' — ' .
                        $section['course_Name']) ?></h3>
@@ -455,6 +473,7 @@ flash();
             <?php else: ?>
                 <form method="post" action="attendance-weekly_actions.php">
                     <?= csrf_field() ?>
+                    <input type="hidden" name="semester_ID" value="<?= e($semesterId) ?>">
                     <input type="hidden" name="crn"
                            value="<?= e($crn) ?>">
 

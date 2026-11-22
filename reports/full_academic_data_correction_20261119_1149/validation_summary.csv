@@ -1,0 +1,21 @@
+validation,population,passing,flagged,notes
+Student/User/Login relationship,1620,1620,0,"All student, user, login, and role joins validated."
+Academic program display parity across Overview/Information/Degree Audit/Transcript,1620,1620,0,All pages read the same shared resolver; unresolved source declarations remain flagged separately.
+Fall 2026 registered-course parity across student pages,1620,1620,0,All target semester sets matched; no schedule-page omissions.
+Spring 2027 registered-course parity across student pages,1620,1620,0,All target semester sets matched; no schedule-page omissions.
+Fall 2026 student timetable conflicts,1620,1620,0,No overlapping student schedule pairs.
+Spring 2027 student timetable conflicts,1620,1601,19,116 conflict pairs remain across 19 students; affected rows have grades and attendance.
+Undergraduate primary major resolution,1220,840,380,"359 conflicting declarations, 19 stored-only values, and 2 minor-only cases still require review."
+Graduate degree program display,400,400,0,Graduate_Student.Program is populated for all 400.
+Fall 2026 undergraduate 16-credit limit,1220,1220,0,No undergraduate exceeds 16 credits.
+Spring 2027 undergraduate 16-credit limit,1220,1192,28,28 undergraduates remain above the limit; do not alter enrollments without academic review.
+Fall 2026 duplicate-registration groups,1620,1588,32,Groups without any protected enrollment have no evidence identifying which section should be retained; no rows removed.
+Fall 2026 students with prerequisite exceptions,1620,1270,350,Existing history-link anomalies and missing course policy prevent safe automated correction.
+Fall 2026 students with previously passed retakes,1620,1568,52,Repeat-course policy is not sufficiently specified; no enrollment rows changed.
+Spring 2027 duplicate-registration groups,1620,1570,50,Groups without any protected enrollment have no evidence identifying which section should be retained; no rows removed.
+Spring 2027 students with prerequisite exceptions,1620,1217,403,Existing history-link anomalies and missing course policy prevent safe automated correction.
+Spring 2027 students with previously passed retakes,1620,1536,84,Repeat-course policy is not sufficiently specified; no enrollment rows changed.
+Fall 2026 student/course-level consistency,1620,1423,197,237 enrollment rows across 197 students have a course-level mismatch.
+Spring 2027 student/course-level consistency,1620,1305,315,460 enrollment rows across 315 students have a course-level mismatch.
+Active registration against canceled sections,1620,1610,10,10 Spring 2027 registrations on canceled CRN 20077; 3 have posted grades and attendance.
+Historical course/semester links,1620,1352,268,408 course_ID and 48 semester_ID mismatch rows across 268 students; records preserved for review.

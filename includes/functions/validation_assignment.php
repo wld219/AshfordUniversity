@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 // Assignment validation for a single section (create or update).
+// Employment type never sets a section-count ceiling. The assignment helper
+// calculates projected term credits and blocks overlapping meeting times.
 
 // Validate the room choice: exactly one room, it exists, seats fit.
 function validate_room_choice(PDO $pdo, array $proposed, array &$errors): ?int
@@ -296,7 +298,8 @@ function validate_section_assignment(
 			$proposed['faculty_ID'],
 			$proposed['time_Slot_ID'],
 			$ignoreCRN,
-			(int) $proposed['semester_ID']
+			(int) $proposed['semester_ID'],
+			(string) $proposed['course_ID']
 		);
 
 		if (!$canTeach) {

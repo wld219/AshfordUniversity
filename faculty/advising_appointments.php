@@ -6,458 +6,574 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once '../includes/advising_appointment_helpers.php';
 
 require_role(['Faculty']);
 
 $facultyID = (int) $_SESSION['user_id'];
-
-// ---------------------------------------------------------------------------
-// Availability window management
-// ---------------------------------------------------------------------------
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['avail_action'])) {
-    csrf_verify();
-    $availAction = (string) $_POST['avail_action'];
-
-    if ($availAction === 'add') {
-        $dayID = filter_var($_POST['day_id'] ?? null, FILTER_VALIDATE_INT);
-        $startTime = trim((string) ($_POST['start_time'] ?? ''));
-        $endTime = trim((string) ($_POST['end_time'] ?? ''));
-
-        if (!$dayID || !$startTime || !$endTime || $startTime >= $endTime) {
-            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid availability window.'];
-        } else {
-            try {
-                $pdo->prepare(
-                    'INSERT INTO Faculty_Availability (faculty_ID, day_ID, start_Time, end_Time, is_active)
-                     VALUES (?, ?, ?, ?, TRUE)'
-                )->execute([$facultyID, $dayID, $startTime, $endTime]);
-                audit_log($pdo, 'Create', 'Faculty_Availability', (string) $dayID, 'Faculty availability added');
-                $_SESSION['flash'] = ['type' => 'success', 'message' => 'Availability window added.'];
-            } catch (Throwable $e) {
-                error_log('Add availability failed: ' . $e->getMessage());
-                $_SESSION['flash'] = ['type' => 'error', 'message' => 'Could not add availability window.'];
-            }
-        }
-        header('Location: ' . url('faculty/advising_appointments.php'));
-        exit;
-    }
-
-    if ($availAction === 'update') {
-        $availID = filter_var($_POST['avail_id'] ?? null, FILTER_VALIDATE_INT);
-        $dayID = filter_var($_POST['day_id'] ?? null, FILTER_VALIDATE_INT);
-        $startTime = trim((string) ($_POST['start_time'] ?? ''));
-        $endTime = trim((string) ($_POST['end_time'] ?? ''));
-        $isActive = isset($_POST['is_active']) ? 1 : 0;
-
-        if (!$availID || !$dayID || !$startTime || !$endTime || $startTime >= $endTime) {
-            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid availability window.'];
-        } else {
-            try {
-                $pdo->prepare(
-                    'UPDATE Faculty_Availability
-                     SET day_ID = ?, start_Time = ?, end_Time = ?, is_active = ?, updated_At = NOW()
-                     WHERE availability_ID = ? AND faculty_ID = ?'
-                )->execute([$dayID, $startTime, $endTime, $isActive, $availID, $facultyID]);
-                audit_log($pdo, 'Update', 'Faculty_Availability', (string) $availID, 'Faculty availability updated');
-                $_SESSION['flash'] = ['type' => 'success', 'message' => 'Availability window updated.'];
-            } catch (Throwable $e) {
-                error_log('Update availability failed: ' . $e->getMessage());
-                $_SESSION['flash'] = ['type' => 'error', 'message' => 'Could not update availability window.'];
-            }
-        }
-        header('Location: ' . url('faculty/advising_appointments.php'));
-        exit;
-    }
-
-    if ($availAction === 'delete') {
-        $availID = filter_var($_POST['avail_id'] ?? null, FILTER_VALIDATE_INT);
-
-        if (!$availID) {
-            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid availability window.'];
-        } else {
-            try {
-                $pdo->prepare(
-                    'DELETE FROM Faculty_Availability WHERE availability_ID = ? AND faculty_ID = ?'
-                )->execute([$availID, $facultyID]);
-                audit_log($pdo, 'Delete', 'Faculty_Availability', (string) $availID, 'Faculty availability removed');
-                $_SESSION['flash'] = ['type' => 'success', 'message' => 'Availability window removed.'];
-            } catch (Throwable $e) {
-                error_log('Delete availability failed: ' . $e->getMessage());
-                $_SESSION['flash'] = ['type' => 'error', 'message' => 'Could not remove availability window.'];
-            }
-        }
-        header('Location: ' . url('faculty/advising_appointments.php'));
-        exit;
-    }
-}
-
-// Handle appointment actions (accept/deny/complete/cancel)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['appt_action'])) {
-    csrf_verify();
-    $apptID = filter_var($_POST['appointment_id'] ?? null, FILTER_VALIDATE_INT);
-    $action = (string) $_POST['appt_action'];
-    $response = trim((string) ($_POST['response'] ?? ''));
-
-    if (!$apptID) {
-        $_SESSION['flash'] = ['type' => 'error', 'message' => 'Invalid appointment.'];
-    } else {
-        try {
-            $pdo->beginTransaction();
-            $appt = one(
-                $pdo,
-                'SELECT * FROM Appointment WHERE appointment_ID = ? AND faculty_ID = ? FOR UPDATE',
-                [$apptID, $facultyID]
-            );
-            if (!$appt) {
-                throw new RuntimeException('Appointment not found.');
-            }
-
-            if ($action === 'accept') {
-                if ($appt['status'] !== 'Pending') {
-                    throw new RuntimeException('Only pending appointments can be accepted.');
-                }
-                $pdo->prepare(
-                    'UPDATE Appointment SET status = ?, reason = ? WHERE appointment_ID = ?'
-                )->execute(['Accepted', $response ?: null, $apptID]);
-            } elseif ($action === 'deny') {
-                if ($appt['status'] !== 'Pending') {
-                    throw new RuntimeException('Only pending appointments can be denied.');
-                }
-                $pdo->prepare(
-                    'UPDATE Appointment SET status = ?, reason = ? WHERE appointment_ID = ?'
-                )->execute(['Denied', $response ?: null, $apptID]);
-            } elseif ($action === 'complete') {
-                if ($appt['status'] !== 'Accepted') {
-                    throw new RuntimeException('Only accepted appointments can be completed.');
-                }
-                $pdo->prepare(
-                    'UPDATE Appointment SET status = ?, reason = ? WHERE appointment_ID = ?'
-                )->execute(['Completed', $response ?: null, $apptID]);
-            } elseif ($action === 'cancel') {
-                if (!in_array($appt['status'], ['Pending', 'Accepted'], true)) {
-                    throw new RuntimeException('This appointment cannot be cancelled.');
-                }
-                $pdo->prepare(
-                    'UPDATE Appointment SET status = ? WHERE appointment_ID = ?'
-                )->execute(['Cancelled', $apptID]);
-            } else {
-                throw new RuntimeException('Invalid action.');
-            }
-
-            audit_log($pdo, 'Update', 'Appointment', (string) $apptID, "Faculty $action appointment");
-            $pdo->commit();
-            $_SESSION['flash'] = ['type' => 'success', 'message' => "Appointment $action successfully."];
-        } catch (Throwable $e) {
-            if ($pdo->inTransaction()) $pdo->rollBack();
-            error_log('Appointment action failed: ' . $e->getMessage());
-            $_SESSION['flash'] = ['type' => 'error', 'message' => $e instanceof RuntimeException ? $e->getMessage() : 'Unable to update appointment.'];
-        }
-        header('Location: ' . url('faculty/advising_appointments.php'));
-        exit;
-    }
-}
-
-// Load current availability windows
-$availabilityWindows = all_rows(
-    $pdo,
-    "SELECT fa.availability_ID, fa.day_ID, d.day_Of_Week, fa.start_Time, fa.end_Time, fa.is_active
-     FROM Faculty_Availability fa
-     JOIN Day d ON d.day_ID = fa.day_ID
-     WHERE fa.faculty_ID = ?
-     ORDER BY fa.day_ID, fa.start_Time",
-    [$facultyID]
-) ?? [];
-
-// Load days for the dropdown
-$days = all_rows($pdo, 'SELECT day_ID, day_Of_Week FROM Day ORDER BY day_ID') ?? [];
-
-// Load appointments for this faculty member
-$appointments = all_rows(
-    $pdo,
-    "SELECT
-        ap.appointment_ID,
-        ap.student_ID,
-        ap.slot_start AS requested_DateTime,
-        ap.status,
-        ap.topic AS student_Reason,
-        ap.notes AS advisor_Response,
-        u.first_Name,
-        u.last_Name,
-        m.major_Name
-     FROM Appointment ap
-     JOIN User u ON u.user_ID = ap.student_ID
-     JOIN Student s ON s.student_ID = ap.student_ID
-     LEFT JOIN Major m ON m.major_ID = s.major_ID
-     WHERE ap.faculty_ID = ?
-     ORDER BY
-         CASE WHEN ap.status = 'Pending' THEN 0 ELSE 1 END,
-         ap.slot_start DESC",
-    [$facultyID]
-) ?? [];
-
-page_start(
-    'Advising Appointments',
-    'Faculty',
-    'advising_appointments.php'
+$semesters = all_rows(
+	$pdo,
+	"SELECT semester_ID, semester_Name, semester_Start
+	 FROM Semester
+	 WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+	 ORDER BY CASE semester_Name WHEN 'Fall 2026' THEN 1 ELSE 2 END"
 );
+$semesterById = [];
+foreach ($semesters as $semesterRow) {
+	$semesterById[(int) $semesterRow['semester_ID']] = $semesterRow;
+}
+$semesterRequest = $_SERVER['REQUEST_METHOD'] === 'POST'
+	? ($_POST['semester_ID'] ?? null)
+	: ($_GET['semester_ID'] ?? null);
+$requestedSemester = filter_var($semesterRequest, FILTER_VALIDATE_INT);
+$fallSemesterId = 0;
+foreach ($semesters as $semesterRow) {
+	if ((string) $semesterRow['semester_Name'] === 'Fall 2026') {
+		$fallSemesterId = (int) $semesterRow['semester_ID'];
+		break;
+	}
+}
+$semesterID = $requestedSemester !== false && isset($semesterById[(int) $requestedSemester])
+	? (int) $requestedSemester
+	: ($fallSemesterId ?: (int) ($semesters[0]['semester_ID'] ?? 0));
+$semesterName = (string) ($semesterById[$semesterID]['semester_Name'] ?? '');
+$semesterStart = (string) ($semesterById[$semesterID]['semester_Start'] ?? '');
+$nextSemesterStart = null;
+foreach ($semesters as $semesterRow) {
+	if ((string) $semesterRow['semester_Start'] > $semesterStart) {
+		if ($nextSemesterStart === null || (string) $semesterRow['semester_Start'] < $nextSemesterStart) {
+			$nextSemesterStart = (string) $semesterRow['semester_Start'];
+		}
+	}
+}
+$view = in_array((string) ($_REQUEST['view'] ?? 'availability'), ['availability', 'appointments'], true)
+	? (string) ($_REQUEST['view'] ?? 'availability')
+	: 'availability';
+$returnToPage = static function (string $tab, int $term): void {
+	header('Location: ' . url('faculty/advising_appointments.php?view=' . rawurlencode($tab) . '&semester_ID=' . $term));
+	exit;
+};
+$postMessage = static function (string $type, string $message): void {
+	$_SESSION['flash'] = ['type' => $type, 'message' => $message];
+};
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+	csrf_verify();
+	$action = (string) ($_POST['action'] ?? '');
+	$view = in_array($action, ['add_availability', 'update_availability', 'toggle_availability'], true)
+		? 'availability'
+		: 'appointments';
+	$ownTransaction = !$pdo->inTransaction();
+
+	try {
+		if ($action === 'add_availability' || $action === 'update_availability' || $action === 'toggle_availability') {
+			$postedSemester = filter_var($_POST['semester_ID'] ?? null, FILTER_VALIDATE_INT);
+			if ($postedSemester === false || !isset($semesterById[(int) $postedSemester]) || (int) $postedSemester !== $semesterID) {
+				throw new RuntimeException('Select Fall 2026 or Spring 2027 before changing availability.');
+			}
+			$availabilitySemesterID = (int) $postedSemester;
+			if ($ownTransaction) {
+				$pdo->beginTransaction();
+			}
+			$lockFaculty = $pdo->prepare('SELECT faculty_ID FROM Faculty WHERE faculty_ID = ? FOR UPDATE');
+			$lockFaculty->execute([$facultyID]);
+			if (!$lockFaculty->fetchColumn()) {
+				throw new RuntimeException('Faculty account not found.');
+			}
+
+			if ($action === 'add_availability') {
+				$rawDays = $_POST['day_ids'] ?? [];
+				$days = [];
+				if (is_array($rawDays)) {
+					foreach ($rawDays as $rawDay) {
+						$dayID = filter_var($rawDay, FILTER_VALIDATE_INT);
+						if ($dayID === false || (int) $dayID < 1) {
+							throw new RuntimeException('One or more selected weekdays are invalid.');
+						}
+						$days[] = (int) $dayID;
+					}
+					$days = array_values(array_unique($days));
+				}
+				$start = trim((string) ($_POST['start_time'] ?? ''));
+				$end = trim((string) ($_POST['end_time'] ?? ''));
+				$duration = filter_var($_POST['duration_minutes'] ?? null, FILTER_VALIDATE_INT);
+				if (!$days || !preg_match('/^\d{2}:\d{2}$/', $start) || !preg_match('/^\d{2}:\d{2}$/', $end)
+					|| $start >= $end || $duration !== advising_appointment_duration_minutes()) {
+					throw new RuntimeException('Choose at least one weekday, a valid time window, and the supported 30-minute appointment duration.');
+				}
+				$windowStart = new DateTimeImmutable('1970-01-01 ' . $start);
+				$windowEnd = new DateTimeImmutable('1970-01-01 ' . $end);
+				if (($windowEnd->getTimestamp() - $windowStart->getTimestamp()) < $duration * 60) {
+					throw new RuntimeException('The availability window must fit at least one 30-minute appointment.');
+				}
+				$validDays = all_rows($pdo, 'SELECT day_ID FROM Day');
+				$validDayIds = array_map(static fn(array $row): int => (int) $row['day_ID'], $validDays);
+				if (array_diff($days, $validDayIds)) {
+					throw new RuntimeException('One or more selected weekdays are invalid.');
+				}
+				$overlap = $pdo->prepare(
+					' SELECT availability_ID FROM Faculty_Availability
+					  WHERE faculty_ID = ? AND semester_ID = ? AND day_ID = ?
+					    AND start_Time < ? AND end_Time > ? LIMIT 1'
+				);
+				$insert = $pdo->prepare(
+					'INSERT INTO Faculty_Availability (faculty_ID, semester_ID, day_ID, start_Time, end_Time, is_active)
+					 VALUES (?, ?, ?, ?, ?, 1)'
+				);
+				foreach ($days as $dayID) {
+					$teachingConflict = advising_teaching_conflict($pdo, $facultyID, $availabilitySemesterID, $dayID, $start . ':00', $end . ':00');
+					if ($teachingConflict) {
+						throw new RuntimeException(advising_teaching_conflict_message($teachingConflict));
+					}
+					$overlap->execute([$facultyID, $availabilitySemesterID, $dayID, $end . ':00', $start . ':00']);
+					if ($overlap->fetchColumn()) {
+						$dayName = one($pdo, 'SELECT day_Of_Week FROM Day WHERE day_ID = ?', [$dayID]);
+						throw new RuntimeException('The ' . ($dayName['day_Of_Week'] ?? 'selected day') . ' window overlaps another availability window in this semester.');
+					}
+					$insert->execute([$facultyID, $availabilitySemesterID, $dayID, $start . ':00', $end . ':00']);
+					$auditId = (string) $pdo->lastInsertId();
+					audit_log($pdo, 'Create', 'Faculty_Availability', $auditId, 'Recurring advising availability added');
+				}
+				$postMessage('success', 'Availability added for ' . count($days) . ' weekday(s).');
+			} elseif ($action === 'update_availability') {
+				$availabilityID = filter_var($_POST['availability_id'] ?? null, FILTER_VALIDATE_INT);
+				$dayID = filter_var($_POST['day_id'] ?? null, FILTER_VALIDATE_INT);
+				$start = trim((string) ($_POST['start_time'] ?? ''));
+				$end = trim((string) ($_POST['end_time'] ?? ''));
+				$duration = filter_var($_POST['duration_minutes'] ?? null, FILTER_VALIDATE_INT);
+				if (!$availabilityID || !$dayID || !preg_match('/^\d{2}:\d{2}$/', $start)
+					|| !preg_match('/^\d{2}:\d{2}$/', $end) || $start >= $end
+					|| $duration !== advising_appointment_duration_minutes()) {
+					throw new RuntimeException('Enter a valid weekday and time window.');
+				}
+				$old = one(
+					$pdo,
+					' SELECT fa.*, d.day_Of_Week FROM Faculty_Availability fa
+					  JOIN Day d ON d.day_ID = fa.day_ID
+					  WHERE fa.availability_ID = ? AND fa.faculty_ID = ? AND fa.semester_ID = ? FOR UPDATE',
+					[$availabilityID, $facultyID, $availabilitySemesterID]
+				);
+				$day = one($pdo, 'SELECT day_Of_Week FROM Day WHERE day_ID = ?', [$dayID]);
+				if (!$old || !$day) {
+					throw new RuntimeException('Availability window or weekday not found.');
+				}
+				$overlap = one(
+					$pdo,
+					' SELECT availability_ID FROM Faculty_Availability
+					  WHERE faculty_ID = ? AND semester_ID = ? AND day_ID = ? AND availability_ID <> ?
+				    AND start_Time < ? AND end_Time > ? LIMIT 1',
+					[$facultyID, $availabilitySemesterID, $dayID, $availabilityID, $end . ':00', $start . ':00']
+				);
+				if ($overlap) {
+					throw new RuntimeException('This edit overlaps another availability window in the selected semester.');
+				}
+				$teachingConflict = advising_teaching_conflict($pdo, $facultyID, $availabilitySemesterID, $dayID, $start . ':00', $end . ':00');
+				if ($teachingConflict) {
+					throw new RuntimeException(advising_teaching_conflict_message($teachingConflict));
+				}
+				$futureAppointments = all_rows(
+					$pdo,
+					"SELECT requested_DateTime FROM Advising_Appointment
+					 WHERE faculty_ID = ? AND status IN ('Pending','Scheduled') AND requested_DateTime >= NOW()",
+					[$facultyID]
+				);
+				foreach ($futureAppointments as $appointment) {
+					$slot = new DateTimeImmutable((string) $appointment['requested_DateTime']);
+					$slotEnd = $slot->modify('+30 minutes');
+					$wasCovered = $slot->format('l') === (string) $old['day_Of_Week']
+						&& $slot->format('H:i:s') >= (string) $old['start_Time']
+						&& $slotEnd->format('H:i:s') <= (string) $old['end_Time'];
+					$willBeCovered = $slot->format('l') === (string) $day['day_Of_Week']
+						&& $slot->format('H:i:s') >= $start . ':00'
+						&& $slotEnd->format('H:i:s') <= $end . ':00';
+					if ($wasCovered && !$willBeCovered) {
+						throw new RuntimeException('This change would move an upcoming appointment outside its existing availability. Reschedule or cancel that appointment first.');
+					}
+				}
+				$pdo->prepare(
+					'UPDATE Faculty_Availability SET day_ID = ?, start_Time = ?, end_Time = ?
+					 WHERE availability_ID = ? AND faculty_ID = ? AND semester_ID = ?'
+				)->execute([$dayID, $start . ':00', $end . ':00', $availabilityID, $facultyID, $availabilitySemesterID]);
+				audit_log($pdo, 'Update', 'Faculty_Availability', (string) $availabilityID, 'Recurring advising availability updated');
+				$postMessage('success', 'Availability updated. Existing appointments remain unchanged.');
+			} else {
+				$availabilityID = filter_var($_POST['availability_id'] ?? null, FILTER_VALIDATE_INT);
+				if (!$availabilityID) {
+					throw new RuntimeException('Invalid availability window.');
+				}
+				$row = one(
+					$pdo,
+					'SELECT availability_ID, is_active, day_ID, start_Time, end_Time FROM Faculty_Availability WHERE availability_ID = ? AND faculty_ID = ? AND semester_ID = ? FOR UPDATE',
+					[$availabilityID, $facultyID, $availabilitySemesterID]
+				);
+				if (!$row) {
+					throw new RuntimeException('Availability window not found.');
+				}
+				$makeActive = (int) $row['is_active'] !== 1;
+				if ($makeActive) {
+					$teachingConflict = advising_teaching_conflict($pdo, $facultyID, $availabilitySemesterID, (int) $row['day_ID'], (string) $row['start_Time'], (string) $row['end_Time']);
+					if ($teachingConflict) {
+						throw new RuntimeException(advising_teaching_conflict_message($teachingConflict));
+					}
+					$overlap = one(
+						$pdo,
+						' SELECT availability_ID FROM Faculty_Availability a
+						  WHERE a.faculty_ID = ? AND a.semester_ID = ? AND a.day_ID = ?
+					    AND a.availability_ID <> ?
+					    AND a.start_Time < (SELECT end_Time FROM Faculty_Availability WHERE availability_ID = ?)
+					    AND a.end_Time > (SELECT start_Time FROM Faculty_Availability WHERE availability_ID = ?) LIMIT 1',
+						[$facultyID, $availabilitySemesterID, (int) $row['day_ID'], $availabilityID, $availabilityID, $availabilityID]
+					);
+					if ($overlap) {
+						throw new RuntimeException('This window overlaps another availability window in the selected semester. Edit the times before activating it.');
+					}
+				}
+				$pdo->prepare('UPDATE Faculty_Availability SET is_active = ? WHERE availability_ID = ? AND faculty_ID = ? AND semester_ID = ?')
+					->execute([$makeActive ? 1 : 0, $availabilityID, $facultyID, $availabilitySemesterID]);
+				audit_log($pdo, 'Update', 'Faculty_Availability', (string) $availabilityID, $makeActive ? 'Recurring availability activated' : 'Recurring availability deactivated; appointments retained');
+				$postMessage('success', $makeActive ? 'Availability activated.' : 'Availability deactivated. Existing appointments were not changed.');
+			}
+			if ($ownTransaction) {
+				$pdo->commit();
+			}
+		} elseif (in_array($action, ['approve_appointment', 'deny_appointment', 'cancel_appointment', 'complete_appointment', 'reschedule_appointment'], true)) {
+			$appointmentID = filter_var($_POST['appointment_id'] ?? null, FILTER_VALIDATE_INT);
+			$reason = trim((string) ($_POST['response'] ?? ''));
+			if (!$appointmentID || mb_strlen($reason) > 500) {
+				throw new RuntimeException('Invalid appointment or response.');
+			}
+			if ($ownTransaction) {
+				$pdo->beginTransaction();
+			}
+			$lockFaculty = $pdo->prepare('SELECT faculty_ID FROM Faculty WHERE faculty_ID = ? FOR UPDATE');
+			$lockFaculty->execute([$facultyID]);
+			if (!$lockFaculty->fetchColumn()) {
+				throw new RuntimeException('Faculty account not found.');
+			}
+			$appointment = one(
+				$pdo,
+				'SELECT * FROM Advising_Appointment WHERE appointment_ID = ? AND faculty_ID = ? FOR UPDATE',
+				[$appointmentID, $facultyID]
+			);
+			if (!$appointment) {
+				throw new RuntimeException('Appointment not found.');
+			}
+			$studentID = (int) $appointment['student_ID'];
+			$lockStudent = $pdo->prepare('SELECT student_ID FROM Student WHERE student_ID = ? FOR UPDATE');
+			$lockStudent->execute([$studentID]);
+			if (!$lockStudent->fetchColumn()) {
+				throw new RuntimeException('Student account not found.');
+			}
+			$status = (string) $appointment['status'];
+			if ($action === 'approve_appointment') {
+				if ($status !== 'Pending') {
+					throw new RuntimeException('Only pending requests can be approved.');
+				}
+				$slot = new DateTimeImmutable((string) $appointment['requested_DateTime']);
+				$appointmentSemesterID = advising_resolve_semester_for_date($pdo, $slot);
+				if ($appointmentSemesterID === null || $appointmentSemesterID !== $semesterID) {
+					throw new RuntimeException('The appointment date cannot be reliably mapped to the selected semester. Verify semester date boundaries before approving it.');
+				}
+				if ($slot <= new DateTimeImmutable('now') || !advising_slot_is_in_active_window($pdo, $facultyID, $appointmentSemesterID, $slot)) {
+					throw new RuntimeException('This request is no longer within an active availability window. Reschedule it before approval.');
+				}
+				if (advising_slot_has_conflict($pdo, $facultyID, $studentID, $slot, $appointmentID)) {
+					throw new RuntimeException('This appointment conflicts with another active booking.');
+				}
+				$pdo->prepare("UPDATE Advising_Appointment SET status = 'Scheduled', advisor_Response = ? WHERE appointment_ID = ? AND faculty_ID = ?")
+					->execute([$reason !== '' ? $reason : 'Your appointment is confirmed.', $appointmentID, $facultyID]);
+			} elseif ($action === 'deny_appointment') {
+				if ($status !== 'Pending') {
+					throw new RuntimeException('Only pending requests can be denied.');
+				}
+				$pdo->prepare("UPDATE Advising_Appointment SET status = 'Denied', advisor_Response = ? WHERE appointment_ID = ? AND faculty_ID = ?")
+					->execute([$reason !== '' ? $reason : 'Your appointment request was denied.', $appointmentID, $facultyID]);
+			} elseif ($action === 'complete_appointment') {
+				if ($status !== 'Scheduled') {
+					throw new RuntimeException('Only scheduled appointments can be completed.');
+				}
+				$slotEnd = (new DateTimeImmutable((string) $appointment['requested_DateTime']))->modify('+30 minutes');
+				if ($slotEnd > new DateTimeImmutable('now')) {
+					throw new RuntimeException('An appointment can be marked complete after its scheduled end time.');
+				}
+				$pdo->prepare("UPDATE Advising_Appointment SET status = 'Completed', advisor_Response = ? WHERE appointment_ID = ? AND faculty_ID = ?")
+					->execute([$reason !== '' ? $reason : 'Appointment completed.', $appointmentID, $facultyID]);
+			} elseif ($action === 'cancel_appointment') {
+				if (!in_array($status, ['Pending', 'Scheduled'], true)) {
+					throw new RuntimeException('This appointment can no longer be cancelled.');
+				}
+				$pdo->prepare("UPDATE Advising_Appointment SET status = 'Cancelled', advisor_Response = ? WHERE appointment_ID = ? AND faculty_ID = ?")
+					->execute([$reason !== '' ? $reason : 'Your appointment was cancelled by your advisor.', $appointmentID, $facultyID]);
+			} else {
+				if (!in_array($status, ['Pending', 'Scheduled'], true)) {
+					throw new RuntimeException('Only pending or scheduled appointments can be rescheduled.');
+				}
+				$proposed = advising_parse_slot(
+					trim((string) ($_POST['appointment_date'] ?? '')),
+					trim((string) ($_POST['appointment_time'] ?? ''))
+				);
+				if (!$proposed || $proposed <= new DateTimeImmutable('now')) {
+					throw new RuntimeException('Choose a valid future date and time.');
+				}
+				$appointmentSemesterID = advising_resolve_semester_for_date($pdo, $proposed);
+				if ($appointmentSemesterID === null || $appointmentSemesterID !== $semesterID) {
+					throw new RuntimeException('The new appointment date cannot be reliably mapped to the selected semester. Verify semester date boundaries before rescheduling.');
+				}
+				if (!advising_slot_is_in_active_window($pdo, $facultyID, $appointmentSemesterID, $proposed)) {
+					throw new RuntimeException('The new time must fit within your active availability.');
+				}
+				if (advising_slot_has_conflict($pdo, $facultyID, $studentID, $proposed, $appointmentID)) {
+					throw new RuntimeException('The new time conflicts with another active booking.');
+				}
+				$response = $reason !== '' ? $reason : 'Your advisor rescheduled the appointment.';
+				$pdo->prepare('UPDATE Advising_Appointment SET requested_DateTime = ?, advisor_Response = ? WHERE appointment_ID = ? AND faculty_ID = ?')
+					->execute([$proposed->format('Y-m-d H:i:s'), $response, $appointmentID, $facultyID]);
+			}
+			audit_log($pdo, 'Update', 'Advising_Appointment', (string) $appointmentID, 'Faculty appointment action: ' . $action);
+			$postMessage('success', 'Appointment updated. The Student Portal now shows the current status and response.');
+			if ($ownTransaction) {
+				$pdo->commit();
+			}
+		} else {
+			throw new RuntimeException('Invalid advising action.');
+		}
+	} catch (Throwable $exception) {
+		if ($ownTransaction && $pdo->inTransaction()) {
+			$pdo->rollBack();
+		}
+		error_log('Faculty advising update failed: ' . $exception->getMessage());
+		$postMessage('error', $exception instanceof RuntimeException ? $exception->getMessage() : 'Unable to save this change.');
+	}
+	$returnToPage($view, $semesterID);
+}
+
+$days = all_rows($pdo, 'SELECT day_ID, day_Of_Week FROM Day ORDER BY day_ID');
+$availabilityWindows = all_rows(
+	$pdo,
+	"SELECT fa.availability_ID, fa.day_ID, d.day_Of_Week, fa.start_Time, fa.end_Time, fa.is_active
+	 FROM Faculty_Availability fa
+	 JOIN Day d ON d.day_ID = fa.day_ID
+	 WHERE fa.faculty_ID = ? AND fa.semester_ID = ?
+	 ORDER BY d.day_ID, fa.start_Time, fa.availability_ID",
+	[$facultyID, $semesterID]
+);
+
+$appointmentSql = "SELECT aa.appointment_ID, aa.student_ID, aa.requested_DateTime,
+				  aa.status, aa.student_Reason, aa.advisor_Response,
+				  u.first_Name, u.last_Name
+			   FROM Advising_Appointment aa
+			   JOIN User u ON u.user_ID = aa.student_ID
+			   WHERE aa.faculty_ID = ? AND DATE(aa.requested_DateTime) >= ?";
+$appointmentParams = [$facultyID, $semesterStart ?: '1000-01-01'];
+if ($nextSemesterStart !== null) {
+	$appointmentSql .= ' AND DATE(aa.requested_DateTime) < ?';
+	$appointmentParams[] = $nextSemesterStart;
+	} else {
+	$appointmentSql .= ' AND 1 = 0';
+}
+$statusFilter = trim((string) ($_GET['status'] ?? ''));
+$validStatuses = ['Pending', 'Scheduled', 'Denied', 'Cancelled', 'Completed'];
+if (in_array($statusFilter, $validStatuses, true)) {
+	$appointmentSql .= ' AND aa.status = ?';
+	$appointmentParams[] = $statusFilter;
+}
+$search = trim((string) ($_GET['search'] ?? ''));
+if ($search !== '') {
+	$appointmentSql .= ' AND (CAST(aa.student_ID AS CHAR) = ? OR CONCAT(u.first_Name, " ", u.last_Name) LIKE ?)';
+	$appointmentParams[] = $search;
+	$appointmentParams[] = '%' . $search . '%';
+}
+$appointmentSql .= " ORDER BY CASE aa.status WHEN 'Pending' THEN 0 WHEN 'Scheduled' THEN 1 ELSE 2 END,
+					 aa.requested_DateTime ASC, aa.appointment_ID";
+$appointments = all_rows($pdo, $appointmentSql, $appointmentParams);
+$appointmentCounts = array_fill_keys($validStatuses, 0);
+$countSql = 'SELECT status, COUNT(*) AS total FROM Advising_Appointment WHERE faculty_ID = ? AND DATE(requested_DateTime) >= ?';
+$countParams = [$facultyID, $semesterStart ?: '1000-01-01'];
+if ($nextSemesterStart !== null) {
+	$countSql .= ' AND DATE(requested_DateTime) < ?';
+	$countParams[] = $nextSemesterStart;
+	} else {
+	$countSql .= ' AND 1 = 0';
+}
+foreach (all_rows($pdo, $countSql . ' GROUP BY status', $countParams) as $countRow) {
+	$appointmentCounts[(string) $countRow['status']] = (int) $countRow['total'];
+}
+$activeAvailabilityCount = count(array_filter($availabilityWindows, static fn(array $row): bool => (int) $row['is_active'] === 1));
+
+page_start('Advising & Appointments', 'Faculty', 'advising_appointments.php');
+flash();
 ?>
+<link rel="stylesheet" href="<?= e(url('assets/ashford-advising/faculty-advising.css')) ?>">
 
-<style>
-/* ASHFORD_FACULTY_AVAILABILITY_V2 */
-.availability-section {
-    background: #fff;
-    border: 1px solid #dfe5ef;
-    border-radius: 13px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0 4px 16px rgba(16,36,74,.045);
-}
-.availability-section h3 {
-    margin: 0 0 16px;
-    font-size: 19px;
-    color: #142345;
-}
-.availability-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 14px;
-    margin-bottom: 16px;
-}
-.availability-card {
-    background: #f8f9fd;
-    border: 1px solid #e0e5ef;
-    border-radius: 11px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-.availability-card.active {
-    border-color: #1e3366;
-    background: #f0f5ff;
-}
-.availability-card.inactive {
-    border-color: #d1d5db;
-    background: #f7f7f7;
-    opacity: 0.85;
-}
-.availability-day {
-    font-weight: 700;
-    color: #1e3366;
-    font-size: 15px;
-}
-.availability-times {
-    color: #334155;
-    font-size: 14px;
-    font-family: monospace;
-}
-.availability-status {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-.availability-status.active { color: #245b2b; }
-.availability-status.inactive { color: #a83232; }
-.availability-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px;
-}
-.availability-actions button {
-    flex: 1;
-    padding: 6px 12px;
-    font-size: 12px;
-    border-radius: 7px;
-    border: 1px solid #cbd5e1;
-    background: white;
-    cursor: pointer;
-    font-weight: 600;
-}
-.availability-actions button.edit { color: #1e3366; border-color: #1e3366; }
-.availability-actions button.edit:hover { background: #1e3366; color: white; }
-.availability-actions button.delete { color: #a83232; border-color: #a83232; }
-.availability-actions button.delete:hover { background: #a83232; color: white; }
+<div class="faculty-advising">
+	<header class="fa-page-header">
+		<div>
+			<p class="fa-eyebrow">ACADEMIC ADVISING</p>
+			<h1>Advising &amp; Appointments</h1>
+			<p>Manage recurring appointment hours and student requests.</p>
+		</div>
+		<form method="get" class="fa-term-form">
+			<input type="hidden" name="view" value="<?= e($view) ?>">
+			<label for="advising-semester">Semester view</label>
+			<select name="semester_ID" id="advising-semester" onchange="this.form.submit()">
+				<?php foreach ($semesters as $term): ?>
+					<option value="<?= e($term['semester_ID']) ?>" <?= (int) $term['semester_ID'] === $semesterID ? 'selected' : '' ?>><?= e($term['semester_Name']) ?></option>
+				<?php endforeach; ?>
+			</select>
+			<noscript><button class="fa-button fa-button-secondary" type="submit">Show semester</button></noscript>
+		</form>
+	</header>
 
-.availability-form {
-    background: #f8f9fd;
-    border: 1px solid #e0e5ef;
-    border-radius: 13px;
-    padding: 20px;
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    align-items: end;
-}
-.availability-form label {
-    display: block;
-    font-size: 13px;
-    font-weight: 650;
-    color: #334155;
-    margin-bottom: 6px;
-}
-.availability-form select,
-.availability-form input[type="time"] {
-    width: 100%;
-    min-height: 42px;
-    padding: 9px 11px;
-    border: 1px solid #cbd5e1;
-    border-radius: 9px;
-    background: white;
-    font-size: 14px;
-}
-.availability-form .form-actions {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 10px;
-}
-</style>
+	<nav class="fa-tabs" aria-label="Advising sections">
+		<a href="<?= e(url('faculty/advising_appointments.php?view=availability&semester_ID=' . $semesterID)) ?>" class="<?= $view === 'availability' ? 'is-active' : '' ?>" <?= $view === 'availability' ? 'aria-current="page"' : '' ?>>My Availability</a>
+		<a href="<?= e(url('faculty/advising_appointments.php?view=appointments&semester_ID=' . $semesterID)) ?>" class="<?= $view === 'appointments' ? 'is-active' : '' ?>" <?= $view === 'appointments' ? 'aria-current="page"' : '' ?>>Advising Appointments</a>
+	</nav>
 
-<?php flash(); ?>
+	<?php if ($view === 'availability'): ?>
+		<section class="fa-metrics" aria-label="Availability summary">
+			<div class="fa-metric"><span>Availability Windows</span><strong><?= count($availabilityWindows) ?></strong></div>
+			<div class="fa-metric"><span>Active Windows</span><strong><?= $activeAvailabilityCount ?></strong></div>
+			<div class="fa-metric"><span>Appointment Duration</span><strong>30 min</strong></div>
+		</section>
 
-<section class="card">
-    <h2>Advising Appointments</h2>
-    <p>Review appointment requests submitted by your advisees.</p>
+		<div class="fa-availability-grid">
+			<section class="fa-panel">
+				<div class="fa-panel-heading"><span class="fa-panel-icon" aria-hidden="true">＋</span><div><h2>Add Availability</h2><p>Choose one or more weekdays for a recurring time window.</p></div></div>
+				<form method="post" class="fa-form" action="<?= e(url('faculty/advising_appointments.php')) ?>">
+					<?= csrf_field() ?>
+					<input type="hidden" name="action" value="add_availability">
+					<input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>">
+					<fieldset class="fa-fieldset">
+						<legend>Days of the week <span aria-hidden="true">*</span></legend>
+						<details class="fa-day-picker" id="day-picker">
+							<summary id="day-summary">Choose weekdays</summary>
+							<div class="fa-day-options">
+								<label class="fa-select-all"><input type="checkbox" id="select-all-days"> Select all days</label>
+								<?php foreach ($days as $day): ?>
+									<label><input type="checkbox" name="day_ids[]" value="<?= e($day['day_ID']) ?>" class="fa-day-checkbox"> <?= e($day['day_Of_Week']) ?></label>
+								<?php endforeach; ?>
+							</div>
+						</details>
+					</fieldset>
+					<div class="fa-time-grid">
+						<div><label for="availability-start">Start time <span aria-hidden="true">*</span></label><input type="time" id="availability-start" name="start_time" required></div>
+						<div><label for="availability-end">End time <span aria-hidden="true">*</span></label><input type="time" id="availability-end" name="end_time" required></div>
+					</div>
+					<div><label for="appointment-duration">Appointment duration</label>
+						<select id="appointment-duration" name="duration_minutes" required><option value="30">30 minutes</option></select>
+						<small>The current advising workflow supports 30-minute appointments.</small>
+					</div>
+					<button type="submit" class="fa-button fa-button-primary">Add Availability Window</button>
+				</form>
+			</section>
 
-    <?php if (!$appointments): ?>
-        <p>No appointment requests have been submitted.</p>
-    <?php else: ?>
-        <div class="table-wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Student</th>
-                        <th>Major</th>
-                        <th>Requested Time</th>
-                        <th>Status</th>
-                        <th>Reason</th>
-                        <th>Response / Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($appointments as $appointment): ?>
-                        <tr>
-                            <td>
-                                <?= e(
-                                    $appointment['first_Name'] . ' ' .
-                                    $appointment['last_Name']
-                                ) ?>
-                                <br>
-                                <?= e($appointment['student_ID']) ?>
-                            </td>
-                            <td><?= e($appointment['major_Name'] ?? 'Undeclared') ?></td>
-                            <td><?= e($appointment['requested_DateTime']) ?></td>
-                            <td><?= e($appointment['status']) ?></td>
-                            <td><?= e($appointment['student_Reason'] ?? '—') ?></td>
-                            <td>
-                                <?php if ($appointment['status'] === 'Pending'): ?>
-                                    <form method="post">
-                                        <?= csrf_field() ?>
-                                        <input type="hidden" name="appt_action" value="accept">
-                                        <input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>">
-                                        <label>Response</label>
-                                        <textarea name="response" maxlength="500" rows="2" placeholder="Optional response"></textarea>
-                                        <button type="submit" class="btn">Accept</button>
-                                        <button type="submit" name="appt_action" value="deny" class="btn danger small">Deny</button>
-                                    </form>
-                                <?php elseif ($appointment['status'] === 'Accepted'): ?>
-                                    <form method="post" style="display:inline;">
-                                        <?= csrf_field() ?>
-                                        <input type="hidden" name="appt_action" value="complete">
-                                        <input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>">
-                                        <label>Response</label>
-                                        <textarea name="response" maxlength="500" rows="2" placeholder="Notes"></textarea>
-                                        <button type="submit" class="btn">Mark Complete</button>
-                                    </form>
-                                <?php else: ?>
-                                    <?= e($appointment['advisor_Response'] ?? '—') ?>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php endif; ?>
-</section>
+			<section class="fa-panel">
+				<div class="fa-panel-heading"><span class="fa-panel-icon" aria-hidden="true">▦</span><div><h2>Current Availability</h2><p>Changes affect future booking choices; saved appointments remain on the record.</p></div></div>
+				<?php if (!$availabilityWindows): ?>
+					<div class="fa-empty"><h3>No availability windows yet</h3><p>Add one or more weekdays to let students request a meeting.</p></div>
+				<?php else: ?>
+					<div class="fa-table-wrap">
+						<table class="fa-table">
+							<caption class="visually-hidden">Your recurring advising availability</caption>
+							<thead><tr><th scope="col">Day</th><th scope="col">Time Window</th><th scope="col">Duration</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+							<tbody>
+							<?php foreach ($availabilityWindows as $window): $active = (int) $window['is_active'] === 1; ?>
+								<tr>
+									<th scope="row"><?= e($window['day_Of_Week']) ?></th>
+									<td><?= e(date('g:i A', strtotime($window['start_Time']))) ?> – <?= e(date('g:i A', strtotime($window['end_Time']))) ?></td>
+									<td>30 min</td>
+									<td><span class="fa-status <?= $active ? 'fa-status-active' : 'fa-status-inactive' ?>"><?= $active ? 'Active' : 'Inactive' ?></span></td>
+									<td class="fa-row-actions">
+										<details class="fa-edit-details"><summary class="fa-button fa-button-small fa-button-secondary">Edit</summary>
+											<form method="post" class="fa-edit-form">
+												<?= csrf_field() ?>
+												<input type="hidden" name="action" value="update_availability"><input type="hidden" name="availability_id" value="<?= e($window['availability_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>">
+												<label>Weekday<select name="day_id" required><?php foreach ($days as $day): ?><option value="<?= e($day['day_ID']) ?>" <?= (int) $day['day_ID'] === (int) $window['day_ID'] ? 'selected' : '' ?>><?= e($day['day_Of_Week']) ?></option><?php endforeach; ?></select></label>
+												<div class="fa-time-grid"><label>Start<input type="time" name="start_time" value="<?= e(substr((string) $window['start_Time'], 0, 5)) ?>" required></label><label>End<input type="time" name="end_time" value="<?= e(substr((string) $window['end_Time'], 0, 5)) ?>" required></label></div>
+												<label>Appointment duration<select name="duration_minutes"><option value="30">30 minutes</option></select></label>
+												<button type="submit" class="fa-button fa-button-primary">Save changes</button>
+											</form>
+										</details>
+										<form method="post" class="fa-inline-form" onsubmit="return confirm('<?= $active ? 'Deactivate' : 'Activate' ?> this recurring availability window? Existing appointments will remain unchanged.');">
+											<?= csrf_field() ?><input type="hidden" name="action" value="toggle_availability"><input type="hidden" name="availability_id" value="<?= e($window['availability_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>">
+											<button type="submit" class="fa-button fa-button-small <?= $active ? 'fa-button-danger' : 'fa-button-secondary' ?>"><?= $active ? 'Deactivate' : 'Activate' ?></button>
+										</form>
+									</td>
+								</tr>
+							<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
+				<?php endif; ?>
+				<aside class="fa-note"><strong>Availability notes</strong><ul><li>Select multiple weekdays when creating a window.</li><li>Each weekday is saved as its own availability record for <?= e($semesterName) ?>.</li><li>Availability is semester-specific; legacy unassigned windows are kept separate and are not bookable.</li><li>Deactivating a window does not delete or change scheduled appointments.</li></ul></aside>
+			</section>
+		</div>
+	<?php else: ?>
+		<section class="fa-metrics fa-metrics-appointments" aria-label="Appointment counts">
+			<div class="fa-metric fa-metric-pending"><span>Pending Requests</span><strong><?= $appointmentCounts['Pending'] ?></strong></div>
+			<div class="fa-metric fa-metric-scheduled"><span>Scheduled</span><strong><?= $appointmentCounts['Scheduled'] ?></strong></div>
+			<div class="fa-metric fa-metric-completed"><span>Completed</span><strong><?= $appointmentCounts['Completed'] ?></strong></div>
+			<div class="fa-metric fa-metric-closed"><span>Denied / Cancelled</span><strong><?= $appointmentCounts['Denied'] + $appointmentCounts['Cancelled'] ?></strong></div>
+		</section>
+		<section class="fa-panel">
+			<div class="fa-panel-heading"><span class="fa-panel-icon" aria-hidden="true">▦</span><div><h2>Advising Appointments</h2><p>Requests for <?= e($semesterName ?: 'the selected semester') ?>. Updates appear in the Student Portal from the same appointment record.</p></div></div>
+			<form method="get" class="fa-filter-form">
+				<input type="hidden" name="view" value="appointments"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>">
+				<div><label for="appointment-search">Student name or ID</label><input id="appointment-search" type="search" name="search" value="<?= e($search) ?>" placeholder="Search appointments"></div>
+				<div><label for="appointment-status">Status</label><select name="status" id="appointment-status"><option value="">All statuses</option><?php foreach ($validStatuses as $status): ?><option value="<?= e($status) ?>" <?= $statusFilter === $status ? 'selected' : '' ?>><?= e($status) ?></option><?php endforeach; ?></select></div>
+				<button class="fa-button fa-button-primary" type="submit">Filter</button>
+				<a class="fa-button fa-button-secondary" href="<?= e(url('faculty/advising_appointments.php?view=appointments&semester_ID=' . $semesterID)) ?>">Clear</a>
+			</form>
+			<?php if (!$appointments): ?>
+				<div class="fa-empty"><h3>No appointments found</h3><p>There are no matching advising requests for <?= e($semesterName ?: 'this semester') ?>.</p></div>
+			<?php else: ?>
+				<div class="fa-table-wrap">
+					<table class="fa-table fa-appointment-table">
+						<caption class="visually-hidden">Advising appointment requests for <?= e($semesterName) ?></caption>
+						<thead><tr><th scope="col">Student</th><th scope="col">Reason / Topic</th><th scope="col">Date &amp; Time</th><th scope="col">Status</th><th scope="col">Response</th><th scope="col">Actions</th></tr></thead>
+						<tbody>
+						<?php foreach ($appointments as $appointment): $appointmentStatus = (string) $appointment['status']; ?>
+							<tr>
+								<td><strong><?= e($appointment['first_Name'] . ' ' . $appointment['last_Name']) ?></strong><small>ID <?= e($appointment['student_ID']) ?></small></td>
+								<td><?= e($appointment['student_Reason'] ?: '—') ?></td>
+								<td><?= e(date('M j, Y · g:i A', strtotime($appointment['requested_DateTime']))) ?></td>
+								<td><span class="fa-status fa-status-<?= e(strtolower($appointmentStatus)) ?>"><?= e($appointmentStatus) ?></span></td>
+								<td><?= e($appointment['advisor_Response'] ?: '—') ?></td>
+								<td class="fa-appointment-actions">
+					<?php if ($appointmentStatus === 'Pending'): ?>
+										<form method="post" class="fa-inline-form"><?= csrf_field() ?><input type="hidden" name="action" value="approve_appointment"><input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>"><button class="fa-button fa-button-small fa-button-success" type="submit">Approve</button></form>
+										<details class="fa-action-details"><summary class="fa-button fa-button-small fa-button-danger">Deny</summary><form method="post" class="fa-action-form"><?= csrf_field() ?><input type="hidden" name="action" value="deny_appointment"><input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>"><label>Response<textarea name="response" maxlength="500" rows="2"></textarea></label><button class="fa-button fa-button-danger" type="submit">Confirm denial</button></form></details>
+									<?php endif; ?>
+					<?php if (in_array($appointmentStatus, ['Pending', 'Scheduled'], true) && strtotime($appointment['requested_DateTime'] . ' +30 minutes') > time()): ?>
+										<details class="fa-action-details"><summary class="fa-button fa-button-small fa-button-secondary">Reschedule</summary><form method="post" class="fa-action-form"><?= csrf_field() ?><input type="hidden" name="action" value="reschedule_appointment"><input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>"><label>New date<input type="date" name="appointment_date" min="<?= e(date('Y-m-d')) ?>" required></label><label>New time<input type="time" name="appointment_time" required></label><label>Response<textarea name="response" maxlength="500" rows="2"></textarea></label><button class="fa-button fa-button-primary" type="submit">Save new time</button></form></details>
+										<form method="post" class="fa-inline-form" onsubmit="return confirm('Cancel this appointment?');"><?= csrf_field() ?><input type="hidden" name="action" value="cancel_appointment"><input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>"><button class="fa-button fa-button-small fa-button-danger" type="submit">Cancel</button></form>
+					<?php elseif ($appointmentStatus === 'Scheduled' && strtotime($appointment['requested_DateTime'] . ' +30 minutes') <= time()): ?>
+										<form method="post" class="fa-inline-form"><?= csrf_field() ?><input type="hidden" name="action" value="complete_appointment"><input type="hidden" name="appointment_id" value="<?= e($appointment['appointment_ID']) ?>"><input type="hidden" name="semester_ID" value="<?= e($semesterID) ?>"><button class="fa-button fa-button-small fa-button-success" type="submit">Mark complete</button></form>
+									<?php else: ?><span class="fa-muted">No action</span><?php endif; ?>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+						</tbody>
+					</table>
+				</div>
+			<?php endif; ?>
+		</section>
+	<?php endif; ?>
+</div>
 
-<!-- Availability Window Management -->
-<section class="availability-section">
-    <h3>Availability Window</h3>
-    <p>Set when you are available for advising appointments. Students can only request appointments during your available times.</p>
+<script>
+(() => {
+	const checkboxes = Array.from(document.querySelectorAll('.fa-day-checkbox'));
+	const selectAll = document.getElementById('select-all-days');
+	const summary = document.getElementById('day-summary');
+	function updateDaySummary() {
+		const selected = checkboxes.filter((box) => box.checked).map((box) => box.parentElement.textContent.trim());
+		if (summary) summary.textContent = selected.length ? `${selected.join(', ')} (${selected.length} selected)` : 'Choose weekdays';
+		if (selectAll) selectAll.checked = selected.length > 0 && selected.length === checkboxes.length;
+	}
+	checkboxes.forEach((box) => box.addEventListener('change', updateDaySummary));
+	if (selectAll) selectAll.addEventListener('change', () => { checkboxes.forEach((box) => { box.checked = selectAll.checked; }); updateDaySummary(); });
+})();
+</script>
 
-    <div class="availability-form">
-        <form method="post" action="advising_appointments.php">
-            <?= csrf_field() ?>
-            <input type="hidden" name="avail_action" value="add">
-
-            <div>
-                <label for="avail_day">Day</label>
-                <select name="day_id" id="avail_day" required>
-                    <option value="">Select day</option>
-                    <?php foreach ($days as $day): ?>
-                        <option value="<?= e($day['day_ID']) ?>"><?= e($day['day_Of_Week']) ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-
-            <div>
-                <label for="avail_start">Start Time</label>
-                <input type="time" name="start_time" id="avail_start" required>
-            </div>
-
-            <div>
-                <label for="avail_end">End Time</label>
-                <input type="time" name="end_time" id="avail_end" required>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="btn">Add Availability</button>
-            </div>
-        </form>
-    </div>
-
-    <?php if ($availabilityWindows): ?>
-        <h4 style="margin: 16px 0 8px; font-size: 15px; color: #142345;">Your Availability Windows</h4>
-        <div class="availability-grid">
-            <?php foreach ($availabilityWindows as $win): $isActive = (int) $win['is_active'] === 1; ?>
-                <div class="availability-card <?= $isActive ? 'active' : 'inactive' ?>">
-                    <div class="availability-day"><?= e($win['day_Of_Week']) ?></div>
-                    <div class="availability-times">
-                        <?= date('g:i A', strtotime($win['start_Time'])) ?> – <?= date('g:i A', strtotime($win['end_Time'])) ?>
-                    </div>
-                    <div class="availability-status <?= $isActive ? 'active' : 'inactive' ?>">
-                        <?= $isActive ? 'Active' : 'Inactive' ?>
-                    </div>
-                    <div class="availability-actions">
-                        <form method="post" style="display:inline; margin:0;" onsubmit="return confirm('Toggle this availability window?');">
-                            <?= csrf_field() ?>
-                            <input type="hidden" name="avail_action" value="update">
-                            <input type="hidden" name="avail_id" value="<?= e($win['availability_ID']) ?>">
-                            <input type="hidden" name="day_id" value="<?= e($win['day_ID']) ?>">
-                            <input type="hidden" name="start_time" value="<?= e($win['start_Time']) ?>">
-                            <input type="hidden" name="end_time" value="<?= e($win['end_Time']) ?>">
-                            <input type="hidden" name="is_active" value="<?= $isActive ? 0 : 1 ?>">
-                            <button type="submit" class="btn edit" style="padding:4px 8px;font-size:11px"><?= $isActive ? 'Deactivate' : 'Activate' ?></button>
-                        </form>
-                        <form method="post" style="display:inline; margin:0;" onsubmit="return confirm('Delete this availability window?');">
-                            <?= csrf_field() ?>
-                            <input type="hidden" name="avail_action" value="delete">
-                            <input type="hidden" name="avail_id" value="<?= e($win['availability_ID']) ?>">
-                            <button type="submit" class="btn delete" style="padding:4px 8px;font-size:11px">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    <?php else: ?>
-        <p class="muted" style="margin-top:12px">No availability windows set. Add one above to allow students to request appointments.</p>
-    <?php endif; ?>
-</section>
-
-<?php /* ASHFORD_ALL_ENHANCEMENTS_V2 */ ?>
-<link rel="stylesheet" href="<?= e(url('assets/ashford-enhancements/enhancements.css')) ?>">
-<script defer src="<?= e(url('assets/ashford-enhancements/enhancements.js')) ?>"></script>
-
-<?php require __DIR__.'/../includes/advising_ui.php'; page_end(); ?>
+<?php page_end(); ?>

@@ -1,0 +1,92 @@
+{
+  "database": "ashford_waleed",
+  "backup": "backups/ashford_waleed_full_20261119_114909.sql.gz",
+  "backup_sha256": "d2e17892e2c162d5700668dc7ad40289620ed1834f958777b566d53068f0c042",
+  "backup_integrity_checked_before_transaction": true,
+  "transaction_committed": true,
+  "student_major_rows_changed": 139,
+  "course_section_rows_changed": 3,
+  "course_section_crns_changed": [
+    30005,
+    30015,
+    30020
+  ],
+  "student_history_rows_changed": 0,
+  "faculty_history_rows_changed": 0,
+  "enrollment_rows_changed": 0,
+  "attendance_rows_changed": 0,
+  "grade_rows_changed": 0,
+  "schema_changed": false,
+  "before_after_validation": {
+    "active_course_registrations_unchanged": true,
+    "fall2026": {
+      "before": {
+        "active_enrollments": 1619,
+        "students_with_schedule_page_course_omissions": 0,
+        "duplicate_course_groups": 34,
+        "duplicate_extra_rows": 53,
+        "prerequisite_unmet_enrollments": 522,
+        "passed_course_retakes": 69,
+        "course_level_mismatches": 237,
+        "students_over_credit_limit": 0,
+        "credit_limit_excess_credits": 0,
+        "student_conflict_pairs": 0,
+        "unscheduled_enrollments": 0,
+        "unmapped_requirement_courses": 1059
+      },
+      "after": {
+        "active_enrollments": 1619,
+        "students_with_schedule_page_course_omissions": 0,
+        "duplicate_course_groups": 34,
+        "duplicate_extra_rows": 53,
+        "prerequisite_unmet_enrollments": 522,
+        "passed_course_retakes": 69,
+        "course_level_mismatches": 237,
+        "students_over_credit_limit": 0,
+        "credit_limit_excess_credits": 0,
+        "student_conflict_pairs": 0,
+        "unscheduled_enrollments": 0,
+        "unmapped_requirement_courses": 1059
+      }
+    },
+    "spring2027": {
+      "before": {
+        "active_enrollments": 1861,
+        "students_with_schedule_page_course_omissions": 0,
+        "duplicate_course_groups": 136,
+        "duplicate_extra_rows": 245,
+        "prerequisite_unmet_enrollments": 729,
+        "passed_course_retakes": 322,
+        "course_level_mismatches": 460,
+        "students_over_credit_limit": 28,
+        "credit_limit_excess_credits": 1288,
+        "student_conflict_pairs": 116,
+        "unscheduled_enrollments": 0,
+        "unmapped_requirement_courses": 1455
+      },
+      "after": {
+        "active_enrollments": 1861,
+        "students_with_schedule_page_course_omissions": 0,
+        "duplicate_course_groups": 136,
+        "duplicate_extra_rows": 245,
+        "prerequisite_unmet_enrollments": 729,
+        "passed_course_retakes": 322,
+        "course_level_mismatches": 460,
+        "students_over_credit_limit": 28,
+        "credit_limit_excess_credits": 1288,
+        "student_conflict_pairs": 116,
+        "unscheduled_enrollments": 0,
+        "unmapped_requirement_courses": 1455
+      }
+    },
+    "program_review_count_before": 380,
+    "program_review_count_after": 380,
+    "program_display_mismatches_after": 0,
+    "historical_course_mismatch_rows_before": 436,
+    "historical_course_mismatch_rows_after": 408,
+    "historical_semester_mismatch_rows_before": 48,
+    "historical_semester_mismatch_rows_after": 48,
+    "students_with_identity_relationship_issues_after": 0,
+    "student_page_course_sets_consistent_after": 1620
+  }
+}

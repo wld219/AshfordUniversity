@@ -1,0 +1,644 @@
+semester,semester_ID,faculty_ID,full_name,email_if_available,stored_faculty_Type,semester_teaching_credits,calculated_workload_status,active_section_count,active_CRNs,department_affiliations,login_exists
+"Fall 2026",1,200001,"Kevin Michael Baptiste",kevinbaptiste200001@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10001,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Spring 2027",2,200001,"Kevin Michael Baptiste",kevinbaptiste200001@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Fall 2026",1,200002,"Zoe Walker",zoewalker@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10002,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Spring 2027",2,200002,"Zoe Walker",zoewalker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Fall 2026",1,200003,"Maya Joseph Green",mayagreen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10003,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Spring 2027",2,200003,"Maya Joseph Green",mayagreen@ashford.edu,Full-Time,1,"Part-Time (PT)",1,140036,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Fall 2026",1,200004,"Joshua Thomas Scott",joshuascott200004@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10004,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Spring 2027",2,200004,"Joshua Thomas Scott",joshuascott200004@ashford.edu,Full-Time,6,"Part-Time (PT)",2,140031;140033,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Fall 2026",1,200005,"Ryan Sanchez",ryansanchez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10005,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Spring 2027",2,200005,"Ryan Sanchez",ryansanchez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Fall 2026",1,200006,"Malcolm Allen",malcolmallen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10006,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Spring 2027",2,200006,"Malcolm Allen",malcolmallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Education; Health Sciences",1
+"Fall 2026",1,200007,"Nathan Claire Wilson",nathanwilson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10007,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Spring 2027",2,200007,"Nathan Claire Wilson",nathanwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Fall 2026",1,200008,"Malcolm Lee Thomas",malcolmthomas@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10008,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Spring 2027",2,200008,"Malcolm Lee Thomas",malcolmthomas@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Fall 2026",1,200009,"Grace King",graceking@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10009,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Spring 2027",2,200009,"Grace King",graceking@ashford.edu,Full-Time,6,"Part-Time (PT)",2,140032;140034,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Fall 2026",1,200010,"Samuel Allen",samuelallen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10010,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Spring 2027",2,200010,"Samuel Allen",samuelallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Accounting, Taxation & Business Law; Engineering; Health Sciences",1
+"Fall 2026",1,200011,"Casey Joseph Hall",caseyhall@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140049,"Engineering; Health Sciences",1
+"Spring 2027",2,200011,"Casey Joseph Hall",caseyhall@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences",1
+"Fall 2026",1,200012,"Joseph Perez",josephperez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140065,"Engineering; Health Sciences",1
+"Spring 2027",2,200012,"Joseph Perez",josephperez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences",1
+"Fall 2026",1,200013,"Nicole Michael Gonzalez",nicolegonzalez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140068,"Adolescence Education; Engineering; Mathematics",1
+"Spring 2027",2,200013,"Nicole Michael Gonzalez",nicolegonzalez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Engineering; Mathematics",1
+"Fall 2026",1,200014,"Nathan Louise Carter",nathancarter@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140069,"Chemistry & Physics; Engineering; Mathematics",1
+"Spring 2027",2,200014,"Nathan Louise Carter",nathancarter@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Chemistry & Physics; Engineering; Mathematics",1
+"Fall 2026",1,200015,"Elena Alexander Mitchell",elenamitchell@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140070,"Engineering; Mathematics",1
+"Spring 2027",2,200015,"Elena Alexander Mitchell",elenamitchell@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Mathematics",1
+"Fall 2026",1,200016,"Mason Michelle Carter",masoncarter@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140037,"English; Mathematics",1
+"Spring 2027",2,200016,"Mason Michelle Carter",masoncarter@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200017,"Destiny Daniel Ramirez",destinyramirez200017@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140038,"English; Mathematics",1
+"Spring 2027",2,200017,"Destiny Daniel Ramirez",destinyramirez200017@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200018,"Grace Rose Martin",gracemartin200018@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140039,"English; Mathematics",1
+"Spring 2027",2,200018,"Grace Rose Martin",gracemartin200018@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200019,"Jordan Rose Clark",jordanclark@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140040,"English; Mathematics",1
+"Spring 2027",2,200019,"Jordan Rose Clark",jordanclark@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200020,"Malcolm Wright",malcolmwright@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140041,"English; Mathematics; Politics, Economics & Law",1
+"Spring 2027",2,200020,"Malcolm Wright",malcolmwright@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics; Politics, Economics & Law",1
+"Fall 2026",1,200021,"Isabella Louise Perez",isabellaperez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140042,"English; Mathematics",1
+"Spring 2027",2,200021,"Isabella Louise Perez",isabellaperez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200022,"Isabella Anthony Green",isabellagreen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140094,"English; Mathematics",1
+"Spring 2027",2,200022,"Isabella Anthony Green",isabellagreen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200023,"Nia Rodriguez",niarodriguez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140095,"English; Mathematics",1
+"Spring 2027",2,200023,"Nia Rodriguez",niarodriguez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200024,"Chloe Taylor",chloetaylor@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140096,"English; Mathematics",1
+"Spring 2027",2,200024,"Chloe Taylor",chloetaylor@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200025,"Elijah Ann Augustin",elijahaugustin@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140097,"English; Mathematics",1
+"Spring 2027",2,200025,"Elijah Ann Augustin",elijahaugustin@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Fall 2026",1,200026,"Zoe Hernandez",zoehernandez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140066,"Health Sciences; Mathematics",1
+"Spring 2027",2,200026,"Zoe Hernandez",zoehernandez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics",1
+"Fall 2026",1,200027,"Elijah Louise Walker",elijahwalker@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140067,"Health Sciences; Mathematics",1
+"Spring 2027",2,200027,"Elijah Louise Walker",elijahwalker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics",1
+"Fall 2026",1,200028,"Jonathan Hall",jonathanhall@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140098,"Health Sciences; Mathematics",1
+"Spring 2027",2,200028,"Jonathan Hall",jonathanhall@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics",1
+"Fall 2026",1,200029,"Jonathan Michelle Adams",jonathanadams@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140099,"Health Sciences; Natural Sciences",1
+"Spring 2027",2,200029,"Jonathan Michelle Adams",jonathanadams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Natural Sciences",1
+"Fall 2026",1,200030,"David Rodriguez",davidrodriguez200030@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140100,"Health Sciences; Natural Sciences",1
+"Spring 2027",2,200030,"David Rodriguez",davidrodriguez200030@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Natural Sciences",1
+"Fall 2026",1,200031,"Adrian Michael Baker",adrianbaker200031@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140101,"Health Sciences; Natural Sciences",1
+"Spring 2027",2,200031,"Adrian Michael Baker",adrianbaker200031@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Natural Sciences",1
+"Fall 2026",1,200032,"Gabriella Jean Williams",gabriellawilliams@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140102,"Health Sciences; Natural Sciences",1
+"Spring 2027",2,200032,"Gabriella Jean Williams",gabriellawilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Natural Sciences",1
+"Fall 2026",1,200033,"James Alexander Garcia",jamesgarcia@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140103,"Health Sciences; Natural Sciences",1
+"Spring 2027",2,200033,"James Alexander Garcia",jamesgarcia@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Natural Sciences",1
+"Fall 2026",1,200034,"Ethan Rose Lee",ethanlee200034@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140104,"Health Sciences; Natural Sciences",1
+"Spring 2027",2,200034,"Ethan Rose Lee",ethanlee200034@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Natural Sciences",1
+"Fall 2026",1,200035,"Ashley Claire Lopez",ashleylopez200035@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140105,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200035,"Ashley Claire Lopez",ashleylopez200035@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200036,"Victoria Nicole Wright",victoriawright200036@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140106,"Mathematics; Natural Sciences; Visual Arts",1
+"Spring 2027",2,200036,"Victoria Nicole Wright",victoriawright200036@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences; Visual Arts",1
+"Fall 2026",1,200037,"Jada Nguyen",jadanguyen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140107,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200037,"Jada Nguyen",jadanguyen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200038,"Brianna Thomas Clark",briannaclark@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200038,"Brianna Thomas Clark",briannaclark@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200039,"Kevin Jean Gonzalez",kevingonzalez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200039,"Kevin Jean Gonzalez",kevingonzalez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200040,"Elijah David Martinez",elijahmartinez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200040,"Elijah David Martinez",elijahmartinez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200041,"Gabriella Lee Hall",gabriellahall@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200041,"Gabriella Lee Hall",gabriellahall@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200042,"Nicholas Smith",nicholassmith200042@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200042,"Nicholas Smith",nicholassmith200042@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200043,"Grace Claire Roberts",graceroberts@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200043,"Grace Claire Roberts",graceroberts@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200044,"Naomi Johnson",naomijohnson200044@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Natural Sciences",1
+"Spring 2027",2,200044,"Naomi Johnson",naomijohnson200044@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Natural Sciences",1
+"Fall 2026",1,200045,"Brandon Baker",brandonbaker200045@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140074,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200045,"Brandon Baker",brandonbaker200045@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200046,"David David Nguyen",davidnguyen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140075,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200046,"David David Nguyen",davidnguyen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200047,"Matthew Joseph Allen",matthewallen200047@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140076,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200047,"Matthew Joseph Allen",matthewallen200047@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200048,"David Renee Brown",davidbrown200048@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140077,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200048,"David Renee Brown",davidbrown200048@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200049,"Ava Hernandez",avahernandez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140078,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200049,"Ava Hernandez",avahernandez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200050,"Ava Baker",avabaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200050,"Ava Baker",avabaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200051,"Brianna Rose Lewis",briannalewis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200051,"Brianna Rose Lewis",briannalewis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200052,"Adrian Michael Nguyen",adriannguyen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200052,"Adrian Michael Nguyen",adriannguyen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200053,"Lauren Walker",laurenwalker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Spring 2027",2,200053,"Lauren Walker",laurenwalker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",1
+"Fall 2026",1,200054,"Ashley Rose Smith",ashleysmith200054@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Social Sciences",1
+"Spring 2027",2,200054,"Ashley Rose Smith",ashleysmith200054@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140030,"Adolescence Education; Social Sciences",1
+"Fall 2026",1,200055,"Jasmine Daniel Adams",jasmineadams200055@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Social Sciences",1
+"Spring 2027",2,200055,"Jasmine Daniel Adams",jasmineadams200055@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Social Sciences",1
+"Fall 2026",1,200056,"Jonathan Grace Baker",jonathanbaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Social Sciences",1
+"Spring 2027",2,200056,"Jonathan Grace Baker",jonathanbaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Adolescence Education; Social Sciences",1
+"Fall 2026",1,200057,"Taylor James Wright",taylorwright@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Biological Sciences; Social Sciences",1
+"Spring 2027",2,200057,"Taylor James Wright",taylorwright@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Biological Sciences; Social Sciences",1
+"Fall 2026",1,200058,"Maya Baptiste",mayabaptiste@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Biological Sciences; Social Sciences",1
+"Spring 2027",2,200058,"Maya Baptiste",mayabaptiste@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Biological Sciences; Social Sciences",1
+"Fall 2026",1,200059,"Andrew Rose Hill",andrewhill@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140079,"Arts and Media; Social Sciences",1
+"Spring 2027",2,200059,"Andrew Rose Hill",andrewhill@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Social Sciences",1
+"Fall 2026",1,200060,"Nia Alexander Torres",niatorres@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140080,"Arts and Media; Social Sciences",1
+"Spring 2027",2,200060,"Nia Alexander Torres",niatorres@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Social Sciences",1
+"Fall 2026",1,200061,"Matthew Michael Smith",matthewsmith@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140081,"Arts and Media; Social Sciences",1
+"Spring 2027",2,200061,"Matthew Michael Smith",matthewsmith@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Social Sciences",1
+"Fall 2026",1,200062,"Madison Joseph Martin",madisonmartin@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140082,"Arts and Media; Social Sciences",1
+"Spring 2027",2,200062,"Madison Joseph Martin",madisonmartin@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Social Sciences",1
+"Fall 2026",1,200063,"Andre Robinson",andrerobinson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140083,"Arts and Media; Modern Languages",1
+"Spring 2027",2,200063,"Andre Robinson",andrerobinson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Modern Languages",1
+"Fall 2026",1,200064,"Julian Anthony Louis",julianlouis200064@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140084,"Arts and Media; Biological Sciences",1
+"Spring 2027",2,200064,"Julian Anthony Louis",julianlouis200064@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Biological Sciences",1
+"Fall 2026",1,200065,"Darius Elise King",dariusking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Chemistry & Physics",1
+"Spring 2027",2,200065,"Darius Elise King",dariusking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Chemistry & Physics",1
+"Fall 2026",1,200066,"Jasmine King",jasmineking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Chemistry & Physics",1
+"Spring 2027",2,200066,"Jasmine King",jasmineking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Chemistry & Physics",1
+"Fall 2026",1,200067,"Victoria Daniel Scott",victoriascott200067@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Media & American Studies",1
+"Spring 2027",2,200067,"Victoria Daniel Scott",victoriascott200067@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Media & American Studies",1
+"Fall 2026",1,200068,"Caleb Green",calebgreen200068@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Childhood Education & Literacy",1
+"Spring 2027",2,200068,"Caleb Green",calebgreen200068@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Childhood Education & Literacy",1
+"Fall 2026",1,200069,"Brittany Nicole Young",brittanyyoung@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Media & American Studies",1
+"Spring 2027",2,200069,"Brittany Nicole Young",brittanyyoung@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Media & American Studies",1
+"Fall 2026",1,200070,"Natalie Jean Moore",nataliemoore200070@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140085,"Arts and Media; Business",1
+"Spring 2027",2,200070,"Natalie Jean Moore",nataliemoore200070@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business",1
+"Fall 2026",1,200071,"Gabriel Hall",gabrielhall200071@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140086,"Arts and Media; Business",1
+"Spring 2027",2,200071,"Gabriel Hall",gabrielhall200071@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business",1
+"Spring 2027",2,200072,"Gabriel Thomas Thomas",gabrielthomas@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Fall 2026",1,200073,"Michael Johnson",michaeljohnson200073@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140048,"Business; Computer Science",1
+"Spring 2027",2,200073,"Michael Johnson",michaeljohnson200073@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Fall 2026",1,200074,"Gabriel Lee Jean",gabrieljean@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140043,"Business; Education",1
+"Spring 2027",2,200074,"Gabriel Lee Jean",gabrieljean@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education",1
+"Fall 2026",1,200075,"Emily Joseph",emilyjoseph@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140044,"Business; Education",1
+"Spring 2027",2,200075,"Emily Joseph",emilyjoseph@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education",1
+"Fall 2026",1,200076,"Camila Marie Walker",camilawalker@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140071,"Business; Engineering",1
+"Spring 2027",2,200076,"Camila Marie Walker",camilawalker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Fall 2026",1,200077,"Elijah Michelle Miller",elijahmiller200077@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140072,"Business; Engineering",1
+"Spring 2027",2,200077,"Elijah Michelle Miller",elijahmiller200077@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Fall 2026",1,200078,"Nathan Louise Green",nathangreen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140087,"Business; English",1
+"Spring 2027",2,200078,"Nathan Louise Green",nathangreen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Fall 2026",1,200079,"Ava Marie Lopez",avalopez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140088,"Business; English",1
+"Spring 2027",2,200079,"Ava Marie Lopez",avalopez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20066,"Business; English",1
+"Fall 2026",1,200080,"Gabriel Joseph King",gabrielking@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140089,"Business; Health Sciences",1
+"Spring 2027",2,200080,"Gabriel Joseph King",gabrielking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Health Sciences",1
+"Fall 2026",1,200081,"Gabriel Anthony Torres",gabrieltorres200081@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140090,"Business; Health Sciences",1
+"Spring 2027",2,200081,"Gabriel Anthony Torres",gabrieltorres200081@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Health Sciences",1
+"Fall 2026",1,200082,"Taylor Sanchez",taylorsanchez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140091,"Business; Mathematics",1
+"Spring 2027",2,200082,"Taylor Sanchez",taylorsanchez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Mathematics",1
+"Fall 2026",1,200083,"Riley Desir",rileydesir200083@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140092,"Business; Mathematics",1
+"Spring 2027",2,200083,"Riley Desir",rileydesir200083@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Mathematics",1
+"Fall 2026",1,200084,"Eric Baker",ericbaker@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140093,"Business; Natural Sciences",1
+"Spring 2027",2,200084,"Eric Baker",ericbaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Natural Sciences",1
+"Fall 2026",1,200085,"Caleb Elise Sanchez",calebsanchez200085@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Natural Sciences",1
+"Spring 2027",2,200085,"Caleb Elise Sanchez",calebsanchez200085@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Natural Sciences",1
+"Fall 2026",1,200086,"Jason Ann Pierre",jasonpierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Spring 2027",2,200086,"Jason Ann Pierre",jasonpierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Fall 2026",1,200087,"Jordan Renee Nguyen",jordannguyen200087@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140050,"Computer Science; Social Sciences",1
+"Spring 2027",2,200087,"Jordan Renee Nguyen",jordannguyen200087@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Fall 2026",1,200088,"Elena Brown",elenabrown@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140051,"Arts and Media; Computer Science",1
+"Spring 2027",2,200088,"Elena Brown",elenabrown@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Fall 2026",1,200089,"Lauren Elise Jean",laurenjean@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140052,"Arts and Media; Computer Science",1
+"Spring 2027",2,200089,"Lauren Elise Jean",laurenjean@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Fall 2026",1,200090,"Victoria Hernandez",victoriahernandez200090@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140053,"Business; Computer Science",1
+"Spring 2027",2,200090,"Victoria Hernandez",victoriahernandez200090@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Fall 2026",1,200091,"Brian James Lewis",brianlewis@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140054,"Business; Computer Science",1
+"Spring 2027",2,200091,"Brian James Lewis",brianlewis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Fall 2026",1,200092,"Isabella Nicole Rivera",isabellarivera@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140055,"Computer Science; Media & American Studies",1
+"Spring 2027",2,200092,"Isabella Nicole Rivera",isabellarivera@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Media & American Studies",1
+"Fall 2026",1,200093,"Brianna Thomas Nguyen",briannanguyen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140056,"Computer Science; Exceptional Education & Learning",1
+"Spring 2027",2,200093,"Brianna Thomas Nguyen",briannanguyen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Exceptional Education & Learning",1
+"Fall 2026",1,200094,"Eric Louise Brown",ericbrown@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140045,"Computer Science; Education",1
+"Spring 2027",2,200094,"Eric Louise Brown",ericbrown@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Education",1
+"Fall 2026",1,200095,"Samuel James Jones",samueljones@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140046,"Computer Science; Education",1
+"Spring 2027",2,200095,"Samuel James Jones",samueljones@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Education",1
+"Fall 2026",1,200096,"Ethan Thomas Gonzalez",ethangonzalez200096@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140057,"Computer Science; Engineering",1
+"Spring 2027",2,200096,"Ethan Thomas Gonzalez",ethangonzalez200096@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Engineering",1
+"Fall 2026",1,200097,"Victoria Renee Allen",victoriaallen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140058,"Computer Science; Engineering",1
+"Spring 2027",2,200097,"Victoria Renee Allen",victoriaallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Engineering",1
+"Fall 2026",1,200098,"Jada Flores",jadaflores@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140047,"Education; English",1
+"Spring 2027",2,200098,"Jada Flores",jadaflores@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; English",1
+"Fall 2026",1,200099,"Taylor Daniel Lewis",taylorlewis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; English",1
+"Spring 2027",2,200099,"Taylor Daniel Lewis",taylorlewis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; English",1
+"Fall 2026",1,200100,"Destiny Joseph Nelson",destinynelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences",1
+"Spring 2027",2,200100,"Destiny Joseph Nelson",destinynelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences",1
+"Fall 2026",1,200101,"Joshua Rose Carter",joshuacarter@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140073,"Arts and Media; Engineering",1
+"Spring 2027",2,200101,"Joshua Rose Carter",joshuacarter@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Fall 2026",1,200102,"Eric Marie Wilson",ericwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences",1
+"Spring 2027",2,200102,"Eric Marie Wilson",ericwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences",1
+"Fall 2026",1,200103,"Samantha Anthony Lewis",samanthalewis@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140059,"Computer Science; Engineering",1
+"Spring 2027",2,200103,"Samantha Anthony Lewis",samanthalewis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Engineering",1
+"Fall 2026",1,200104,"Gabriel Anthony Nelson",gabrielnelson200104@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200104,"Gabriel Anthony Nelson",gabrielnelson200104@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Fall 2026",1,200105,"Eric Nicole Charles",ericcharles@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Social Sciences",1
+"Spring 2027",2,200105,"Eric Nicole Charles",ericcharles@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Social Sciences",1
+"Fall 2026",1,200106,"Eric Nicole Gonzalez",ericgonzalez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Mathematics",1
+"Spring 2027",2,200106,"Eric Nicole Gonzalez",ericgonzalez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Mathematics",1
+"Fall 2026",1,200107,"Rachel Marie Allen",rachelallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Spring 2027",2,200107,"Rachel Marie Allen",rachelallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Fall 2026",1,200108,"Ashley Anthony Green",ashleygreen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Social Sciences",1
+"Spring 2027",2,200108,"Ashley Anthony Green",ashleygreen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Social Sciences",1
+"Fall 2026",1,200109,"Sarah James Thompson",sarahthompson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Mathematics",1
+"Spring 2027",2,200109,"Sarah James Thompson",sarahthompson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Mathematics",1
+"Fall 2026",1,200110,"Jordan Thomas Johnson",jordanjohnson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200110,"Jordan Thomas Johnson",jordanjohnson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Fall 2026",1,200111,"Maya Marie Allen",mayaallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Women's, Gender, and Sexuality Studies",1
+"Spring 2027",2,200111,"Maya Marie Allen",mayaallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Women's, Gender, and Sexuality Studies",1
+"Fall 2026",1,200112,"Lucas Anthony Wright",lucaswright@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Spring 2027",2,200112,"Lucas Anthony Wright",lucaswright@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Fall 2026",1,200113,"Brittany Renee Jean",brittanyjean@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Natural Sciences",1
+"Spring 2027",2,200113,"Brittany Renee Jean",brittanyjean@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Natural Sciences",1
+"Fall 2026",1,200114,"Christopher Lee Smith",christophersmith@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Natural Sciences",1
+"Spring 2027",2,200114,"Christopher Lee Smith",christophersmith@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Natural Sciences",1
+"Fall 2026",1,200115,"Brandon Thomas Desir",brandondesir@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Spring 2027",2,200115,"Brandon Thomas Desir",brandondesir@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Fall 2026",1,200116,"Matthew Roberts",matthewroberts@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Psychology; Social Sciences",1
+"Spring 2027",2,200116,"Matthew Roberts",matthewroberts@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Psychology; Social Sciences",1
+"Fall 2026",1,200117,"Brianna Michael King",briannaking@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140060,"Computer Science; Engineering",1
+"Spring 2027",2,200117,"Brianna Michael King",briannaking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Engineering",1
+"Fall 2026",1,200118,"Darius Daniel Miller",dariusmiller@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10208,"English; Mathematics; Natural Sciences",1
+"Spring 2027",2,200118,"Darius Daniel Miller",dariusmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics; Natural Sciences",1
+"Fall 2026",1,200119,"Aaliyah Miller",aaliyahmiller200119@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10209,"English; Mathematics; Natural Sciences",1
+"Spring 2027",2,200119,"Aaliyah Miller",aaliyahmiller200119@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics; Natural Sciences",1
+"Fall 2026",1,200120,"Gabriel Alexander Green",gabrielgreen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10210,"English; Mathematics; Natural Sciences",1
+"Spring 2027",2,200120,"Gabriel Alexander Green",gabrielgreen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics; Natural Sciences",1
+"Fall 2026",1,200121,"Adrian Michelle Robinson",adrianrobinson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10211,"English; Mathematics; Natural Sciences",1
+"Spring 2027",2,200121,"Adrian Michelle Robinson",adrianrobinson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics; Natural Sciences",1
+"Fall 2026",1,200122,"Chloe Michelle Etienne",chloeetienne@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10212,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200122,"Chloe Michelle Etienne",chloeetienne@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200123,"Samuel Jean Joseph",samueljoseph@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10213,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200123,"Samuel Jean Joseph",samueljoseph@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200124,"Darius Renee Scott",dariusscott200124@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10201,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200124,"Darius Renee Scott",dariusscott200124@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200125,"Maya Lee Ramirez",mayaramirez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10202,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200125,"Maya Lee Ramirez",mayaramirez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200126,"Brianna Louise Thomas",briannathomas@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10203,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200126,"Brianna Louise Thomas",briannathomas@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200127,"Alexis James Martin",alexismartin@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10204,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200127,"Alexis James Martin",alexismartin@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200128,"Brianna Williams",briannawilliams@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10205,"Health Sciences; Mathematics; Natural Sciences",1
+"Spring 2027",2,200128,"Brianna Williams",briannawilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics; Natural Sciences",1
+"Fall 2026",1,200129,"Jordan Johnson",jordanjohnson200129@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10206,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200129,"Jordan Johnson",jordanjohnson200129@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200130,"Ava Alexander Allen",avaallen@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10207,"Mathematics; Natural Sciences",1
+"Spring 2027",2,200130,"Ava Alexander Allen",avaallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",1
+"Fall 2026",1,200131,"Jasmine Nicole Martinez",jasminemartinez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Social Sciences",1
+"Spring 2027",2,200131,"Jasmine Nicole Martinez",jasminemartinez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20241,"Engineering; Social Sciences",1
+"Fall 2026",1,200132,"Camila Thomas",camilathomas200132@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10225,"Engineering; Social Sciences",1
+"Spring 2027",2,200132,"Camila Thomas",camilathomas200132@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Social Sciences",1
+"Fall 2026",1,200133,"Quinn Baptiste",quinnbaptiste@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10226,"Engineering; Social Sciences",1
+"Spring 2027",2,200133,"Quinn Baptiste",quinnbaptiste@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Social Sciences",1
+"Fall 2026",1,200134,"Mia Michelle Augustin",miaaugustin200134@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10227,"Engineering; Social Sciences",1
+"Spring 2027",2,200134,"Mia Michelle Augustin",miaaugustin200134@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Social Sciences",1
+"Fall 2026",1,200135,"Kayla Louis",kaylalouis@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10228,"Engineering; Social Sciences",1
+"Spring 2027",2,200135,"Kayla Louis",kaylalouis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Social Sciences",1
+"Fall 2026",1,200136,"Jessica Grace Thompson",jessicathompson200136@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10229,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200136,"Jessica Grace Thompson",jessicathompson200136@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200137,"Samantha Rose Wright",samanthawright200137@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10230,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200137,"Samantha Rose Wright",samanthawright200137@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200138,"Liam Nicole Jackson",liamjackson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10231,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200138,"Liam Nicole Jackson",liamjackson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200139,"Isabella Michelle Green",isabellagreen200139@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10232,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200139,"Isabella Michelle Green",isabellagreen200139@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200140,"Ashley Robinson",ashleyrobinson200140@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10233,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200140,"Ashley Robinson",ashleyrobinson200140@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200141,"Adrian Elise Wilson",adrianwilson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10234,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200141,"Adrian Elise Wilson",adrianwilson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140029,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200142,"Isaiah Elise Baker",isaiahbaker@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10235,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200142,"Isaiah Elise Baker",isaiahbaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200143,"Naomi Michael Ramirez",naomiramirez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10236,"Arts and Media; Engineering; Social Sciences",1
+"Spring 2027",2,200143,"Naomi Michael Ramirez",naomiramirez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering; Social Sciences",1
+"Fall 2026",1,200144,"Rachel Grace Flores",rachelflores@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10237,"Business; Engineering; Social Sciences",1
+"Spring 2027",2,200144,"Rachel Grace Flores",rachelflores@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Social Sciences",1
+"Fall 2026",1,200145,"Jessica Renee Harris",jessicaharris@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10238,"Business; Engineering; Social Sciences",1
+"Spring 2027",2,200145,"Jessica Renee Harris",jessicaharris@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Social Sciences",1
+"Fall 2026",1,200146,"Grace James White",gracewhite@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10239,"Arts and Media; Business; Engineering",1
+"Spring 2027",2,200146,"Grace James White",gracewhite@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; Engineering",1
+"Fall 2026",1,200147,"Cameron Alexander Harris",cameronharris@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10240,"Arts and Media; Business; Engineering",1
+"Spring 2027",2,200147,"Cameron Alexander Harris",cameronharris@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; Engineering",1
+"Fall 2026",1,200148,"Mia Michelle Thompson",miathompson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10241,"Arts and Media; Business; Engineering",1
+"Spring 2027",2,200148,"Mia Michelle Thompson",miathompson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; Engineering",1
+"Fall 2026",1,200149,"Eric Davis",ericdavis@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10242,"Arts and Media; Business; Engineering",1
+"Spring 2027",2,200149,"Eric Davis",ericdavis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; Engineering",1
+"Fall 2026",1,200150,"Maria Claire Lopez",marialopez200150@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140061,"Business; Computer Science; Health Sciences",1
+"Spring 2027",2,200150,"Maria Claire Lopez",marialopez200150@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20001;20065,"Business; Computer Science; Health Sciences",1
+"Fall 2026",1,200151,"Isabella Ramirez",isabellaramirez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140062,"Business; Computer Science; Health Sciences",1
+"Spring 2027",2,200151,"Isabella Ramirez",isabellaramirez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20002,"Business; Computer Science; Health Sciences",1
+"Fall 2026",1,200152,"Gabriella Renee Hernandez",gabriellahernandez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140063,"Business; Computer Science; Mathematics",1
+"Spring 2027",2,200152,"Gabriella Renee Hernandez",gabriellahernandez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20003,"Business; Computer Science; Mathematics",1
+"Fall 2026",1,200153,"Nicole Ann Garcia",nicolegarcia@ashford.edu,Full-Time,4,"Part-Time (PT)",1,140064,"Business; Computer Science; Mathematics",1
+"Spring 2027",2,200153,"Nicole Ann Garcia",nicolegarcia@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20004,"Business; Computer Science; Mathematics",1
+"Fall 2026",1,200154,"James Michael Martin",jamesmartin@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Mathematics",1
+"Spring 2027",2,200154,"James Michael Martin",jamesmartin@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20005,"Business; Computer Science; Mathematics",1
+"Fall 2026",1,200155,"Nia Ann Carter",niacarter@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Mathematics",1
+"Spring 2027",2,200155,"Nia Ann Carter",niacarter@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20006,"Business; Computer Science; Mathematics",1
+"Fall 2026",1,200156,"Matthew Hernandez",matthewhernandez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Natural Sciences",1
+"Spring 2027",2,200156,"Matthew Hernandez",matthewhernandez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20007,"Business; Computer Science; Natural Sciences",1
+"Fall 2026",1,200157,"Samantha Renee Pierre",samanthapierre200157@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Natural Sciences",1
+"Spring 2027",2,200157,"Samantha Renee Pierre",samanthapierre200157@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20008,"Business; Computer Science; Natural Sciences",1
+"Fall 2026",1,200158,"Mia Ann Pierre",miapierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Natural Sciences",1
+"Spring 2027",2,200158,"Mia Ann Pierre",miapierre@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20009,"Business; Computer Science; Natural Sciences",1
+"Fall 2026",1,200159,"Camila David Rivera",camilarivera200159@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Natural Sciences",1
+"Spring 2027",2,200159,"Camila David Rivera",camilarivera200159@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20010,"Business; Computer Science; Natural Sciences",1
+"Fall 2026",1,200160,"Daniel Thomas Wright",danielwright200160@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Social Sciences",1
+"Spring 2027",2,200160,"Daniel Thomas Wright",danielwright200160@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20011,"Business; Computer Science; Social Sciences",1
+"Fall 2026",1,200161,"Aaliyah Elise Anderson",aaliyahanderson200161@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Social Sciences",1
+"Spring 2027",2,200161,"Aaliyah Elise Anderson",aaliyahanderson200161@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20012,"Business; Computer Science; Social Sciences",1
+"Fall 2026",1,200162,"Nicholas Lee Thompson",nicholasthompson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Social Sciences",1
+"Spring 2027",2,200162,"Nicholas Lee Thompson",nicholasthompson@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20013,"Business; Computer Science; Social Sciences",1
+"Fall 2026",1,200163,"David Grace Baptiste",davidbaptiste@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science; Social Sciences",1
+"Spring 2027",2,200163,"David Grace Baptiste",davidbaptiste@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20014,"Business; Computer Science; Social Sciences",1
+"Fall 2026",1,200164,"Nathan Clark",nathanclark200164@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Spring 2027",2,200164,"Nathan Clark",nathanclark200164@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20015,"Arts and Media; Computer Science",1
+"Fall 2026",1,200165,"Malcolm Michelle Scott",malcolmscott@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Spring 2027",2,200165,"Malcolm Michelle Scott",malcolmscott@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20016,"Arts and Media; Computer Science",1
+"Fall 2026",1,200166,"Gabriel Lee Scott",gabrielscott@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Spring 2027",2,200166,"Gabriel Lee Scott",gabrielscott@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20017,"Arts and Media; Computer Science",1
+"Fall 2026",1,200167,"Madison Marie Miller",madisonmiller200167@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Spring 2027",2,200167,"Madison Marie Miller",madisonmiller200167@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20018;20048,"Arts and Media; Computer Science",1
+"Fall 2026",1,200168,"Julian Davis",juliandavis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Spring 2027",2,200168,"Julian Davis",juliandavis@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20019;20049,"Business; Computer Science",1
+"Fall 2026",1,200169,"Michael Rodriguez",michaelrodriguez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Spring 2027",2,200169,"Michael Rodriguez",michaelrodriguez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20020;20050,"Business; Computer Science",1
+"Fall 2026",1,200170,"Maria Alexander Nguyen",marianguyen200170@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Spring 2027",2,200170,"Maria Alexander Nguyen",marianguyen200170@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20021;20051,"Business; Computer Science",1
+"Fall 2026",1,200171,"Ava James Ramirez",avaramirez200171@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Computer Science",1
+"Spring 2027",2,200171,"Ava James Ramirez",avaramirez200171@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20022;20052,"Business; Computer Science",1
+"Fall 2026",1,200172,"Isaiah James Martinez",isaiahmartinez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Visual Arts",1
+"Spring 2027",2,200172,"Isaiah James Martinez",isaiahmartinez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20023;20053,"Computer Science; Visual Arts",1
+"Fall 2026",1,200173,"Kevin Michael Nelson",kevinnelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Politics, Economics & Law",1
+"Spring 2027",2,200173,"Kevin Michael Nelson",kevinnelson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20024;20054,"Computer Science; Politics, Economics & Law",1
+"Fall 2026",1,200174,"Brandon Elise Hall",brandonhall200174@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Sociology",1
+"Spring 2027",2,200174,"Brandon Elise Hall",brandonhall200174@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20055,"Computer Science; Sociology",1
+"Fall 2026",1,200175,"Isaiah James Perez",isaiahperez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Education",1
+"Spring 2027",2,200175,"Isaiah James Perez",isaiahperez@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20056,"Computer Science; Education",1
+"Fall 2026",1,200176,"Lucas Anthony Robinson",lucasrobinson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Public Health",1
+"Spring 2027",2,200176,"Lucas Anthony Robinson",lucasrobinson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Public Health",1
+"Fall 2026",1,200177,"Nicholas Hall",nicholashall@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Visual Arts",1
+"Spring 2027",2,200177,"Nicholas Hall",nicholashall@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Visual Arts",1
+"Fall 2026",1,200178,"Mason David Wilson",masonwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Women's, Gender, and Sexuality Studies",1
+"Spring 2027",2,200178,"Mason David Wilson",masonwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Women's, Gender, and Sexuality Studies",1
+"Fall 2026",1,200179,"Brianna Nguyen",briannanguyen200179@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Psychology",1
+"Spring 2027",2,200179,"Brianna Nguyen",briannanguyen200179@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Psychology",1
+"Fall 2026",1,200180,"Ava Rose Williams",avawilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Spring 2027",2,200180,"Ava Rose Williams",avawilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Fall 2026",1,200181,"Kiara Altidor",kiaraaltidor@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Spring 2027",2,200181,"Kiara Altidor",kiaraaltidor@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Fall 2026",1,200182,"Alexis Michelle Young",alexisyoung@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Spring 2027",2,200182,"Alexis Michelle Young",alexisyoung@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Fall 2026",1,200183,"Elena Adams",elenaadams12@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Spring 2027",2,200183,"Elena Adams",elenaadams12@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Engineering",1
+"Fall 2026",1,200184,"Marcus Marie Sanchez",marcussanchez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; English",1
+"Spring 2027",2,200184,"Marcus Marie Sanchez",marcussanchez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; English",1
+"Fall 2026",1,200185,"Ashley Miller",ashleymiller200185@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; English",1
+"Spring 2027",2,200185,"Ashley Miller",ashleymiller200185@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; English",1
+"Fall 2026",1,200186,"Cameron Sanchez",cameronsanchez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; English",1
+"Spring 2027",2,200186,"Cameron Sanchez",cameronsanchez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20067;20097,"Business; Education; English",1
+"Fall 2026",1,200187,"Julian Louise Wilson",julianwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; English",1
+"Spring 2027",2,200187,"Julian Louise Wilson",julianwilson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20068;20098,"Business; Education; English",1
+"Fall 2026",1,200188,"Sophia James Rodriguez",sophiarodriguez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; Health Sciences",1
+"Spring 2027",2,200188,"Sophia James Rodriguez",sophiarodriguez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20069;20099,"Business; Education; Health Sciences",1
+"Fall 2026",1,200189,"Michael Marie Williams",michaelwilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Education; Health Sciences",1
+"Spring 2027",2,200189,"Michael Marie Williams",michaelwilliams@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20070;20100,"Business; Education; Health Sciences",1
+"Fall 2026",1,200190,"Sophia Baker",sophiabaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Health Sciences",1
+"Spring 2027",2,200190,"Sophia Baker",sophiabaker@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20071;20101,"Business; Engineering; Health Sciences",1
+"Fall 2026",1,200191,"Zoe Lee Ramirez",zoeramirez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Health Sciences",1
+"Spring 2027",2,200191,"Zoe Lee Ramirez",zoeramirez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20072;20102,"Business; Engineering; Health Sciences",1
+"Fall 2026",1,200192,"Casey Torres",caseytorres@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200192,"Casey Torres",caseytorres@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20073;20103,"Business; Engineering",1
+"Fall 2026",1,200193,"Michael Claire Baker",michaelbaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200193,"Michael Claire Baker",michaelbaker@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20074;20104,"Business; Engineering",1
+"Fall 2026",1,200194,"Gabriella Grace Joseph",gabriellajoseph@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200194,"Gabriella Grace Joseph",gabriellajoseph@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20075;20105,"Business; Engineering",1
+"Fall 2026",1,200195,"Mason Jean",masonjean@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200195,"Mason Jean",masonjean@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20076;20106,"Business; Engineering",1
+"Fall 2026",1,200196,"Andrew Louis",andrewlouis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Natural Sciences",1
+"Spring 2027",2,200196,"Andrew Louis",andrewlouis@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20107,"Business; Engineering; Natural Sciences",1
+"Fall 2026",1,200197,"Ryan Nelson",ryannelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Natural Sciences",1
+"Spring 2027",2,200197,"Ryan Nelson",ryannelson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20078;20108,"Business; Engineering; Natural Sciences",1
+"Fall 2026",1,200198,"Nicholas Daniel Perez",nicholasperez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Natural Sciences",1
+"Spring 2027",2,200198,"Nicholas Daniel Perez",nicholasperez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20079;20109,"Business; Engineering; Natural Sciences",1
+"Fall 2026",1,200199,"Joseph Walker",josephwalker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Natural Sciences",1
+"Spring 2027",2,200199,"Joseph Walker",josephwalker@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20080;20110,"Business; Engineering; Natural Sciences",1
+"Fall 2026",1,200200,"Aaliyah Daniel Lopez",aaliyahlopez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering",1
+"Spring 2027",2,200200,"Aaliyah Daniel Lopez",aaliyahlopez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20081;20111,"Business; Engineering",1
+"Fall 2026",1,200201,"Nia Rose Wilson",niawilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Social Sciences",1
+"Spring 2027",2,200201,"Nia Rose Wilson",niawilson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20082;20112,"Business; Engineering; Social Sciences",1
+"Fall 2026",1,200202,"Cameron Grace Anderson",cameronanderson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Social Sciences",1
+"Spring 2027",2,200202,"Cameron Grace Anderson",cameronanderson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20083;20113,"Business; Engineering; Social Sciences",1
+"Fall 2026",1,200203,"Gabriel Claire Lee",gabriellee200203@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Engineering; Social Sciences",1
+"Spring 2027",2,200203,"Gabriel Claire Lee",gabriellee200203@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20084;20114,"Business; Engineering; Social Sciences",1
+"Fall 2026",1,200204,"Ryan Scott",ryanscott@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; Engineering",1
+"Spring 2027",2,200204,"Ryan Scott",ryanscott@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20085;20115,"Arts and Media; Business; Engineering",1
+"Fall 2026",1,200205,"Michael Elise Scott",michaelscott200205@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; English",1
+"Spring 2027",2,200205,"Michael Elise Scott",michaelscott200205@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20086;20116,"Arts and Media; Business; English",1
+"Fall 2026",1,200206,"James James Young",jamesyoung@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; English",1
+"Spring 2027",2,200206,"James James Young",jamesyoung@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20087;20117,"Arts and Media; Business; English",1
+"Fall 2026",1,200207,"Olivia Marie Anderson",oliviaanderson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Business; English",1
+"Spring 2027",2,200207,"Olivia Marie Anderson",oliviaanderson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20088;20118,"Arts and Media; Business; English",1
+"Fall 2026",1,200208,"Taylor Rivera",taylorrivera@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200208,"Taylor Rivera",taylorrivera@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20119,"Business; English",1
+"Fall 2026",1,200209,"Christian Jean Williams",christianwilliams200209@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200209,"Christian Jean Williams",christianwilliams200209@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20120,"Business; English",1
+"Fall 2026",1,200210,"Ethan Ramirez",ethanramirez200210@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English; Mathematics",1
+"Spring 2027",2,200210,"Ethan Ramirez",ethanramirez200210@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20151,"Business; English; Mathematics",1
+"Fall 2026",1,200211,"Caleb Baker",calebbaker@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English; Mathematics",1
+"Spring 2027",2,200211,"Caleb Baker",calebbaker@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20152,"Business; English; Mathematics",1
+"Fall 2026",1,200212,"James Allen",jamesallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200212,"James Allen",jamesallen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Fall 2026",1,200213,"Ava Marie Nguyen",avanguyen200213@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200213,"Ava Marie Nguyen",avanguyen200213@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Fall 2026",1,200214,"Victoria Alexander Garcia",victoriagarcia@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200214,"Victoria Alexander Garcia",victoriagarcia@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Fall 2026",1,200215,"Riley Michelle Williams",rileywilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200215,"Riley Michelle Williams",rileywilliams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Fall 2026",1,200216,"Marcus Hall",marcushall200216@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English",1
+"Spring 2027",2,200216,"Marcus Hall",marcushall200216@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English",1
+"Fall 2026",1,200217,"Gabriella Rose Perez",gabriellaperez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English",1
+"Spring 2027",2,200217,"Gabriella Rose Perez",gabriellaperez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English",1
+"Fall 2026",1,200218,"Destiny Jean",destinyjean@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English; Mathematics",1
+"Spring 2027",2,200218,"Destiny Jean",destinyjean@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20129,"Computer Science; English; Mathematics",1
+"Fall 2026",1,200219,"Isabella Grace Jean",isabellajean200219@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English; Mathematics",1
+"Spring 2027",2,200219,"Isabella Grace Jean",isabellajean200219@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20130,"Computer Science; English; Mathematics",1
+"Fall 2026",1,200220,"Sophia Claire Pierre",sophiapierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English; Mathematics",1
+"Spring 2027",2,200220,"Sophia Claire Pierre",sophiapierre@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20131;20161,"Computer Science; English; Mathematics",1
+"Fall 2026",1,200221,"Brittany Daniel Green",brittanygreen@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; English; Mathematics",1
+"Spring 2027",2,200221,"Brittany Daniel Green",brittanygreen@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20132;20162,"Computer Science; English; Mathematics",1
+"Fall 2026",1,200222,"Andrew Rose Harris",andrewharris@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200222,"Andrew Rose Harris",andrewharris@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20133;20163,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200223,"Jordan Hill",jordanhill@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200223,"Jordan Hill",jordanhill@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20134;20164,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200224,"Jada Nicole Jones",jadajones@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200224,"Jada Nicole Jones",jadajones@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20135;20165,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200225,"Isabella Alexander Green",isabellagreen200225@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200225,"Isabella Alexander Green",isabellagreen200225@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20136;20166,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200226,"Ethan Brown",ethanbrown@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200226,"Ethan Brown",ethanbrown@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20137;20167,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200227,"Christopher Joseph Johnson",christopherjohnson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200227,"Christopher Joseph Johnson",christopherjohnson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20138;20168,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200228,"Joshua Michelle Garcia",joshuagarcia@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Education; Health Sciences; Mathematics",1
+"Spring 2027",2,200228,"Joshua Michelle Garcia",joshuagarcia@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20139;20169,"Education; Health Sciences; Mathematics",1
+"Fall 2026",1,200229,"Samantha Augustin",samanthaaugustin200229@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200229,"Samantha Augustin",samanthaaugustin200229@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20140;20170,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200230,"Ryan Joseph Adams",ryanadams@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200230,"Ryan Joseph Adams",ryanadams@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20141;20171,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200231,"Julian Gonzalez",juliangonzalez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200231,"Julian Gonzalez",juliangonzalez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20142;20172,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200232,"Noah Jackson",noahjackson200232@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200232,"Noah Jackson",noahjackson200232@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20143;20173,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200233,"Ryan Claire Rodriguez",ryanrodriguez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200233,"Ryan Claire Rodriguez",ryanrodriguez@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20144;20174,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200234,"Sophia Desir",sophiadesir@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200234,"Sophia Desir",sophiadesir@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20145;20175,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200235,"Victoria Nelson",victorianelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Health Sciences; Mathematics",1
+"Spring 2027",2,200235,"Victoria Nelson",victorianelson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20146;20176,"Engineering; Health Sciences; Mathematics",1
+"Fall 2026",1,200236,"Quinn Renee Robinson",quinnrobinson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Spring 2027",2,200236,"Quinn Renee Robinson",quinnrobinson@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20147;20177,"English; Mathematics",1
+"Fall 2026",1,200237,"Victoria Michelle Baptiste",victoriabaptiste200237@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Spring 2027",2,200237,"Victoria Michelle Baptiste",victoriabaptiste200237@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20148;20178,"English; Mathematics",1
+"Fall 2026",1,200238,"Lauren Renee Jones",laurenjones@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Spring 2027",2,200238,"Lauren Renee Jones",laurenjones@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20149;20179,"English; Mathematics",1
+"Fall 2026",1,200239,"Malcolm Flores",malcolmflores@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"English; Mathematics",1
+"Spring 2027",2,200239,"Malcolm Flores",malcolmflores@ashford.edu,Full-Time,8,"Part-Time (PT)",2,20150;20180,"English; Mathematics",1
+"Fall 2026",1,200240,"Maya David Taylor",mayataylor@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10260,"Arts and Media; Business; English",1
+"Spring 2027",2,200240,"Maya David Taylor",mayataylor@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20278,"Arts and Media; Business; English",1
+"Fall 2026",1,200241,"Michael Grace Garcia",michaelgarcia@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10261,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200241,"Michael Grace Garcia",michaelgarcia@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20279,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200242,"Joshua Louise Williams",joshuawilliams@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10262,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200242,"Joshua Louise Williams",joshuawilliams@ashford.edu,Full-Time,4,"Part-Time (PT)",1,20280,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200243,"Jada Scott",jadascott@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10263,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200243,"Jada Scott",jadascott@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200244,"Julian Anthony Jones",julianjones200244@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10264,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200244,"Julian Anthony Jones",julianjones200244@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200245,"Zoe Lee Hernandez",zoehernandez200245@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10265,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200245,"Zoe Lee Hernandez",zoehernandez200245@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200246,"Destiny Flores",destinyflores200246@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10266,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200246,"Destiny Flores",destinyflores200246@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200247,"Natalie Grace Etienne",natalieetienne200247@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10267,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200247,"Natalie Grace Etienne",natalieetienne200247@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200248,"Lauren Michelle Desir",laurendesir200248@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10268,"Arts and Media; Computer Science; English",1
+"Spring 2027",2,200248,"Lauren Michelle Desir",laurendesir200248@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science; English",1
+"Fall 2026",1,200249,"James Miller",jamesmiller@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10269,"Arts and Media; Education; English",1
+"Spring 2027",2,200249,"James Miller",jamesmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education; English",1
+"Fall 2026",1,200250,"Brandon James Davis",brandondavis@ashford.edu,Full-Time,4,"Part-Time (PT)",1,10270,"Arts and Media; Education; English",1
+"Spring 2027",2,200250,"Brandon James Davis",brandondavis@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education; English",1
+"Fall 2026",1,200262,"Noah Miller",noahmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Spring 2027",2,200262,"Noah Miller",noahmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Fall 2026",1,200263,"Andrew Pierre",andrewpierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Spring 2027",2,200263,"Andrew Pierre",andrewpierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Fall 2026",1,200264,"Emily Pierre",emilypierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Spring 2027",2,200264,"Emily Pierre",emilypierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Fall 2026",1,200265,"Amanda Hill",amandahill@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Spring 2027",2,200265,"Amanda Hill",amandahill@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Social Sciences",1
+"Fall 2026",1,200266,"Nia Jackson",niajackson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Spring 2027",2,200266,"Nia Jackson",niajackson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Fall 2026",1,200267,"Mia King",miaking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Spring 2027",2,200267,"Mia King",miaking@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Fall 2026",1,200268,"Aaron Thomas Desir",aarondesir@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Spring 2027",2,200268,"Aaron Thomas Desir",aarondesir@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",1
+"Fall 2026",1,200269,"Jonathan Michelle Hernandez",jonathanhernandez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Spring 2027",2,200269,"Jonathan Michelle Hernandez",jonathanhernandez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Computer Science",1
+"Fall 2026",1,200294,"Samantha Altidor",samanthaaltidor@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Spring 2027",2,200294,"Samantha Altidor",samanthaaltidor@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Fall 2026",1,200295,"Skyler Rose Lopez",skylerlopez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Spring 2027",2,200295,"Skyler Rose Lopez",skylerlopez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Fall 2026",1,200296,"Malcolm Charles",malcolmcharles@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Spring 2027",2,200296,"Malcolm Charles",malcolmcharles@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Fall 2026",1,200297,"Julian Martinez",julianmartinez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Spring 2027",2,200297,"Julian Martinez",julianmartinez@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Education",1
+"Fall 2026",1,200298,"Ava Rivera",avarivera@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Spring 2027",2,200298,"Ava Rivera",avarivera@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Fall 2026",1,200299,"Noah Rose Wilson",noahwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Spring 2027",2,200299,"Noah Rose Wilson",noahwilson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Fall 2026",1,200300,"Jessica Michelle Pierre",jessicapierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Spring 2027",2,200300,"Jessica Michelle Pierre",jessicapierre@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Fall 2026",1,200305,"Nathan Alexander Nelson",nathannelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Spring 2027",2,200305,"Nathan Alexander Nelson",nathannelson@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Engineering",1
+"Fall 2026",1,200306,"Jessica Carter",jessicacarter@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; English",1
+"Spring 2027",2,200306,"Jessica Carter",jessicacarter@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; English",1
+"Fall 2026",1,200323,"Marcus Jean Miller",marcusmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; English",1
+"Spring 2027",2,200323,"Marcus Jean Miller",marcusmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; English",1
+"Fall 2026",1,200347,"David Grace Miller",davidmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; English",1
+"Spring 2027",2,200347,"David Grace Miller",davidmiller@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; English",1
+"Fall 2026",1,200348,"Malcolm Jackson",malcolmjackson200348@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Spring 2027",2,200348,"Malcolm Jackson",malcolmjackson200348@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; English",1
+"Fall 2026",1,200349,"Isaiah Wilson",isaiahwilson200349@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Health Sciences",1
+"Spring 2027",2,200349,"Isaiah Wilson",isaiahwilson200349@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Health Sciences",1
+"Fall 2026",1,200350,"Jada Nicole Anderson",jadaanderson200350@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Health Sciences",1
+"Spring 2027",2,200350,"Jada Nicole Anderson",jadaanderson200350@ashford.edu,Full-Time,0,"Part-Time (PT)",0,,"Business; Health Sciences",1
+"Fall 2026",1,400011,"Patricia Martinez",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400011,"Patricia Martinez",,Full-Time,4,"Part-Time (PT)",1,20181,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400012,"Robert Hernandez",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400012,"Robert Hernandez",,Full-Time,4,"Part-Time (PT)",1,20211,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400013,"Jennifer Lopez",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400013,"Jennifer Lopez",,Full-Time,4,"Part-Time (PT)",1,20182,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400014,"Michael Gonzalez",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400014,"Michael Gonzalez",,Full-Time,4,"Part-Time (PT)",1,20212,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400015,"Linda Wilson",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400015,"Linda Wilson",,Full-Time,4,"Part-Time (PT)",1,20183,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400016,"William Anderson",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400016,"William Anderson",,Full-Time,4,"Part-Time (PT)",1,20213,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400017,"Elizabeth Thomas",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; School of Business Graduate Programs",0
+"Spring 2027",2,400017,"Elizabeth Thomas",,Full-Time,4,"Part-Time (PT)",1,20184,"Natural Sciences; School of Business Graduate Programs",0
+"Fall 2026",1,400018,"David Taylor",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Psychology",0
+"Spring 2027",2,400018,"David Taylor",,Full-Time,8,"Part-Time (PT)",2,20193;20214,"Natural Sciences; Psychology",0
+"Fall 2026",1,400019,"Barbara Moore",,Full-Time,0,"Part-Time (PT)",0,,"Modern Languages; Natural Sciences",0
+"Spring 2027",2,400019,"Barbara Moore",,Full-Time,0,"Part-Time (PT)",0,,"Modern Languages; Natural Sciences",0
+"Fall 2026",1,400020,"Richard Jackson",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Sociology",0
+"Spring 2027",2,400020,"Richard Jackson",,Full-Time,8,"Part-Time (PT)",2,20194;20215,"Natural Sciences; Sociology",0
+"Fall 2026",1,400021,"Susan Martin",,Full-Time,0,"Part-Time (PT)",0,,"History & Philosophy; Natural Sciences",0
+"Spring 2027",2,400021,"Susan Martin",,Full-Time,0,"Part-Time (PT)",0,,"History & Philosophy; Natural Sciences",0
+"Fall 2026",1,400022,"Joseph Lee",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Politics, Economics & Law",0
+"Spring 2027",2,400022,"Joseph Lee",,Full-Time,8,"Part-Time (PT)",2,20195;20216,"Natural Sciences; Politics, Economics & Law",0
+"Fall 2026",1,400023,"Jessica Perez",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Politics, Economics & Law",0
+"Spring 2027",2,400023,"Jessica Perez",,Full-Time,4,"Part-Time (PT)",1,20225,"Natural Sciences; Politics, Economics & Law",0
+"Fall 2026",1,400024,"Thomas Thompson",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Psychology",0
+"Spring 2027",2,400024,"Thomas Thompson",,Full-Time,4,"Part-Time (PT)",1,20196,"Natural Sciences; Psychology",0
+"Fall 2026",1,400025,"Sarah White",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",0
+"Spring 2027",2,400025,"Sarah White",,Full-Time,4,"Part-Time (PT)",1,20226,"Natural Sciences; Social Sciences",0
+"Fall 2026",1,400026,"Charles Harris",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",0
+"Spring 2027",2,400026,"Charles Harris",,Full-Time,4,"Part-Time (PT)",1,20197,"Natural Sciences; Social Sciences",0
+"Fall 2026",1,400027,"Karen Sanchez",,Full-Time,0,"Part-Time (PT)",0,,"Natural Sciences; Social Sciences",0
+"Spring 2027",2,400027,"Karen Sanchez",,Full-Time,4,"Part-Time (PT)",1,20227,"Natural Sciences; Social Sciences",0
+"Fall 2026",1,400050,"Marcus Abbas",,Full-Time,0,"Part-Time (PT)",0,,"English; Health Sciences",0
+"Spring 2027",2,400050,"Marcus Abbas",,Full-Time,0,"Part-Time (PT)",0,,"English; Health Sciences",0
+"Fall 2026",1,400051,"Talia Farouk",,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; History & Philosophy",0
+"Spring 2027",2,400051,"Talia Farouk",,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; History & Philosophy",0
+"Fall 2026",1,400052,"Darius Hassan",,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; History & Philosophy",0
+"Spring 2027",2,400052,"Darius Hassan",,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; History & Philosophy",0
+"Fall 2026",1,400053,"Serena Ibrahim",,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics",0
+"Spring 2027",2,400053,"Serena Ibrahim",,Full-Time,0,"Part-Time (PT)",0,,"Health Sciences; Mathematics",0
+"Fall 2026",1,400054,"Julian Jabbar",,Full-Time,0,"Part-Time (PT)",0,,"Management, Marketing & Finance; Mathematics",0
+"Spring 2027",2,400054,"Julian Jabbar",,Full-Time,0,"Part-Time (PT)",0,,"Management, Marketing & Finance; Mathematics",0
+"Fall 2026",1,400055,"Nadia Karim",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400055,"Nadia Karim",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400056,"Cyrus Malik",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Spring 2027",2,400056,"Cyrus Malik",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Natural Sciences",0
+"Fall 2026",1,400057,"Layla Nasir",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Social Sciences",0
+"Spring 2027",2,400057,"Layla Nasir",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Social Sciences",0
+"Fall 2026",1,400058,"Omar Omar",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Social Sciences",0
+"Spring 2027",2,400058,"Omar Omar",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Social Sciences",0
+"Fall 2026",1,400059,"Yasmine Rashid",,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Mathematics",0
+"Spring 2027",2,400059,"Yasmine Rashid",,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Mathematics",0
+"Fall 2026",1,400060,"Kareem Saleem",,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Mathematics",0
+"Spring 2027",2,400060,"Kareem Saleem",,Full-Time,0,"Part-Time (PT)",0,,"Arts and Media; Mathematics",0
+"Fall 2026",1,400061,"Aisha Tariq",,Full-Time,0,"Part-Time (PT)",0,,"Management, Marketing & Finance; Mathematics",0
+"Spring 2027",2,400061,"Aisha Tariq",,Full-Time,0,"Part-Time (PT)",0,,"Management, Marketing & Finance; Mathematics",0
+"Fall 2026",1,400062,"Tariq Usman",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Mathematics, Computer & Information Science",0
+"Spring 2027",2,400062,"Tariq Usman",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Mathematics, Computer & Information Science",0
+"Fall 2026",1,400063,"Zara Waleed",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Mathematics, Computer & Information Science",0
+"Spring 2027",2,400063,"Zara Waleed",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Mathematics, Computer & Information Science",0
+"Fall 2026",1,400064,"Rashid Yahya",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Mathematics, Computer & Information Science",0
+"Spring 2027",2,400064,"Rashid Yahya",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Mathematics, Computer & Information Science",0
+"Fall 2026",1,400065,"Leila Zubair",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Media & American Studies",0
+"Spring 2027",2,400065,"Leila Zubair",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Media & American Studies",0
+"Fall 2026",1,400066,"Amir Ahmed",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Media & American Studies",0
+"Spring 2027",2,400066,"Amir Ahmed",,Full-Time,0,"Part-Time (PT)",0,,"Mathematics; Media & American Studies",0
+"Fall 2026",1,400067,"Samira Ali",,Full-Time,0,"Part-Time (PT)",0,,"Engineering; Natural Sciences",0
+"Spring 2027",2,400067,"Samira Ali",,Full-Time,4,"Part-Time (PT)",1,20259,"Engineering; Natural Sciences",0
+"Fall 2026",1,400068,"Farid Bilal",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400068,"Farid Bilal",,Full-Time,4,"Part-Time (PT)",1,20033,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400069,"Layth Hamza",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400069,"Layth Hamza",,Full-Time,4,"Part-Time (PT)",1,20034,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400070,"Nour Imran",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400070,"Nour Imran",,Full-Time,4,"Part-Time (PT)",1,20035,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400071,"Karim Khalid",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400071,"Karim Khalid",,Full-Time,4,"Part-Time (PT)",1,20036,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400072,"Jamila Layth",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400072,"Jamila Layth",,Full-Time,4,"Part-Time (PT)",1,20037,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400073,"Hadi Mansoor",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400073,"Hadi Mansoor",,Full-Time,4,"Part-Time (PT)",1,20038,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400074,"Mona Nabeel",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400074,"Mona Nabeel",,Full-Time,4,"Part-Time (PT)",1,20039,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400075,"Faris Owais",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400075,"Faris Owais",,Full-Time,4,"Part-Time (PT)",1,20040,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400076,"Safia Qasim",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400076,"Safia Qasim",,Full-Time,4,"Part-Time (PT)",1,20041,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400077,"Tamer Rafi",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Natural Sciences",0
+"Spring 2027",2,400077,"Tamer Rafi",,Full-Time,4,"Part-Time (PT)",1,20042,"Computer Science; Natural Sciences",0
+"Fall 2026",1,400078,"Rana Sami",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",0
+"Spring 2027",2,400078,"Rana Sami",,Full-Time,4,"Part-Time (PT)",1,20043,"Computer Science; Social Sciences",0
+"Fall 2026",1,400079,"Adel Tariq",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",0
+"Spring 2027",2,400079,"Adel Tariq",,Full-Time,4,"Part-Time (PT)",1,20044,"Computer Science; Social Sciences",0
+"Fall 2026",1,400080,"Lina Usman",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",0
+"Spring 2027",2,400080,"Lina Usman",,Full-Time,4,"Part-Time (PT)",1,20045,"Computer Science; Social Sciences",0
+"Fall 2026",1,400081,"Omar Waleed",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",0
+"Spring 2027",2,400081,"Omar Waleed",,Full-Time,4,"Part-Time (PT)",1,20046,"Computer Science; Social Sciences",0
+"Fall 2026",1,400082,"Yasmine Yahya",,Full-Time,0,"Part-Time (PT)",0,,"Computer Science; Social Sciences",0
+"Spring 2027",2,400082,"Yasmine Yahya",,Full-Time,4,"Part-Time (PT)",1,20047,"Computer Science; Social Sciences",0

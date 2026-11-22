@@ -6,90 +6,74 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once __DIR__ . '/attendance-window.php';
+require_once __DIR__ . '/attendance-support.php';
 
 require_role(['Faculty']);
 
 $facultyID = (int) $_SESSION['user_id'];
 
-// Get the sections taught by this faculty member
-$sections = all_rows(
-	$pdo,
-	"SELECT
-		cs.CRN,
-		c.course_ID,
-		c.course_Name,
-		s.semester_Name,
-		s.semester_Start
-	FROM Course_Section cs
-	JOIN Course c ON c.course_ID = cs.course_ID
-	JOIN Semester s ON s.semester_ID = cs.semester_ID
-	WHERE cs.faculty_ID = ?
-		AND cs.is_Cancelled = 0
-	ORDER BY s.semester_ID DESC, c.course_ID",
-	[$facultyID]
+$semesterOptions = faculty_attendance_semesters($pdo);
+$semesterId = faculty_attendance_selected_semester(
+	$semesterOptions,
+	$_GET['semester_ID'] ?? null
 );
+$semesterName = '';
+foreach ($semesterOptions as $option) {
+	if ((int) $option['semester_ID'] === $semesterId) {
+		$semesterName = (string) $option['semester_Name'];
+		break;
+	}
+}
+$sections = faculty_attendance_sections($pdo, $facultyID, $semesterId);
 
 // Selected CRN
-$crn = (int) ($_GET['crn'] ?? ($sections[0]['CRN'] ?? 0));
+$hasRequestedCrn = array_key_exists('crn', $_GET);
+$requestedCrn = filter_var($_GET['crn'] ?? null, FILTER_VALIDATE_INT);
+$crn = $requestedCrn !== false && $requestedCrn !== null
+	? (int) $requestedCrn
+	: 0;
+if (!$hasRequestedCrn && $sections) {
+	$crn = (int) $sections[0]['CRN'];
+}
 
 // Selected date (default today)
-$selectedDate = $_GET['date'] ?? date('Y-m-d');
+$selectedDate = is_string($_GET['date'] ?? null)
+	? trim($_GET['date'])
+	: date('Y-m-d');
 
 // Validate the date format
-if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $selectedDate) || !checkdate(
-	(int) substr($selectedDate, 5, 2),
-	(int) substr($selectedDate, 8, 2),
-	(int) substr($selectedDate, 0, 4)
-)) {
+if (!faculty_attendance_date_is_valid($selectedDate)) {
 	$selectedDate = date('Y-m-d');
 }
 
 // Section info
-$sectionInfo = null;
-if ($crn > 0) {
-	$sectionInfo = one(
-		$pdo,
-		"SELECT cs.CRN, c.course_ID, c.course_Name, c.course_Credits,
-				s.semester_Name, s.semester_Start, cs.time_Slot_ID
-		FROM Course_Section cs
-		JOIN Course c ON c.course_ID = cs.course_ID
-		JOIN Semester s ON s.semester_ID = cs.semester_ID
-		WHERE cs.CRN = ? AND cs.faculty_ID = ?",
-		[$crn, $facultyID]
-	);
+$sectionInfo = faculty_attendance_section($pdo, $facultyID, $semesterId, $crn);
+if (!$sectionInfo) {
+	$crn = 0;
 }
 
 // Check if attendance is allowed for this date
 $attendanceAllowed = false;
 $attendanceMessage = '';
 if ($sectionInfo) {
-	[$attendanceAllowed, $attendanceMessage] = attendance_date_allowed(
+	[$dateAllowed, $attendanceMessage] = attendance_date_allowed(
 		$pdo,
 		$crn,
 		$selectedDate
 	);
+	if ($dateAllowed && faculty_attendance_date_is_today($selectedDate)) {
+		[$attendanceAllowed, $attendanceMessage] = attendance_window_status($pdo, $crn);
+	} elseif ($dateAllowed) {
+		$attendanceMessage = 'Past attendance is read-only. Attendance cannot be completed for a date other than today.';
+	}
 }
 
 // Get enrolled students with their existing attendance for the selected date
 $roster = [];
 if ($sectionInfo) {
-	$roster = all_rows(
-		$pdo,
-		"SELECT
-			Enrollment.student_ID,
-			User.first_Name,
-			User.last_Name,
-			Attendance.Present_Absent
-		FROM Enrollment
-		JOIN User ON User.user_ID = Enrollment.student_ID
-		LEFT JOIN Attendance
-			ON Attendance.student_ID = Enrollment.student_ID
-			AND Attendance.CRN = ?
-			AND Attendance.attendance_Date = ?
-		WHERE Enrollment.CRN = ?
-		ORDER BY User.last_Name, User.first_Name",
-		[$crn, $selectedDate, $crn]
-	);
+	$sectionInfo['faculty_ID'] = $facultyID;
+	$roster = faculty_attendance_roster($pdo, $sectionInfo, $selectedDate);
 }
 
 // Calendar navigation: previous/next month
@@ -137,7 +121,7 @@ if ($sectionInfo) {
 	$attendanceDates = all_rows(
 		$pdo,
 		"SELECT DISTINCT attendance_Date FROM Attendance
-		WHERE CRN = ?",
+		WHERE CRN = ? AND attendance_Date <= CURDATE()",
 		[$crn]
 	);
 }
@@ -171,19 +155,63 @@ flash();
 	<div class="dashboard-section-heading">
 		<div>
 			<p class="dashboard-eyebrow">Attendance Calendar</p>
-			<h2><?= e($sectionInfo['course_ID'] . ' ' . $sectionInfo['course_Name'] ?? 'Select a Course') ?></h2>
+			<h2><?= $sectionInfo ? e($sectionInfo['course_ID'] . ' ' . $sectionInfo['course_Name']) : 'Select a Course' ?></h2>
 		</div>
 	</div>
 
-	<?php if (!$sectionInfo): ?>
+	<?php if (!$sections): ?>
 
-		<p class="muted">No course sections found.</p>
+		<form method="get" style="margin-top: 12px;">
+			<label for="attendance-semester-empty">Semester</label>
+			<select name="semester_ID" id="attendance-semester-empty" onchange="this.form.submit()">
+				<?php foreach ($semesterOptions as $option): ?>
+					<option value="<?= e($option['semester_ID']) ?>" <?= (int)$option['semester_ID'] === $semesterId ? 'selected' : '' ?>><?= e($option['semester_Name']) ?></option>
+				<?php endforeach; ?>
+			</select>
+			<noscript><button type="submit" class="btn">View Semester</button></noscript>
+		</form>
+		<p class="muted">No active course sections found for <?= e($semesterName ?: 'this semester') ?>.</p>
+	<?php elseif (!$sectionInfo): ?>
+
+		<form method="get" style="margin-top: 12px;">
+			<label for="attendance-semester-unselected">Semester</label>
+			<select name="semester_ID" id="attendance-semester-unselected" onchange="this.form.submit()">
+				<?php foreach ($semesterOptions as $option): ?>
+					<option value="<?= e($option['semester_ID']) ?>" <?= (int)$option['semester_ID'] === $semesterId ? 'selected' : '' ?>><?= e($option['semester_Name']) ?></option>
+				<?php endforeach; ?>
+			</select>
+			<label for="attendance-crn-unselected">Course section</label>
+			<select name="crn" id="attendance-crn-unselected">
+				<option value="">Select a section</option>
+				<?php foreach ($sections as $item): ?>
+					<option value="<?= e($item['CRN']) ?>"><?= e($item['course_ID'] . ' — ' . $item['course_Name'] . ' (CRN ' . $item['CRN'] . ')') ?></option>
+				<?php endforeach; ?>
+			</select>
+			<button type="submit" class="btn">View Section</button>
+		</form>
+		<p class="muted">Select a section assigned to your Faculty account. The requested CRN is not available for this semester.</p>
 
 	<?php else: ?>
 
 		<form method="get" style="margin-top: 12px;">
-			<?= csrf_field() ?>
-			<input type="hidden" name="crn" value="<?= e($crn) ?>">
+			<div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+				<div>
+					<label for="attendance-semester">Semester</label>
+					<select name="semester_ID" id="attendance-semester" onchange="this.form.submit()">
+						<?php foreach ($semesterOptions as $option): ?>
+							<option value="<?= e($option['semester_ID']) ?>" <?= (int)$option['semester_ID'] === $semesterId ? 'selected' : '' ?>><?= e($option['semester_Name']) ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+				<div>
+					<label for="attendance-crn">Course section</label>
+					<select name="crn" id="attendance-crn" onchange="this.form.submit()">
+						<?php foreach ($sections as $item): ?>
+							<option value="<?= e($item['CRN']) ?>" <?= (int)$item['CRN'] === $crn ? 'selected' : '' ?>><?= e($item['course_ID'] . ' — ' . $item['course_Name'] . ' (CRN ' . $item['CRN'] . ')') ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			</div>
 
 			<div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
 				<div>
@@ -210,6 +238,7 @@ flash();
 
 			<form method="post" action="attendance-calendar_actions.php" style="margin-top: 18px;">
 				<?= csrf_field() ?>
+				<input type="hidden" name="semester_ID" value="<?= e($semesterId) ?>">
 				<input type="hidden" name="crn" value="<?= e($crn) ?>">
 				<input type="hidden" name="attendance_date" value="<?= e($selectedDate) ?>">
 
@@ -253,7 +282,7 @@ flash();
 											value=""
 											<?= !isset($student['Present_Absent']) ? 'checked' : '' ?>
 										>
-										Not Recorded
+										Leave Unchanged
 									</label>
 								</td>
 							</tr>
@@ -272,7 +301,7 @@ flash();
 
 				<div style="margin-top: 16px; display:flex; gap:10px;">
 					<button type="submit" class="btn">Save Attendance</button>
-					<a href="attendance-calendar.php?crn=<?= e($crn) ?>" class="btn light">Cancel</a>
+					<a href="attendance-calendar.php?semester_ID=<?= e($semesterId) ?>&crn=<?= e($crn) ?>" class="btn light">Cancel</a>
 				</div>
 			</form>
 
@@ -299,13 +328,13 @@ flash();
 
 	<div style="margin-top: 12px; display:flex; gap:12px; align-items:center;">
 		<a
-			href="attendance-calendar.php?crn=<?= e($crn) ?>&date=<?= e($prevMonth) ?>"
+				href="attendance-calendar.php?semester_ID=<?= e($semesterId) ?>&crn=<?= e($crn) ?>&date=<?= e($prevMonth) ?>"
 			class="btn light small"
 		>
 			Previous Month
 		</a>
 		<a
-			href="attendance-calendar.php?crn=<?= e($crn) ?>&date=<?= e($nextMonth) ?>"
+			href="attendance-calendar.php?semester_ID=<?= e($semesterId) ?>&crn=<?= e($crn) ?>&date=<?= e($nextMonth) ?>"
 			class="btn light small"
 		>
 			Next Month

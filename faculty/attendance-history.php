@@ -3,6 +3,7 @@
 require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
+require_once '../includes/helpers.php';
 
 require_role(['Faculty']);
 
@@ -85,6 +86,7 @@ if ($crn > 0) {
                 ON Course_Section.CRN = Attendance.CRN
 
             WHERE Attendance.CRN = ?
+            AND Attendance.attendance_Date <= CURDATE()
             AND Course_Section.faculty_ID = ?
 
             ORDER BY

@@ -1,0 +1,2 @@
+student_ID,student_name,Student.major_ID,Student.major_name,Student_Major.major_IDs_and_names,Student_Minor_records,proposed_action,evidence
+100632,Adrians Ads,118,Computer and Information Sciences Minor,113 — Accounting Minor; 118 — Computer and Information Sciences Minor,Check detailed program/requirements report,Manual registrar review; do not infer a primary major or replace either declaration.,Student.major_ID is explicitly a Minor and both Student_Major entries are Minor-labeled catalog values; no published Major_Requirement rows identify a degree primary.

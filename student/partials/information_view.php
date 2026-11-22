@@ -13,8 +13,10 @@ $rawYear = trim((string) ($student['student_Year'] ?? ''));
 $yearNumber = preg_replace('/^Year\s*/i', '', $rawYear);
 $classifications = ['1' => 'Freshman', '2' => 'Sophomore', '3' => 'Junior', '4' => 'Senior'];
 $classification = $classifications[$yearNumber] ?? ($rawYear !== '' ? $rawYear : 'Not assigned');
-$major = trim((string) ($student['major_Name'] ?? ''));
-$major = $major !== '' ? $major : 'Undeclared';
+$academicLevel = (string) ($student['student_Type'] ?? 'Unavailable');
+$major = (string) $studentAcademicProgram['major_display'];
+$minor = (string) $studentAcademicProgram['minor_display'];
+$degreeProgram = (string) $studentAcademicProgram['degree_program_display'];
 ?>
 <style>
 /* Student Information: scoped styles so other student pages are unaffected. */
@@ -76,7 +78,12 @@ $major = $major !== '' ? $major : 'Undeclared';
       <p class="ai-help">Academic details managed by the university.</p>
       <dl class="ai-details">
         <div class="ai-detail"><dt>Classification</dt><dd><?= e($classification) ?></dd></div>
-        <div class="ai-detail"><dt>Major</dt><dd><?= e($major) ?></dd></div>
+        <div class="ai-detail"><dt><?= $academicLevel === 'Graduate' ? 'Major' : 'Primary Major' ?></dt><dd><?= e($major) ?></dd></div>
+        <?php if ($academicLevel === 'Graduate'): ?><div class="ai-detail"><dt>Degree Program</dt><dd><?= e($degreeProgram) ?></dd></div><?php endif; ?>
+        <div class="ai-detail"><dt>Minor</dt><dd><?= e($minor) ?></dd></div>
+        <?php if ($studentAcademicProgram['additional_major_names']): ?><div class="ai-detail"><dt>Additional Majors</dt><dd><?= e(implode(', ', $studentAcademicProgram['additional_major_names'])) ?></dd></div><?php endif; ?>
+        <?php if ($studentAcademicProgram['candidate_major_names']): ?><div class="ai-detail"><dt>Major Candidates</dt><dd><?= e(implode(', ', $studentAcademicProgram['candidate_major_names'])) ?></dd></div><?php endif; ?>
+        <?php if ($studentAcademicProgram['review_message']): ?><div class="ai-detail"><dt>Program Review</dt><dd><?= e($studentAcademicProgram['review_message']) ?></dd></div><?php endif; ?>
         <div class="ai-detail"><dt>Academic Year</dt><dd><?= e($rawYear !== '' ? $rawYear : 'Not assigned') ?></dd></div>
         <div class="ai-detail"><dt>Account Type</dt><dd>Student</dd></div>
       </dl>

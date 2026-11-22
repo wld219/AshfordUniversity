@@ -7,11 +7,9 @@ declare(strict_types=1);
 // Read-only users (StatStaff) are blocked from all write operations.
 require_write_access();
 
-// Enforces:
-//   - the course's department must be one of the faculty member's
-//     departments (faculty may only teach in their departments),
-//   - full-time faculty teach at most two sections and never two
-//     overlapping sections; part-time faculty teach exactly one section.
+// Enforces department eligibility and overlapping meeting conflicts.
+// Workload is calculated from distinct active CRNs by semester; the 12-credit
+// classification is a planning target, not an employment-based section cap.
 //
 // Uses $pdo, $adminID, $error from the entry point.
 
@@ -114,7 +112,8 @@ if (one($pdo, 'SELECT CRN FROM Course_Section WHERE semester_ID = ? AND time_Slo
     $facultyID,
     $timeSlotID,
     null,
-    $semesterID
+	$semesterID,
+	$courseID
 );
 
 if (!$canTeach) {

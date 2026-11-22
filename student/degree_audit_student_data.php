@@ -22,34 +22,25 @@ $studentAuditFullName = trim(implode(' ', array_filter([
 	(string) ($studentAuditProfile['last_Name'] ?? ''),
 ], static fn(string $part): bool => $part !== '')));
 
-$studentAuditSemesters = all_rows(
-	$pdo,
-	"SELECT semester_ID, semester_Name
-	 FROM Semester
-	 WHERE semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
-	 ORDER BY CASE semester_Name
-		 WHEN 'Spring 2026' THEN 1
-		 WHEN 'Fall 2026' THEN 2
-		 WHEN 'Spring 2027' THEN 3
-	 END"
-);
-$studentAuditSemesterIDs = array_map(
-	static fn(array $term): int => (int)$term['semester_ID'],
-	$studentAuditSemesters
-);
-$studentAuditDefaultSemesterID = null;
-foreach ($studentAuditSemesters as $term) {
-	if ($term['semester_Name'] === 'Fall 2026') {
-		$studentAuditDefaultSemesterID = (int)$term['semester_ID'];
-		break;
-	}
-}
+$studentAcademicProgram = resolve_student_academic_program($pdo, $studentID);
+$studentAuditPrimaryMajorID = $studentAcademicProgram['primary_major_ID'];
+$studentAuditProfile['major_ID'] = $studentAuditPrimaryMajorID;
+$studentAuditProfile['major_Name'] = $studentAcademicProgram['major_display'];
+$studentAuditDegreeProgram = (string) $studentAcademicProgram['degree_program_display'];
+$studentAuditDeclaredMajors = $studentAcademicProgram['additional_major_names'];
+$studentAuditDeclaredMinors = $studentAcademicProgram['minor_names'];
+$studentAuditMajorCandidates = $studentAcademicProgram['candidate_major_names'];
+$studentAuditProgramReviewMessage = $studentAcademicProgram['review_message'];
+
+$studentAuditSemesters = student_portal_semesters($pdo);
 $studentAuditRequestedSemesterID = filter_input(INPUT_GET, 'semester', FILTER_VALIDATE_INT);
-$studentAuditSemesterID = $studentAuditRequestedSemesterID !== null
-	&& $studentAuditRequestedSemesterID !== false
-	&& in_array($studentAuditRequestedSemesterID, $studentAuditSemesterIDs, true)
-	? $studentAuditRequestedSemesterID
-	: ($studentAuditDefaultSemesterID ?? ($studentAuditSemesterIDs[0] ?? null));
+if ($studentAuditRequestedSemesterID === null && isset($_GET['semester']) && is_scalar($_GET['semester'])) {
+	$studentAuditRequestedSemesterID = filter_var($_GET['semester'], FILTER_VALIDATE_INT);
+}
+$studentAuditSemesterID = student_portal_selected_semester_id(
+	$studentAuditSemesters,
+	is_int($studentAuditRequestedSemesterID) ? $studentAuditRequestedSemesterID : null
+);
 $studentAuditSemesterName = '';
 foreach ($studentAuditSemesters as $term) {
 	if ((int)$term['semester_ID'] === (int)$studentAuditSemesterID) {
@@ -63,33 +54,91 @@ $studentAuditRegisteredCourses = $studentAuditSemesterID !== null
 $studentAuditSemesterStatus = $studentAuditSemesterID !== null
 	? student_semester_enrollment_status($pdo, $studentID, $studentAuditSemesterID)
 	: null;
-$studentAuditInProgressCourses = $studentAuditSemesterID !== null
-	? student_semester_registered_courses($pdo, $studentID, $studentAuditSemesterID, true)
-	: [];
-$studentAuditInProgressCourseIDs = array_fill_keys(
-	array_map(
-		static fn(array $course): string => (string) $course['course_ID'],
-		$studentAuditInProgressCourses
-	),
-	true
-);
+$studentAuditCurrentCourseStatuses = [];
+$studentAuditCurrentCourseStatusByCourse = [];
+if ($studentAuditSemesterID !== null) {
+	$currentEnrollmentRows = all_rows(
+		$pdo,
+		"SELECT e.CRN, e.Grade AS enrollment_Grade, sh.Grade AS history_Grade,
+				c.course_ID, sem.semester_Name
+		 FROM Enrollment e
+		 JOIN Course_Section cs
+			ON cs.CRN = e.CRN
+			AND cs.semester_ID = e.semester_ID
+			AND cs.is_Cancelled = 0
+		 JOIN Course c ON c.course_ID = cs.course_ID
+		 JOIN Semester sem ON sem.semester_ID = e.semester_ID
+		 LEFT JOIN Student_History sh
+			ON sh.student_ID = e.student_ID
+			AND sh.CRN = e.CRN
+			AND sh.semester_ID = e.semester_ID
+		 WHERE e.student_ID = ? AND e.semester_ID = ?
+		 ORDER BY c.course_ID, e.CRN",
+		[$studentID, $studentAuditSemesterID]
+	);
+	$currentRowsByCRN = [];
+	foreach ($currentEnrollmentRows as $row) {
+		$currentRowsByCRN[(int) $row['CRN']] = $row;
+	}
+	foreach ($studentAuditRegisteredCourses as $registeredCourse) {
+		$crn = (int) $registeredCourse['CRN'];
+		$currentRow = $currentRowsByCRN[$crn] ?? null;
+		if ($currentRow === null) continue;
+		$historyGrade = trim((string) ($currentRow['history_Grade'] ?? ''));
+		$grade = $historyGrade !== ''
+			? $historyGrade
+			: ($currentRow['enrollment_Grade'] !== null ? (string) $currentRow['enrollment_Grade'] : null);
+		$gradeFromHistory = $historyGrade !== '';
+		if (!$gradeFromHistory && (string) $currentRow['semester_Name'] === 'Spring 2027') {
+			$grade = null;
+		}
+		$status = student_course_status(
+			$grade,
+			(string) $currentRow['semester_Name'],
+			!$gradeFromHistory
+		);
+		$registeredCourse['Grade'] = $grade;
+		$registeredCourse['grade_from_history'] = $gradeFromHistory;
+		$registeredCourse['status'] = $status;
+		$studentAuditCurrentCourseStatuses[] = $registeredCourse;
+		$studentAuditCurrentCourseStatusByCourse[(string) $registeredCourse['course_ID']][] = [
+			'status' => $status,
+			'grade' => trim((string) ($grade ?? '')),
+			'term' => (string) $currentRow['semester_Name'],
+		];
+	}
+}
 
 // Student_History is the sole completed-course source. Keep the existing
 // best-grade behavior and preserve history rows regardless of section status.
 $studentAuditHistory = $studentAuditProfile
 	? all_rows(
 		$pdo,
-		' SELECT course_ID, Grade
-		  FROM Student_History
-		  WHERE student_ID = ? AND Grade IS NOT NULL',
+		' SELECT sh.CRN, sh.course_ID, sh.Grade, c.course_Credits,
+				sem.semester_Name, sem.semester_Start
+		  FROM Student_History sh
+		  JOIN Course c ON c.course_ID = sh.course_ID
+		  JOIN Semester sem ON sem.semester_ID = sh.semester_ID
+		  WHERE sh.student_ID = ? AND sh.Grade IS NOT NULL
+		  ORDER BY sem.semester_Start DESC, sh.CRN DESC',
 		[$studentID]
 	)
 	: [];
 
 $studentAuditBestGrades = [];
+$studentAuditLatestOutcomes = [];
 foreach ($studentAuditHistory as $historyRow) {
 	$courseID = (string) $historyRow['course_ID'];
-	$points = grade_points((string) $historyRow['Grade']);
+	$grade = trim((string) $historyRow['Grade']);
+	$points = grade_points($grade);
+	if (!isset($studentAuditLatestOutcomes[$courseID])) {
+		$studentAuditLatestOutcomes[$courseID] = [
+			'status' => student_course_status($grade, (string) $historyRow['semester_Name'], false),
+			'grade' => $grade,
+			'term' => (string) $historyRow['semester_Name'],
+			'semester_Start' => (string) ($historyRow['semester_Start'] ?? ''),
+		];
+	}
 
 	if (
 		$points !== null
@@ -101,13 +150,38 @@ foreach ($studentAuditHistory as $historyRow) {
 		$studentAuditBestGrades[$courseID] = [
 			'grade' => (string) $historyRow['Grade'],
 			'points' => $points,
+			'term' => (string) $historyRow['semester_Name'],
 		];
 	}
 }
 
+$studentAuditEarnedCourses = [];
+$studentAuditGpaPoints = 0.0;
+$studentAuditGpaCredits = 0;
+foreach ($studentAuditHistory as $historyRow) {
+	$points = grade_points((string) $historyRow['Grade']);
+	$credits = (int) $historyRow['course_Credits'];
+	if ($points === null) continue;
+	$studentAuditGpaPoints += $points * $credits;
+	$studentAuditGpaCredits += $credits;
+	$courseID = (string) $historyRow['course_ID'];
+	if ($points >= 1.0 && !isset($studentAuditEarnedCourses[$courseID])) {
+		$studentAuditEarnedCourses[$courseID] = $credits;
+	}
+}
+$studentAuditEarnedCredits = array_sum($studentAuditEarnedCourses);
+$studentAuditGpa = $studentAuditGpaCredits > 0
+	? round($studentAuditGpaPoints / $studentAuditGpaCredits, 2)
+	: null;
+$studentAuditAcademicStanding = $studentAuditGpa === null
+	? 'N/A'
+	: ($studentAuditGpa >= 3.5 ? 'Dean\'s List' : ($studentAuditGpa >= 2.0 ? 'Good Standing' : 'Academic Probation'));
+
 $evaluateStudentAuditRequirements = static function (array $requirements) use (
 	$studentAuditBestGrades,
-	$studentAuditInProgressCourseIDs
+	$studentAuditLatestOutcomes,
+	$studentAuditCurrentCourseStatusByCourse,
+	$studentAuditSemesterName
 ): array {
 	$completed = 0;
 	$rows = [];
@@ -117,9 +191,39 @@ $evaluateStudentAuditRequirements = static function (array $requirements) use (
 		$earned = $studentAuditBestGrades[$courseID] ?? null;
 		$met = $earned !== null
 			&& grade_meets($earned['grade'], (string) $requirement['min_Grade_Req']);
-		$inProgress = !$met
-			&& $earned === null
-			&& isset($studentAuditInProgressCourseIDs[$courseID]);
+		$latestOutcome = $studentAuditLatestOutcomes[$courseID] ?? null;
+		$currentOutcomes = $studentAuditCurrentCourseStatusByCourse[$courseID] ?? [];
+		$currentOutcome = null;
+		foreach (['In Progress', 'Completed', 'Failed', 'Withdrawn', 'Registered'] as $preferredStatus) {
+			foreach ($currentOutcomes as $outcome) {
+				if ($outcome['status'] === $preferredStatus) {
+					$currentOutcome = $outcome;
+					break 2;
+				}
+			}
+		}
+		$hasPassingAttempt = $earned !== null && $earned['points'] >= 1.0;
+		if ($met || ($hasPassingAttempt && $currentOutcome === null)) {
+			$status = 'Completed';
+		} elseif ($currentOutcome !== null) {
+			$status = (string) $currentOutcome['status'];
+		} else {
+			$status = (string) ($latestOutcome['status'] ?? 'Not Started');
+			if (!in_array($status, ['Failed', 'Withdrawn', 'Completed', 'In Progress'], true)) {
+				$status = 'Not Started';
+			}
+		}
+		$inProgress = $status === 'In Progress';
+		if ($met || ($status === 'Completed' && $currentOutcome === null)) {
+			$displayGrade = $earned['grade'] ?? $latestOutcome['grade'] ?? null;
+			$displayTerm = $earned['term'] ?? $latestOutcome['term'] ?? '—';
+		} else {
+			$displayGrade = $currentOutcome['grade'] ?? $latestOutcome['grade'] ?? $earned['grade'] ?? null;
+			$displayTerm = $currentOutcome['term'] ?? $latestOutcome['term'] ?? $earned['term'] ?? '—';
+		}
+		$minimumNotMet = $status === 'Completed'
+			&& $displayGrade !== null
+			&& !grade_meets((string) $displayGrade, (string) $requirement['min_Grade_Req']);
 
 		if ($met) {
 			$completed++;
@@ -128,10 +232,17 @@ $evaluateStudentAuditRequirements = static function (array $requirements) use (
 		$rows[] = [
 			'course_ID' => $courseID,
 			'course_Name' => (string) $requirement['course_Name'],
+			'course_Credits' => (int) $requirement['course_Credits'],
 			'min_Grade_Req' => (string) $requirement['min_Grade_Req'],
-			'grade' => $earned['grade'] ?? null,
+			'grade' => $displayGrade,
+			'term' => $displayTerm,
+			'earned_credits' => $met ? (int) $requirement['course_Credits'] : 0,
 			'met' => $met,
 			'in_progress' => $inProgress,
+			'failed' => $status === 'Failed',
+			'withdrawn' => $status === 'Withdrawn',
+			'minimum_not_met' => $minimumNotMet,
+			'status' => $status,
 		];
 	}
 
@@ -143,45 +254,15 @@ $evaluateStudentAuditRequirements = static function (array $requirements) use (
 };
 
 $studentAuditPrograms = [];
-$studentAuditDeclaredMinors = [];
+$studentAuditDeclaredMinors = $studentAcademicProgram['minor_names'];
+$studentAuditDeclaredMajors = [];
 $studentAuditGraduateMessage = null;
 
 if (($studentAuditProfile['student_Type'] ?? null) === 'Undergraduate') {
-	$majorByID = [];
-	$primaryMajorID = (int) ($studentAuditProfile['major_ID'] ?? 0);
-
-	if ($primaryMajorID > 0) {
-		$primaryMajor = one(
-			$pdo,
-			'SELECT major_ID, major_Name FROM Major WHERE major_ID = ?',
-			[$primaryMajorID]
-		);
-		if ($primaryMajor) {
-			$majorByID[$primaryMajorID] = $primaryMajor + ['primary' => true];
-		}
-	}
-
-	$additionalMajors = all_rows(
-		$pdo,
-		"SELECT m.major_ID, m.major_Name
-		 FROM Student_Major sm
-		 JOIN Major m ON m.major_ID = sm.major_ID
-		 WHERE sm.student_ID = ?
-		 ORDER BY sm.date_Of_Choice, m.major_Name",
-		[$studentID]
-	);
-
-	foreach ($additionalMajors as $major) {
-		$majorID = (int) $major['major_ID'];
-		if (!isset($majorByID[$majorID])) {
-			$majorByID[$majorID] = $major + ['primary' => false];
-		}
-	}
-
-	foreach ($majorByID as $major) {
+	foreach ($studentAcademicProgram['audit_major_rows'] as $major) {
 		$requirements = all_rows(
 			$pdo,
-			"SELECT mr.course_ID, mr.min_Grade_Req, c.course_Name
+			"SELECT mr.course_ID, mr.min_Grade_Req, c.course_Name, c.course_Credits
 			 FROM Major_Requirement mr
 			 JOIN Course c ON c.course_ID = mr.course_ID
 			 WHERE mr.major_ID = ?
@@ -196,22 +277,11 @@ if (($studentAuditProfile['student_Type'] ?? null) === 'Undergraduate') {
 		] + $evaluateStudentAuditRequirements($requirements);
 	}
 
-	$minorRows = all_rows(
-		$pdo,
-		"SELECT mn.minor_ID, mn.minor_Name
-		 FROM Student_Minor sm
-		 JOIN Minor mn ON mn.minor_ID = sm.minor_ID
-		 WHERE sm.student_ID = ?
-		 ORDER BY sm.date_Of_Choice, mn.minor_Name",
-		[$studentID]
-	);
-
-	foreach ($minorRows as $minor) {
+	foreach ($studentAcademicProgram['minor_rows'] as $minor) {
 		$minorID = (int) $minor['minor_ID'];
-		$studentAuditDeclaredMinors[] = (string) $minor['minor_Name'];
 		$requirements = all_rows(
 			$pdo,
-			"SELECT mr.course_ID, mr.min_Grade_Req, c.course_Name
+			"SELECT mr.course_ID, mr.min_Grade_Req, c.course_Name, c.course_Credits
 			 FROM Minor_Requirement mr
 			 JOIN Course c ON c.course_ID = mr.course_ID
 			 WHERE mr.minor_ID = ?
@@ -226,18 +296,5 @@ if (($studentAuditProfile['student_Type'] ?? null) === 'Undergraduate') {
 		] + $evaluateStudentAuditRequirements($requirements);
 	}
 } elseif (($studentAuditProfile['student_Type'] ?? null) === 'Graduate') {
-	$minorRows = all_rows(
-		$pdo,
-		"SELECT mn.minor_Name
-		 FROM Student_Minor sm
-		 JOIN Minor mn ON mn.minor_ID = sm.minor_ID
-		 WHERE sm.student_ID = ?
-		 ORDER BY sm.date_Of_Choice, mn.minor_Name",
-		[$studentID]
-	);
-	$studentAuditDeclaredMinors = array_map(
-		static fn(array $minor): string => (string) $minor['minor_Name'],
-		$minorRows
-	);
 	$studentAuditGraduateMessage = 'Graduate degree requirements not yet configured.';
 }

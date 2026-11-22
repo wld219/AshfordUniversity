@@ -1,0 +1,9 @@
+{
+    "database": "ashford_waleed",
+    "backup_file": "backups/instructor_reassignment_review_20261121_230559/ashford_waleed_full.sql",
+    "bytes": 5734528,
+    "sha256": "59a1020c13c2a87a9cb189c47bd4eb8ed8a624e9ba1f925d4d2cf7c5d97f7019",
+    "create_table_statements": 76,
+    "mysqldump_exit": 0,
+    "created_at": "2026-11-21T23:05:59+00:00"
+}

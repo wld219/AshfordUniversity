@@ -1,0 +1,117 @@
+﻿semester_ID,semester,student_ID,student_name,CRN_A,course_A,section_A,CRN_B,course_B,section_B,conflict_days,overlap_times,meeting_components
+2,Spring 2027,100505,Aaron Nguyen,20001,CS1001,1,20013,CS2007,2,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20001,CS1001,1,20021,CS2008,3,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20001,CS1001,1,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20001,CS1001,1,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20004,CS1002,2,20036,CS5001,3,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20010,CS1005,4,20042,CS5004,1,Thursday; Tuesday,Thursday 9:50 AM–11:30 AM | Tuesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20012,CS2007,1,20044,CS5005,1,Thursday; Tuesday,Thursday 1:30 PM–3:10 PM | Tuesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20013,CS2007,2,20021,CS2008,3,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20013,CS2007,2,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20013,CS2007,2,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20016,CS2007,5,20048,CS1004,1,Thursday; Tuesday,Thursday 8:50 PM–10:30 PM | Tuesday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20018,CS2007,7,20050,CS1004,3,Friday,Friday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20019,CS2008,1,20051,CS1004,4,Friday,Friday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20021,CS2008,3,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20021,CS2008,3,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20022,CS2008,4,20054,CS3011,3,Friday,Friday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20023,CS2009,1,20055,CS3011,4,Friday,Friday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100505,Aaron Nguyen,20033,CS4018,1,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20001,CS1001,1,20013,CS2007,2,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20001,CS1001,1,20021,CS2008,3,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20001,CS1001,1,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20001,CS1001,1,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20002,CS1001,2,20034,CS5001,1,Monday; Wednesday,Monday 9:50 AM–11:30 AM | Wednesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20003,CS1002,1,20035,CS5001,2,Monday; Wednesday,Monday 11:40 AM–1:20 PM | Wednesday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20004,CS1002,2,20036,CS5001,3,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20012,CS2007,1,20044,CS5005,1,Thursday; Tuesday,Thursday 1:30 PM–3:10 PM | Tuesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20013,CS2007,2,20021,CS2008,3,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20013,CS2007,2,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20013,CS2007,2,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20018,CS2007,7,20050,CS1004,3,Friday,Friday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20019,CS2008,1,20051,CS1004,4,Friday,Friday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20021,CS2008,3,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20021,CS2008,3,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20022,CS2008,4,20054,CS3011,3,Friday,Friday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20023,CS2009,1,20055,CS3011,4,Friday,Friday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100506,Nia Charles,20033,CS4018,1,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20065,BU3011,2,20068,BU1002,3,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20065,BU3011,2,20100,BU5004,1,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20066,BU1002,1,20098,BU5003,2,Monday; Wednesday,Monday 9:50 AM–11:30 AM | Wednesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20068,BU1002,3,20100,BU5004,1,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20069,BU1002,4,20101,BU5004,2,Monday; Wednesday,Monday 3:20 PM–5:00 PM | Wednesday 3:20 PM–5:00 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20074,BU1003,4,20106,BU5002,1,Thursday; Tuesday,Thursday 9:50 AM–11:30 AM | Tuesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20078,BU2009,3,20110,BU3013,2,Thursday; Tuesday,Thursday 5:10 PM–6:50 PM | Tuesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20079,BU2009,4,20111,BU3013,3,Thursday; Tuesday,Thursday 7:00 PM–8:40 PM | Tuesday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20080,BU3010,1,20112,BU4014,1,Thursday; Tuesday,Thursday 8:50 PM–10:30 PM | Tuesday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20081,BU3010,2,20113,BU4014,2,Friday,Friday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20082,BU3010,3,20114,BU4014,3,Friday,Friday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20084,BU3012,1,20116,BU5006,3,Friday,Friday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100507,Elena Flores,20087,BU3012,4,20119,BU3013,4,Friday,Friday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20066,BU1002,1,20098,BU5003,2,Monday; Wednesday,Monday 9:50 AM–11:30 AM | Wednesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20068,BU1002,3,20100,BU5004,1,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20069,BU1002,4,20101,BU5004,2,Monday; Wednesday,Monday 3:20 PM–5:00 PM | Wednesday 3:20 PM–5:00 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20070,BU1002,5,20102,BU5004,3,Monday; Wednesday,Monday 5:10 PM–6:50 PM | Wednesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20074,BU1003,4,20106,BU5002,1,Thursday; Tuesday,Thursday 9:50 AM–11:30 AM | Tuesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20078,BU2009,3,20110,BU3013,2,Thursday; Tuesday,Thursday 5:10 PM–6:50 PM | Tuesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20079,BU2009,4,20111,BU3013,3,Thursday; Tuesday,Thursday 7:00 PM–8:40 PM | Tuesday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20080,BU3010,1,20112,BU4014,1,Thursday; Tuesday,Thursday 8:50 PM–10:30 PM | Tuesday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20081,BU3010,2,20113,BU4014,2,Friday,Friday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20082,BU3010,3,20114,BU4014,3,Friday,Friday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20083,BU3010,4,20115,BU5006,2,Friday,Friday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20087,BU3012,4,20119,BU3013,4,Friday,Friday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100508,Adrian Gonzalez,20088,BU5001,1,20120,BU4014,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20132,MA1001,4,20164,MA5005,2,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20133,MA1002,1,20165,MA3013,1,Monday; Wednesday,Monday 3:20 PM–5:00 PM | Wednesday 3:20 PM–5:00 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20134,MA1002,2,20166,MA4014,1,Monday; Wednesday,Monday 5:10 PM–6:50 PM | Wednesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20135,MA1004,1,20167,MA4018,1,Monday; Wednesday,Monday 7:00 PM–8:40 PM | Wednesday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20141,MA1004,7,20173,MA4018,3,Thursday; Tuesday,Thursday 3:20 PM–5:00 PM | Tuesday 3:20 PM–5:00 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20142,MA1004,8,20174,MA5002,3,Thursday; Tuesday,Thursday 5:10 PM–6:50 PM | Tuesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20145,MA2007,3,20177,MA5003,1,Friday,Friday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20146,MA2008,1,20178,MA5003,2,Friday,Friday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100509,Chloe Joseph,20148,MA2009,2,20180,MA5003,4,Friday,Friday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100510,Cameron Gonzalez,20184,NS1001,4,20216,NS2009,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100510,Cameron Gonzalez,20193,NS1002,1,20225,NS5002,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100517,Ariana Johnson,20001,CS1001,1,20013,CS2007,2,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100517,Ariana Johnson,20001,CS1001,1,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100517,Ariana Johnson,20002,CS1001,2,20034,CS5001,1,Monday; Wednesday,Monday 9:50 AM–11:30 AM | Wednesday 9:50 AM–11:30 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100517,Ariana Johnson,20013,CS2007,2,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100517,Ariana Johnson,20019,CS2008,1,20051,CS1004,4,Friday,Friday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20001,CS1001,1,20013,CS2007,2,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20001,CS1001,1,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20001,CS1001,1,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20013,CS2007,2,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20013,CS2007,2,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20019,CS2008,1,20051,CS1004,4,Friday,Friday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100518,Aaliyah White,20033,CS4018,1,20037,CS5001,4,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20065,BU3011,2,20068,BU1002,3,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20065,BU3011,2,20100,BU5004,1,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20067,BU1002,2,20099,BU5003,3,Monday; Wednesday,Monday 11:40 AM–1:20 PM | Wednesday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20068,BU1002,3,20100,BU5004,1,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20070,BU1002,5,20102,BU5004,3,Monday; Wednesday,Monday 5:10 PM–6:50 PM | Wednesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20078,BU2009,3,20110,BU3013,2,Thursday; Tuesday,Thursday 5:10 PM–6:50 PM | Tuesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20080,BU3010,1,20112,BU4014,1,Thursday; Tuesday,Thursday 8:50 PM–10:30 PM | Tuesday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20081,BU3010,2,20113,BU4014,2,Friday,Friday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20084,BU3012,1,20116,BU5006,3,Friday,Friday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100519,Natalie Carter,20088,BU5001,1,20120,BU4014,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100520,Victoria Desir,20070,BU1002,5,20102,BU5004,3,Monday; Wednesday,Monday 5:10 PM–6:50 PM | Wednesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100520,Victoria Desir,20084,BU3012,1,20116,BU5006,3,Friday,Friday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20129,MA1001,1,20161,MA5004,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20132,MA1001,4,20164,MA5005,2,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20134,MA1002,2,20166,MA4014,1,Monday; Wednesday,Monday 5:10 PM–6:50 PM | Wednesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20135,MA1004,1,20167,MA4018,1,Monday; Wednesday,Monday 7:00 PM–8:40 PM | Wednesday 7:00 PM–8:40 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20136,MA1004,2,20168,MA5002,1,Monday; Wednesday,Monday 8:50 PM–10:30 PM | Wednesday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20141,MA1004,7,20173,MA4018,3,Thursday; Tuesday,Thursday 3:20 PM–5:00 PM | Tuesday 3:20 PM–5:00 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100521,Grace Williams,20148,MA2009,2,20180,MA5003,4,Friday,Friday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100522,Andrew Johnson,20184,NS1001,4,20216,NS2009,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100522,Andrew Johnson,20193,NS1002,1,20225,NS5002,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100529,Samantha Pierre,20001,CS1001,1,20033,CS4018,1,Monday; Wednesday,Monday 8:00 AM–9:40 AM | Wednesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100531,Malcolm Martinez,20070,BU1002,5,20102,BU5004,3,Monday; Wednesday,Monday 5:10 PM–6:50 PM | Wednesday 5:10 PM–6:50 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100531,Malcolm Martinez,20088,BU5001,1,20120,BU4014,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100532,Kayla Young,20088,BU5001,1,20120,BU4014,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100533,Darius Desir,20132,MA1001,4,20164,MA5005,2,Monday; Wednesday,Monday 1:30 PM–3:10 PM | Wednesday 1:30 PM–3:10 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100533,Darius Desir,20137,MA1004,3,20169,MA5002,2,Thursday; Tuesday,Thursday 8:00 AM–9:40 AM | Tuesday 8:00 AM–9:40 AM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100534,Nathan Joseph,20184,NS1001,4,20216,NS2009,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100534,Nathan Joseph,20195,NS1003,1,20227,NS5003,1,Monday; Wednesday,Monday 11:40 AM–1:20 PM | Wednesday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100546,Lucas Perez,20184,NS1001,4,20216,NS2009,4,Friday,Friday 8:50 PM–10:30 PM,Shared Course_Section time slot; no separate lecture/lab times in schema
+2,Spring 2027,100570,David Johnson,20195,NS1003,1,20227,NS5003,1,Monday; Wednesday,Monday 11:40 AM–1:20 PM | Wednesday 11:40 AM–1:20 PM,Shared Course_Section time slot; no separate lecture/lab times in schema

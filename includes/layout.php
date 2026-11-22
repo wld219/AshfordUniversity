@@ -26,17 +26,19 @@ function nav_items(string $role): array
 
         case 'Faculty':
             return [
+                ['__section', 'DASHBOARD'],
                 ['Overview', 'dashboard.php'],
                 ['My Schedule', 'schedule.php'],
-                ['Advising Appointments', 'advising_appointments.php'],
-                ['Master Schedule', 'master-schedule.php'],
                 ['Course Rosters', 'rosters.php'],
-                ['Attendance History', 'attendance-history.php'],
-                ['Attendance Calendar', 'attendance-calendar.php'],
-                ['Weekly Attendance', 'attendance-weekly.php'],
-                ['Advisees', 'advisees.php'],
+                ['Attendance', 'attendance-weekly.php'],
+                ['__section', 'ACADEMIC ADVISING'],
+                ['My Advisees', 'advisees.php'],
+                ['Advising & Appointments', 'advising_appointments.php'],
+                ['__section', 'RESOURCES & ACCOUNT'],
+                ['Master Schedule', 'master-schedule.php'],
                 ['Catalog', 'catalog.php'],
-                ['My Profile', 'profile.php']
+                ['My Profile', 'profile.php'],
+                ['Log Out', '../logout.php']
             ];
 
         case 'Admin':
@@ -119,7 +121,7 @@ function page_start(
 
     </head>
 
-    <body class="<?= $role === 'Student' ? 'student-portal-theme ashford-admin-collapsible' : (in_array($role, ['Admin', 'Faculty'], true) ? 'ashford-admin-collapsible' : '') ?>">
+    <body class="<?= $role === 'Student' ? 'student-portal-theme ashford-admin-collapsible' : ($role === 'Faculty' ? 'ashford-admin-collapsible faculty-portal-shell' : ($role === 'Admin' ? 'ashford-admin-collapsible' : '')) ?>">
 
     <header class="topbar">
 
@@ -171,7 +173,16 @@ function page_start(
 
 
     <div class="shell">
-<?php if (in_array($role, ['Admin', 'Faculty'], true)): ?>
+<?php if ($role === 'Faculty'): ?>
+<button type="button" id="admin-sidebar-toggle" class="admin-sidebar-toggle faculty-sidebar-toggle" aria-controls="admin-sidebar" aria-expanded="true" aria-label="Collapse navigation" title="Collapse navigation">
+    <svg class="faculty-sidebar-icon faculty-sidebar-icon-close" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="m16 15-3-3 3-3"/>
+    </svg>
+    <svg class="faculty-sidebar-icon faculty-sidebar-icon-open" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="m13 9 3 3-3 3"/>
+    </svg>
+</button>
+<?php elseif ($role === 'Admin'): ?>
 <button type="button" id="admin-sidebar-toggle" class="admin-sidebar-toggle" aria-controls="admin-sidebar" aria-expanded="true" aria-label="Collapse navigation" title="Toggle navigation">☰</button>
 <?php endif; ?>
 
@@ -193,10 +204,26 @@ function page_start(
 
                 <?php
 
+                if ($role === 'Faculty' && ($item[0] ?? '') === '__section'):
+                    ?>
+                    <h2 class="faculty-nav-section"><?= e($item[1]) ?></h2>
+                    <?php
+                    continue;
+                endif;
+
                 $label = $item[0];
                 $url = $item[1];
 
-                if ($active === $url) {
+                $isActive = $active === $url;
+                if ($role === 'Faculty' && $label === 'Attendance') {
+                    $isActive = in_array($active, [
+                        'attendance-weekly.php',
+                        'attendance-calendar.php',
+                        'attendance-history.php',
+                    ], true);
+                }
+
+                if ($isActive) {
                     $class = 'active';
                 } else {
                     $class = '';
@@ -208,6 +235,7 @@ function page_start(
                     class="<?= $class ?>"
                     href="<?= e($url) ?>"
                     title="<?= e($label) ?>"
+                    <?= $role === 'Faculty' && $isActive ? 'aria-current="page"' : '' ?>
                 >
                     <?php if ($role === 'Admin'): ?>
                     <?php $icons = ['Dashboard'=>'⌂', 'User Management'=>'♧', 'Course Management'=>'▤', 'Course Sections'=>'▥', 'Master Schedule'=>'▦', 'Security & Logs'=>'◇']; ?>
@@ -258,18 +286,16 @@ $studentIcons = [
 <?php
 // ASHFORD_FACULTY_NAV_ICONS_V2
 $facultyIcons = [
-                        'Dashboard' => '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
-                        'Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+                        'Overview' => '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+                        'My Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/>',
+                        'Course Rosters' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
+                        'Attendance' => '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M8 14l2 2 5-5"/>',
+                        'My Advisees' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+                        'Advising & Appointments' => '<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 9h18M8 13h3M8 17h7"/>',
                         'Master Schedule' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>',
-                        'Rosters' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/>',
-                        'Attendance Calendar' => '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9" r="3"/><path d="M16 12v2"/><path d="M20 8v6"/><path d="M4 8v6"/>',
-                        'Attendance History' => '<path d="M17 3v10h-6v-6"/><circle cx="8" cy="8" r="2"/><path d="M12 8h8M9 12h2M15 12h2"/>',
-                        'Weekly Attendance' => '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M3 14h18"/>',
-                        'Time Rules' => '<path d="M12 20a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4z"/><path d="M12 6h8M12 18h8"/>',
-                        'Attendance Window' => '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9" r="3"/><path d="M16 12v2"/><path d="M20 8v6"/><path d="M4 8v6"/>',
-                        'Advisees' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
                         'Catalog' => '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>',
-                        'Profile' => '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+                        'My Profile' => '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+                        'Log Out' => '<path d="M10 17l5-5-5-5M15 12H3"/><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/>',
                     ];
 ?>
 <span class="admin-nav-icon" aria-hidden="true">

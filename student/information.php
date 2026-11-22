@@ -148,6 +148,7 @@ $student = one(
 		WHERE User.user_ID = ?",
 	[$studentID]
 );
+$studentAcademicProgram = resolve_student_academic_program($pdo, $studentID);
 
 
 page_start(

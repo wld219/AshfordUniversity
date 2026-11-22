@@ -1,0 +1,469 @@
+student_ID,semester_Name,semester_ID,course_ID,course_Name,CRN,section_No,Grade,attendance_rows,history_rows,record_protection
+100017,"Fall 2026",1,BU3071,"Information Technology & Application",10004,4,,0,0,"No grade/attendance/history"
+100017,"Fall 2026",1,BU3071,"Information Technology & Application",10005,5,,0,0,"No grade/attendance/history"
+100019,"Fall 2026",1,EG2007,"Engineering Graphics",10231,4,,0,0,"No grade/attendance/history"
+100019,"Fall 2026",1,EG2007,"Engineering Graphics",10234,7,,0,0,"No grade/attendance/history"
+100020,"Fall 2026",1,BU3071,"Information Technology & Application",10001,1,,0,0,"No grade/attendance/history"
+100020,"Fall 2026",1,BU3071,"Information Technology & Application",10006,6,,0,0,"No grade/attendance/history"
+100027,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,A-,2,0,Protected
+100027,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,B-,2,0,Protected
+100027,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,B,2,0,Protected
+100027,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,D+,2,0,Protected
+100028,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,B-,2,0,Protected
+100028,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,A-,2,0,Protected
+100028,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,C+,2,0,Protected
+100028,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,D+,2,0,Protected
+100029,"Fall 2026",1,EG3010,Statics,10238,1,,0,0,"No grade/attendance/history"
+100029,"Fall 2026",1,EG3010,Statics,10239,2,,0,0,"No grade/attendance/history"
+100045,"Fall 2026",1,EG2009,"Engineering Mathematics",10235,1,,0,0,"No grade/attendance/history"
+100045,"Fall 2026",1,EG2009,"Engineering Mathematics",10237,3,,0,0,"No grade/attendance/history"
+100049,"Fall 2026",1,BU3071,"Information Technology & Application",10001,1,B+,8,1,Protected
+100049,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,F,2,0,Protected
+100049,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,D,2,0,Protected
+100049,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,D,2,0,Protected
+100050,"Fall 2026",1,BU3071,"Information Technology & Application",10004,4,,0,0,"No grade/attendance/history"
+100050,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,,0,0,"No grade/attendance/history"
+100055,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,D+,2,0,Protected
+100055,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,F,2,0,Protected
+100055,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,B-,2,0,Protected
+100055,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,C-,2,0,Protected
+100069,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,B+,2,0,Protected
+100069,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,D+,2,0,Protected
+100069,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,B,2,0,Protected
+100069,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,A,2,0,Protected
+100073,"Fall 2026",1,BU3071,"Information Technology & Application",10002,2,B,8,1,Protected
+100073,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,D,2,0,Protected
+100073,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,D,2,0,Protected
+100073,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,C+,2,0,Protected
+100079,"Fall 2026",1,HS3011,"Healthcare Ethics",10338,1,,0,0,"No grade/attendance/history"
+100079,"Fall 2026",1,HS3011,"Healthcare Ethics",10339,2,,0,0,"No grade/attendance/history"
+100085,"Fall 2026",1,BU3071,"Information Technology & Application",10002,2,B,8,1,Protected
+100085,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,B-,2,0,Protected
+100085,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,C+,2,0,Protected
+100085,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,D+,2,0,Protected
+100087,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,B,2,0,Protected
+100087,"Fall 2026",1,BU3071,"Information Technology & Application",10008,8,B-,2,0,Protected
+100087,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,A-,2,0,Protected
+100087,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,B-,2,0,Protected
+100091,"Fall 2026",1,BU3071,"Information Technology & Application",10001,1,D,2,1,Protected
+100091,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,D+,2,0,Protected
+100091,"Fall 2026",1,BU3071,"Information Technology & Application",10009,9,A,2,0,Protected
+100091,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,D,2,0,Protected
+100093,"Fall 2026",1,SS2006,"Social Science Research Methods",10301,1,,0,0,"No grade/attendance/history"
+100093,"Fall 2026",1,SS2006,"Social Science Research Methods",10304,3,,0,0,"No grade/attendance/history"
+100099,"Fall 2026",1,EN2009,"World Literature",10267,1,C+,2,0,Protected
+100099,"Fall 2026",1,EN2009,"World Literature",10268,2,A,2,0,Protected
+100099,"Fall 2026",1,EN4017,"Language and Culture",10269,1,A,2,0,Protected
+100099,"Fall 2026",1,EN4017,"Language and Culture",10270,2,A,2,0,Protected
+100104,"Fall 2026",1,BU3071,"Information Technology & Application",10007,7,C+,2,0,Protected
+100104,"Fall 2026",1,BU3071,"Information Technology & Application",10010,10,B-,2,0,Protected
+100129,"Fall 2026",1,EN1001,"College Composition",10260,1,,0,0,"No grade/attendance/history"
+100129,"Fall 2026",1,EN1001,"College Composition",10262,3,,0,0,"No grade/attendance/history"
+100227,"Fall 2026",1,EG2007,"Engineering Graphics",10228,1,,0,0,"No grade/attendance/history"
+100227,"Fall 2026",1,EG2007,"Engineering Graphics",10231,4,,0,0,"No grade/attendance/history"
+100230,"Fall 2026",1,SS2006,"Social Science Research Methods",10303,2,,0,0,"No grade/attendance/history"
+100230,"Fall 2026",1,SS2006,"Social Science Research Methods",10304,3,,0,0,"No grade/attendance/history"
+100240,"Fall 2026",1,EN2009,"World Literature",10267,1,C,2,0,Protected
+100240,"Fall 2026",1,EN2009,"World Literature",10268,2,B-,2,0,Protected
+100240,"Fall 2026",1,EN4017,"Language and Culture",10269,1,B,2,0,Protected
+100240,"Fall 2026",1,EN4017,"Language and Culture",10270,2,B-,2,0,Protected
+100261,"Fall 2026",1,EG2007,"Engineering Graphics",10229,2,,0,0,"No grade/attendance/history"
+100261,"Fall 2026",1,EG2007,"Engineering Graphics",10232,5,,0,0,"No grade/attendance/history"
+100277,"Fall 2026",1,SS2009,"American Government",10289,1,,0,0,"No grade/attendance/history"
+100277,"Fall 2026",1,SS2009,"American Government",10290,2,,0,0,"No grade/attendance/history"
+100284,"Fall 2026",1,EN1002,"Introduction to Literature",10263,1,D,2,0,Protected
+100284,"Fall 2026",1,EN1002,"Introduction to Literature",10264,2,D,2,0,Protected
+100297,"Fall 2026",1,EG2007,"Engineering Graphics",10228,1,,0,0,"No grade/attendance/history"
+100297,"Fall 2026",1,EG2007,"Engineering Graphics",10233,6,,0,0,"No grade/attendance/history"
+100347,"Fall 2026",1,EG2007,"Engineering Graphics",10228,1,,0,0,"No grade/attendance/history"
+100347,"Fall 2026",1,EG2007,"Engineering Graphics",10230,3,,0,0,"No grade/attendance/history"
+100367,"Fall 2026",1,EN2009,"World Literature",10267,1,C,2,0,Protected
+100367,"Fall 2026",1,EN2009,"World Literature",10268,2,D+,2,0,Protected
+100389,"Fall 2026",1,EN2009,"World Literature",10267,1,B-,2,0,Protected
+100389,"Fall 2026",1,EN2009,"World Literature",10268,2,A,2,0,Protected
+100496,"Fall 2026",1,EG2007,"Engineering Graphics",10228,1,,0,0,"No grade/attendance/history"
+100496,"Fall 2026",1,EG2007,"Engineering Graphics",10229,2,,0,0,"No grade/attendance/history"
+100523,"Fall 2026",1,EG2007,"Engineering Graphics",10229,2,A-,2,0,Protected
+100523,"Fall 2026",1,EG2007,"Engineering Graphics",10230,3,A-,2,0,Protected
+100523,"Fall 2026",1,EG2007,"Engineering Graphics",10232,5,B+,2,0,Protected
+100022,"Spring 2027",2,MA1004,"Discrete Mathematics",20138,4,,0,0,"No grade/attendance/history"
+100022,"Spring 2027",2,MA1004,"Discrete Mathematics",20139,5,,0,0,"No grade/attendance/history"
+100026,"Spring 2027",2,MA2009,"Mathematical Reasoning",20147,1,,0,0,"No grade/attendance/history"
+100026,"Spring 2027",2,MA2009,"Mathematical Reasoning",20150,4,,0,0,"No grade/attendance/history"
+100031,"Spring 2027",2,MA1004,"Discrete Mathematics",20137,3,,0,0,"No grade/attendance/history"
+100031,"Spring 2027",2,MA1004,"Discrete Mathematics",20139,5,,0,0,"No grade/attendance/history"
+100041,"Spring 2027",2,BU3013,"Operations Management",20111,3,,0,0,"No grade/attendance/history"
+100041,"Spring 2027",2,BU3013,"Operations Management",20119,4,,0,0,"No grade/attendance/history"
+100064,"Spring 2027",2,BU1002,"Financial Accounting",20068,3,,0,0,"No grade/attendance/history"
+100064,"Spring 2027",2,BU1002,"Financial Accounting",20070,5,,0,0,"No grade/attendance/history"
+100099,"Spring 2027",2,EN1001,"College Composition",20278,1,B+,2,0,Protected
+100099,"Spring 2027",2,EN1001,"College Composition",20279,2,F,2,0,Protected
+100099,"Spring 2027",2,EN1001,"College Composition",20280,3,B+,2,0,Protected
+100099,"Spring 2027",2,EN3013,"Technical Writing",20290,1,B,2,0,Protected
+100099,"Spring 2027",2,EN3013,"Technical Writing",20291,2,F,2,0,Protected
+100130,"Spring 2027",2,BU1002,"Financial Accounting",20067,2,,0,0,"No grade/attendance/history"
+100130,"Spring 2027",2,BU1002,"Financial Accounting",20069,4,,0,0,"No grade/attendance/history"
+100148,"Spring 2027",2,NS1003,"General Physics",20196,2,,0,0,"No grade/attendance/history"
+100148,"Spring 2027",2,NS1003,"General Physics",20198,4,,0,0,"No grade/attendance/history"
+100192,"Spring 2027",2,BU3012,Entrepreneurship,20084,1,,0,0,"No grade/attendance/history"
+100192,"Spring 2027",2,BU3012,Entrepreneurship,20086,3,,0,0,"No grade/attendance/history"
+100212,"Spring 2027",2,EN1001,"College Composition",20278,1,B+,2,0,Protected
+100212,"Spring 2027",2,EN1001,"College Composition",20279,2,F,2,0,Protected
+100212,"Spring 2027",2,EN1001,"College Composition",20280,3,C-,2,0,Protected
+100212,"Spring 2027",2,EN3013,"Technical Writing",20290,1,F,2,0,Protected
+100212,"Spring 2027",2,EN3013,"Technical Writing",20291,2,B+,2,0,Protected
+100215,"Spring 2027",2,CS5003,"Machine Learning",20038,1,,0,0,"No grade/attendance/history"
+100215,"Spring 2027",2,CS5003,"Machine Learning",20040,3,,0,0,"No grade/attendance/history"
+100240,"Spring 2027",2,EN1001,"College Composition",20278,1,A-,2,0,Protected
+100240,"Spring 2027",2,EN1001,"College Composition",20279,2,B,2,0,Protected
+100240,"Spring 2027",2,EN1001,"College Composition",20280,3,B,2,0,Protected
+100240,"Spring 2027",2,EN3013,"Technical Writing",20290,1,A,2,0,Protected
+100240,"Spring 2027",2,EN3013,"Technical Writing",20291,2,B,2,0,Protected
+100248,"Spring 2027",2,NS2008,"Earth Science",20207,1,,0,0,"No grade/attendance/history"
+100248,"Spring 2027",2,NS2008,"Earth Science",20212,6,,0,0,"No grade/attendance/history"
+100284,"Spring 2027",2,EN1001,"College Composition",20278,1,C-,2,0,Protected
+100284,"Spring 2027",2,EN1001,"College Composition",20279,2,B-,2,0,Protected
+100284,"Spring 2027",2,EN1001,"College Composition",20280,3,A,2,0,Protected
+100284,"Spring 2027",2,EN3013,"Technical Writing",20290,1,B,2,0,Protected
+100284,"Spring 2027",2,EN3013,"Technical Writing",20291,2,A,2,0,Protected
+100355,"Spring 2027",2,CS5003,"Machine Learning",20038,1,,0,0,"No grade/attendance/history"
+100355,"Spring 2027",2,CS5003,"Machine Learning",20041,4,,0,0,"No grade/attendance/history"
+100367,"Spring 2027",2,EN1001,"College Composition",20278,1,D+,2,0,Protected
+100367,"Spring 2027",2,EN1001,"College Composition",20279,2,C,2,0,Protected
+100389,"Spring 2027",2,EN1001,"College Composition",20278,1,A-,2,0,Protected
+100389,"Spring 2027",2,EN1001,"College Composition",20279,2,B,2,0,Protected
+100395,"Spring 2027",2,EG1001,"Introduction to Engineering",20243,3,,0,0,"No grade/attendance/history"
+100395,"Spring 2027",2,EG1001,"Introduction to Engineering",20245,5,,0,0,"No grade/attendance/history"
+100436,"Spring 2027",2,MA1004,"Discrete Mathematics",20140,6,,0,0,"No grade/attendance/history"
+100436,"Spring 2027",2,MA1004,"Discrete Mathematics",20141,7,,0,0,"No grade/attendance/history"
+100457,"Spring 2027",2,MA1004,"Discrete Mathematics",20135,1,,0,0,"No grade/attendance/history"
+100457,"Spring 2027",2,MA1004,"Discrete Mathematics",20137,3,,0,0,"No grade/attendance/history"
+100492,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20203,3,,0,0,"No grade/attendance/history"
+100492,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20205,5,,0,0,"No grade/attendance/history"
+100505,"Spring 2027",2,CS1001,"Introduction to Programming",20001,1,B+,2,0,Protected
+100505,"Spring 2027",2,CS1001,"Introduction to Programming",20002,2,C+,2,0,Protected
+100505,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20003,1,B,2,0,Protected
+100505,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20004,2,A,2,0,Protected
+100505,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20006,4,C+,2,0,Protected
+100505,"Spring 2027",2,CS1004,"Database Systems",20048,1,B,2,0,Protected
+100505,"Spring 2027",2,CS1004,"Database Systems",20049,2,B,2,0,Protected
+100505,"Spring 2027",2,CS1004,"Database Systems",20050,3,C+,2,0,Protected
+100505,"Spring 2027",2,CS1004,"Database Systems",20051,4,D,2,0,Protected
+100505,"Spring 2027",2,CS1005,"Computer Networks",20009,3,C,2,0,Protected
+100505,"Spring 2027",2,CS1005,"Computer Networks",20010,4,B,8,0,Protected
+100505,"Spring 2027",2,CS2007,"Introduction to Computing",20012,1,A-,2,0,Protected
+100505,"Spring 2027",2,CS2007,"Introduction to Computing",20013,2,D,2,0,Protected
+100505,"Spring 2027",2,CS2007,"Introduction to Computing",20016,5,C,2,0,Protected
+100505,"Spring 2027",2,CS2007,"Introduction to Computing",20018,7,C+,2,0,Protected
+100505,"Spring 2027",2,CS2008,"Web Development",20019,1,D+,2,0,Protected
+100505,"Spring 2027",2,CS2008,"Web Development",20020,2,D,2,0,Protected
+100505,"Spring 2027",2,CS2008,"Web Development",20021,3,C+,2,0,Protected
+100505,"Spring 2027",2,CS2008,"Web Development",20022,4,B+,2,0,Protected
+100505,"Spring 2027",2,CS3011,"Algorithm Design",20054,3,F,2,0,Protected
+100505,"Spring 2027",2,CS3011,"Algorithm Design",20055,4,F,2,0,Protected
+100505,"Spring 2027",2,CS5001,"Advanced Algorithms",20036,3,C-,2,0,Protected
+100505,"Spring 2027",2,CS5001,"Advanced Algorithms",20037,4,D+,2,0,Protected
+100505,"Spring 2027",2,CS5005,"Advanced Database Research",20044,1,F,2,0,Protected
+100505,"Spring 2027",2,CS5005,"Advanced Database Research",20046,3,F,2,0,Protected
+100506,"Spring 2027",2,CS1001,"Introduction to Programming",20001,1,D+,2,0,Protected
+100506,"Spring 2027",2,CS1001,"Introduction to Programming",20002,2,C,2,0,Protected
+100506,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20003,1,B-,2,0,Protected
+100506,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20004,2,A-,2,0,Protected
+100506,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20006,4,D+,2,0,Protected
+100506,"Spring 2027",2,CS1004,"Database Systems",20049,2,D+,2,0,Protected
+100506,"Spring 2027",2,CS1004,"Database Systems",20050,3,A,2,0,Protected
+100506,"Spring 2027",2,CS1004,"Database Systems",20051,4,B-,2,0,Protected
+100506,"Spring 2027",2,CS1005,"Computer Networks",20009,3,C,2,0,Protected
+100506,"Spring 2027",2,CS1005,"Computer Networks",20010,4,B-,8,0,Protected
+100506,"Spring 2027",2,CS2007,"Introduction to Computing",20012,1,B+,2,0,Protected
+100506,"Spring 2027",2,CS2007,"Introduction to Computing",20013,2,B+,2,0,Protected
+100506,"Spring 2027",2,CS2007,"Introduction to Computing",20016,5,C-,2,0,Protected
+100506,"Spring 2027",2,CS2007,"Introduction to Computing",20018,7,B,2,0,Protected
+100506,"Spring 2027",2,CS2008,"Web Development",20019,1,B,2,0,Protected
+100506,"Spring 2027",2,CS2008,"Web Development",20020,2,C+,2,0,Protected
+100506,"Spring 2027",2,CS2008,"Web Development",20021,3,B-,2,0,Protected
+100506,"Spring 2027",2,CS2008,"Web Development",20022,4,B-,2,0,Protected
+100506,"Spring 2027",2,CS3011,"Algorithm Design",20054,3,A,2,0,Protected
+100506,"Spring 2027",2,CS3011,"Algorithm Design",20055,4,B,2,0,Protected
+100506,"Spring 2027",2,CS5001,"Advanced Algorithms",20034,1,B+,2,0,Protected
+100506,"Spring 2027",2,CS5001,"Advanced Algorithms",20035,2,C+,2,0,Protected
+100506,"Spring 2027",2,CS5001,"Advanced Algorithms",20036,3,B-,2,0,Protected
+100506,"Spring 2027",2,CS5001,"Advanced Algorithms",20037,4,B-,2,0,Protected
+100506,"Spring 2027",2,CS5005,"Advanced Database Research",20044,1,A-,2,0,Protected
+100506,"Spring 2027",2,CS5005,"Advanced Database Research",20045,2,C,2,0,Protected
+100506,"Spring 2027",2,CS5005,"Advanced Database Research",20046,3,A,2,0,Protected
+100507,"Spring 2027",2,BU1002,"Financial Accounting",20066,1,B+,2,0,Protected
+100507,"Spring 2027",2,BU1002,"Financial Accounting",20067,2,F,2,0,Protected
+100507,"Spring 2027",2,BU1002,"Financial Accounting",20068,3,B-,2,0,Protected
+100507,"Spring 2027",2,BU1002,"Financial Accounting",20069,4,C+,2,0,Protected
+100507,"Spring 2027",2,BU1002,"Financial Accounting",20070,5,C+,2,0,Protected
+100507,"Spring 2027",2,BU1003,"Managerial Accounting",20071,1,B,2,0,Protected
+100507,"Spring 2027",2,BU1003,"Managerial Accounting",20072,2,C,2,0,Protected
+100507,"Spring 2027",2,BU1003,"Managerial Accounting",20073,3,C-,2,0,Protected
+100507,"Spring 2027",2,BU1003,"Managerial Accounting",20074,4,C+,2,0,Protected
+100507,"Spring 2027",2,BU2009,"Microeconomics for Business",20076,1,A,2,0,Protected
+100507,"Spring 2027",2,BU2009,"Microeconomics for Business",20078,3,C,2,0,Protected
+100507,"Spring 2027",2,BU2009,"Microeconomics for Business",20079,4,B,2,0,Protected
+100507,"Spring 2027",2,BU3010,"Macroeconomics for Business",20080,1,C-,2,0,Protected
+100507,"Spring 2027",2,BU3010,"Macroeconomics for Business",20081,2,B,2,0,Protected
+100507,"Spring 2027",2,BU3010,"Macroeconomics for Business",20082,3,A,2,0,Protected
+100507,"Spring 2027",2,BU3010,"Macroeconomics for Business",20083,4,B,2,0,Protected
+100507,"Spring 2027",2,BU3012,Entrepreneurship,20084,1,F,2,0,Protected
+100507,"Spring 2027",2,BU3012,Entrepreneurship,20085,2,B,2,0,Protected
+100507,"Spring 2027",2,BU3012,Entrepreneurship,20087,4,C,8,0,Protected
+100507,"Spring 2027",2,BU3013,"Operations Management",20109,1,A,2,0,Protected
+100507,"Spring 2027",2,BU3013,"Operations Management",20110,2,C-,2,0,Protected
+100507,"Spring 2027",2,BU3013,"Operations Management",20111,3,C+,2,0,Protected
+100507,"Spring 2027",2,BU3013,"Operations Management",20119,4,B,2,0,Protected
+100507,"Spring 2027",2,BU4014,"Human Resource Management",20112,1,D,2,0,Protected
+100507,"Spring 2027",2,BU4014,"Human Resource Management",20113,2,C,2,0,Protected
+100507,"Spring 2027",2,BU4014,"Human Resource Management",20114,3,D+,2,0,Protected
+100507,"Spring 2027",2,BU4014,"Human Resource Management",20120,4,A-,2,0,Protected
+100507,"Spring 2027",2,BU5002,"Advanced Financial Analysis",20106,1,F,2,0,Protected
+100507,"Spring 2027",2,BU5002,"Advanced Financial Analysis",20107,2,C+,2,0,Protected
+100507,"Spring 2027",2,BU5003,"Business Analytics",20097,1,F,2,0,Protected
+100507,"Spring 2027",2,BU5003,"Business Analytics",20098,2,C,2,0,Protected
+100507,"Spring 2027",2,BU5004,"Global Marketing Strategy",20100,1,D+,2,0,Protected
+100507,"Spring 2027",2,BU5004,"Global Marketing Strategy",20101,2,B,2,0,Protected
+100508,"Spring 2027",2,BU1002,"Financial Accounting",20066,1,C,2,0,Protected
+100508,"Spring 2027",2,BU1002,"Financial Accounting",20067,2,D+,2,0,Protected
+100508,"Spring 2027",2,BU1002,"Financial Accounting",20068,3,A,2,0,Protected
+100508,"Spring 2027",2,BU1002,"Financial Accounting",20069,4,B-,2,0,Protected
+100508,"Spring 2027",2,BU1002,"Financial Accounting",20070,5,D+,2,0,Protected
+100508,"Spring 2027",2,BU1003,"Managerial Accounting",20071,1,A-,2,0,Protected
+100508,"Spring 2027",2,BU1003,"Managerial Accounting",20072,2,F,2,0,Protected
+100508,"Spring 2027",2,BU1003,"Managerial Accounting",20073,3,A-,2,0,Protected
+100508,"Spring 2027",2,BU1003,"Managerial Accounting",20074,4,A,2,0,Protected
+100508,"Spring 2027",2,BU2009,"Microeconomics for Business",20076,1,F,2,0,Protected
+100508,"Spring 2027",2,BU2009,"Microeconomics for Business",20078,3,C-,2,0,Protected
+100508,"Spring 2027",2,BU2009,"Microeconomics for Business",20079,4,B+,2,0,Protected
+100508,"Spring 2027",2,BU3010,"Macroeconomics for Business",20080,1,B,2,0,Protected
+100508,"Spring 2027",2,BU3010,"Macroeconomics for Business",20081,2,D+,2,0,Protected
+100508,"Spring 2027",2,BU3010,"Macroeconomics for Business",20082,3,A-,2,0,Protected
+100508,"Spring 2027",2,BU3010,"Macroeconomics for Business",20083,4,C+,2,0,Protected
+100508,"Spring 2027",2,BU3012,Entrepreneurship,20085,2,F,2,0,Protected
+100508,"Spring 2027",2,BU3012,Entrepreneurship,20087,4,B,8,0,Protected
+100508,"Spring 2027",2,BU3013,"Operations Management",20109,1,B,2,0,Protected
+100508,"Spring 2027",2,BU3013,"Operations Management",20110,2,B+,2,0,Protected
+100508,"Spring 2027",2,BU3013,"Operations Management",20111,3,D,2,0,Protected
+100508,"Spring 2027",2,BU3013,"Operations Management",20119,4,D,2,0,Protected
+100508,"Spring 2027",2,BU4014,"Human Resource Management",20112,1,A-,2,0,Protected
+100508,"Spring 2027",2,BU4014,"Human Resource Management",20113,2,B+,2,0,Protected
+100508,"Spring 2027",2,BU4014,"Human Resource Management",20114,3,A,2,0,Protected
+100508,"Spring 2027",2,BU4014,"Human Resource Management",20120,4,B,2,0,Protected
+100508,"Spring 2027",2,BU5002,"Advanced Financial Analysis",20106,1,B,2,0,Protected
+100508,"Spring 2027",2,BU5002,"Advanced Financial Analysis",20107,2,D,2,0,Protected
+100508,"Spring 2027",2,BU5003,"Business Analytics",20097,1,A-,2,0,Protected
+100508,"Spring 2027",2,BU5003,"Business Analytics",20098,2,D+,2,0,Protected
+100508,"Spring 2027",2,BU5004,"Global Marketing Strategy",20100,1,B-,2,0,Protected
+100508,"Spring 2027",2,BU5004,"Global Marketing Strategy",20101,2,B-,2,0,Protected
+100508,"Spring 2027",2,BU5004,"Global Marketing Strategy",20102,3,A-,2,0,Protected
+100508,"Spring 2027",2,BU5006,"Quantitative Business Research",20115,2,C,2,0,Protected
+100508,"Spring 2027",2,BU5006,"Quantitative Business Research",20116,3,B,2,0,Protected
+100509,"Spring 2027",2,MA1001,"Calculus I",20129,1,A-,2,0,Protected
+100509,"Spring 2027",2,MA1001,"Calculus I",20131,3,B,2,0,Protected
+100509,"Spring 2027",2,MA1001,"Calculus I",20132,4,D,2,0,Protected
+100509,"Spring 2027",2,MA1002,"Calculus II",20133,1,B,2,0,Protected
+100509,"Spring 2027",2,MA1002,"Calculus II",20134,2,C-,2,0,Protected
+100509,"Spring 2027",2,MA1004,"Discrete Mathematics",20135,1,C+,2,0,Protected
+100509,"Spring 2027",2,MA1004,"Discrete Mathematics",20136,2,B,2,0,Protected
+100509,"Spring 2027",2,MA1004,"Discrete Mathematics",20137,3,A,2,0,Protected
+100509,"Spring 2027",2,MA1004,"Discrete Mathematics",20139,5,D,2,0,Protected
+100509,"Spring 2027",2,MA1004,"Discrete Mathematics",20141,7,F,2,0,Protected
+100509,"Spring 2027",2,MA1004,"Discrete Mathematics",20142,8,C,2,0,Protected
+100509,"Spring 2027",2,MA2007,"College Algebra",20143,1,A,2,0,Protected
+100509,"Spring 2027",2,MA2007,"College Algebra",20144,2,B-,2,0,Protected
+100509,"Spring 2027",2,MA2007,"College Algebra",20145,3,B+,2,0,Protected
+100509,"Spring 2027",2,MA2009,"Mathematical Reasoning",20147,1,B+,2,0,Protected
+100509,"Spring 2027",2,MA2009,"Mathematical Reasoning",20148,2,F,2,0,Protected
+100509,"Spring 2027",2,MA2009,"Mathematical Reasoning",20149,3,C-,2,0,Protected
+100509,"Spring 2027",2,MA2009,"Mathematical Reasoning",20150,4,B,2,0,Protected
+100509,"Spring 2027",2,MA2009,"Mathematical Reasoning",20151,5,B,2,0,Protected
+100509,"Spring 2027",2,MA3013,"Abstract Algebra Fundamentals",20165,1,B-,2,0,Protected
+100509,"Spring 2027",2,MA3013,"Abstract Algebra Fundamentals",20170,2,B,2,0,Protected
+100509,"Spring 2027",2,MA4018,"Mathematics Capstone",20167,1,B-,2,0,Protected
+100509,"Spring 2027",2,MA4018,"Mathematics Capstone",20172,2,B,2,0,Protected
+100509,"Spring 2027",2,MA4018,"Mathematics Capstone",20173,3,B+,2,0,Protected
+100509,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20177,1,B+,2,0,Protected
+100509,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20178,2,B+,2,0,Protected
+100509,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20180,4,C+,2,0,Protected
+100510,"Spring 2027",2,NS1002,"General Chemistry",20193,1,C+,2,0,Protected
+100510,"Spring 2027",2,NS1002,"General Chemistry",20194,2,A-,2,0,Protected
+100510,"Spring 2027",2,NS1003,"General Physics",20195,1,B-,2,0,Protected
+100510,"Spring 2027",2,NS1003,"General Physics",20196,2,B,2,0,Protected
+100510,"Spring 2027",2,NS1003,"General Physics",20197,3,C+,2,0,Protected
+100510,"Spring 2027",2,NS1003,"General Physics",20198,4,A,2,0,Protected
+100510,"Spring 2027",2,NS1003,"General Physics",20199,5,D,2,0,Protected
+100510,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20201,1,B,2,0,Protected
+100510,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20203,3,B+,2,0,Protected
+100510,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20204,4,D+,2,0,Protected
+100510,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20205,5,C-,2,0,Protected
+100510,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20206,6,B,2,0,Protected
+100510,"Spring 2027",2,NS2008,"Earth Science",20207,1,A-,2,0,Protected
+100510,"Spring 2027",2,NS2008,"Earth Science",20208,2,C,2,0,Protected
+100510,"Spring 2027",2,NS2008,"Earth Science",20209,3,A,2,0,Protected
+100510,"Spring 2027",2,NS2008,"Earth Science",20210,4,C,2,0,Protected
+100510,"Spring 2027",2,NS2008,"Earth Science",20211,5,C+,2,0,Protected
+100510,"Spring 2027",2,NS2008,"Earth Science",20212,6,F,2,0,Protected
+100511,"Spring 2027",2,EG1001,"Introduction to Engineering",20244,4,F,2,0,Protected
+100511,"Spring 2027",2,EG1001,"Introduction to Engineering",20246,6,A,2,0,Protected
+100511,"Spring 2027",2,EG1001,"Introduction to Engineering",20247,7,F,2,0,Protected
+100511,"Spring 2027",2,EG3011,Dynamics,20257,1,A-,2,0,Protected
+100511,"Spring 2027",2,EG3011,Dynamics,20258,2,D,2,0,Protected
+100517,"Spring 2027",2,CS1001,"Introduction to Programming",20001,1,C,2,0,Protected
+100517,"Spring 2027",2,CS1001,"Introduction to Programming",20002,2,B,2,0,Protected
+100517,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20003,1,D,2,0,Protected
+100517,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20004,2,B,2,0,Protected
+100517,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20006,4,C+,2,0,Protected
+100517,"Spring 2027",2,CS2007,"Introduction to Computing",20012,1,C,2,0,Protected
+100517,"Spring 2027",2,CS2007,"Introduction to Computing",20013,2,B+,2,0,Protected
+100517,"Spring 2027",2,CS2007,"Introduction to Computing",20016,5,D+,2,0,Protected
+100517,"Spring 2027",2,CS2008,"Web Development",20019,1,C-,2,0,Protected
+100517,"Spring 2027",2,CS2008,"Web Development",20020,2,A,2,0,Protected
+100517,"Spring 2027",2,CS2008,"Web Development",20022,4,D,2,0,Protected
+100517,"Spring 2027",2,CS5005,"Advanced Database Research",20045,2,A,2,0,Protected
+100517,"Spring 2027",2,CS5005,"Advanced Database Research",20046,3,B-,2,0,Protected
+100518,"Spring 2027",2,CS1001,"Introduction to Programming",20001,1,C+,2,0,Protected
+100518,"Spring 2027",2,CS1001,"Introduction to Programming",20002,2,C-,2,0,Protected
+100518,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20004,2,B,2,0,Protected
+100518,"Spring 2027",2,CS1002,"Object-Oriented Programming with Java",20006,4,D,2,0,Protected
+100518,"Spring 2027",2,CS2007,"Introduction to Computing",20012,1,A-,2,0,Protected
+100518,"Spring 2027",2,CS2007,"Introduction to Computing",20013,2,A-,2,0,Protected
+100518,"Spring 2027",2,CS2007,"Introduction to Computing",20016,5,A-,2,0,Protected
+100518,"Spring 2027",2,CS2008,"Web Development",20019,1,C+,2,0,Protected
+100518,"Spring 2027",2,CS2008,"Web Development",20022,4,A,2,0,Protected
+100519,"Spring 2027",2,BU1002,"Financial Accounting",20067,2,C-,2,0,Protected
+100519,"Spring 2027",2,BU1002,"Financial Accounting",20068,3,D,2,0,Protected
+100519,"Spring 2027",2,BU1002,"Financial Accounting",20069,4,B,2,0,Protected
+100519,"Spring 2027",2,BU1002,"Financial Accounting",20070,5,B,2,0,Protected
+100519,"Spring 2027",2,BU1003,"Managerial Accounting",20071,1,C+,2,0,Protected
+100519,"Spring 2027",2,BU1003,"Managerial Accounting",20073,3,A,2,0,Protected
+100519,"Spring 2027",2,BU1003,"Managerial Accounting",20074,4,A-,2,0,Protected
+100519,"Spring 2027",2,BU2009,"Microeconomics for Business",20076,1,C-,2,0,Protected
+100519,"Spring 2027",2,BU2009,"Microeconomics for Business",20078,3,B+,2,0,Protected
+100519,"Spring 2027",2,BU3010,"Macroeconomics for Business",20080,1,F,2,0,Protected
+100519,"Spring 2027",2,BU3010,"Macroeconomics for Business",20081,2,B+,2,0,Protected
+100519,"Spring 2027",2,BU3013,"Operations Management",20109,1,C,2,0,Protected
+100519,"Spring 2027",2,BU3013,"Operations Management",20110,2,C-,2,0,Protected
+100519,"Spring 2027",2,BU3013,"Operations Management",20119,4,B,2,0,Protected
+100519,"Spring 2027",2,BU4014,"Human Resource Management",20112,1,A-,2,0,Protected
+100519,"Spring 2027",2,BU4014,"Human Resource Management",20113,2,B+,2,0,Protected
+100519,"Spring 2027",2,BU4014,"Human Resource Management",20114,3,B+,2,0,Protected
+100519,"Spring 2027",2,BU4014,"Human Resource Management",20120,4,A-,2,0,Protected
+100519,"Spring 2027",2,BU5003,"Business Analytics",20097,1,C,2,0,Protected
+100519,"Spring 2027",2,BU5003,"Business Analytics",20099,3,C-,2,0,Protected
+100519,"Spring 2027",2,BU5004,"Global Marketing Strategy",20100,1,B+,2,0,Protected
+100519,"Spring 2027",2,BU5004,"Global Marketing Strategy",20102,3,B,2,0,Protected
+100519,"Spring 2027",2,BU5006,"Quantitative Business Research",20116,3,B+,2,0,Protected
+100519,"Spring 2027",2,BU5006,"Quantitative Business Research",20117,4,B,2,0,Protected
+100520,"Spring 2027",2,BU1002,"Financial Accounting",20069,4,B+,2,0,Protected
+100520,"Spring 2027",2,BU1002,"Financial Accounting",20070,5,A-,2,0,Protected
+100520,"Spring 2027",2,BU2009,"Microeconomics for Business",20076,1,C+,2,0,Protected
+100520,"Spring 2027",2,BU2009,"Microeconomics for Business",20078,3,D+,2,0,Protected
+100520,"Spring 2027",2,BU3013,"Operations Management",20109,1,D+,2,0,Protected
+100520,"Spring 2027",2,BU3013,"Operations Management",20119,4,A-,2,0,Protected
+100521,"Spring 2027",2,MA1001,"Calculus I",20129,1,A,2,0,Protected
+100521,"Spring 2027",2,MA1001,"Calculus I",20132,4,B,2,0,Protected
+100521,"Spring 2027",2,MA1004,"Discrete Mathematics",20135,1,A,2,0,Protected
+100521,"Spring 2027",2,MA1004,"Discrete Mathematics",20136,2,D+,2,0,Protected
+100521,"Spring 2027",2,MA1004,"Discrete Mathematics",20137,3,F,2,0,Protected
+100521,"Spring 2027",2,MA1004,"Discrete Mathematics",20139,5,C-,2,0,Protected
+100521,"Spring 2027",2,MA1004,"Discrete Mathematics",20141,7,C-,2,0,Protected
+100521,"Spring 2027",2,MA2007,"College Algebra",20143,1,A-,2,0,Protected
+100521,"Spring 2027",2,MA2007,"College Algebra",20144,2,C+,2,0,Protected
+100521,"Spring 2027",2,MA2007,"College Algebra",20145,3,C+,2,0,Protected
+100521,"Spring 2027",2,MA2009,"Mathematical Reasoning",20147,1,C-,2,0,Protected
+100521,"Spring 2027",2,MA2009,"Mathematical Reasoning",20148,2,B+,2,0,Protected
+100521,"Spring 2027",2,MA2009,"Mathematical Reasoning",20149,3,B,2,0,Protected
+100521,"Spring 2027",2,MA2009,"Mathematical Reasoning",20150,4,D,2,0,Protected
+100521,"Spring 2027",2,MA3013,"Abstract Algebra Fundamentals",20165,1,A,2,0,Protected
+100521,"Spring 2027",2,MA3013,"Abstract Algebra Fundamentals",20170,2,C-,2,0,Protected
+100521,"Spring 2027",2,MA4018,"Mathematics Capstone",20167,1,A-,2,0,Protected
+100521,"Spring 2027",2,MA4018,"Mathematics Capstone",20172,2,C-,2,0,Protected
+100521,"Spring 2027",2,MA4018,"Mathematics Capstone",20173,3,B-,2,0,Protected
+100521,"Spring 2027",2,MA5002,"Abstract Algebra",20168,1,F,2,0,Protected
+100521,"Spring 2027",2,MA5002,"Abstract Algebra",20174,3,B,2,0,Protected
+100521,"Spring 2027",2,MA5005,Topology,20163,1,B,2,0,Protected
+100521,"Spring 2027",2,MA5005,Topology,20164,2,C,2,0,Protected
+100522,"Spring 2027",2,NS1003,"General Physics",20195,1,B+,2,0,Protected
+100522,"Spring 2027",2,NS1003,"General Physics",20196,2,C-,2,0,Protected
+100522,"Spring 2027",2,NS1003,"General Physics",20198,4,F,2,0,Protected
+100522,"Spring 2027",2,NS1003,"General Physics",20199,5,C,2,0,Protected
+100522,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20201,1,B-,2,0,Protected
+100522,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20203,3,A,2,0,Protected
+100522,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20204,4,B+,2,0,Protected
+100522,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20205,5,C+,2,0,Protected
+100522,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20206,6,D,2,0,Protected
+100522,"Spring 2027",2,NS2008,"Earth Science",20207,1,B-,2,0,Protected
+100522,"Spring 2027",2,NS2008,"Earth Science",20208,2,D+,2,0,Protected
+100522,"Spring 2027",2,NS2008,"Earth Science",20209,3,F,2,0,Protected
+100522,"Spring 2027",2,NS2008,"Earth Science",20210,4,B,2,0,Protected
+100522,"Spring 2027",2,NS2008,"Earth Science",20211,5,D+,2,0,Protected
+100522,"Spring 2027",2,NS2008,"Earth Science",20212,6,A-,2,0,Protected
+100523,"Spring 2027",2,EG1001,"Introduction to Engineering",20244,4,C,2,0,Protected
+100523,"Spring 2027",2,EG1001,"Introduction to Engineering",20246,6,C+,2,0,Protected
+100523,"Spring 2027",2,EG1001,"Introduction to Engineering",20247,7,C+,2,0,Protected
+100529,"Spring 2027",2,CS1001,"Introduction to Programming",20001,1,C,2,0,Protected
+100529,"Spring 2027",2,CS1001,"Introduction to Programming",20002,2,D,2,0,Protected
+100530,"Spring 2027",2,CS5001,"Advanced Algorithms",20035,2,D,2,0,Protected
+100530,"Spring 2027",2,CS5001,"Advanced Algorithms",20037,4,C+,2,0,Protected
+100531,"Spring 2027",2,BU1002,"Financial Accounting",20069,4,C,2,0,Protected
+100531,"Spring 2027",2,BU1002,"Financial Accounting",20070,5,A,2,0,Protected
+100533,"Spring 2027",2,MA1004,"Discrete Mathematics",20136,2,D,2,0,Protected
+100533,"Spring 2027",2,MA1004,"Discrete Mathematics",20137,3,D,2,0,Protected
+100533,"Spring 2027",2,MA2009,"Mathematical Reasoning",20148,2,D,2,0,Protected
+100533,"Spring 2027",2,MA2009,"Mathematical Reasoning",20150,4,C+,2,0,Protected
+100533,"Spring 2027",2,MA3013,"Abstract Algebra Fundamentals",20165,1,C,2,0,Protected
+100533,"Spring 2027",2,MA3013,"Abstract Algebra Fundamentals",20170,2,A,2,0,Protected
+100533,"Spring 2027",2,MA5004,"Mathematical Optimization",20161,1,B+,2,0,Protected
+100533,"Spring 2027",2,MA5004,"Mathematical Optimization",20162,2,F,2,0,Protected
+100533,"Spring 2027",2,MA5005,Topology,20163,1,C-,2,0,Protected
+100533,"Spring 2027",2,MA5005,Topology,20164,2,C+,2,0,Protected
+100534,"Spring 2027",2,NS1003,"General Physics",20195,1,B,2,0,Protected
+100534,"Spring 2027",2,NS1003,"General Physics",20196,2,C-,2,0,Protected
+100534,"Spring 2027",2,NS1003,"General Physics",20198,4,B+,2,0,Protected
+100534,"Spring 2027",2,NS1003,"General Physics",20199,5,D,2,0,Protected
+100534,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20201,1,C,2,0,Protected
+100534,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20203,3,B,2,0,Protected
+100534,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20204,4,C+,2,0,Protected
+100534,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20206,6,C-,2,0,Protected
+100534,"Spring 2027",2,NS2008,"Earth Science",20207,1,D,2,0,Protected
+100534,"Spring 2027",2,NS2008,"Earth Science",20208,2,A-,2,0,Protected
+100534,"Spring 2027",2,NS2008,"Earth Science",20209,3,C,2,0,Protected
+100534,"Spring 2027",2,NS2008,"Earth Science",20210,4,F,2,0,Protected
+100534,"Spring 2027",2,NS2008,"Earth Science",20211,5,F,2,0,Protected
+100534,"Spring 2027",2,NS2008,"Earth Science",20212,6,C-,2,0,Protected
+100535,"Spring 2027",2,EG1001,"Introduction to Engineering",20244,4,C-,2,0,Protected
+100535,"Spring 2027",2,EG1001,"Introduction to Engineering",20246,6,A-,2,0,Protected
+100535,"Spring 2027",2,EG1001,"Introduction to Engineering",20247,7,D,2,0,Protected
+100546,"Spring 2027",2,NS1003,"General Physics",20195,1,A,2,0,Protected
+100546,"Spring 2027",2,NS1003,"General Physics",20196,2,D,2,0,Protected
+100546,"Spring 2027",2,NS1003,"General Physics",20199,5,B-,2,0,Protected
+100546,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20201,1,C,2,0,Protected
+100546,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20204,4,C-,2,0,Protected
+100546,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20206,6,B+,2,0,Protected
+100546,"Spring 2027",2,NS2008,"Earth Science",20208,2,B,2,0,Protected
+100546,"Spring 2027",2,NS2008,"Earth Science",20209,3,F,2,0,Protected
+100546,"Spring 2027",2,NS2008,"Earth Science",20211,5,B-,2,0,Protected
+100547,"Spring 2027",2,EG1001,"Introduction to Engineering",20244,4,C+,2,0,Protected
+100547,"Spring 2027",2,EG1001,"Introduction to Engineering",20246,6,C,2,0,Protected
+100547,"Spring 2027",2,EG1001,"Introduction to Engineering",20247,7,D+,2,0,Protected
+100557,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20178,2,B-,2,0,Protected
+100557,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20179,3,B,2,0,Protected
+100558,"Spring 2027",2,NS1003,"General Physics",20195,1,A-,2,0,Protected
+100558,"Spring 2027",2,NS1003,"General Physics",20196,2,B+,2,0,Protected
+100558,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20201,1,C+,2,0,Protected
+100558,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20204,4,B,2,0,Protected
+100558,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20206,6,D+,2,0,Protected
+100559,"Spring 2027",2,EG1001,"Introduction to Engineering",20246,6,F,2,0,Protected
+100559,"Spring 2027",2,EG1001,"Introduction to Engineering",20247,7,D+,2,0,Protected
+100570,"Spring 2027",2,NS1003,"General Physics",20195,1,B-,2,0,Protected
+100570,"Spring 2027",2,NS1003,"General Physics",20196,2,D+,2,0,Protected
+100570,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20201,1,C+,2,0,Protected
+100570,"Spring 2027",2,NS2007,"Introduction to Scientific Inquiry",20206,6,D+,2,0,Protected
+100581,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20177,1,B,2,0,Protected
+100581,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20179,3,B-,2,0,Protected
+100587,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20178,2,,0,0,"No grade/attendance/history"
+100587,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20180,4,,0,0,"No grade/attendance/history"
+100653,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20177,1,B-,2,0,Protected
+100653,"Spring 2027",2,MA5003,"Advanced Statistical Methods",20180,4,C+,2,0,Protected

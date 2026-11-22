@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-11-19T09:46:36-05:00",
+  "database": "ashford_waleed",
+  "read_only_verification": true,
+  "full_enrollment_rows_after": 3490,
+  "active_enrollments_fall_spring_after": 3480,
+  "results": {
+    "transferred": 4,
+    "dropped": 64
+  },
+  "audit_entries_created": 83,
+  "affected_student_semester_pairs_verified": 85,
+  "credits_status_counts_after": {
+    "Full-Time (FT)": 50,
+    "Part-Time (PT)": 16,
+    "Overloaded": 19
+  },
+  "remaining_conflicts_by_semester": {
+    "Fall 2026": {
+      "conflict_pairs": 0,
+      "affected_students": 0
+    },
+    "Spring 2027": {
+      "conflict_pairs": 116,
+      "affected_students": 19
+    }
+  },
+  "operation_record_checks_failed": 0,
+  "backup": "backups/student_schedule_correction_20261119_0920/ashford_waleed_full_before_schedule_correction.sql",
+  "requirement_course_additions_registered": 11,
+  "requirement_addition_record_checks_failed": 0,
+  "remaining_conflict_pairs_with_both_endpoints_protected_by_grade_and_attendance": 116,
+  "remaining_conflict_pair_count": 116
+}

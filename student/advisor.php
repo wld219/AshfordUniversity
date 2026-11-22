@@ -5,10 +5,9 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once '../includes/advising_appointment_helpers.php';
 
 require_role(['Student']);
-require_once '../includes/advising_workflow.php';
-aw_action($pdo,'Student');
 
 $studentID = (int) $_SESSION['user_id'];
 
@@ -47,11 +46,11 @@ if ($advisor) {
 
 $appointments = all_rows(
     $pdo,
-    "SELECT appointment_ID, slot_start AS requested_DateTime, status,
-            topic AS student_Reason, notes AS advisor_Response
-     FROM Appointment
+    "SELECT appointment_ID, requested_DateTime, status,
+            student_Reason, advisor_Response
+     FROM Advising_Appointment
      WHERE student_ID = ?
-     ORDER BY created_At DESC, appointment_ID DESC",
+     ORDER BY requested_DateTime DESC, appointment_ID DESC",
     [$studentID]
 );
 
@@ -66,15 +65,30 @@ foreach ($appointments as $appointment) {
 
 // Get advisor's availability windows
 $availabilityWindows = [];
+$bookingRanges = [];
+$bookableSemesterIds = [];
+foreach (all_rows(
+    $pdo,
+    "SELECT semester_ID FROM Semester WHERE semester_Name IN ('Fall 2026', 'Spring 2027') AND semester_Start IS NOT NULL"
+) as $termRow) {
+    $bookableSemesterIds[] = (int) $termRow['semester_ID'];
+}
+foreach (advising_semester_date_ranges($pdo) as $range) {
+    if (in_array((int) $range['semester_ID'], $bookableSemesterIds, true)) {
+        $bookingRanges[] = $range;
+    }
+}
 if ($advisor) {
     $availabilityWindows = all_rows(
         $pdo,
-        "SELECT fa.availability_ID, d.day_Of_Week, fa.start_Time, fa.end_Time
+        "SELECT fa.availability_ID, fa.semester_ID, s.semester_Name, d.day_Of_Week, fa.start_Time, fa.end_Time
          FROM Faculty_Availability fa
          JOIN Day d ON d.day_ID = fa.day_ID
+         JOIN Semester s ON s.semester_ID = fa.semester_ID
          WHERE fa.faculty_ID = ?
            AND fa.is_active = TRUE
-         ORDER BY d.day_ID, fa.start_Time",
+           AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
+         ORDER BY s.semester_Start, d.day_ID, fa.start_Time",
         [(int) $advisor['faculty_ID']]
     );
 }
@@ -84,18 +98,16 @@ $busySlots = [];
 if ($advisor) {
     $busySlots = all_rows(
         $pdo,
-        "SELECT DATE_FORMAT(slot_start, '%Y-%m-%d') AS appt_date,
-                TIME_FORMAT(slot_start, '%H:%i') AS appt_start,
-                TIME_FORMAT(slot_end, '%H:%i') AS appt_end
-         FROM Appointment
+    "SELECT DATE_FORMAT(requested_DateTime, '%Y-%m-%d') AS appt_date,
+                TIME_FORMAT(requested_DateTime, '%H:%i') AS appt_start,
+                TIME_FORMAT(DATE_ADD(requested_DateTime, INTERVAL 30 MINUTE), '%H:%i') AS appt_end
+         FROM Advising_Appointment
          WHERE faculty_ID = ?
            AND status IN ('Pending', 'Scheduled')",
         [(int) $advisor['faculty_ID']]
     );
 }
 
-$awProposals=aw_proposals($pdo,$studentID,'Student');
-$awActivity=aw_activity($pdo,$studentID);
 page_start('My Advisor', 'Student', 'advisor.php');
 ?>
 
@@ -145,8 +157,8 @@ page_start('My Advisor', 'Student', 'advisor.php');
     <?php if ($hasActiveRequest): ?>
         <p style="color:#8a6d00">⏳ You already have a pending or scheduled appointment.</p>
     <?php elseif (empty($availabilityWindows)): ?>
-        <p style="color:#a83232">⚠ Your advisor has not set any availability windows yet.</p>
-        <p class="muted">Please contact your advisor directly to schedule an appointment.</p>
+        <p style="color:#a83232">⚠ Your advisor has not published bookable availability for Fall 2026 or Spring 2027 yet.</p>
+        <p class="muted">Please check again later or contact your advisor directly.</p>
     <?php else: ?>
         <form method="post" action="advisor_appointment.php">
             <?= csrf_field() ?>
@@ -197,13 +209,15 @@ page_start('My Advisor', 'Student', 'advisor.php');
             <table style="width:100%;font-size:14px;border-collapse:collapse;">
                 <thead>
                     <tr style="text-align:left;border-bottom:2px solid #dfe5ef;">
+                        <th style="padding:8px;">Semester</th>
                         <th style="padding:8px;">Day</th>
                         <th style="padding:8px;">Available Time</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($availabilityWindows as $win): ?>
-                        <tr data-day="<?= e($win['day_Of_Week']) ?>">
+                        <tr data-semester="<?= e($win['semester_ID']) ?>" data-day="<?= e($win['day_Of_Week']) ?>">
+                            <td style="padding:8px;border-bottom:1px solid #edf0f6;"><?= e($win['semester_Name']) ?></td>
                             <td style="padding:8px;border-bottom:1px solid #edf0f6;"><strong><?= e($win['day_Of_Week']) ?></strong></td>
                             <td style="padding:8px;border-bottom:1px solid #edf0f6;">
                                 <?= e(date('g:i A', strtotime($win['start_Time']))) ?> – <?= e(date('g:i A', strtotime($win['end_Time']))) ?>
@@ -213,6 +227,7 @@ page_start('My Advisor', 'Student', 'advisor.php');
                 </tbody>
             </table>
         </div>
+        <p class="muted">Appointment dates are accepted only when they fall inside a semester range with known start and next-semester dates.</p>
 
         <script>
             // Generate time slots based on selected date and advisor availability
@@ -226,6 +241,15 @@ page_start('My Advisor', 'Student', 'advisor.php');
                     return;
                 }
 
+                const semesterRanges = <?= json_encode($bookingRanges, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+                const matchedSemester = semesterRanges.find(term => selectedDate >= term.start && selectedDate < term.end_exclusive);
+                if (!matchedSemester) {
+                    timeSelect.innerHTML = '<option value="">Semester dates are unavailable for booking</option>';
+                    document.getElementById('date-day-hint').textContent = 'This date cannot be reliably mapped to a semester yet.';
+                    document.getElementById('date-day-hint').classList.add('no-availability');
+                    return;
+                }
+
                 const [y, m, d] = selectedDate.split('-').map(Number);
                 const selectedDay = new Date(y, m - 1, d).getDay();
                 // Map JS day (0=Sun, 1=Mon, etc.) to DB day names
@@ -233,8 +257,8 @@ page_start('My Advisor', 'Student', 'advisor.php');
                 const selectedDayName = dayNames[selectedDay];
 
                 // Find matching availability windows for this day
-                const availability = <?= json_encode($availabilityWindows) ?>;
-                const daySlots = availability.filter(w => w.day_Of_Week === selectedDayName);
+                const availability = <?= json_encode($availabilityWindows, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+                const daySlots = availability.filter(w => Number(w.semester_ID) === Number(matchedSemester.semester_ID) && w.day_Of_Week === selectedDayName);
 
                 // Get busy slots
                 const busySlots = <?= json_encode($busySlots) ?>;
@@ -255,9 +279,9 @@ page_start('My Advisor', 'Student', 'advisor.php');
                     const start = parseTime(win.start_Time);
                     const end = parseTime(win.end_Time);
 
-                    for (let t = start; t < end; t += 30) { // 30-minute slots
+                    for (let t = start; t + 30 <= end; t += 30) { // full 30-minute slots only
                         const timeStr = formatTime(t);
-                        const isBusy = busyToday.some(b => b.appt_start === timeStr);
+                        const isBusy = busyToday.some(b => parseTime(b.appt_start) < t + 30 && parseTime(b.appt_end) > t);
                         const opt = document.createElement('option');
                         opt.value = timeStr;
                         opt.textContent = timeStr + (isBusy ? ' (busy)' : '');
@@ -287,6 +311,16 @@ page_start('My Advisor', 'Student', 'advisor.php');
                     const selectedDate = dateSelect.value;
                     if (!selectedDate) {
                         dayHint.textContent = '';
+                        dayHint.classList.remove('no-availability');
+                        return;
+                    }
+
+                    const semesterRanges = <?= json_encode($bookingRanges, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+                    const matchedSemester = semesterRanges.find(term => selectedDate >= term.start && selectedDate < term.end_exclusive);
+                    if (!matchedSemester) {
+                        dayHint.textContent = 'This date cannot be reliably mapped to a semester yet.';
+                        dayHint.classList.add('no-availability');
+                        document.querySelectorAll('.availability-info tbody tr[data-day]').forEach(row => row.classList.remove('availability-matched'));
                         return;
                     }
 
@@ -301,7 +335,8 @@ page_start('My Advisor', 'Student', 'advisor.php');
                     let foundMatch = false;
                     rows.forEach(row => {
                         const rowDay = row.getAttribute('data-day');
-                        if (rowDay === selectedDayName) {
+                        const rowSemester = row.getAttribute('data-semester');
+                        if (rowDay === selectedDayName && Number(rowSemester) === Number(matchedSemester.semester_ID)) {
                             row.classList.add('availability-matched');
                             row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                             foundMatch = true;

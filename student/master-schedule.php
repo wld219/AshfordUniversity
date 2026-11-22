@@ -15,42 +15,14 @@ require_role(['Student']);
  * meeting time, room, availability). No student records are exposed.
  */
 
-$semesters = all_rows(
-    $pdo,
-    "SELECT semester_ID, semester_Name
-     FROM Semester
-     WHERE semester_Name IN ('Spring 2026', 'Fall 2026', 'Spring 2027')
-     ORDER BY CASE semester_Name
-		 WHEN 'Spring 2026' THEN 1
-		 WHEN 'Fall 2026' THEN 2
-		 WHEN 'Spring 2027' THEN 3
-         ELSE 3 END"
-);
+$semesters = student_portal_semesters($pdo);
 
 $departments = all_rows(
 	$pdo,
 	'SELECT dept_ID, dept_Name FROM Department ORDER BY dept_Name'
 );
 
-$semesterIDs = array_map(
-    static fn(array $term): int => (int)$term['semester_ID'],
-    $semesters
-);
-
-$semesterID = get_int('semester');
-
-if ($semesterID === null || !in_array($semesterID, $semesterIDs, true)) {
-    $semesterID = 0;
-    foreach ($semesters as $term) {
-        if ($term['semester_Name'] === 'Fall 2026') {
-            $semesterID = (int)$term['semester_ID'];
-            break;
-        }
-    }
-    if ($semesterID === 0) {
-        $semesterID = $semesterIDs === [] ? 0 : (int)reset($semesterIDs);
-    }
-}
+$semesterID = student_portal_selected_semester_id($semesters, get_int('semester')) ?? 0;
 
 $filterDepartment = get_int('dept');
 $filterDay = get_str('day', 10);

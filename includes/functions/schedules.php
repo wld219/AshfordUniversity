@@ -98,19 +98,31 @@ function schedule_section_rows(PDO $pdo, int $semesterID): array
 		$membershipMap[(int) $row['faculty_ID']][] = (int) $row['dept_ID'];
 	}
 
-	// Section counts per faculty member (workload validation)
-	$countMap = [];
+	// Semester workload per faculty member, based on each active CRN once and
+	// the linked course credits. This includes sections across all affiliations.
+	$workloadMap = [];
 
 	foreach (all_rows(
 		$pdo,
-		"SELECT faculty_ID, COUNT(*) AS total
-		FROM Course_Section
-		WHERE semester_ID = ?
-			AND is_Cancelled = 0
-		GROUP BY faculty_ID",
+		"SELECT assigned.faculty_ID,
+		        COUNT(*) AS total_Sections,
+	        COALESCE(SUM(assigned.course_Credits), 0) AS total_Credits
+		 FROM (
+			SELECT cs.faculty_ID, cs.CRN, MAX(c.course_Credits) AS course_Credits
+			FROM Course_Section cs
+			JOIN Course c ON c.course_ID = cs.course_ID
+			WHERE cs.semester_ID = ? AND cs.is_Cancelled = 0
+			GROUP BY cs.faculty_ID, cs.CRN
+		 ) assigned
+		 GROUP BY assigned.faculty_ID",
 		[$semesterID]
 	) as $row) {
-		$countMap[(int) $row['faculty_ID']] = (int) $row['total'];
+		$credits = (int) $row['total_Credits'];
+		$workloadMap[(int) $row['faculty_ID']] = [
+			'sections' => (int) $row['total_Sections'],
+			'credits' => $credits,
+			'status' => $credits >= 12 ? 'Full-Time (FT)' : 'Part-Time (PT)',
+		];
 	}
 
 	foreach ($sections as &$section) {
@@ -121,7 +133,14 @@ function schedule_section_rows(PDO $pdo, int $semesterID): array
 		$section['start_Time'] = $periodMap[$slotID]['start_Time'] ?? null;
 		$section['end_Time'] = $periodMap[$slotID]['end_Time'] ?? null;
 		$section['faculty_Departments'] = $membershipMap[(int) $section['faculty_ID']] ?? [];
-		$section['faculty_Section_Count'] = $countMap[(int) $section['faculty_ID']] ?? 0;
+		$facultyWorkload = $workloadMap[(int) $section['faculty_ID']] ?? [
+			'sections' => 0,
+			'credits' => 0,
+			'status' => 'Part-Time (PT)',
+		];
+		$section['faculty_Section_Count'] = $facultyWorkload['sections'];
+		$section['faculty_Teaching_Credits'] = $facultyWorkload['credits'];
+		$section['faculty_Workload_Status'] = $facultyWorkload['status'];
 
 		// Room key identifies the physical room used by the section
 		if ($section['lecture_ID'] !== null) {
