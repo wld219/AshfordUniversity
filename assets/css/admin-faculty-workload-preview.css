@@ -1,0 +1,40 @@
+.faculty-workload-preview {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid #d7e1ef;
+  border-left: 4px solid #426b9f;
+  border-radius: 12px;
+  background: #f7faff;
+  color: #19304f;
+}
+.faculty-workload-preview h3 {
+  margin: 0 0 8px;
+  color: #19304f;
+  font-size: 15px;
+}
+.faculty-workload-state,
+.faculty-workload-notice { margin: 0; line-height: 1.5; }
+.faculty-workload-values {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+  gap: 8px 18px;
+  margin: 0;
+}
+.faculty-workload-values > div { min-width: 0; }
+.faculty-workload-values dt { color: #536781; font-size: 12px; }
+.faculty-workload-values dd { margin: 2px 0 0; color: #152b49; font-size: 14px; font-weight: 650; overflow-wrap: anywhere; }
+.faculty-workload-notice {
+  margin-top: 10px;
+  padding: 9px 11px;
+  border: 1px solid #efd28f;
+  border-radius: 8px;
+  background: #fff8e8;
+  color: #704900;
+  font-size: 13px;
+}
+@media (max-width: 620px) {
+  .faculty-workload-preview { padding: 12px; }
+  .faculty-workload-values { grid-template-columns: 1fr 1fr; gap: 10px 12px; }
+}

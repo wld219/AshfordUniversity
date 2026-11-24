@@ -16,7 +16,7 @@ $semesterById = [];
 $faculty = null;
 $departments = [];
 $sections = [];
-$workload = ['teaching_credits' => 0, 'assigned_sections' => 0, 'employment_type' => 'Unknown'];
+$workload = ['teaching_credits' => null, 'assigned_sections' => 0, 'employment_type' => 'Unknown'];
 $enrolledStudentCount = 0;
 $enrollmentCountsByCRN = [];
 $roomsByCRN = [];
@@ -151,6 +151,8 @@ $facultyName = $faculty !== null
 	: '';
 
 page_start('My Schedule', 'Faculty', 'schedule.php');
+require_once __DIR__ . '/../includes/demo_schedule_notice.php';
+demo_schedule_notice((int) ($selectedSemesterID ?? 0));
 ?>
 <style>
 .content:has(.faculty-my-schedule) > h1 { display: none; }

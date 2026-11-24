@@ -10,7 +10,13 @@ declare(strict_types=1);
 
 	<h2>Edit section <?= e((string) $editCRN) ?></h2>
 
-	<form method="post" class="form-grid" style="margin-top: 16px;">
+	<form method="post" class="form-grid" data-workload-preview
+		data-original-faculty-id="<?= (int) $editSection['faculty_ID'] ?>"
+		data-original-semester-id="<?= (int) $semesterID ?>"
+		data-original-active="<?= (int) $editSection['is_Cancelled'] === 0 ? '1' : '0' ?>"
+		data-original-course-credits="<?= $editSection['course_Credits'] === null ? '' : (int) $editSection['course_Credits'] ?>"
+		data-course-credits="<?= $editSection['course_Credits'] === null ? '' : (int) $editSection['course_Credits'] ?>"
+		style="margin-top: 16px;">
 
 		<?= csrf_field() ?>
 		<input type="hidden" name="action" value="update_section">
@@ -26,6 +32,8 @@ declare(strict_types=1);
 				<?php foreach ($facultyList as $member): ?>
 					<option
 						value="<?= e($member['faculty_ID']) ?>"
+						data-faculty-name="<?= e($member['name']) ?>"
+						data-recorded-type="<?= e($member['faculty_Type']) ?>"
 						<?= (int) $editSection['faculty_ID'] === (int) $member['faculty_ID'] ? 'selected' : '' ?>
 					>
 						<?= e($member['name']) ?>
@@ -33,6 +41,8 @@ declare(strict_types=1);
 				<?php endforeach; ?>
 			</select>
 		</div>
+
+		<?php require __DIR__ . '/faculty_workload_preview.php'; ?>
 
 		<div>
 			<label for="time_slot_id">Meeting time</label>

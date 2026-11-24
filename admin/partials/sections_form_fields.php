@@ -30,6 +30,7 @@ declare(strict_types=1);
 			<option
 				value="<?= e($course['course_ID']) ?>"
             data-dept="<?= e((string) ($course['dept_ID'] ?? '')) ?>"
+				data-course-credits="<?= $course['course_Credits'] === null ? '' : (int) $course['course_Credits'] ?>"
 				<?= $editSection !== null && (string) $editSection['course_ID'] === (string) $course['course_ID'] ? 'selected' : '' ?>
 			>
 				<?= e($course['course_ID']) ?> -
@@ -58,15 +59,34 @@ declare(strict_types=1);
 	<select name="faculty_id" id="faculty_id" required <?= $locked ? 'disabled' : '' ?>>
 		<option value="">Select faculty</option>
 		<?php foreach ($faculty as $member): ?>
+			<?php
+			$selectedLoadSemesterId = $editSection !== null ? (int) $editSection['semester_ID'] : null;
+			$selectedLoad = $selectedLoadSemesterId !== null
+				? ($member['teaching_loads'][$selectedLoadSemesterId] ?? null)
+				: null;
+			$selectedLoadType = $selectedLoad['employment_type'] ?? 'Unknown';
+			$selectedLoadCredits = $selectedLoad && $selectedLoad['teaching_credits'] !== null
+				? (string) $selectedLoad['teaching_credits']
+				: 'Unknown';
+			$initialFacultyLabel = $selectedLoadSemesterId === null
+				? 'Select semester for calculated load'
+				: ($selectedLoadType . ($selectedLoadCredits !== 'Unknown' ? ' · ' . $selectedLoadCredits . ' credits' : ' · credits unknown'));
+			?>
 			<option
 				value="<?= e($member['faculty_ID']) ?>"
+				data-faculty-name="<?= e($member['name']) ?>"
+				data-recorded-type="<?= e($member['faculty_Type']) ?>"
 				<?= $editSection !== null && (int) $editSection['faculty_ID'] === (int) $member['faculty_ID'] ? 'selected' : '' ?>
 			>
-				<?= e($member['name']) ?> (<?= e($member['faculty_Type']) ?>)
+				<?= e($member['name']) ?>
+				— <?= e($initialFacultyLabel) ?>
 			</option>
 		<?php endforeach; ?>
 	</select>
+	<small class="muted">This Full-Time/Part-Time label is calculated from active teaching credits for the selected semester. The stored employment record is unchanged.</small>
 </div>
+
+<?php require __DIR__ . '/faculty_workload_preview.php'; ?>
 
 
 

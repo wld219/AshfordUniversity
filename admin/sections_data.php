@@ -16,7 +16,7 @@ $departments = all_rows(
 
 $courses = all_rows(
 	$pdo,
-	"SELECT c.course_ID, c.course_Name, c.course_Type, d.dept_Name
+	"SELECT c.course_ID, c.course_Name, c.course_Type, c.course_Credits, c.dept_ID, d.dept_Name
 	FROM Course c
 	JOIN Department d ON d.dept_ID = c.dept_ID
 	ORDER BY d.dept_Name, c.course_ID"
@@ -30,6 +30,43 @@ $faculty = all_rows(
 	JOIN User u ON u.user_ID = f.faculty_ID
 	ORDER BY name"
 );
+
+$workloadSemesters = all_rows($pdo, 'SELECT semester_ID FROM Semester ORDER BY semester_ID');
+$facultyWorkloadsBySemester = [];
+foreach ($workloadSemesters as $semesterOption) {
+	$semesterId = (int) $semesterOption['semester_ID'];
+	$facultyWorkloadsBySemester[$semesterId] = faculty_workload_directory($pdo, $semesterId)['by_faculty'];
+}
+
+foreach ($faculty as &$facultyMember) {
+	$facultyId = (int) $facultyMember['faculty_ID'];
+	$facultyMember['teaching_loads'] = [];
+	foreach ($workloadSemesters as $semesterOption) {
+		$semesterId = (int) $semesterOption['semester_ID'];
+		$load = $facultyWorkloadsBySemester[$semesterId][$facultyId] ?? null;
+		$credits = $load['teaching_credits'] ?? null;
+		$facultyMember['teaching_loads'][$semesterId] = [
+			'employment_type' => $load['employment_type'] ?? 'Unknown',
+			'teaching_credits' => $credits,
+			'assigned_sections' => $load['assigned_sections'] ?? 0,
+			'missing_credit_sections' => $load['missing_credit_sections'] ?? 0,
+		];
+	}
+}
+unset($facultyMember);
+
+$facultyWorkloadLabels = [];
+foreach ($faculty as $facultyMember) {
+	$facultyId = (int) $facultyMember['faculty_ID'];
+	foreach ($facultyMember['teaching_loads'] as $semesterId => $load) {
+		$facultyWorkloadLabels[$facultyId][(int) $semesterId] = [
+			'employment_type' => $load['employment_type'],
+			'teaching_credits' => $load['teaching_credits'],
+			'assigned_sections' => $load['assigned_sections'] ?? 0,
+			'missing_credit_sections' => $load['missing_credit_sections'] ?? 0,
+		];
+	}
+}
 
 $timeSlots = all_rows(
 	$pdo,

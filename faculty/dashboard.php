@@ -29,9 +29,14 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 	--fo-muted: #52657c;
 	--fo-border: #d5dfeb;
 	--fo-wash: #f5f8fc;
+	--fo-section-gap: clamp(14px, 1.5vw, 20px);
+	width: 100%;
 	max-width: 1380px;
 	margin: 0 auto;
-	padding: clamp(18px, 2.4vw, 30px);
+	padding: 0 0 12px;
+	display: flex;
+	flex-direction: column;
+	gap: var(--fo-section-gap);
 	color: var(--fo-ink);
 }
 .faculty-overview *,
@@ -55,10 +60,9 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 .faculty-overview .fo-information {
 	display: grid;
 	grid-template-columns: minmax(220px, .85fr) minmax(0, 1.6fr);
-	gap: 22px;
+	gap: clamp(18px, 2vw, 28px);
 	align-items: center;
-	padding: 20px 22px;
-	margin-bottom: 16px;
+	padding: clamp(18px, 2vw, 24px);
 }
 .faculty-overview .fo-identity {
 	min-width: 0;
@@ -77,7 +81,7 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 .faculty-overview .fo-details {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 12px 20px;
+	gap: 14px clamp(16px, 2vw, 24px);
 	margin: 0;
 }
 .faculty-overview .fo-detail { min-width: 0; }
@@ -94,17 +98,25 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 	line-height: 1.4;
 	overflow-wrap: anywhere;
 }
-.faculty-overview .fo-departments { display: flex; flex-wrap: wrap; gap: 6px; }
+.faculty-overview .fo-departments {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	gap: 6px 8px;
+	max-width: 100%;
+}
 .faculty-overview .fo-department {
 	display: inline-block;
 	max-width: 100%;
-	padding: 3px 8px;
+	padding: 4px 9px;
 	border: 1px solid #d8e2ef;
 	border-radius: 5px;
 	background: var(--fo-wash);
 	font-size: .9rem;
 	font-weight: 600;
+	line-height: 1.3;
 	white-space: normal;
+	overflow-wrap: anywhere;
 }
 .faculty-overview .fo-status {
 	display: inline-block;
@@ -118,22 +130,29 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 .faculty-overview .fo-summary {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 14px;
-	margin-bottom: 18px;
+	align-items: stretch;
+	gap: var(--fo-section-gap);
 }
 .faculty-overview .fo-metric {
-	min-height: 94px;
-	padding: 15px 18px;
+	min-height: 112px;
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 17px 19px;
 	border-top: 3px solid var(--fo-navy);
 }
 .faculty-overview .fo-metric h2 {
-	margin: 0 0 8px;
+	margin: 0;
 	color: var(--fo-muted);
 	font-size: .9rem;
 	font-weight: 650;
+	line-height: 1.35;
 }
 .faculty-overview .fo-metric p {
 	margin: 0;
+	margin-top: auto;
 	color: var(--fo-navy);
 	font-size: 1.8rem;
 	font-weight: 750;
@@ -142,12 +161,13 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 }
 .faculty-overview .fo-schedule { overflow: hidden; }
 .faculty-overview .fo-schedule-heading {
-	padding: 13px 18px;
+	padding: 14px clamp(16px, 1.7vw, 22px);
 	background: var(--fo-navy);
 	color: #fff;
 }
 .faculty-overview .fo-schedule-heading h2 {
 	margin: 0;
+	color: #fff;
 	font-size: 1.12rem;
 	line-height: 1.35;
 	font-weight: 700;
@@ -156,12 +176,39 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 	width: 100%;
 	overflow-x: auto;
 	overscroll-behavior-inline: contain;
+	padding: 0 clamp(10px, 1.1vw, 15px) 14px;
 }
+.faculty-overview .fo-table-scroll .as-ui-toolbar {
+	width: 100%;
+	min-width: 0;
+	margin: 0;
+	padding: 12px 0;
+	gap: 8px;
+	border: 0;
+	border-bottom: 1px solid var(--fo-border);
+	border-radius: 0;
+	background: #fff;
+}
+.faculty-overview .fo-table-scroll .as-ui-toolbar input {
+	flex: 1 1 260px;
+	min-width: min(100%, 220px);
+	min-height: 40px;
+}
+.faculty-overview .fo-table-scroll .as-ui-toolbar select {
+	flex: 0 1 180px;
+	min-width: 145px;
+	min-height: 40px;
+}
+.faculty-overview .fo-table-scroll .as-ui-toolbar button {
+	min-height: 40px;
+	white-space: nowrap;
+}
+.faculty-overview .fo-table-scroll .as-ui-count { margin-left: auto; }
 .faculty-overview table {
 	width: 100%;
 	min-width: 850px;
 	border-collapse: collapse;
-	font-size: .91rem;
+	font-size: .84rem;
 }
 .faculty-overview caption.sr-only {
 	position: absolute;
@@ -174,12 +221,13 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 	white-space: nowrap;
 	border: 0;
 }
-.faculty-overview th,
-.faculty-overview td {
-	padding: 11px 12px;
+.content .faculty-overview table th,
+.content .faculty-overview table td {
+	padding: 9px 8px;
 	border-bottom: 1px solid #e5ebf2;
 	text-align: left;
 	vertical-align: top;
+	line-height: 1.45;
 }
 .faculty-overview th {
 	background: #edf3f9;
@@ -209,17 +257,29 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 	outline-offset: -3px;
 }
 @media (max-width: 767px) {
-	.faculty-overview { padding: 16px; }
-	.faculty-overview .fo-information { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 17px; }
+	.faculty-overview { --fo-section-gap: 14px; }
+	.faculty-overview .fo-information { grid-template-columns: minmax(0, 1fr); gap: 15px; padding: 17px; }
 	.faculty-overview .fo-identity { padding: 0 0 14px; border-right: 0; border-bottom: 1px solid var(--fo-border); }
-	.faculty-overview .fo-details { gap: 11px 14px; }
-	.faculty-overview .fo-summary { grid-template-columns: minmax(0, 1fr); gap: 9px; }
-	.faculty-overview .fo-metric { min-height: 76px; padding: 12px 15px; }
+	.faculty-overview .fo-details { gap: 12px 14px; }
+	.faculty-overview .fo-summary { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+	.faculty-overview .fo-metric { min-height: 82px; padding: 13px 15px; gap: 8px; }
 	.faculty-overview .fo-metric p { font-size: 1.55rem; }
+	.faculty-overview .fo-table-scroll .as-ui-toolbar { gap: 8px; }
+	.faculty-overview .fo-table-scroll .as-ui-toolbar input {
+		flex: 0 1 auto;
+		width: 100%;
+		min-width: 0;
+	}
+	.faculty-overview .fo-table-scroll .as-ui-toolbar select {
+		flex: 0 1 auto;
+		width: 100%;
+		min-width: 0;
+	}
 }
 @media (max-width: 420px) {
 	.faculty-overview .fo-details { grid-template-columns: minmax(0, 1fr); }
 	.faculty-overview .fo-schedule-heading { padding: 12px 14px; }
+	.faculty-overview .fo-table-scroll { padding-right: 10px; padding-left: 10px; }
 	.faculty-overview .fo-schedule-heading h2 { font-size: 1rem; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -234,13 +294,14 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 		<?php
 		$loadError = false;
 		$semester = null;
+		$overviewSemesterName = 'Fall 2026';
 		$departments = [];
 		$sections = [];
 		$workload = [
 			'assigned_sections' => 0,
 			'teaching_credits' => 0,
-			'employment_type' => 'Part-Time',
-			'status' => 'Part-Time (PT)',
+			'employment_type' => 'Unknown',
+			'status' => 'Unknown',
 		];
 		$enrolledStudentCount = 0;
 		$enrollmentCountByCRN = [];
@@ -248,6 +309,9 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 
 		try {
 			$semester = one($pdo, 'SELECT semester_ID, semester_Name FROM Semester WHERE semester_Name = ? LIMIT 1', ['Fall 2026']);
+			if ($semester !== null) {
+				$overviewSemesterName = (string) $semester['semester_Name'];
+			}
 			$departments = faculty_departments($pdo, $facultyID);
 			if ($semester) {
 				$semesterID = (int) $semester['semester_ID'];
@@ -256,10 +320,13 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 
 				$studentCount = one(
 					$pdo,
-					' SELECT COUNT(DISTINCT e.student_ID) AS total
+					" SELECT COUNT(DISTINCT e.student_ID) AS total
 					  FROM Course_Section cs
-					  JOIN Enrollment e ON e.CRN = cs.CRN AND e.semester_ID = cs.semester_ID
-					  WHERE cs.faculty_ID = ? AND cs.semester_ID = ? AND cs.is_Cancelled = 0',
+					  JOIN Enrollment e
+					    ON e.CRN = cs.CRN
+					   AND e.semester_ID = cs.semester_ID
+					   AND UPPER(TRIM(COALESCE(e.Grade, ''))) NOT IN ('W', 'WD', 'WITHDRAWN')
+					  WHERE cs.faculty_ID = ? AND cs.semester_ID = ? AND cs.is_Cancelled = 0",
 					[$facultyID, $semesterID]
 				);
 				$enrolledStudentCount = (int) ($studentCount['total'] ?? 0);
@@ -272,7 +339,10 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 						$pdo,
 						" SELECT cs.CRN, COUNT(DISTINCT e.student_ID) AS total
 						  FROM Course_Section cs
-						  LEFT JOIN Enrollment e ON e.CRN = cs.CRN AND e.semester_ID = cs.semester_ID
+						  LEFT JOIN Enrollment e
+						    ON e.CRN = cs.CRN
+						   AND e.semester_ID = cs.semester_ID
+						   AND UPPER(TRIM(COALESCE(e.Grade, ''))) NOT IN ('W', 'WD', 'WITHDRAWN')
 						  WHERE cs.faculty_ID = ? AND cs.semester_ID = ? AND cs.is_Cancelled = 0
 						    AND cs.CRN IN ($crnMarks)
 						  GROUP BY cs.CRN",
@@ -372,7 +442,7 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 						<dd><?= e(trim((string) $faculty['Specialty']) !== '' ? $faculty['Specialty'] : 'Not recorded') ?></dd>
 					</div>
 					<div class="fo-detail">
-						<dt>Employment Type (Fall 2026 teaching load)</dt>
+					<dt>Employment Type (<?= e($overviewSemesterName) ?> teaching load)</dt>
 						<dd><span class="fo-status"><?= e($workload['employment_type']) ?></span></dd>
 					</div>
 					<div class="fo-detail">
@@ -382,7 +452,7 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 				</dl>
 			</section>
 
-			<section class="fo-summary" aria-label="Fall 2026 teaching summary">
+			<section class="fo-summary" aria-label="<?= e($overviewSemesterName) ?> teaching summary">
 				<article class="fo-card fo-metric">
 					<h2>Teaching Credits</h2>
 					<p><?= $workload['teaching_credits'] === null ? 'Unknown' : (int) $workload['teaching_credits'] ?></p>
@@ -392,19 +462,20 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 					<p><?= (int) $workload['assigned_sections'] ?></p>
 				</article>
 				<article class="fo-card fo-metric">
-					<h2>Enrolled Students</h2>
+					<h2>Unique Enrolled Students</h2>
 					<p><?= $semester ? $enrolledStudentCount : 0 ?></p>
 				</article>
 			</section>
 
+			<?php require_once __DIR__ . '/../includes/demo_schedule_notice.php'; demo_schedule_notice((int) ($semesterID ?? 0)); ?>
 			<section class="fo-card fo-schedule" aria-labelledby="fo-schedule-title">
 				<header class="fo-schedule-heading">
-					<h2 id="fo-schedule-title">My Teaching Schedule — Fall 2026</h2>
+					<h2 id="fo-schedule-title">My Teaching Schedule — <?= e($overviewSemesterName) ?></h2>
 				</header>
 				<?php if ($sections): ?>
-					<div class="fo-table-scroll" role="region" aria-label="Fall 2026 teaching schedule; scroll horizontally to view all columns" tabindex="0">
+					<div class="fo-table-scroll" role="region" aria-label="<?= e($overviewSemesterName) ?> teaching schedule; scroll horizontally to view all columns" tabindex="0">
 						<table>
-							<caption class="sr-only">Sections assigned to the authenticated faculty member for Fall 2026</caption>
+							<caption class="sr-only">Sections assigned to the authenticated faculty member for <?= e($overviewSemesterName) ?></caption>
 							<thead>
 								<tr>
 									<th scope="col">CRN</th>
@@ -433,7 +504,7 @@ page_start('Faculty Overview', 'Faculty', 'dashboard.php');
 						</table>
 					</div>
 				<?php else: ?>
-					<p class="fo-empty">No active Fall 2026 sections are assigned to your Faculty account.</p>
+					<p class="fo-empty">No active <?= e($overviewSemesterName) ?> sections are assigned to your Faculty account.</p>
 				<?php endif; ?>
 			</section>
 		<?php endif; ?>

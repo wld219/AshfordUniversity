@@ -21,5 +21,7 @@ $page=max(1,min($totalPages,get_int('page')??1));
 $pageRows=array_slice($rows,($page-1)*$perPage,$perPage);
 $pageUrl=static function(int $p):string{$q=$_GET;$q['page']=$p;return 'master-schedule.php?'.http_build_query($q);};
 page_start('Master Schedule','Faculty','master-schedule.php');
+require_once __DIR__.'/../includes/demo_schedule_notice.php';
+demo_schedule_notice($semesterID);
 require __DIR__.'/partials/master_schedule_view.php';
 page_end();

@@ -346,5 +346,7 @@ if ($registrationNotice !== null && count($sections) > 0) {
 
 page_start('Course Registration', 'Student', 'registration.php');
 flash();
+require_once __DIR__ . '/../includes/demo_schedule_notice.php';
+demo_schedule_notice((int) ($registrationNotice ?? 0));
 require __DIR__ . '/partials/registration_view.php';
 page_end();

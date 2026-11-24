@@ -33,7 +33,14 @@ declare(strict_types=1);
 				</td>
 				<td><?= e($section['course_ID']) ?> - <?= e($section['course_Name']) ?></td>
 				<td><?= e($section['section_No']) ?></td>
-				<td><?= e($section['instructor']) ?></td>
+				<td>
+					<?= e($section['instructor']) ?><br>
+					<small class="muted">
+						Teaching classification (<?= e($section['semester_Name']) ?>):
+						<?= e($section['calculated_employment_type']) ?> ·
+						<?= $section['calculated_teaching_credits'] === null ? 'credits unknown' : (int) $section['calculated_teaching_credits'] . ' credits' ?>
+					</small>
+				</td>
 				<td><?= e(time_slot_label($pdo, (int) $section['time_Slot_ID'])) ?></td>
 				<td>
 					<?= e(section_room_label(
@@ -179,7 +186,11 @@ $ashfordSlotPeriods = $pdo->query('SELECT tsp.time_Slot_ID, p.start_Time, p.end_
    <p class="muted">CRN <?= $editCRN ?> · <?= e($row['course_ID']) ?> · Section <?= e($row['section_No']) ?> · <?= e($row['semester_Name']) ?></p></div>
    <button type="button" class="edit-close" aria-label="Close" onclick="this.closest('dialog').close()">&times;</button>
   </div>
-  <form method="post" class="form-grid">
+  <form method="post" class="form-grid" data-workload-preview
+    data-original-faculty-id="<?= (int) $row['faculty_ID'] ?>"
+    data-original-semester-id="<?= (int) $row['semester_ID'] ?>"
+    data-original-active="<?= (int) $row['is_Cancelled'] === 0 ? '1' : '0' ?>"
+    data-original-course-credits="<?= $row['course_Credits'] === null ? '' : (int) $row['course_Credits'] ?>">
    <?= csrf_field() ?>
    <input type="hidden" name="action" value="update">
    <input type="hidden" name="crn" value="<?= $editCRN ?>">
@@ -196,7 +207,36 @@ const ashfordData = <?= json_encode([
   'departments' => $ashfordFacultyDepartments,
   'days' => $ashfordSlotDays,
   'periods' => $ashfordSlotPeriods,
+  'facultyWorkloads' => $facultyWorkloadLabels,
+  'courseCredits' => array_column($courses, 'course_Credits', 'course_ID'),
 ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>;
+window.ashfordFacultyWorkloadData = {
+  workloads: ashfordData.facultyWorkloads,
+  courseCredits: ashfordData.courseCredits,
+  threshold: 12
+};
+(function(){
+  document.querySelectorAll('form').forEach(form=>{
+    const semester=form.querySelector('select[name="semester_id"]');
+    const faculty=form.querySelector('select[name="faculty_id"]');
+    if(!semester||!faculty)return;
+    function refreshWorkloadLabels(){
+      const semesterId=semester.value;
+      [...faculty.options].forEach(option=>{
+        if(!option.value)return;
+        const load=semesterId?(ashfordData.facultyWorkloads?.[option.value]?.[semesterId]||null):null;
+        const type=load?.employment_type||'Unknown';
+        const credits=load?.teaching_credits;
+        const loadLabel=load?(type+(credits===null?' · credits unknown':' · '+credits+' credits')):'Select semester for calculated load';
+        const label=option.dataset.facultyName+' — '+loadLabel;
+        option.dataset.label=label;
+        option.textContent=label;
+      });
+    }
+    semester.addEventListener('change',refreshWorkloadLabels);
+    refreshWorkloadLabels();
+  });
+})();
 (function(){
   const sections=ashfordData.sections;
   const membership=new Set(ashfordData.departments.map(x=>String(x.faculty_ID)+'|'+String(x.course_ID)));
@@ -251,8 +291,7 @@ const ashfordData = <?= json_encode([
       if(!option.value)return false;
       if(!membership.has(option.value+'|'+course.value))return false;
       const assignments=own().filter(s=>String(s.faculty_ID)===option.value);
-      const max=option.dataset.facultyType==='Full-Time'?2:1;
-      return assignments.length<max&&!assignments.some(s=>overlaps(s.time_Slot_ID,slot.value));
+      return !assignments.some(s=>overlaps(s.time_Slot_ID,slot.value));
     };
     function refreshFaculty(){
       let count=0;
@@ -320,3 +359,4 @@ const ashfordData = <?= json_encode([
   });
 })();
 </script>
+<script src="../assets/js/admin-faculty-workload-preview.js" defer></script>

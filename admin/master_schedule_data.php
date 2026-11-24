@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+require_once __DIR__ . '/../includes/functions/faculty_teaching_load.php';
+
 // Data for the master schedule page: reference lists, the selected
 // semester and schedule record, validation results, filters, pagination.
 
@@ -70,11 +72,15 @@ $departments = all_rows(
 
 $facultyList = all_rows(
 	$pdo,
-	"SELECT f.faculty_ID, CONCAT(u.first_Name, ' ', u.last_Name) AS name
+	"SELECT f.faculty_ID, f.faculty_Type, CONCAT(u.first_Name, ' ', u.last_Name) AS name
 	FROM Faculty f
 	JOIN User u ON u.user_ID = f.faculty_ID
 	ORDER BY name"
 );
+
+$facultyWorkloadLabels = $semesterID > 0
+	? faculty_workload_directory($pdo, $semesterID)['by_faculty']
+	: [];
 
 $timeSlots = all_rows(
 	$pdo,
@@ -169,7 +175,7 @@ $editSection = null;
 if ($editCRN !== null) {
 	$editSection = one(
 		$pdo,
-		'SELECT * FROM Course_Section WHERE CRN = ?',
+		'SELECT cs.*, c.course_Credits FROM Course_Section cs LEFT JOIN Course c ON c.course_ID = cs.course_ID WHERE cs.CRN = ?',
 		[$editCRN]
 	);
 }

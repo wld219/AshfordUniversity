@@ -155,6 +155,8 @@ page_start(
 	'Student',
 	'master-schedule.php'
 );
+require_once __DIR__ . '/../includes/demo_schedule_notice.php';
+demo_schedule_notice($semesterID);
 
 require_once __DIR__ . '/partials/master_schedule_view.php';
 

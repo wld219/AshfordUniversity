@@ -80,30 +80,78 @@ if ($courseSection) {
 			$errors[] = 'Grades must be a letter grade such as A, B+, or C-.';
 
 		} else {
+			try {
+				$pdo->beginTransaction();
 
-			[$gradeOpen, $gradeMessage] = grade_submission_status(
-				$pdo,
-				$studentID,
-				$crn
-			);
+				// Lock and revalidate the complete authorization/enrollment chain
+				// inside the transaction so a concurrent reassignment or drop
+				// cannot split the official grade and history writes.
+				$lockedSection = one(
+					$pdo,
+					"SELECT cs.course_ID, cs.semester_ID, cs.faculty_ID, cs.is_Cancelled,
+							e.student_ID, e.semester_ID AS enrollment_semester_ID
+					 FROM Course_Section cs
+					 JOIN Semester s ON s.semester_ID = cs.semester_ID
+					 JOIN Enrollment e
+					   ON e.CRN = cs.CRN AND e.semester_ID = cs.semester_ID
+					 WHERE cs.CRN = ? AND cs.faculty_ID = ? AND cs.semester_ID = ?
+					   AND cs.is_Cancelled = 0
+					   AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
+					   AND e.student_ID = ?
+					 FOR UPDATE",
+					[$crn, $facultyID, $semesterID, $studentID]
+				);
 
-			if (!$gradeOpen) {
+				if (!$lockedSection
+					|| (int) $lockedSection['faculty_ID'] !== $facultyID
+					|| (int) $lockedSection['semester_ID'] !== $semesterID
+					|| (int) $lockedSection['enrollment_semester_ID'] !== $semesterID
+					|| (int) $lockedSection['is_Cancelled'] !== 0) {
+					throw new RuntimeException('Section or enrollment is no longer available.');
+				}
 
-				$errors[] = $gradeMessage;
+				// Do not turn a known mismatched history row for this CRN into a
+				// grade-bearing record for a different course or semester.
+				$historyRow = one(
+					$pdo,
+					'SELECT course_ID, semester_ID
+					 FROM Student_History
+					 WHERE student_ID = ? AND CRN = ?
+					 FOR UPDATE',
+					[$studentID, $crn]
+				);
+				if ($historyRow
+					&& ((string) $historyRow['course_ID'] !== (string) $lockedSection['course_ID']
+						|| (int) $historyRow['semester_ID'] !== $semesterID)) {
+					throw new DomainException('Existing course history does not match this section; manual review is required.');
+				}
 
-			} else {
+				[$gradeOpen, $gradeMessage] = grade_submission_status(
+					$pdo,
+					$studentID,
+					$crn
+				);
+				if (!$gradeOpen) {
+					throw new DomainException($gradeMessage);
+				}
 
 				$pdo->prepare(
 					"UPDATE Enrollment
 					SET Grade = ?
-					WHERE student_ID = ?
-					AND CRN = ?
-					AND semester_ID = ?"
+					WHERE student_ID = ? AND CRN = ? AND semester_ID = ?"
+				)->execute([$grade, $studentID, $crn, $semesterID]);
+
+				$pdo->prepare(
+					"INSERT INTO Student_History
+						(student_ID, CRN, course_ID, semester_ID, Grade)
+					VALUES (?, ?, ?, ?, ?)
+					ON DUPLICATE KEY UPDATE Grade = VALUES(Grade)"
 				)->execute([
-					$grade,
 					$studentID,
 					$crn,
-					$semesterID
+					$lockedSection['course_ID'],
+					$semesterID,
+					$grade
 				]);
 
 				audit_log(
@@ -114,22 +162,19 @@ if ($courseSection) {
 					'Grade submitted for CRN ' . $crn
 				);
 
-				// Keep the student's course history in sync so the posted
-				// grade immediately appears on the transcript and GPA.
-				$pdo->prepare(
-					"INSERT INTO Student_History
-						(student_ID, CRN, course_ID, semester_ID, Grade)
-					VALUES (?, ?, ?, ?, ?)
-					ON DUPLICATE KEY UPDATE Grade = VALUES(Grade)"
-				)->execute([
-					$studentID,
-					$crn,
-					$courseSection['course_ID'],
-					$courseSection['semester_ID'],
-					$grade
-				]);
-
+				$pdo->commit();
 				$savedSomething = true;
+			} catch (Throwable $exception) {
+				if ($pdo->inTransaction()) {
+					$pdo->rollBack();
+				}
+
+				if ($exception instanceof DomainException) {
+					$errors[] = $exception->getMessage();
+				} else {
+					error_log('Legacy roster grade save failed: ' . $exception->getMessage());
+					$errors[] = 'Grade could not be saved. No grade or history changes were retained.';
+				}
 			}
 		}
 	}

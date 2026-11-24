@@ -6,6 +6,7 @@ require_once '../config/database.php';
 require_once '../includes/layout.php';
 require_once '../includes/functions.php';
 require_once '../includes/helpers.php';
+require_once __DIR__ . '/../includes/functions/faculty_teaching_load.php';
 
 require_role(['Admin', 'StatStaff']);
 
@@ -59,6 +60,7 @@ page_start(
         'sections.php'
 );
 ?>
+<link rel="stylesheet" href="../assets/css/admin-faculty-workload-preview.css">
 
     <style>
         /* Ashford — Soft Bubble UI, Sections page */

@@ -70,5 +70,12 @@ $sql .= ' ORDER BY s.semester_ID DESC, d.dept_Name, c.course_ID, cs.section_No L
 
 $sections = all_rows($pdo, $sql, $params);
 
+foreach ($sections as &$sectionRow) {
+	$facultyLoad = $facultyWorkloadsBySemester[(int) $sectionRow['semester_ID']][(int) $sectionRow['faculty_ID']] ?? null;
+	$sectionRow['calculated_employment_type'] = $facultyLoad['employment_type'] ?? 'Unknown';
+	$sectionRow['calculated_teaching_credits'] = $facultyLoad['teaching_credits'] ?? null;
+}
+unset($sectionRow);
+
 $editCRN = null;
 $editSection = null;

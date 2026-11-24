@@ -2,17 +2,8 @@
 
 declare(strict_types=1);
 
-// Development-only message writer using PHP mail() — sends real email on localhost
-// when a local mail server is configured.
+// Isolated demonstration sink: never sends to real recipients or logs message data.
 function dev_mail_deliver(string $to, string $subject, string $body): void
 {
-    $headers = "From: security@ashford.edu\r\n";
-    $headers .= "Reply-To: security@ashford.edu\r\n";
-    $headers .= "X-Mailer: Ashford University Security\r\n";
-    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-    $ok = mail($to, $subject, $body, $headers);
-    if (!$ok) {
-        throw new RuntimeException('mail() could not send verification email.');
-    }
+    error_log('[demo-mail-sink] outgoing verification message suppressed');
 }

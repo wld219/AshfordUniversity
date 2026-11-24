@@ -23,7 +23,9 @@ if ($locked) {
 
 	<h2><?= $editSection !== null ? 'Edit section ' . e((string) $editCRN) : 'Create a section' ?></h2>
 
-	<form method="post" id="ashford-create-section-form" class="form-grid" style="margin-top: 16px;">
+	<form method="post" id="ashford-create-section-form" class="form-grid" data-workload-preview
+		<?= $editSection !== null ? 'data-original-faculty-id="' . (int) $editSection['faculty_ID'] . '" data-original-semester-id="' . (int) $editSection['semester_ID'] . '" data-original-course-credits="' . e((string) ($editSection['course_Credits'] ?? '')) . '" data-original-active="' . ((int) $editSection['is_Cancelled'] === 0 ? '1' : '0') . '"' : '' ?>
+		style="margin-top: 16px;">
 
 		<?= csrf_field() ?>
 
@@ -58,7 +60,6 @@ if ($locked) {
     $ashfordAssignments = $pdo->query('SELECT semester_ID, time_Slot_ID, faculty_ID, lecture_ID, lab_ID FROM Course_Section WHERE is_Cancelled = 0')->fetchAll(PDO::FETCH_ASSOC);
     $ashfordDepartments = $pdo->query('SELECT course_ID, dept_ID FROM Course')->fetchAll(PDO::FETCH_ASSOC);
     $ashfordFacultyDepts = $pdo->query('SELECT faculty_ID, dept_ID FROM Faculty_Department')->fetchAll(PDO::FETCH_ASSOC);
-    $ashfordFacultyTypes = $pdo->query('SELECT faculty_ID, faculty_Type FROM Faculty')->fetchAll(PDO::FETCH_ASSOC);
     $ashfordSlotDays = $pdo->query('SELECT time_Slot_ID, day_ID FROM Time_Slot_Day')->fetchAll(PDO::FETCH_ASSOC);
     $ashfordSlotPeriods = $pdo->query('SELECT tsp.time_Slot_ID, p.start_Time, p.end_Time FROM Time_Slot_Period tsp JOIN Period p ON p.period_ID = tsp.period_ID')->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -69,7 +70,7 @@ if ($locked) {
   const data = <?= json_encode([
     'taken'=>$ashfordTaken, 'assignments'=>$ashfordAssignments,
     'departments'=>$ashfordDepartments, 'facultyDepts'=>$ashfordFacultyDepts,
-    'facultyTypes'=>$ashfordFacultyTypes, 'days'=>$ashfordSlotDays,
+    'days'=>$ashfordSlotDays,
     'periods'=>$ashfordSlotPeriods
   ], JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT) ?>;
   const get = name => form.elements.namedItem(name);
@@ -92,8 +93,6 @@ if ($locked) {
     return pa.some(x=>pb.some(y=>x.start_Time<y.end_Time && y.start_Time<x.end_Time));
   };
   const assignments=()=>data.assignments.filter(x=>eq(x.semester_ID,semester.value));
-  const workload=(id)=>assignments().filter(x=>eq(x.faculty_ID,id)).length;
-  const facultyLimit=(id)=>data.facultyTypes.find(x=>eq(x.faculty_ID,id))?.faculty_Type==='Full-Time'?2:1;
   function mark(opt,reason,hidden=false){
     opt.disabled=!!reason;
     opt.hidden=hidden;
@@ -111,9 +110,8 @@ if ($locked) {
     const dept=deptOf(course.value);
     choices(faculty).forEach(o=>{
       const eligible=hasCourse&&dept!=null&&facultyInDept(o.value,dept);
-      const full=eligible&&workload(o.value)>=facultyLimit(o.value);
       const conflict=eligible&&!!slot.value&&assignments().some(x=>eq(x.faculty_ID,o.value)&&overlapping(x.time_Slot_ID,slot.value));
-      mark(o,!hasCourse?'Select course first':!eligible?'Outside course department':full?'Teaching limit reached':conflict?'Time conflict':'',!eligible&&hasCourse);
+      mark(o,!hasCourse?'Select course first':!eligible?'Outside course department':conflict?'Time conflict':'',!eligible&&hasCourse);
     }); resetDisabled(faculty);
     choices(slot).forEach(o=>{
       const conflict=!!faculty.value&&assignments().some(x=>eq(x.faculty_ID,faculty.value)&&overlapping(x.time_Slot_ID,o.value));

@@ -28,17 +28,9 @@ if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
 // Which transport is active: 'phpmailer' or 'null' (log only).
 function mail_transport(): string
 {
-	if (!class_exists('PHPMailer\\PHPMailer\\PHPMailer')) {
-		return 'null';
-	}
-
-	$transport = strtolower((string) env_value('MAIL_TRANSPORT', ''));
-
-	if ($transport === 'null') {
-		return 'null';
-	}
-
-	return 'phpmailer';
+	// Hard-locked sink in this isolated demo copy; host environment overrides
+	// cannot enable SMTP or PHP mail delivery.
+	return 'null';
 }
 
 /**
@@ -69,7 +61,7 @@ function send_password_reset_email(
 	// Local development: log the link instead of sending mail.
 	if (mail_transport() === 'null') {
 
-		error_log('[mail] Password reset link for ' . $toEmail . ': ' . $resetUrl);
+		error_log('[demo-mail-sink] outgoing password-reset message suppressed');
 
 		return true;
 	}
@@ -121,7 +113,7 @@ function send_generic_email(
 
 	if (mail_transport() === 'null') {
 
-		error_log('[mail] ' . $subject . ' -> ' . $toEmail);
+		error_log('[demo-mail-sink] outgoing notification message suppressed');
 
 		return true;
 	}

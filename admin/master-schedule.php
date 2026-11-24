@@ -43,14 +43,27 @@ page_start(
 	'Admin',
 	'master-schedule.php'
 );
+?>
+<link rel="stylesheet" href="../assets/css/admin-faculty-workload-preview.css">
+<?php
 
 flash();
+require_once __DIR__ . '/../includes/demo_schedule_notice.php';
+demo_schedule_notice((int) ($semester['semester_ID'] ?? 0));
 
 // View partials (same variable scope)
 require_once __DIR__ . '/partials/master_schedule_view.php';
 
 
 ?>
+<script>
+window.ashfordFacultyWorkloadData = {
+    workloads: <?= json_encode($facultyWorkloadLabels, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>,
+    courseCredits: {},
+    threshold: 12
+};
+</script>
+<script src="../assets/js/admin-faculty-workload-preview.js" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const resultsId = 'ashford-schedule-results';

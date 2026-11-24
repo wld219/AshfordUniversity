@@ -10,7 +10,12 @@ $ashfordAdminLevel = ashford_admin_level($pdo, (int) $_SESSION['user_id']);
 
 $students = one($pdo, 'SELECT COUNT(*) AS total FROM Student');
 $faculty = one($pdo, 'SELECT COUNT(*) AS total FROM Faculty');
-$sections = one($pdo, 'SELECT COUNT(*) AS total FROM Course_Section');
+$sectionStats = one($pdo, '
+	SELECT COUNT(*) AS total,
+	       COALESCE(SUM(CASE WHEN is_Cancelled = 0 THEN 1 ELSE 0 END), 0) AS active,
+	       COALESCE(SUM(CASE WHEN is_Cancelled = 1 THEN 1 ELSE 0 END), 0) AS cancelled
+	FROM Course_Section
+');
 $dashboardTerms = all_rows($pdo,
 	"SELECT semester_ID, semester_Name
 	 FROM Semester
@@ -18,6 +23,19 @@ $dashboardTerms = all_rows($pdo,
 	 ORDER BY CASE semester_Name
 		WHEN 'Spring 2026' THEN 1 WHEN 'Fall 2026' THEN 2 WHEN 'Spring 2027' THEN 3 END"
 );
+$activeTermCounts = [];
+$activeTermCountStmt = $pdo->prepare('
+	SELECT s.semester_Name, COUNT(cs.CRN) AS active
+	FROM Semester s
+	LEFT JOIN Course_Section cs
+		ON cs.semester_ID = s.semester_ID AND cs.is_Cancelled = 0
+	WHERE s.semester_Name IN (?, ?, ?)
+	GROUP BY s.semester_ID, s.semester_Name
+');
+$activeTermCountStmt->execute(['Fall 2026', 'Spring 2026', 'Spring 2027']);
+foreach ($activeTermCountStmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+	$activeTermCounts[(string) $row['semester_Name']] = (int) $row['active'];
+}
 $dashboardSemesterID = filter_input(INPUT_GET, 'semester', FILTER_VALIDATE_INT);
 $validDashboardSemesterIDs = array_map(static fn(array $row): int => (int)$row['semester_ID'], $dashboardTerms);
 if ($dashboardSemesterID === null || $dashboardSemesterID === false || !in_array($dashboardSemesterID, $validDashboardSemesterIDs, true)) {
@@ -37,7 +55,7 @@ $termCounts = null;
 if ($term) {
     $termCounts = one($pdo, 'SELECT COUNT(*) AS total, COALESCE(SUM(CASE WHEN is_Cancelled = 0 THEN 1 ELSE 0 END), 0) AS active FROM Course_Section WHERE semester_ID = ?', [(int)$term['semester_ID']]);
 }
-$recentSections = all_rows($pdo, '
+$recentSections = $term ? all_rows($pdo, '
     SELECT cs.CRN, c.course_Name, cs.section_No, cs.is_Cancelled, s.semester_Name,
            cs.available_Seats, COALESCE((
                SELECT COUNT(*) FROM Enrollment en WHERE en.CRN = cs.CRN
@@ -46,15 +64,16 @@ $recentSections = all_rows($pdo, '
     FROM Course_Section cs
     JOIN Course c ON c.course_ID = cs.course_ID
     JOIN Semester s ON s.semester_ID = cs.semester_ID
+    WHERE cs.semester_ID = ?
     ORDER BY cs.CRN DESC LIMIT 5
-') ?? [];
+', [(int) $term['semester_ID']]) ?? [] : [];
 page_start('Admin Overview', 'Admin', 'dashboard.php');
 ?>
 <style>
 .ao-wrap{display:grid;gap:16px;max-width:1200px}
 .ao-header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .ao-header h2{margin:4px 0}.ao-muted{color:#667085;margin:4px 0}
-.ao-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ao-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .ao-stat{background:#fff;border:1px solid #e0e4e9;border-radius:10px;padding:17px}
 .ao-stat span{color:#667085;font-size:13px;display:block}
 .ao-stat strong{font-size:28px;display:block;margin-top:5px}
@@ -65,6 +84,7 @@ page_start('Admin Overview', 'Admin', 'dashboard.php');
 .ao-term{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 .ao-tag{display:inline-block;padding:4px 9px;border:1px solid #d0d5dd;border-radius:20px;font-size:12px}
 .ao-link{font-size:14px;text-decoration:underline}
+@media(max-width:900px){.ao-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.ao-summary{grid-template-columns:1fr}.ao-card{padding:12px}}
 </style>
 <div class="ao-wrap">
@@ -76,7 +96,12 @@ page_start('Admin Overview', 'Admin', 'dashboard.php');
   <section class="ao-summary" aria-label="University statistics">
     <div class="ao-stat"><span>Students</span><strong><?= number_format((int)($students['total'] ?? 0)) ?></strong></div>
     <div class="ao-stat"><span>Faculty</span><strong><?= number_format((int)($faculty['total'] ?? 0)) ?></strong></div>
-    <div class="ao-stat"><span>Course Sections</span><strong><?= number_format((int)($sections['total'] ?? 0)) ?></strong></div>
+    <div class="ao-stat"><span>Course Section Records — All Semesters</span><strong><?= number_format((int)($sectionStats['total'] ?? 0)) ?></strong></div>
+    <div class="ao-stat"><span>Active Course Sections — All Semesters</span><strong><?= number_format((int)($sectionStats['active'] ?? 0)) ?></strong></div>
+    <div class="ao-stat"><span>Canceled Course Sections — All Semesters</span><strong><?= number_format((int)($sectionStats['cancelled'] ?? 0)) ?></strong></div>
+    <div class="ao-stat"><span>Active Fall 2026 Sections</span><strong><?= number_format((int)($activeTermCounts['Fall 2026'] ?? 0)) ?></strong></div>
+    <div class="ao-stat"><span>Active Spring 2026 Sections</span><strong><?= number_format((int)($activeTermCounts['Spring 2026'] ?? 0)) ?></strong></div>
+    <div class="ao-stat"><span>Active Spring 2027 Sections</span><strong><?= number_format((int)($activeTermCounts['Spring 2027'] ?? 0)) ?></strong></div>
   </section>
   <section class="ao-card">
     <div class="ao-term">
@@ -98,7 +123,7 @@ page_start('Admin Overview', 'Admin', 'dashboard.php');
     </div>
   </section>
   <section class="ao-card">
-    <div class="ao-term"><h3>Recent Course Sections</h3>
+    <div class="ao-term"><h3>Recent Course Sections — <?= e((string) ($term['semester_Name'] ?? 'No semester selected')) ?></h3>
       <a class="ao-link" href="<?= e(app_base_path() . '/admin/sections.php') ?>">View All Sections</a></div>
     <div class="table-wrap" style="overflow-x:auto"><table>
       <thead><tr><th>CRN</th><th>Course</th><th>Section</th><th>Semester</th><th>Actual Enrollment</th><th>Seats Remaining</th><th>Status</th></tr></thead>

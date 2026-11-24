@@ -49,8 +49,7 @@ $sql = "SELECT
 			cs.lecture_ID,
 			cs.lab_ID,
 			cs.available_Seats,
-			c.course_ID,
-			c.course_Code,
+			c.course_ID AS course_Code,
 			c.course_Name,
 			c.course_Credits,
 			c.course_Type,
@@ -90,6 +89,8 @@ $sql .= " ORDER BY MD5(CONCAT('ashford-2026-', cs.CRN)), cs.CRN";
 $semesterName = $selectedSemester[0]['semester_Name'] ?? 'Unknown semester';
 
 public_page_start('Master Schedule');
+require_once __DIR__ . '/../includes/demo_schedule_notice.php';
+demo_schedule_notice($semesterID);
 
 ?>
 

@@ -10,27 +10,15 @@ require_once '../includes/functions/faculty_teaching_load.php';
 require_role(['Faculty']);
 $facultyID = (int) $_SESSION['user_id'];
 
-// Build the term selector from this faculty member's actual assigned sections.
+// Show only the two current demo semesters. IDs come from Semester, not hardcoded.
 $semesterOptions = all_rows(
     $pdo,
     "SELECT semester_ID, semester_Name, semester_Start
-     FROM (
-        SELECT DISTINCT s.semester_ID, s.semester_Name, s.semester_Start
-        FROM Semester s
-        WHERE s.semester_Name IN ('Fall 2026', 'Spring 2027')
-        UNION
-        SELECT DISTINCT s.semester_ID, s.semester_Name, s.semester_Start
-        FROM Semester s
-        JOIN Course_Section cs ON cs.semester_ID = s.semester_ID
-        WHERE cs.faculty_ID = ? AND cs.is_Cancelled = 0
-        UNION
-        SELECT DISTINCT s.semester_ID, s.semester_Name, s.semester_Start
-        FROM Semester s
-        JOIN Faculty_History fh ON fh.semester_ID = s.semester_ID
-        WHERE fh.faculty_ID = ?
-     ) assigned_terms
-     ORDER BY semester_Start DESC, semester_ID DESC",
-    [$facultyID, $facultyID]
+     FROM Semester
+     WHERE semester_Name IN ('Fall 2026', 'Spring 2027')
+     ORDER BY CASE semester_Name
+        WHEN 'Fall 2026' THEN 1 WHEN 'Spring 2027' THEN 2 ELSE 3 END,
+        semester_Start, semester_ID"
 );
 $semesterOptionsById = [];
 foreach ($semesterOptions as $option) {
@@ -66,6 +54,8 @@ if ($semesterId === 0 && $semesterOptions) {
 }
 $semesterName = $semesterOptionsById[$semesterId]['semester_Name'] ?? '';
 $semester = (string)$semesterId;
+$facultyEmployment = one($pdo, 'SELECT faculty_Type FROM Faculty WHERE faculty_ID = ?', [$facultyID]);
+$facultyEmploymentType = (string)($facultyEmployment['faculty_Type'] ?? 'Not listed');
 $isHistoricalSemester = $semesterName !== ''
     && !in_array($semesterName, ['Fall 2026', 'Spring 2027'], true);
 $rosterWorkload = null;
@@ -127,6 +117,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     try {
         $pdo->beginTransaction();
+
+        // Recheck and lock ownership plus enrollment before the write. This
+        // keeps authorization valid if the section or enrollment changes
+        // between the initial request check and the transaction.
+        $lockedSection = one(
+            $pdo,
+            "SELECT cs.CRN, cs.semester_ID, cs.faculty_ID, cs.is_Cancelled,
+                    e.student_ID, e.semester_ID AS enrollment_semester_ID
+             FROM Course_Section cs
+             JOIN Semester s ON s.semester_ID = cs.semester_ID
+             JOIN Enrollment e
+               ON e.CRN = cs.CRN AND e.semester_ID = cs.semester_ID
+             WHERE cs.CRN = ? AND cs.faculty_ID = ? AND cs.semester_ID = ?
+               AND cs.is_Cancelled = 0
+               AND s.semester_Name IN ('Fall 2026', 'Spring 2027')
+               AND e.student_ID = ?
+             FOR UPDATE",
+            [$crn, $facultyID, $semesterId, $studentID]
+        );
+
+        if (!$lockedSection
+            || (int) $lockedSection['faculty_ID'] !== $facultyID
+            || (int) $lockedSection['semester_ID'] !== $semesterId
+            || (int) $lockedSection['enrollment_semester_ID'] !== $semesterId
+            || (int) $lockedSection['is_Cancelled'] !== 0) {
+            throw new DomainException('Course section or enrollment is no longer available to you.');
+        }
+
+        [$gradeOpen, $gradeMessage] = grade_submission_status($pdo, $studentID, $crn);
+        if (!$gradeOpen) {
+            throw new DomainException($gradeMessage);
+        }
+
         $pdo->prepare(
             'UPDATE Enrollment
              SET midterm_Grade = ?,
@@ -142,11 +165,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         );
     } catch (Throwable $e) {
         if ($pdo->inTransaction()) $pdo->rollBack();
-        error_log('Midterm grade update failed: ' . $e->getMessage());
+        if (!$e instanceof DomainException) {
+            error_log('Midterm grade update failed: ' . $e->getMessage());
+        }
         redirect_with_flash(
             url('faculty/rosters.php'),
             'error',
-            'Midterm grade could not be updated.'
+            $e instanceof DomainException
+                ? $e->getMessage()
+                : 'Midterm grade could not be updated.'
         );
     }
     exit;
@@ -310,13 +337,7 @@ $averageAttendance = $totalRecorded > 0
 
 page_start('Course Rosters', 'Faculty', 'rosters.php');
 flash();
-if ($rosterWorkload !== null): ?>
-    <p role="status" style="max-width:1250px;margin:0 auto 12px;padding:12px 16px;border-left:4px solid #1d4ed8;background:#eff6ff;color:#142b4d;border-radius:8px">
-        <?= e($semesterName) ?> teaching workload:
-        <strong><?= $rosterWorkload['teaching_credits'] === null ? 'Unknown credits · Unknown' : (int) $rosterWorkload['teaching_credits'] . ' credits · ' . e($rosterWorkload['status']) ?></strong>
-        (<?= (int) $rosterWorkload['assigned_sections'] ?> active assigned sections)
-    </p>
-<?php endif; ?>
-<?php
+require_once __DIR__ . '/../includes/demo_schedule_notice.php';
+demo_schedule_notice($semesterId);
 require_once __DIR__ . '/partials/rosters_view.php';
 page_end();
